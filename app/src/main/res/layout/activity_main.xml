@@ -51,18 +51,20 @@
             android:text="Login"
              />
 
-        <TextView
-            android:id="@+id/link"
-            android:autoLink="all"
-            android:clickable="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Criar perfil"
-            android:textColor="#2A6FA6"
-            android:layout_marginLeft="280dp"
-            android:onClick="enviaPerfil()"
-            android:focusable="true"
-            />
+
+
+                <TextView
+        android:id="@+id/link"
+        android:autoLink="all"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/criar_perfil"
+        android:textColor="#2A6FA6"
+        android:layout_marginLeft="280dp"
+        android:onClick="enviaPerfil"
+        android:focusable="true"
+        />
 
     </LinearLayout>
 

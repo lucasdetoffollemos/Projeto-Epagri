@@ -1,13 +1,11 @@
 package com.example.testetelas1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,11 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void enviaPerfil(){
-        Intent intent = new Intent(MainActivity.this, Perfil.class);
-        startActivity(intent);
+        Intent i = new Intent(MainActivity.this, Perfil.class);
+        startActivity(i);
     }
 
-
-
-
+//
+//    public void enviaPerfil(View view) {
+//        Intent intent = new Intent(MainActivity.this, Perfil.class);
+//        startActivity(intent);
+//    }
 }
