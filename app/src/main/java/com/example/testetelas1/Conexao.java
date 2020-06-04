@@ -7,19 +7,29 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 
-//Nesta classe é conectado o banco com o projeto, e aqui sao criados o banco, as tabelas e as colunas de cada tabela.
+/**
+ * Nesta classe é conectado o banco com o projeto, e aqui sao criados os bancos, as tabelas e as colunas de cada tabela.
+ */
 public class Conexao extends SQLiteOpenHelper {
 
-    //Atributos de nome e versao do banco
+    /**
+     * Atributos de nome e versao do banco
+     */
     private static final  String name = "banco.db";
     private static final int version = 1;
 
-    //Este metodo herda o nome e a versao do banco
+    /**
+     * Este metodo herda o nome e a versao do banco
+     * @param context
+     */
     public Conexao(Context context) {
         super(context, name, null, version);
     }
 
-    //Cria as tabelas do banco
+    /**
+     * Cria as tabelas do banco
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table usuario(id integer primary key autoincrement,  nome varchar(50), email varchar(100), telefone varchar(50), senha varchar(50))");

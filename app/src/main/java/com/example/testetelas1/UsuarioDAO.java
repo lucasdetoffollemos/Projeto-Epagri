@@ -13,25 +13,28 @@ public class UsuarioDAO {
     private SQLiteDatabase banco;
 
 
-    //Este método conecta o banco com o arquivo conexao, e deixa ele liberado para escrita com a funcao getWritable...
+    /**
+     * Este método conecta o banco com o arquivo conexao, e deixa ele liberado para escrita com a funcao getWritable...
+     * @param context
+     */
     public UsuarioDAO(Context context){
         conexao = new Conexao(context);
         banco = conexao.getWritableDatabase();
     }
 
 
-
-    //Inseri os dados da classe usuário na tabela usuario
-    public long inserir(Usuario usuario){
+    /**
+     * Inseri os dados da classe usuário na tabela usuario
+     * @param usuario
+     * @return
+     */
+    public long inserirUsuario(Usuario usuario){
         ContentValues values = new ContentValues();
         values.put("nome", usuario.getNome());
         values.put("email", usuario.getEmail());
         values.put("telefone", usuario.getTelefone());
         values.put("senha", usuario.getSenha());
         return banco.insert("usuario", null, values);
-
     }
-
-
 
 }

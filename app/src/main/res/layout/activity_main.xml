@@ -25,7 +25,7 @@
             android:textSize="24dp" />
 
         <EditText
-            android:id="@+id/loginTxt"
+            android:id="@+id/et_nomeLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -33,7 +33,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/senhaTxt"
+            android:id="@+id/et_senhaLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -43,13 +43,13 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/loginBt"
+            android:id="@+id/bt_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login" />
 
         <TextView
-            android:id="@+id/link"
+            android:id="@+id/tv_criaPerfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="250dp"
@@ -57,7 +57,7 @@
             android:autoLink="all"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="enviaPerfil"
+            android:onClick="criaPerfil"
             android:text="@string/criar_perfil"
             android:textColor="#2A6FA6"
             android:textSize="17dp"

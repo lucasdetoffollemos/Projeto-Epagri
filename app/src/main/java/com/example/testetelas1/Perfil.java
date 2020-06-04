@@ -26,69 +26,72 @@ import org.w3c.dom.Text;
 public class Perfil extends AppCompatActivity {
 
 
-    public Button botaoVoltar;
-    //Criando atributos para conectar com os id's do activity_perfil
+    /**
+     * Criando atributos para conectar com os id's do activity_perfil
+     */
     private EditText nome;
     private EditText email;
     private EditText telefone;
     private EditText senha;
     private UsuarioDAO dao;
+    //////////////////////
+    public Button botaoVoltar;
 
-    //variavel de validaçao
-    boolean dadosValidados;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        //Pegando os id's da activity_perfil, e seta nos atributos declarados la em cima
+        /**
+         * Pegando os id's da activity_perfil, e setando nos atributos declarados la em cima
+         */
         nome = findViewById(R.id.editNome);
         email = findViewById(R.id.editEmail);
         telefone = findViewById(R.id.editTelefone);
         senha = findViewById(R.id.editSenha);
         dao = new UsuarioDAO(this);
-        botaoVoltar = findViewById(R.id.bt_voltar);
+
+        /////
+        botaoVoltar = findViewById(R.id.btVoltar);
         botaoVoltar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
                 voltar();
             }
         });
     }
 
-    //Volta a pagina anterior
+    /**
+     * Este metodo esta sendo declarado no  onCreate, o método voltar tem o objetivo de voltar a página de login;
+     */
     private void voltar() {
         Intent i = new Intent(Perfil.this, MainActivity.class);
         startActivity(i);
     }
 
-    //Este metodo esta declarado no onclik do botao Criar no activity_perfil, aqui dentro do metodo é criado um objeto usuario
-    public void criar(View view){
-        //Verificar se os dados estao digitados no formulario
-        dadosValidados = validarFormulario();
+    /**
+     * Este metodo esta declarado no onclik do botao Criar no activity_perfil, aqui dentro do metodo é criado um objeto usuario
+     * @param view
+     */
+    public void criarPerfil(View view){
 
-        if(dadosValidados) {
-            Usuario u = new Usuario();
-            u.setNome(nome.getText().toString());
-            u.setEmail(email.getText().toString());
-            u.setTelefone(telefone.getText().toString());
-            u.setSenha(senha.getText().toString());
-            long id = dao.inserir(u);
-            Toast.makeText(this, "Usuario inserido com id " + id, Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "Por favor preencha os campos acima.", Toast.LENGTH_SHORT).show();
-        }
+        Usuario u = new Usuario();
+        u.setNome(nome.getText().toString());
+        u.setEmail(email.getText().toString());
+        u.setTelefone(telefone.getText().toString());
+        u.setSenha(senha.getText().toString());
+        long id = dao.inserirUsuario(u);
+        Toast.makeText(this, "Usuario inserido com id " + id, Toast.LENGTH_SHORT).show();
 
-        //Este metodo esta sendo chamado aqui, pra quando o usuario clicar em criar, os campos de editText esvaziem.
-        //svaiarDados();
-
+        //limparDados();
     }
 
-    //Este metodo esta sendo declarado la em cima no metodo criar
-    private void esvaiarDados() {
+    /**
+     * Este metodo esta sendo chamado aqui, pra quando o usuario clicar em criar, os campos de editText esvaziem.
+     */
+    private void limparDados() {
         nome.setText("");
         email.setText("");
         telefone.setText("");
@@ -96,41 +99,5 @@ public class Perfil extends AppCompatActivity {
     }
 
 
-    //Este metodo faz a validaçao do formulario
-    private boolean validarFormulario() {
-        //Regra de validaçao, usando a classe TextUtils
-
-        boolean retorno = false;
-
-            if (!TextUtils.isEmpty(nome.getText().toString())) {
-                retorno = true;
-            } else {
-                nome.setError("*");
-                nome.requestFocus();
-            }
-
-            if (!TextUtils.isEmpty(email.getText().toString())) {
-                retorno = true;
-            } else {
-                email.setError("*");
-                email.requestFocus();
-            }
-
-            if (!TextUtils.isEmpty(telefone.getText().toString())) {
-                retorno = true;
-            } else {
-                telefone.setError("*");
-                telefone.requestFocus();
-            }
-
-            if (!TextUtils.isEmpty(senha.getText().toString())) {
-                retorno = true;
-            } else {
-                senha.setError("*");
-                senha.requestFocus();
-            }
-
-        return retorno;
-    }
 
 }

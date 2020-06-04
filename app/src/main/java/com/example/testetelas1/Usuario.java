@@ -7,7 +7,10 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
 
 
-    // Craindo os atributos da classe aluno
+    /**
+     * Criando os atributos da classe aluno
+     */
+
     private Integer id;
     private String nome;
     private String email;
@@ -15,9 +18,10 @@ public class Usuario implements Serializable {
     private String senha;
 
 
-
-//    public Usuario(Integer id, String nome, String email, String telefone, String senha){
-//        this.id = id;
+/**
+ * Declarando método construtor
+ */
+//    public Usuario( String nome, String email, String telefone, String senha){
 //        this.nome = nome;
 //        this.email = email;
 //        this.telefone = telefone;
@@ -25,15 +29,17 @@ public class Usuario implements Serializable {
 //    }
 
 
+    /**
+     * Metodos getter e setter para todos os atributo de cima
+     */
 
-    //Metodos getter e setter para todos os atributo de cima
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;

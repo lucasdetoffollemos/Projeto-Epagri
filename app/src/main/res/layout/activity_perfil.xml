@@ -64,17 +64,17 @@ tools:context=".Perfil">
             android:layout_marginBottom="20dp"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btCriar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="criar"
+            android:onClick="criarPerfil"
             android:text="Criar" />
 
         <Button
-            android:id="@+id/bt-voltar"
+            android:id="@+id/btVoltar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Voltar ao Login"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:text="Voltar ao Login" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
