@@ -21,12 +21,12 @@ public class Usuario implements Serializable {
 /**
  * Declarando método construtor
  */
-//    public Usuario( String nome, String email, String telefone, String senha){
-//        this.nome = nome;
-//        this.email = email;
-//        this.telefone = telefone;
-//        this.senha = senha;
-//    }
+    public Usuario( String nome, String email, String telefone, String senha){
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+    }
 
 
     /**

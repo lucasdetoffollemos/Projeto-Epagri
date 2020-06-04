@@ -77,12 +77,12 @@ public class Perfil extends AppCompatActivity {
      */
     public void criarPerfil(View view){
 
-        Usuario u = new Usuario();
-        u.setNome(nome.getText().toString());
-        u.setEmail(email.getText().toString());
-        u.setTelefone(telefone.getText().toString());
-        u.setSenha(senha.getText().toString());
-        long id = dao.inserirUsuario(u);
+        Usuario u = new Usuario(nome.getText().toString(), email.getText().toString(), telefone.getText().toString(), senha.getText().toString());
+//        u.setNome(nome.getText().toString());
+//        u.setEmail(email.getText().toString());
+//        u.setTelefone(telefone.getText().toString());
+//        u.setSenha(senha.getText().toString());
+          long id = dao.inserirUsuario(u);
         Toast.makeText(this, "Usuario inserido com id " + id, Toast.LENGTH_SHORT).show();
 
         //limparDados();
