@@ -10,8 +10,9 @@ import androidx.annotation.Nullable;
 /**
  * Nesta classe é conectado o banco com o projeto, e aqui sao criados os bancos, as tabelas e as colunas de cada tabela.
  */
-public class Conexao extends SQLiteOpenHelper {
+public class BancoDeDados extends SQLiteOpenHelper {
 
+    private SQLiteDatabase banco;
     /**
      * Atributos de nome e versao do banco
      */
@@ -22,8 +23,9 @@ public class Conexao extends SQLiteOpenHelper {
      * Este metodo herda o nome e a versao do banco
      * @param context
      */
-    public Conexao(Context context) {
+    public BancoDeDados(Context context) {
         super(context, name, null, version);
+        banco = this.getWritableDatabase();
     }
 
     /**

@@ -9,25 +9,24 @@ import android.database.sqlite.SQLiteDatabase;
 //
 public class UsuarioDAO {
 
-    private Conexao conexao;
-    private SQLiteDatabase banco;
+    private BancoDeDados bd;
 
 
     /**
      * Este método conecta o banco com o arquivo conexao, e deixa ele liberado para escrita com a funcao getWritable...
      * @param context
      */
-    public UsuarioDAO(Context context){
-        conexao = new Conexao(context);
-        banco = conexao.getWritableDatabase();
-    }
 
+    public UsuarioDAO(Context context){
+        bd = new BancoDeDados(context);
+    }
 
     /**
      * Inseri os dados da classe usuário na tabela usuario
      * @param usuario
      * @return
      */
+
     public long inserirUsuario(Usuario usuario){
         ContentValues values = new ContentValues();
         values.put("nome", usuario.getNome());
