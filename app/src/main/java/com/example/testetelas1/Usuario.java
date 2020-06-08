@@ -29,6 +29,8 @@ public class Usuario implements Serializable {
     }
 
 
+
+
     /**
      * Metodos getter e setter para todos os atributo de cima
      */
@@ -72,4 +74,16 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+
+    /**
+     * Mostrando na lista apenas o campo do nome.
+     * @return
+     */
+    @Override
+    public  String toString(){
+
+        return getNome();
+    }
+
 }

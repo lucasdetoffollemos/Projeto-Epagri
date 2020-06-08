@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
  */
 public class BancoDeDados extends SQLiteOpenHelper {
 
-    private SQLiteDatabase banco;
+
     /**
      * Atributos de nome e versao do banco
      */
@@ -25,7 +25,7 @@ public class BancoDeDados extends SQLiteOpenHelper {
      */
     public BancoDeDados(Context context) {
         super(context, name, null, version);
-        banco = this.getWritableDatabase();
+
     }
 
     /**
