@@ -1,10 +1,8 @@
-package com.example.testetelas1;
+package com.example.projetoEpagri;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
 
 
 /**
@@ -18,6 +16,21 @@ public class BancoDeDados extends SQLiteOpenHelper {
      */
     private static final  String name = "banco.db";
     private static final int version = 1;
+    private SQLiteDatabase banco;
+
+    /**
+     * Métodos getter e setter para o atributo banco
+     * @return
+     */
+    public SQLiteDatabase getBanco() {
+        return banco;
+    }
+
+    public void setBanco(SQLiteDatabase banco) {
+        this.banco = banco;
+    }
+
+
 
     /**
      * Este metodo herda o nome e a versao do banco
@@ -25,7 +38,7 @@ public class BancoDeDados extends SQLiteOpenHelper {
      */
     public BancoDeDados(Context context) {
         super(context, name, null, version);
-
+        banco = this.getWritableDatabase();
     }
 
     /**

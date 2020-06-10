@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.testetelas1">
+    package="com.example.projetoEpagri">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <!--Activity Principal-->
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.projetoEpagri.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,23 +21,23 @@
 
         <!--Activity Perfil-->
         <activity
-            android:name=".Perfil"
+            android:name="com.example.projetoEpagri.Perfil"
             android:label=" Criar Perfil"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.example.projetoEpagri.MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.example.projetoEpagri.MainActivity" />
         </activity>
 
         <!--Activity De lista de usuarios-->
-        <activity android:name=".ListaUsuarios"
+        <activity android:name="com.example.projetoEpagri.ListaUsuarios"
             android:label="Lista de Usuarios"
-            android:parentActivityName=".Perfil">
+            android:parentActivityName="com.example.projetoEpagri.Perfil">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Perfil" />
+                android:value="com.example.projetoEpagri.Perfil" />
         </activity>
 
 

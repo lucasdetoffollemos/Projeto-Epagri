@@ -70,12 +70,12 @@ tools:context=".Perfil">
             android:onClick="criarPerfil"
             android:text="Criar" />
 
-        <Button
-            android:id="@+id/btVoltar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Voltar ao Login" />
+<!--        <Button-->
+<!--            android:id="@+id/btVoltar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:text="Voltar ao Login" />-->
 
         <Button
             android:id="@+id/bt_lista"
@@ -83,5 +83,13 @@ tools:context=".Perfil">
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Lista de Usuários" />
+
+        <Button
+            android:id="@+id/bt_deletar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="deletarTodosUsuario"
+            android:text="Deletar todos Usuários" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

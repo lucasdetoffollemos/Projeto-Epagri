@@ -1,4 +1,4 @@
-package com.example.testetelas1;
+package com.example.projetoEpagri;
 
 
 import java.io.Serializable;
@@ -28,7 +28,9 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
+    public Usuario() {
 
+    }
 
 
     /**
