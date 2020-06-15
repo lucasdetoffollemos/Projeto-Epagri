@@ -50,6 +50,8 @@ public class Perfil extends AppCompatActivity {
 //            }
 //        });
 
+
+
         ////////
         botaoLista = findViewById(R.id.bt_lista);
         botaoLista.setOnClickListener(new View.OnClickListener() {

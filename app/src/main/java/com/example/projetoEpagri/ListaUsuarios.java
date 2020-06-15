@@ -15,7 +15,7 @@ public class ListaUsuarios extends AppCompatActivity {
     private ListView listaUsuarios;
     private UsuarioDAO daoUser;
     private List<Usuario> usuarios;
-    private  List<Usuario> usuariosFiltrados = new ArrayList<>();
+    //private  List<Usuario> usuariosFiltrados = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +25,7 @@ public class ListaUsuarios extends AppCompatActivity {
         daoUser = new UsuarioDAO(this);
         usuarios = daoUser.listarTodosUsuarios();
         //Apenas usuarios consultados
-        usuariosFiltrados.addAll(usuarios);
+        //usuariosFiltrados.addAll(usuarios);
 
         /**
          * Adaptador de listas, adcionando a lista de usuarios dentro da listview do lista_usuarios.xml

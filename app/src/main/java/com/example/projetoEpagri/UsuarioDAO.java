@@ -17,13 +17,11 @@ public class UsuarioDAO {
 
 
     /**
-     * Este método conecta o banco com o arquivo conexao, e deixa ele liberado para escrita com a funcao getWritable...
+     * Este método conecta o banco com o arquivo Banco de Dados.
      * @param context
      */
-
     public UsuarioDAO(Context context){
         bd = new BancoDeDados(context);
-
     }
 
     /**

@@ -2,6 +2,7 @@ package com.example.projetoEpagri;
 
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 //Classe usuario, criada inicialmente para inserir dados do usuario no banco
 public class Usuario implements Serializable {
@@ -85,7 +86,19 @@ public class Usuario implements Serializable {
     @Override
     public  String toString(){
 
-        return getNome();
+        //Retornando um elemento apenas
+        //return getNome();
+
+
+       //Retornando varios elementos com um array
+
+        String [] arrayUsers = new String[]{" Nome: "+getNome(), " Email: "+getEmail(), " Telefone: "+getTelefone(), " Senha: "+getSenha()};
+        //return Arrays.toString(array);
+
+
+        String tirandoColchetes = Arrays.toString(arrayUsers).replaceAll("(^\\[|\\]$)", "");
+
+        return tirandoColchetes;
     }
 
 }
