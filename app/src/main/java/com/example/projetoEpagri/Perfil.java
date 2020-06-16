@@ -24,7 +24,8 @@ public class Perfil extends AppCompatActivity {
     public Button botaoVoltar;
     /////////////////////
     public Button botaoLista;
-
+    ////////////////////
+    private  PastagemDAO daoPastagem;
 
 
     @Override
@@ -40,6 +41,12 @@ public class Perfil extends AppCompatActivity {
         telefone = findViewById(R.id.editTelefone);
         senha = findViewById(R.id.editSenha);
         dao = new UsuarioDAO(this);
+        //////////////////////////////////
+        //INSERINDO A PASTAGEM COMO TESTE
+        daoPastagem = new PastagemDAO(this);
+        Pastagem p = new Pastagem("Andropogon", new double[]{4.0, 10.9, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+        daoPastagem.inserirPastagem(p);
+        Toast.makeText(this, "Pastagem inserida", Toast.LENGTH_SHORT).show();
 
         /////
 //        botaoVoltar = findViewById(R.id.btVoltar);
@@ -49,6 +56,7 @@ public class Perfil extends AppCompatActivity {
 //                voltar();
 //            }
 //        });
+
 
 
 

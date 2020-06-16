@@ -49,6 +49,7 @@ public class BancoDeDados extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //Tabela de dados do usuário
         db.execSQL("create table usuario(id integer primary key autoincrement,  nome varchar(50), email varchar(100), telefone varchar(50), senha varchar(50))");
+
         //Tabela de dados da pastagem do sul
         db.execSQL("create table dadosSul(nomePastagem varchar(100) primary key, condicaoDegradada real, condicaoMedia real, condicaoOtima real, jan integer, fev integer, mar integer, abri integer, mai integer, jun integer,  jul integer, ago integer, setem integer, out integer, nov  integer, dez integer, totalPastagem integer)");
     }

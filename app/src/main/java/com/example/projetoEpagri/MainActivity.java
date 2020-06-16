@@ -11,10 +11,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public TextView criaPerfil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
         criaPerfil =  findViewById(R.id.tv_criaPerfil);
        //textView.setMovementMethod(LinkMovementMethod.getInstance());
