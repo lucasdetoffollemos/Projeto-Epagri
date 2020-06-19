@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class Pastagem implements Serializable {
 
-    String nome;
+
+    String tipo;
     double condicao [];
     int meses [];
     int total;
@@ -12,40 +13,36 @@ public class Pastagem implements Serializable {
 
 
 
+    public Pastagem(String tipo, double condicao[], int meses[], int total){
 
-    public Pastagem(String nome, double condicao[], int meses[], int total){
-        condicao = new double[3];
-        meses = new int[12];
+        this.condicao = new double[3];
+        this.meses = new int[12];
 
+        this.tipo = tipo;
         this.condicao = condicao;
         this.meses = meses;
+        this.total = total;
     }
 
 
+    public String getTipo() { return tipo; }
 
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public String getNome() {
-        return nome;
+    public double getCondicao(int posicao) {
+        return condicao[posicao];
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setCondicao(double condicao, int posicao) {
+        this.condicao[posicao] = condicao;
     }
 
-    public double[] getCondicao() {
-        return condicao;
+    public int getMeses(int posicao) {
+        return meses[posicao];
     }
 
-    public void setCondicao(double[] condicao) {
-        this.condicao = condicao;
-    }
-
-    public int[] getMeses() {
-        return meses;
-    }
-
-    public void setMeses(int[] meses) {
-        this.meses = meses;
+    public void setMeses(int meses, int posicao) {
+        this.meses[posicao] = meses;
     }
 
     public int getTotal() {
