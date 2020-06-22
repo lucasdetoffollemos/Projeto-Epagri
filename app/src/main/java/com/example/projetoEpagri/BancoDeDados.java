@@ -1,6 +1,7 @@
 package com.example.projetoEpagri;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -18,17 +19,8 @@ public class BancoDeDados extends SQLiteOpenHelper {
     private static final int version = 1;
     private SQLiteDatabase banco;
 
-    /**
-     * Métodos getter e setter para o atributo banco
-     * @return
-     */
-    public SQLiteDatabase getBanco() {
-        return banco;
-    }
 
-    public void setBanco(SQLiteDatabase banco) {
-        this.banco = banco;
-    }
+
 
 
 
@@ -56,6 +48,19 @@ public class BancoDeDados extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            db.execSQL("drop table if exists usuario");
+    }
 
+
+    /**
+     * Métodos getter e setter para o atributo banco e bd
+     * @return
+     */
+    public SQLiteDatabase getBanco() {
+        return banco;
+    }
+
+    public void setBanco(SQLiteDatabase banco) {
+        this.banco = banco;
     }
 }

@@ -9,38 +9,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--Activity Principal-->
-        <activity android:name="com.example.projetoEpagri.MainActivity">
+        <!-- Activity Principal -->
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--Activity Perfil-->
+        <!-- Activity Perfil -->
         <activity
-            android:name="com.example.projetoEpagri.Perfil"
+            android:name=".Perfil"
             android:label=" Criar Perfil"
-            android:parentActivityName="com.example.projetoEpagri.MainActivity">
+            android:parentActivityName=".MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.MainActivity" />
         </activity>
-
-        <!--Activity De lista de usuarios-->
-        <activity android:name="com.example.projetoEpagri.ListaUsuarios"
+        <!-- Activity De lista de usuarios -->
+        <activity
+            android:name=".ListaUsuarios"
             android:label="Lista de Usuarios"
-            android:parentActivityName="com.example.projetoEpagri.Perfil">
+            android:parentActivityName=".Perfil">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Perfil" />
         </activity>
-
-
+        <!--Activity index-->
+        <activity
+            android:name=".Index"
+            android:label="Bem vindo."
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.projetoEpagri.Perfil" />
+            ></activity>
     </application>
 
 </manifest>

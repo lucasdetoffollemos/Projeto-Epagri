@@ -4,6 +4,7 @@ package com.example.projetoEpagri;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,26 @@ public class UsuarioDAO {
      * Método que deleta todos os dados do usuario, está sendo chamado chamado na activity Perfil
      */
     public void excluiTodosUsuarios(Usuario u){
-       bd.getBanco().execSQL("DELETE from usuario");
+
+        bd.getBanco().execSQL("DELETE from usuario");
     }
 
+
+    /**
+     * Método chamado na MainActivity, que tem como obejtivo, pegar o nome e a senha cadastrados no banco de dados, e fazer a verificaçao se condizem com os campos digitados.
+     * @param nome
+     * @param senha
+     * @return
+     */
+    public boolean logar(String nome, String senha){
+        Cursor cursor = bd.getBanco().rawQuery("SELECT * FROM usuario WHERE nome=? and senha=?", new String[]{nome, senha});
+        if(cursor.getCount()>0){ return true;}
+        else {return false;}
+    }
+
+
 }
+
+
+
+
