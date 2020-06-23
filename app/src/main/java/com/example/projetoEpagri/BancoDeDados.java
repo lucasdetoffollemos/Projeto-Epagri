@@ -43,12 +43,14 @@ public class BancoDeDados extends SQLiteOpenHelper {
         db.execSQL("create table usuario(id integer primary key autoincrement,  nome varchar(50), email varchar(100), telefone varchar(50), senha varchar(50))");
 
         //Tabela de dados da pastagem do sul
-        db.execSQL("create table dadosSul(nomePastagem varchar(100) primary key, condicaoDegradada real, condicaoMedia real, condicaoOtima real, jan integer, fev integer, mar integer, abri integer, mai integer, jun integer,  jul integer, ago integer, setem integer, out integer, nov  integer, dez integer, totalPastagem integer)");
+        db.execSQL("create table dadosSul(tipoPastagem varchar(100) primary key, condicaoDegradada real, condicaoMedia real, condicaoOtima real, jan integer, fev integer, mar integer, abri integer, mai integer, jun integer,  jul integer, ago integer, setem integer, out integer, nov  integer, dez integer, totalPastagem integer)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("drop table if exists usuario");
+            db.execSQL("drop table if exists dadosSul");
+            onCreate(db);
     }
 
 

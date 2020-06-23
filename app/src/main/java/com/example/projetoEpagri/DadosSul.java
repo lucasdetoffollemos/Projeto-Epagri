@@ -2,7 +2,7 @@ package com.example.projetoEpagri;
 
 import java.io.Serializable;
 
-public class Pastagem implements Serializable {
+public class DadosSul implements Serializable{
 
 
     String tipo;
@@ -13,7 +13,7 @@ public class Pastagem implements Serializable {
 
 
 
-    public Pastagem(String tipo, double condicao[], int meses[], int total){
+    public DadosSul(String tipo, double condicao[], int meses[], int total){
 
         this.condicao = new double[3];
         this.meses = new int[12];
@@ -29,16 +29,33 @@ public class Pastagem implements Serializable {
 
     public void setTipo(String tipo) { this.tipo = tipo; }
 
+    public double[] getCondicao() {
+        return condicao;
+    }
+
     public double getCondicao(int posicao) {
         return condicao[posicao];
+    }
+
+    public void setCondicao(double [] condicao) {
+        this.condicao = condicao;
     }
 
     public void setCondicao(double condicao, int posicao) {
         this.condicao[posicao] = condicao;
     }
 
+
+    public int[] getMeses() {
+        return meses;
+    }
+
     public int getMeses(int posicao) {
         return meses[posicao];
+    }
+
+    public void setMeses(int [] meses) {
+        this.meses = meses;
     }
 
     public void setMeses(int meses, int posicao) {

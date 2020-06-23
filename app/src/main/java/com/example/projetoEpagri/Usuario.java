@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 //Classe usuario, criada inicialmente para inserir dados do usuario no banco
-public class Usuario implements Serializable {
+public class Usuario implements Serializable{
 
 
     /**

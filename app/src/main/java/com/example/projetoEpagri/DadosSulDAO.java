@@ -3,7 +3,7 @@ package com.example.projetoEpagri;
 import android.content.ContentValues;
 import android.content.Context;
 
-public class PastagemDAO {
+public class DadosSulDAO {
 
     private BancoDeDados bd;
 
@@ -11,14 +11,14 @@ public class PastagemDAO {
      * Este método conecta o banco com o arquivo Banco de Dados.
      * @param context
      */
-    public PastagemDAO(Context context){
+    public DadosSulDAO(Context context){
         bd = new BancoDeDados(context);
     }
 
 
-    public long inserirPastagem(Pastagem p){
+    public long inserirPastagem(DadosSul p){
         ContentValues values = new ContentValues();
-        values.put("nomePastagem", p.getTipo());
+        values.put("tipoPastagem", p.getTipo());
 
         values.put("condicaoDegradada", p.getCondicao(0));
         values.put("condicaoMedia", p.getCondicao(1));
