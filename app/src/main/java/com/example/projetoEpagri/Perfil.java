@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Perfil extends AppCompatActivity {
 
 
@@ -83,6 +86,13 @@ public class Perfil extends AppCompatActivity {
         Usuario u = new Usuario(nome.getText().toString(), email.getText().toString(), telefone.getText().toString(), senha.getText().toString());
         long id = dao.inserirUsuario(u);
         Toast.makeText(this, "Usuario inserido com id " + id, Toast.LENGTH_SHORT).show();
+        //O código abaixo da um tempo da 2 seg até voltar a outra página
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 2000);
         //limparDados();
     }
 
