@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
              String nomeBemVindo = nome.getText().toString();
              i.putExtra(mensagem_extra, nomeBemVindo);
              startActivity(i);
-             finish();
+             //finish();
          }
          else {
              Toast.makeText(getApplicationContext(), "Nome de usuário ou senha incorretos", Toast.LENGTH_SHORT).show();

@@ -8,8 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
+
         <!-- Activity Principal -->
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -17,8 +17,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- Activity Perfil -->
+        </activity> <!-- Activity Perfil -->
         <activity
             android:name=".Perfil"
             android:label=" Criar Perfil"
@@ -28,8 +27,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.MainActivity" />
-        </activity>
-        <!-- Activity De lista de usuarios -->
+        </activity> <!-- Activity De lista de usuarios -->
         <activity
             android:name=".ListaUsuarios"
             android:label="Lista de Usuarios"
@@ -37,27 +35,32 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Perfil" />
-        </activity>
-        <!-- Activity index -->
+        </activity> <!-- Activity index -->
         <activity
             android:name=".Index"
             android:label="Bem vindo"
             android:parentActivityName=".MainActivity">
 
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.MainActivity" />
-
-        </activity>
-        <!-- Acitivity Propriedade-->
-        <activity android:name=".PropriedadeActivity"
+        </activity> <!-- Acitivity Propriedade -->
+        <activity
+            android:name=".PropriedadeActivity"
             android:label="Propriedade"
             android:parentActivityName=".Index">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Index"
-
-                />
+                android:value="com.example.projetoEpagri.Index" />
+        </activity>
+        <!-- Acrivity piquete        -->
+        <activity android:name=".PiqueteActivity"
+            android:label="Piquete"
+            android:parentActivityName=".PropriedadeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.projetoEpagri.PropriedadeActivity"/>
         </activity>
     </application>
 

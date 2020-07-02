@@ -25,11 +25,11 @@ public class Index extends AppCompatActivity {
         //Pegando a mensagem da activity anterior(MainActivity)
         Intent intent = getIntent();
         String nomeEnviado = intent.getStringExtra(MainActivity.mensagem_extra);
-        String nomeEnviado2 = intent.getStringExtra(PropriedadeActivity.mensagem_extra);
+
 
         TextView bem_vindo = findViewById(R.id.tv_bemVindo);
         bem_vindo.setText("Seja bem vindo " + nomeEnviado);
-        bem_vindo.setText("Seja bem vindo " + nomeEnviado2);
+
 
 
 
@@ -48,9 +48,6 @@ public class Index extends AppCompatActivity {
      */
     public void levaParaPropiedade() {
         Intent i = new Intent(Index.this, PropriedadeActivity.class);
-        Intent intent = getIntent();
-        String nomeEnviado = intent.getStringExtra(PropriedadeActivity.mensagem_extra);
-        i.putExtra(mensagem_extra, nomeEnviado);
         startActivity(i);
     }
 }

@@ -1,4 +1,4 @@
 <resources>
-  <string name="app_name">Cadastro</string>
-  <string name="criar_perfil">Criar perfil</string>
+    <string name="app_name">Cadastro</string>
+    <string name="criar_perfil">Criar perfil</string>
 </resources>
