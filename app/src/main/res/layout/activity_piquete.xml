@@ -6,103 +6,120 @@
     android:layout_height="match_parent"
     tools:context=".PiqueteActivity">
 
-    <ScrollView
-        android:id="@+id/barraRolagem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
 
-        <LinearLayout
-            android:id="@+id/linear"
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_titulo_piquetes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:text="Cadastre os piquetes:"
+            android:textColor="#1B1A1A"
+            android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tv_titulo_piquetes"
+        <HorizontalScrollView
+            android:id="@+id/barraRolagemHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <LinearLayout
+                android:id="@+id/linearHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:text="Cadastre os piquetes:"
-                android:gravity="center"
-                android:textColor="#1B1A1A"
-                android:textSize="20dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_infoPiquete"
-                android:layout_width="250dp"
-                android:layout_height="380dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
-                app:cardBackgroundColor="#CCC8C8"
-                app:cardCornerRadius="10dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_infoPiquete"
+                    android:layout_width="250dp"
+                    android:layout_height="380dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    app:cardBackgroundColor="#CCC8C8"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                   >
 
-                <TextView
-                    android:id="@+id/tv_nomePiquete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Piquete 1"
-                    android:textAlignment="center"
-                    android:textColor="#0B0A0A"
-                    tools:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/tv_nomePiquete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Piquete "
+                        android:textAlignment="center"
+                        android:textColor="#0B0A0A"
+                        tools:textSize="18sp" />
 
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/dropdownNomePiquete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="Nome do piquete" />
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/dropdownCondPiquete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="150dp"
-                    android:layout_marginRight="10dp"
-                    android:hint="Condição do piquete" />
-
-                <EditText
-                    android:id="@+id/et_Area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Área Piquete(ha)*"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="220dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"/>
-
-                <EditText
-                    android:id="@+id/et_Aproveitamento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Aproveitamento Prod.(%)*"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="290dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"
-                    />
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/dropdownNomePiquete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="80dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Nome do piquete" />
 
 
-            </androidx.cardview.widget.CardView>
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/dropdownCondPiquete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="150dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Condição do piquete" />
 
-            <Button
-                android:id="@+id/bt_cadastroPique"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cadastrar Piquete" />
+                    <EditText
+                        android:id="@+id/et_Area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="220dp"
+                        android:layout_marginRight="10dp"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="Área Piquete(ha)*"
+                        android:inputType="textPersonName" />
+
+                    <EditText
+                        android:id="@+id/et_Aproveitamento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="290dp"
+                        android:layout_marginRight="10dp"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="Aproveitamento Prod.(%)*"
+                        android:inputType="textPersonName" />
 
 
-        </LinearLayout>
-    </ScrollView>
+                </androidx.cardview.widget.CardView>
+
+
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+        <Button
+            android:id="@+id/bt_cadastroPique"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cadastrar Piquete" />
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
