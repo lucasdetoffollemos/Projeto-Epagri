@@ -68,7 +68,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="80dp"
                         android:layout_marginRight="10dp"
-                        android:hint="Nome do piquete" />
+                        android:hint="Tipo do piquete" />
 
 
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
@@ -79,6 +79,76 @@
                         android:layout_marginTop="150dp"
                         android:layout_marginRight="10dp"
                         android:hint="Condição do piquete" />
+
+                    <EditText
+                        android:id="@+id/et_Area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="220dp"
+                        android:layout_marginRight="10dp"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="Área Piquete(ha)*"
+                        android:inputType="textPersonName" />
+
+                    <EditText
+                        android:id="@+id/et_Aproveitamento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="290dp"
+                        android:layout_marginRight="10dp"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="Aproveitamento Prod.(%)*"
+                        android:inputType="textPersonName" />
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_infoPiquete"
+                    android:layout_width="250dp"
+                    android:layout_height="380dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    app:cardBackgroundColor="#CCC8C8"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_nomePiquete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Piquete "
+                        android:textAlignment="center"
+                        android:textColor="#0B0A0A"
+                        tools:textSize="18sp" />
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/dropdownNomePiquete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="80dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Tipo do piquete"
+                         />
+
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/dropdownCondPiquete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="150dp"
+                        android:layout_marginRight="10dp"
+                        android:hint="Condição do piquete"
+                         />
 
                     <EditText
                         android:id="@+id/et_Area"
