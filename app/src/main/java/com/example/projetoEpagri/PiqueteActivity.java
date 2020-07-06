@@ -28,13 +28,26 @@ public class PiqueteActivity extends AppCompatActivity {
 
         ArrayAdapter<String> piquetesnomeArray = new ArrayAdapter<String>
                 (this, android.R.layout.simple_dropdown_item_1line, piquetesNome);
-        MaterialBetterSpinner  dropNomePiquete = (MaterialBetterSpinner)findViewById(R.id.dropdownNomePiquete);
-        dropNomePiquete.setAdapter(piquetesnomeArray);
+        int [] arrayIdsTipo = {R.id.dropdownNomePiquete, R.id.dropdownNomePiquete2};
+
+        int sizeTipo = arrayIdsTipo.length;
+        for(int i = 0; i < sizeTipo; i++) {
+            MaterialBetterSpinner dropNomePiquete = findViewById(arrayIdsTipo[i]);
+            dropNomePiquete.setAdapter(piquetesnomeArray);
+        }
+
 
         ArrayAdapter<String> piquetesCondArray = new ArrayAdapter<String>
                 (this, android.R.layout.simple_dropdown_item_1line, piquetesCond);
-        MaterialBetterSpinner dropCondPiquete = findViewById(R.id.dropdownCondPiquete);
-        dropCondPiquete.setAdapter(piquetesCondArray);
+        int [] arrayIdsCond = {R.id.dropdownCondPiquete, R.id.dropdownCondPiquete2};
+
+        int sizeCond = arrayIdsCond.length;
+        for(int i =0; i< sizeCond; i++){
+            MaterialBetterSpinner dropCondPiquete = (MaterialBetterSpinner)findViewById(arrayIdsCond[i]);
+            dropCondPiquete.setAdapter(piquetesCondArray);
+        }
+
+
 
 
     }
