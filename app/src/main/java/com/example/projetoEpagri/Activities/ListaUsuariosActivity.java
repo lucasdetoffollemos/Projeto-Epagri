@@ -1,4 +1,4 @@
-package com.example.projetoEpagri;
+package com.example.projetoEpagri.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.example.projetoEpagri.Classes.Usuario;
+import com.example.projetoEpagri.Dao.UsuarioDAO;
+import com.example.projetoEpagri.R;
+
 import java.util.List;
 
-public class ListaUsuarios extends AppCompatActivity {
-
-
+public class ListaUsuariosActivity extends AppCompatActivity {
     private ListView listaUsuarios;
     private UsuarioDAO daoUser;
     private List<Usuario> usuarios;

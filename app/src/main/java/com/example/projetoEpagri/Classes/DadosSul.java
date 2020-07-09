@@ -1,20 +1,14 @@
-package com.example.projetoEpagri;
+package com.example.projetoEpagri.Classes;
 
 import java.io.Serializable;
 
-public class DadosSul implements Serializable{
-
-
-    String tipo;
-    double condicao [];
-    int meses [];
-    int total;
-
-
-
+public class DadosSul {
+    private String tipo;
+    private double condicao [];
+    private int meses [];
+    private int total;
 
     public DadosSul(String tipo, double condicao[], int meses[], int total){
-
         this.condicao = new double[3];
         this.meses = new int[12];
 
@@ -44,7 +38,6 @@ public class DadosSul implements Serializable{
     public void setCondicao(double condicao, int posicao) {
         this.condicao[posicao] = condicao;
     }
-
 
     public int[] getMeses() {
         return meses;

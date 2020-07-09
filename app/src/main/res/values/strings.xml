@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Cadastro</string>
-    <string name="criar_perfil">Criar perfil</string>
+    <string name="txt_criar_perfil">Criar perfil</string>
+    <string name="txt_login">Faça o Login</string>
+    <string name="txt_bt_login">Login</string>
+    <string name="txt_hint_nome">Nome de Usuário</string>
+    <string name="txt_hint_senha">Senha</string>
+    <string name="txt_hint_email">Email</string>
+    <string name="txt_hint_telefone">Telefone</string>
+    <string name="txt_criar">Criar</string>
+    <string name="txt_deletar_usuarios">Deletar todos os usuários</string>
+    <string name="txt_listar_usuarios">Listar Usuários</string>
+    <string name="txt_cadastrar_propriedade">Cadastre sua Propriedade</string>
+    <string name="txt_hint_nome_prorpriedade">Nome da Prorpriedade</string>
+    <string name="txt_hint_qtde_piquetes">Quantidade de Piquetes</string>
+    <string name="txt_bt_proximo_passo">Próximo Passo</string>
 </resources>

@@ -1,10 +1,12 @@
-package com.example.projetoEpagri;
+package com.example.projetoEpagri.Dao;
 
 import android.content.ContentValues;
 import android.content.Context;
 
-public class DadosSulDAO {
+import com.example.projetoEpagri.Classes.BancoDeDados;
+import com.example.projetoEpagri.Classes.DadosSul;
 
+public class DadosSulDAO {
     private BancoDeDados bd;
 
     /**
@@ -15,7 +17,11 @@ public class DadosSulDAO {
         bd = new BancoDeDados(context);
     }
 
-
+    /**
+     * Método para inserir os dados da tabela dadosSul no banco de dados.
+     * @param p
+     * @return
+     */
     public long inserirPastagem(DadosSul p){
         ContentValues values = new ContentValues();
         values.put("tipoPastagem", p.getTipo());
@@ -40,10 +46,6 @@ public class DadosSulDAO {
         values.put("totalPastagem", p.getTotal());
 
         return bd.getBanco().insert("dadosSul", null, values);
-
-
-
-
     }
 
 }

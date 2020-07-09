@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PropriedadeActivity">
+    tools:context=".Activities.PropriedadeActivity">
 
     <TextView
         android:id="@+id/tv_titulo_propriedade"
@@ -16,9 +16,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Cadastre sua Propriedade"
+        android:text="@string/txt_cadastrar_propriedade"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.137" />
 
     <EditText
-        android:id="@+id/pt_nomePropriedade"
+        android:id="@+id/et_nomePropriedade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,16 +37,17 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="94dp"
         android:ems="10"
-        android:hint="Nome da Propriedade"
+        android:hint="@string/txt_hint_nome_prorpriedade"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/pt_qntPiquetes"
+        app:layout_constraintBottom_toTopOf="@+id/et_qtdePiquetes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_titulo_propriedade" />
 
     <EditText
-        android:id="@+id/pt_qntPiquetes"
+        android:id="@+id/et_qtdePiquetes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -56,16 +57,17 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="126dp"
         android:ems="10"
-        android:hint="Quantidade de Piquetes"
+        android:hint="@string/txt_hint_qtde_piquetes"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/bt_cadastroProp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_proximo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pt_nomePropriedade" />
+        app:layout_constraintTop_toBottomOf="@+id/et_nomePropriedade" />
 
     <Button
-        android:id="@+id/bt_cadastroProp"
+        android:id="@+id/bt_proximo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -74,19 +76,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="128dp"
-        android:text="Cadastrar"
+        android:text="@string/txt_bt_proximo_passo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pt_qntPiquetes" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:visibility="invisible"
-        tools:layout_editor_absoluteX="189dp"
-        tools:layout_editor_absoluteY="18dp" />
-
+        app:layout_constraintTop_toBottomOf="@+id/et_qtdePiquetes" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,12 @@
-package com.example.projetoEpagri;
+package com.example.projetoEpagri.Dao;
 
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.EditText;
+
+import com.example.projetoEpagri.Classes.BancoDeDados;
+import com.example.projetoEpagri.Classes.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +66,7 @@ public class UsuarioDAO {
     /**
      * Método que deleta todos os dados do usuario, está sendo chamado chamado na activity Perfil
      */
-    public void excluiTodosUsuarios(Usuario u){
-
+    public void excluiTodosUsuarios(){
         bd.getBanco().execSQL("DELETE from usuario");
     }
 
@@ -78,8 +79,12 @@ public class UsuarioDAO {
      */
     public boolean logar(String nome, String senha){
         Cursor cursor = bd.getBanco().rawQuery("SELECT * FROM usuario WHERE nome=? and senha=?", new String[]{nome, senha});
-        if(cursor.getCount()>0){ return true;}
-        else {return false;}
+        if(cursor.getCount()>0){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 

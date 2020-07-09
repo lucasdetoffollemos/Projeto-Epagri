@@ -1,27 +1,13 @@
-package com.example.projetoEpagri;
-
+package com.example.projetoEpagri.Classes;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
-//Classe usuario, criada inicialmente para inserir dados do usuario no banco
-public class Usuario implements Serializable{
-
-
-    /**
-     * Criando os atributos da classe aluno
-     */
-
+//Classe usuario, criada inicialmente para inserir dados do usuario no banco.
+public class Usuario {
     private Integer id;
-    private String nome;
-    private String email;
-    private String telefone;
-    private String senha;
+    private String nome, email, telefone, senha;
 
-
-/**
- * Declarando método construtor
- */
     public Usuario( String nome, String email, String telefone, String senha){
         this.nome = nome;
         this.email = email;
@@ -29,14 +15,7 @@ public class Usuario implements Serializable{
         this.senha = senha;
     }
 
-    public Usuario() {
-
-    }
-
-
-    /**
-     * Metodos getter e setter para todos os atributo de cima
-     */
+    public Usuario() {}
 
     public Integer getId() {
         return id;
@@ -85,20 +64,14 @@ public class Usuario implements Serializable{
      */
     @Override
     public  String toString(){
-
         //Retornando um elemento apenas
         //return getNome();
 
-
-       //Retornando varios elementos com um array
-
+        //Retornando varios elementos com um array
         String [] arrayUsers = new String[]{" Nome: "+getNome(), " Email: "+getEmail(), " Telefone: "+getTelefone(), " Senha: "+getSenha()};
         //return Arrays.toString(array);
-
-
         String tirandoColchetes = Arrays.toString(arrayUsers).replaceAll("(^\\[|\\]$)", "");
 
         return tirandoColchetes;
     }
-
 }
