@@ -3,8 +3,10 @@ package com.example.projetoEpagri.Classes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetoEpagri.R;
@@ -15,12 +17,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<String> list;
 
     public class MyView extends RecyclerView.ViewHolder {
-        public TextView textView;
+        //public TextView textView;
+        private TextView tv_nomePiquete;
+
 
         public MyView(View view) {
             super(view);
             //Adicionar todos os elementos que fazem parte do cardview (titulo, os menus dropdown e os edittext).
-            textView = (TextView) view.findViewById(R.id.tv_cardTeste);
+            //textView = (TextView) view.findViewById(R.id.tv_cardTeste);
+
+            tv_nomePiquete = view.findViewById(R.id.tv_nomePiquete);
+
             //menudropdown
             //edittext;
         }
@@ -32,13 +39,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public MyView onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_teste, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_piquete, parent, false);
         return new MyView(itemView);
     }
 
     @Override
     public void onBindViewHolder(final MyView holder, final int position) {
-        holder.textView.setText(list.get(position));
+        holder.tv_nomePiquete.setGravity(20);
+        holder.tv_nomePiquete.setText(list.get(position));
     }
 
     @Override

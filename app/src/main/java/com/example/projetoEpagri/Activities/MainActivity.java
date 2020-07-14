@@ -70,5 +70,13 @@ public class MainActivity extends AppCompatActivity {
          else {
              Toast.makeText(getApplicationContext(), "Nome de usuário ou senha incorretos", Toast.LENGTH_SHORT).show();
          }
+
+         limparDados();
+    }
+
+
+    private void limparDados(){
+        et_nome.setText("");
+        et_senha.setText("");
     }
 }

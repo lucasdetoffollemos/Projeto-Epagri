@@ -15,7 +15,8 @@ import com.example.projetoEpagri.R;
 
 public class PropriedadeActivity extends AppCompatActivity {
     private Button bt_proximo;
-    private EditText et_nomePropriedade, et_qtdePiquetes;
+    private EditText et_nomePropriedade;
+    private EditText et_qtdePiquetes;
     private String nomeUsuario;
     private int codigoRequisicao = 1;
 
@@ -44,10 +45,15 @@ public class PropriedadeActivity extends AppCompatActivity {
         String nomePropriedade = et_nomePropriedade.getText().toString();
         i.putExtra("nome_propriedade", nomePropriedade);
 
-        String qtdePiquetes = et_qtdePiquetes.getText().toString();
-        i.putExtra("qtde_piquetes", qtdePiquetes);
+
         //startActivity(i);
-        startActivityForResult(i, this.codigoRequisicao);
+
+            String qtdePiquetes = et_qtdePiquetes.getText().toString();
+
+            i.putExtra("qtde_piquetes", qtdePiquetes);
+            startActivityForResult(i, this.codigoRequisicao);
+
+
     }
 
     public void enviaResposta(){
@@ -60,13 +66,13 @@ public class PropriedadeActivity extends AppCompatActivity {
     /**
      * Método chamado ao clicar no botão voltar do celular
      */
-    @Override
-    public void onBackPressed (){
-        enviaResposta();
-        super.onBackPressed();
-        Toast.makeText(this, "executei ", Toast.LENGTH_SHORT).show();
-
-    }
+//    @Override
+//    public void onBackPressed (){
+//        enviaResposta();
+//        super.onBackPressed();
+//        Toast.makeText(this, "executei ", Toast.LENGTH_SHORT).show();
+//
+//    }
 
     /**
      * Método que volta para activity anterior(Index), pela seta de voltar em cima da tela.

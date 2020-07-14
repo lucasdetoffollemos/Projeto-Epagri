@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.Classes.RecyclerViewAdapter;
 import com.example.projetoEpagri.R;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 
@@ -24,13 +28,22 @@ public class PiqueteActivity extends AppCompatActivity {
     View ChildView ;
     int RecyclerViewItemPosition;
     String qtde;
+    String nome_prop;
+    TextView tv_titulo_piquetes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piquete);
 
+
+
         Intent intent = getIntent();
+        nome_prop = intent.getStringExtra("nome_propriedade");
+        tv_titulo_piquetes = findViewById(R.id.tv_titulo_piquetes);
+        tv_titulo_piquetes.setText("Cadastre os piquetes da propriedade " + nome_prop);
+
         qtde = intent.getStringExtra("qtde_piquetes");
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_piquete);
@@ -93,9 +106,9 @@ public class PiqueteActivity extends AppCompatActivity {
         Number = new ArrayList<>();
         int qt = Integer.parseInt(qtde);
 
-        for(int i=1; i<=qt; i++){
-            Number.add("piquete_" + i);
-        }
+            for(int i = 1; i <= qt; i++) {
+                Number.add("Piquete " + i);
+            }
     }
     /*
     String [] piquetesTipo = { "Andropogon", "Angola", "Aveia Branca"};
