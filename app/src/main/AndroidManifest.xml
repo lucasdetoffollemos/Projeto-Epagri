@@ -54,13 +54,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.IndexActivity" />
         </activity>
-        <!-- Acrivity piquete        -->
+        <!-- Activity piquete        -->
         <activity android:name=".Activities.PiqueteActivity"
+            android:screenOrientation="landscape"
             android:label="Piquete"
-            android:parentActivityName=".Activities.PropriedadeActivity">
+            android:parentActivityName=".Activities.PropriedadeActivity"
+           >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.PropriedadeActivity"/>
+                android:value="com.example.projetoEpagri.Activities.PropriedadeActivity"
+                />
         </activity>
     </application>
 

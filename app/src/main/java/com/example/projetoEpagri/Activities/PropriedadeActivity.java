@@ -29,7 +29,7 @@ public class PropriedadeActivity extends AppCompatActivity {
         nomeUsuario = intent.getStringExtra("nome_usuario");
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
-        et_qtdePiquetes = findViewById(R.id.et_qtdePiquetes);
+//        et_qtdePiquetes = findViewById(R.id.et_qtdePiquetes);
 
         bt_proximo = findViewById(R.id.bt_proximo);
         bt_proximo.setOnClickListener(new View.OnClickListener() {
@@ -41,17 +41,23 @@ public class PropriedadeActivity extends AppCompatActivity {
     }
 
     public void cadastrarPiquete() {
-        Intent i = new Intent(PropriedadeActivity.this, PiqueteActivity.class);
         String nomePropriedade = et_nomePropriedade.getText().toString();
-        i.putExtra("nome_propriedade", nomePropriedade);
+
+        if(!nomePropriedade.equals("")){
+            Intent i = new Intent(PropriedadeActivity.this, PiqueteActivity.class);
+            i.putExtra("nome_propriedade", nomePropriedade);
+            startActivity(i);
+        }
 
 
-        //startActivity(i);
+        else {
+            Toast.makeText(getApplicationContext(), "Insira o nome da propriedade", Toast.LENGTH_SHORT).show();
+        }
 
-            String qtdePiquetes = et_qtdePiquetes.getText().toString();
-
-            i.putExtra("qtde_piquetes", qtdePiquetes);
-            startActivityForResult(i, this.codigoRequisicao);
+//            String qtdePiquetes = et_qtdePiquetes.getText().toString();
+//
+//            i.putExtra("qtde_piquetes", qtdePiquetes);
+//            startActivityForResult(i, this.codigoRequisicao);
 
 
     }
