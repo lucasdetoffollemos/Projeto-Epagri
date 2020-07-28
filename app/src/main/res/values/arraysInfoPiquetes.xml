@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipoPique">
+        <item></item>
+        <item>Aveia Branca</item>
+        <item>Aveia Preta</item>
+        <item>Andropogon</item>
+    </string-array>
+
+    <string-array name="condPique">
+        <item></item>
+        <item>Degradada</item>
+        <item>Média</item>
+        <item>Ótima</item>
+    </string-array>
+</resources>

@@ -2,9 +2,11 @@
     <merge
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <HorizontalScrollView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="0dp"
@@ -15,34 +17,32 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+
+                android:id="@+id/piqueteLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--                    <include layout="@layout/tabela_oferta_atual_1"></include>-->
+                <include layout="@layout/tabela_oferta_atual_1"></include>
 
-                <!--                    <TableLayout-->
-                <!--                        android:id="@+id/table_layout"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content" />-->
-
-                <!--                    <Button-->
-                <!--                        android:id="@+id/bt_adicionar_linha"-->
-                <!--                        android:layout_width="40sp"-->
-                <!--                        android:layout_height="40sp"-->
-                <!--                        android:text="+" />-->
-
-                <!--                    <Button-->
-                <!--                        android:id="@+id/bt_remover_linha"-->
-                <!--                        android:layout_width="40sp"-->
-                <!--                        android:layout_height="40sp"-->
-                <!--                        android:text="-" />-->
-
-                <fragment
-                    android:id="@+id/fragment"
-                    android:name="com.example.projetoEpagri.Fragments.FragmentOfertaAtual"
-                    android:layout_width="wrap_content"
+                <TableLayout
+                    android:id="@+id/table_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/bt_adicionar_linha"
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:text="+" />
+
+                <Button
+                    android:id="@+id/bt_remover_linha"
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:text="-" />
+
+
             </LinearLayout>
         </ScrollView>
     </HorizontalScrollView>
