@@ -2,9 +2,13 @@ package com.example.projetoEpagri.Dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
 
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.DadosSul;
+
+import java.util.ArrayList;
 
 public class DadosSulDAO {
     private BancoDeDados bd;
@@ -46,6 +50,34 @@ public class DadosSulDAO {
         values.put("totalPastagem", p.getTotal());
 
         return bd.getBanco().insert("dadosSul", null, values);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<String> getTiposPastagem() {
+        ArrayList<String> arrayList=new ArrayList<>();
+
+        Cursor cursor =  bd.getBanco().rawQuery( "select * from dadosSul", null );
+        cursor.moveToFirst();
+
+        if (cursor != null){
+            while(cursor.isAfterLast() == false){
+                arrayList.add(cursor.getString(cursor.getColumnIndex("tipoPastagem")));
+                Log.d("tipoPastagem",arrayList.toString());
+
+                cursor.moveToNext();
+            }}
+        return arrayList;
+    }
+
+    public double getCondicao(String tipo){
+
+        //QUERY COM O WHERE
+        //select * from dadosSul WHERE tipoPastagem = tipo
+
+        return 0;
     }
 
 }

@@ -43,7 +43,7 @@ public class PerfilActivity extends AppCompatActivity {
         et_senha = findViewById(R.id.et_senha);
         dao = new UsuarioDAO(this);
         //////////////////////////////////
-        /*INSERINDO A PASTAGEM COMO TESTE
+        //INSERINDO A PASTAGEM COMO TESTE
           daoDadosSul = new DadosSulDAO(this);
           DadosSul p = new DadosSul("Andropogon", new double[]{4.0, 10.9, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
           DadosSul p2 = new DadosSul("Angola", new double[]{3.0, 9.7, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
@@ -53,14 +53,14 @@ public class PerfilActivity extends AppCompatActivity {
           daoDadosSul.inserirPastagem(p3);
           Toast.makeText(this, "Pastagem inserida", Toast.LENGTH_SHORT).show();
 
-        bt_voltar = findViewById(R.id.btVoltar);
+        /*bt_voltar = findViewById(R.id.btVoltar);
         bt_voltar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 voltar();
             }
-        });
-        */
+        });*/
+
         bt_criar = findViewById(R.id.bt_criar);
         bt_criar.setOnClickListener(new View.OnClickListener() {
             @Override
