@@ -9,24 +9,27 @@ import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.DadosSul;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DadosSulDAO {
     private BancoDeDados bd;
 
     /**
      * Este método conecta o banco com o arquivo Banco de Dados.
+     *
      * @param context
      */
-    public DadosSulDAO(Context context){
+    public DadosSulDAO(Context context) {
         bd = new BancoDeDados(context);
     }
 
     /**
      * Método para inserir os dados da tabela dadosSul no banco de dados.
+     *
      * @param p
      * @return
      */
-    public long inserirPastagem(DadosSul p){
+    public long inserirPastagem(DadosSul p) {
         ContentValues values = new ContentValues();
         values.put("tipoPastagem", p.getTipo());
 
@@ -53,31 +56,65 @@ public class DadosSulDAO {
     }
 
     /**
-     *
      * @return
      */
     public ArrayList<String> getTiposPastagem() {
-        ArrayList<String> arrayList=new ArrayList<>();
+        ArrayList<String> arrayList = new ArrayList<>();
 
-        Cursor cursor =  bd.getBanco().rawQuery( "select * from dadosSul", null );
+
+        Cursor cursor = bd.getBanco().rawQuery("select * from dadosSul", null);
         cursor.moveToFirst();
 
-        if (cursor != null){
-            while(cursor.isAfterLast() == false){
+        arrayList.add("Selecione");
+        if (cursor != null) {
+            while (cursor.isAfterLast() == false) {
                 arrayList.add(cursor.getString(cursor.getColumnIndex("tipoPastagem")));
-                Log.d("tipoPastagem",arrayList.toString());
+                Log.d("tipoPastagem", arrayList.toString());
 
                 cursor.moveToNext();
-            }}
+            }
+        }
         return arrayList;
     }
 
-    public double getCondicao(String tipo){
+    //Se ele escolheu “grama” no tipo e “média” na condição,
+    //então eu tenho que retornar do banco o valor 5,
+    //por exemplo, se for “grama” e “ótima”, retorna 7, e assim por diante
+    //QUERY COM O WHERE
+    //select * from dadosSul WHERE tipoPastagem = tipo
+    public Double getCondicao(String tipo, String condicao) {
+        Double valorCondicao = 1.0;
+        int posicaoColuna = 1;
 
-        //QUERY COM O WHERE
-        //select * from dadosSul WHERE tipoPastagem = tipo
+        Cursor c = bd.getBanco().rawQuery("select * from dadosSul where tipoPastagem = " + tipo, null);
 
-        return 0;
+        switch (condicao) {
+            case "Degradada":
+                posicaoColuna = 1;
+                break;
+            case "Média":
+                posicaoColuna = 2;
+                break;
+            case "Ótima":
+                posicaoColuna = 3;
+                break;
+        }
+
+
+
+        while (c.moveToNext()) {
+
+
+            valorCondicao = (c.getDouble(posicaoColuna));
+
+
+
+            //dadosSul.add(d);
+        }
+
+
+        return valorCondicao;
     }
-
 }
+
+

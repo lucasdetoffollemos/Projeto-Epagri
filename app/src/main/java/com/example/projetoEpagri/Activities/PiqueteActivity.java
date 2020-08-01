@@ -1,8 +1,10 @@
 package com.example.projetoEpagri.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 
 import android.animation.IntArrayEvaluator;
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -28,11 +30,12 @@ import java.util.Arrays;
 
 public class PiqueteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private  Button bt_adicionar_linha, bt_remover_linha;
+    private  Button bt_adicionar_linha, bt_remover_linha, bt_resultado_cond;
     public int i=0;
     private  TableRow linha_tabela;
     private TableLayout table_layout;
     private DadosSulDAO dadosSulDAO;
+
 
 
     @Override
@@ -44,80 +47,85 @@ public class PiqueteActivity extends AppCompatActivity implements AdapterView.On
 
         table_layout = (TableLayout) findViewById(R.id.table_layout);
 
+        bt_resultado_cond = findViewById(R.id.bt_resultado_conds);
+        bt_resultado_cond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostraResultadoCond();
+            }
+        });
+
         bt_adicionar_linha = findViewById(R.id.bt_adicionar_linha);
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
                 linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
+
                 ArrayList<String> tipoPique1 = dadosSulDAO.getTiposPastagem();
 
-//                Cursor cNames = db.function();
-//                startManagingCursor(cNames);
+                String [] condPique1 = new String[]{" ", "Degradada", "Média", "Ótima"};
+
 //
-//                // create an array to specify which fields we want to display
-//                String[] from = new String[] { DBAdapter.KEY_NAME };
-//                // create an array of the display item we want to bind our data to
-//                int[] to = new int[] { android.R.id.text1 };
-//
-//                Spinner spinname =(Spinner)findViewById(R.id.name);
-//                SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-//                        android.R.layout.simple_spinner_item, cNames, from, to);
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                spinname.setAdapter(adapter);
 
 
-                //Criando um ArrayAdpter usando um array de string e um spinner pré-definido no layout.
-                //ArrayAdapter<CharSequence> adapterSpinnnerTipo = ArrayAdapter.createFromResource(PiqueteActivity.this, R.array.tipoPique, android.R.layout.simple_spinner_item);
-                ArrayAdapter<CharSequence> adapterSpinnnerCond = ArrayAdapter.createFromResource(PiqueteActivity.this, R.array.condPique, android.R.layout.simple_spinner_item);
-                //adapterSpinnnerTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                adapterSpinnnerCond.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                // Especificando o layout para usar quando a lista de escolha aparecer
+
 
                 //Configuraçao de spinner para o Tipo de pastagem/piquetes
                 //Criado um arquivo xml localizado res/values/arraysInfoPiquetes
                 Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinnerTipoPiquete);
+                Spinner spinnerCondPiquete = linha_tabela.findViewById(R.id.spinnerCondPiquete);
 
-                //O QUE EU MODIFIQUEI
-                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, tipoPique1);
-                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                spinnerTipoPiquete.setAdapter(spinnerArrayAdapter);
-                //FIM
+                //Criando arrayAdapter para o Tipo do piquete
+                ArrayAdapter<String> spinnerArrayAdapterTipo = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, tipoPique1);
+                spinnerArrayAdapterTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                spinnerTipoPiquete.setAdapter(spinnerArrayAdapterTipo);
 
-                // Aplicando o apapter para o spinner
-                //spinnerTipoPiquete.setAdapter(adapterSpinnnerTipo);
-                //Aplicando os método de seleçao para o spinner
+
+
+                ////Criando arrayAdapter para a condiçao do piquete
+                ArrayAdapter<String> spinnerArrayAdapterCond = new ArrayAdapter<>(PiqueteActivity.this, android.R.layout.simple_spinner_item, condPique1);
+                spinnerArrayAdapterCond.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerCondPiquete.setAdapter(spinnerArrayAdapterCond);
+
+
+
+
+                //Aplicando os método de seleçao para o spinner de tipo
                 spinnerTipoPiquete.setOnItemSelectedListener(PiqueteActivity.this);
 
-                //Configuraçao de spinner para o Condiçao de pastagem/piquetesLSD
-                Spinner spinnerCondPiquete = linha_tabela.findViewById(R.id.spinnerCondPiquete);
-                // Criando um ArrayAdpter usando um array de string e um spinner pré-definido no layout.
-                spinnerCondPiquete.setAdapter(adapterSpinnnerCond);
-                //Aplicando os método de seleçao para o spinner
+
+                //Aplicando os método de seleçao para o spinner de condiçao
                 spinnerCondPiquete.setOnItemSelectedListener(PiqueteActivity.this);
 
 
 
 
                  // Setando uma tag para cada linha da tabela
-                linha_tabela.setTag(i);
+                //linha_tabela.setTag(i);
+                linha_tabela.setId(i);
+                int id = linha_tabela.getId();
                 i++;
                 // Adicionando as Linhas da tabela no layout da tabela
                 table_layout.addView(linha_tabela);
-
+                Toast.makeText(PiqueteActivity.this, "Linha id "+id, Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
 
         bt_remover_linha = findViewById(R.id.bt_remover_linha);
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 table_layout.removeView(table_layout.getChildAt(i));
-                i--;
+
+                if(i == 0){
+                    i = i;
+                }
+
+                else{
+                    i--;
+                }
+
             }
         });
 
@@ -133,9 +141,8 @@ public class PiqueteActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            String text = parent.getItemAtPosition(position).toString();
-            Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
-
+           // String text = parent.getItemAtPosition(position).toString();
+           //Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -147,6 +154,19 @@ public class PiqueteActivity extends AppCompatActivity implements AdapterView.On
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
+    public void mostraResultadoCond(){
+//
+//       Double resultadoCond = dadosSulDAO.getCondicao();
+
+
+       //linha_tabela.setId(ViewCompat.generateViewId());
+        Toast.makeText(this, "Um texto", Toast.LENGTH_SHORT).show();
+    }
+
+
+
 
 
 

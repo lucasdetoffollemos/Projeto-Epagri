@@ -37,10 +37,16 @@
                     android:text="+" />
 
                 <Button
-                    android:id="@+id/bt_remover_linha"
+                android:id="@+id/bt_remover_linha"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:text="-" />
+
+                <Button
+                    android:id="@+id/bt_resultado_conds"
                     android:layout_width="40sp"
                     android:layout_height="40sp"
-                    android:text="-" />
+                    android:text="AAA" />
 
 
             </LinearLayout>
