@@ -66,6 +66,15 @@ public class PiqueteActivity extends AppCompatActivity implements AdapterView.On
 
                 String [] condPique1 = new String[]{" ", "Degradada", "Média", "Ótima"};
 
+
+//
+//                for (int i= 0; i < condPique1.length; i++) {
+//
+//                    Toast.makeText(PiqueteActivity.this, "Clicado " + condPique1[i], Toast.LENGTH_SHORT).show();
+//
+//                }
+
+
 //
 
 
@@ -143,6 +152,8 @@ public class PiqueteActivity extends AppCompatActivity implements AdapterView.On
 
            // String text = parent.getItemAtPosition(position).toString();
            //Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
+
 
     }
 
