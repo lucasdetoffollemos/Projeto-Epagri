@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projetoEpagri">
 
     <application
@@ -59,7 +60,7 @@
             android:screenOrientation="landscape"
             android:label="Piquete"
             android:parentActivityName=".Activities.PropriedadeActivity"
-           >
+            tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.PropriedadeActivity"

@@ -58,6 +58,7 @@ public class DadosSulDAO {
      */
     public ArrayList<String> getTiposPastagem() {
         ArrayList<String> arrayList=new ArrayList<>();
+        arrayList.add("Selecione");
 
         Cursor cursor =  bd.getBanco().rawQuery( "select * from dadosSul", null );
         cursor.moveToFirst();
@@ -72,12 +73,11 @@ public class DadosSulDAO {
         return arrayList;
     }
 
-    public double getCondicao(String tipo){
+    public double getCondicao(String tipo, String condicao){
 
         //QUERY COM O WHERE
         //select * from dadosSul WHERE tipoPastagem = tipo
 
-        return 0;
+        return -1;
     }
-
 }
