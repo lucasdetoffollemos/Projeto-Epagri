@@ -8,6 +8,8 @@ public class DadosSul {
     private int meses [];
     private int total;
 
+    public DadosSul(){}
+
     public DadosSul(String tipo, double condicao[], int meses[], int total){
         this.condicao = new double[3];
         this.meses = new int[12];
