@@ -58,7 +58,7 @@ public class DadosSulDAO {
      */
     public ArrayList<String> getTiposPastagem() {
         ArrayList<String> arrayList=new ArrayList<>();
-        arrayList.add("Selecione");
+
 
         Cursor cursor =  bd.getBanco().rawQuery( "select * from dadosSul", null );
         cursor.moveToFirst();
@@ -73,11 +73,49 @@ public class DadosSulDAO {
         return arrayList;
     }
 
-    public double getCondicao(String tipo, String condicao){
+    //Se ele escolheu “grama” no tipo e “média” na condição,
+    //então eu tenho que retornar do banco o valor 5,
+    //por exemplo, se for “grama” e “ótima”, retorna 7, e assim por diante
+    //QUERY COM O WHERE
+    //select * from dadosSul WHERE tipoPastagem = tipo
 
-        //QUERY COM O WHERE
-        //select * from dadosSul WHERE tipoPastagem = tipo
+    /**
+     * Método responsável por associar o tipo da pastagem, com a sua condição. e retornar o valor da condicao da respectiva pastagem.
+     * @param tipo
+     * @param condicao
+     * @return
+     */
+    public Double getCondicao(String tipo, String condicao) {
+        Double valorCondicao = 1.0;
+        int posicaoColuna = 1;
 
-        return -1;
+
+        //Aqui é feito a query selecionando os dados vindo do arquivo BancoDeDados.java
+        //Seleciona toda a linha da tabela dadosSul, onde o tipo da Pastagem guardada no banco de dados é igual ao tipo  selecionado pelo usuário no spinner.
+        Cursor c = bd.getBanco().rawQuery("SELECT * FROM dadosSul WHERE tipoPastagem = '" + tipo +"'", null);
+
+        switch (condicao) {
+            case "Degradada":
+                posicaoColuna = 1;
+                break;
+            case "Média":
+                posicaoColuna = 2;
+                break;
+            case "Ótima":
+                posicaoColuna = 3;
+                break;
+        }
+
+
+
+        while (c.moveToNext()) {
+
+            valorCondicao = (c.getDouble(posicaoColuna));
+
+            //dadosSul.add(d);
+        }
+
+
+        return valorCondicao;
     }
 }

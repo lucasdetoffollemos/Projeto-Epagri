@@ -47,7 +47,9 @@ public class PiqueteActivity extends AppCompatActivity{
 
         table_layout = (TableLayout) findViewById(R.id.table_layout);
 
+
         bt_adicionar_linha = findViewById(R.id.bt_adicionar_linha);
+        //Quando clicado no botao de mais, é acionado está funçao.
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +59,7 @@ public class PiqueteActivity extends AppCompatActivity{
             }
         });
 
+        //Quando clicado no botao de menos, é acionado está funçao, que tem como objetivo excluir cada linha da tabela.
         bt_remover_linha = findViewById(R.id.bt_remover_linha);
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,18 +75,19 @@ public class PiqueteActivity extends AppCompatActivity{
      * Método responsável por adicionar uma linha na tabela oferta atual e configurar o adapter dos spinners.
      */
     private void adicionarLinhaTabela(){
+        //Infla a linha para a tabela
         linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
 
-        //Recupera os valores de tipos de pastagem do Banco de Dados
+        // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
         ArrayList<String> tipoPiquete = dadosSulDAO.getTiposPastagem();
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinnerTipoPiquete);
-        //Cria um ArrayAdpter usando o array de string com os tipos recuperados do banco de dados.
+        //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
         ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, tipoPiquete);
         spinnerTipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoPiquete.setAdapter(spinnerTipoAdapter);
 
-        //Recupera os valores de tipos de pastagem do Banco de Dados
+        //Criando um array de String para as condiçoes de pastagem.
         ArrayList<String> condicaoPiquete = new ArrayList<>();
         condicaoPiquete.add("Degradada");
         condicaoPiquete.add("Média");
@@ -91,7 +95,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
         //Localiza o spinner condicao no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerCondicaoPiquete = linha_tabela.findViewById(R.id.spinnerCondPiquete);
-        //Cria um ArrayAdpter usando o array de string com condicoes "degradada", "média" e "ótima".
+        //Cria um ArrayAdpter usando o array de string com condicoes "degradada", "média" e "ótima". //Cria um ArrayAdapter que pega o Array de string "condicaoPiquete" e transforma em um spinner.
         ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, condicaoPiquete);
         spinnerCondicaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCondicaoPiquete.setAdapter(spinnerCondicaoAdapter);
@@ -99,23 +103,30 @@ public class PiqueteActivity extends AppCompatActivity{
         // Define uma tag para cada linha da tabela.
         linha_tabela.setTag(i);
 
-        // Adicionando as Linhas da tabela no layout da tabela
+        //Adicionando as Linhas da tabela no layout da tabela
         table_layout.addView(linha_tabela);
 
         identificaElementosDaLinha(linha_tabela);
     }
+
+
+
+
+
 
     /**
      * Identifica os elementos dentro da TableRow que foi inflada e chama o método de calcular quando algum valor
      * é escolhido nos spinners ou texto digitado no campo área.
      * @param linha
      */
-
     private void identificaElementosDaLinha(final TableRow linha) {
         final Spinner spinnerTipo = (Spinner) linha.getChildAt(0);
         final Spinner spinnerCondicao = (Spinner) linha.getChildAt(1);
         final EditText editTextArea = (EditText) linha.getChildAt(2);
 
+
+
+        //Quando o spinner TIPO for clicado, a funçao ira convereter o spinner para string, e logo depois ira chamar a funçao calcular().
         spinnerTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -126,7 +137,6 @@ public class PiqueteActivity extends AppCompatActivity{
                 condicao = sp_condicao.getSelectedItem().toString();
 
                 et_area = editTextArea;
-                et_area.requestFocus();
                 areaS = et_area.getText().toString();
 
                 if(areaS.length() > 0) {
@@ -137,13 +147,20 @@ public class PiqueteActivity extends AppCompatActivity{
                 }
 
                 calcular(linha, tipo, condicao, areaD);
+
             }
+
+
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
 
+
+
+        //Quando o spinner CONDIÇAO for clicado, a funçao ira converter o spinner para string, e logo depeois chamar a funçao calcular()
         spinnerCondicao.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -154,7 +171,7 @@ public class PiqueteActivity extends AppCompatActivity{
                 condicao = sp_condicao.getSelectedItem().toString();
 
                 et_area = editTextArea;
-                et_area.requestFocus();
+
                 areaS = et_area.getText().toString();
 
                 if(areaS.length() > 0) {
@@ -171,6 +188,7 @@ public class PiqueteActivity extends AppCompatActivity{
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        //Quando o usuário digitar um número no campo Área, esta funçao ira converter o valor recebido por ele, e será chamadoa funçao calcular().
         editTextArea.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -184,7 +202,6 @@ public class PiqueteActivity extends AppCompatActivity{
                 condicao = sp_condicao.getSelectedItem().toString();
 
                 et_area = editTextArea;
-                et_area.requestFocus();
                 areaS = et_area.getText().toString();
 
                 if(areaS.length() > 0) {
@@ -200,7 +217,11 @@ public class PiqueteActivity extends AppCompatActivity{
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+
     }
+
+
 
     /*
         primeira linha = -1
@@ -212,18 +233,30 @@ public class PiqueteActivity extends AppCompatActivity{
             campoArea = getchildAt(2)
 
     */
+
+    /**
+     * Método responsavel, por pegar os valores dos spinners, TIPO e CONDIÇÃO, e pegar o editText ÁREA, e realizar os cáculos de pastagem mensal. Também setar uma tag para cada elemento da linha.
+     * @param linha
+     * @param tipoPastagem
+     * @param condicao
+     * @param area
+     */
     public void calcular(final TableRow linha, String tipoPastagem, String condicao, double area) {
-        Log.i("CALCULAR", "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area);
+
+//        Toast.makeText(this, "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area, Toast.LENGTH_SHORT).show();
+        //Log.i("CALCULAR", "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area);
 
         //TO DO.
         //Exemplo
-        /*
+
         TextView janeiro = (TextView) linha.getChildAt(3);
         //formula = (condicao * area) / 5
-        double resultado = (dadosSulDAO.getCondicao(TipoPastagem, condicao) * Area) / 5;
+        double resultado = (dadosSulDAO.getCondicao(tipoPastagem, condicao) * area) / 5;
         janeiro.setText(String.valueOf(resultado));
 
-        String texto = linha.getTag().toString();
-        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();*/
+
+
+//        String texto = linha.getTag().toString();
+//        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
     }
 }
