@@ -21,6 +21,7 @@ import com.example.projetoEpagri.Classes.DadosSul;
 import com.example.projetoEpagri.Dao.DadosSulDAO;
 import com.example.projetoEpagri.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -243,16 +244,105 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void calcular(final TableRow linha, String tipoPastagem, String condicao, double area) {
 
+        //Arredonda o cálculo para 2 decimais.
+         DecimalFormat doisDecimais = new DecimalFormat("#.##");
+         Double aproveitamento = 0.60;
+
+
 //        Toast.makeText(this, "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area, Toast.LENGTH_SHORT).show();
         //Log.i("CALCULAR", "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area);
 
         //TO DO.
         //Exemplo
 
+        //Janeiro
         TextView janeiro = (TextView) linha.getChildAt(3);
-        //formula = (condicao * area) / 5
-        double resultado = (dadosSulDAO.getCondicao(tipoPastagem, condicao) * area) / 5;
-        janeiro.setText(String.valueOf(resultado));
+        double mesJan = (float)dadosSulDAO.getMeses(3, tipoPastagem)/100;
+        String resultadoJan = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan * area );
+        janeiro.setText(String.valueOf(resultadoJan));
+       //
+
+
+        //Fevereiro
+        TextView fevereiro = (TextView) linha.getChildAt(4);
+        double mesFev = (float)dadosSulDAO.getMeses(4, tipoPastagem)/100;
+        String resultadoFev = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area);
+        fevereiro.setText(String.valueOf(resultadoFev));
+        //
+
+        //Março
+        TextView marco = (TextView) linha.getChildAt(5);
+        double mesMar = (float)dadosSulDAO.getMeses(5, tipoPastagem)/100;
+        String resultadoMar = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area);
+        marco.setText(String.valueOf(resultadoMar));
+        //
+
+        //Abril
+        TextView abril = (TextView) linha.getChildAt(6);
+        double mesAbr = (float)dadosSulDAO.getMeses(6, tipoPastagem)/100;
+        String resultadoAbr = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area);
+        abril.setText(String.valueOf(resultadoAbr));
+        //
+
+        //Maio
+        TextView maio= (TextView) linha.getChildAt(7);
+        double mesMaio = (float)dadosSulDAO.getMeses(7, tipoPastagem)/100;
+        String resultadoMaio = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area);
+        maio.setText(String.valueOf(resultadoMaio));
+        //
+
+
+        //Junho
+        TextView junho = (TextView) linha.getChildAt(8);
+        double mesJunho = (float)dadosSulDAO.getMeses(8, tipoPastagem)/100;
+        String resultadoJunho = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area);
+        junho.setText(String.valueOf(resultadoJunho));
+        //
+
+
+        //Julho
+        TextView julho = (TextView) linha.getChildAt(9);
+        double mesJul = (float)dadosSulDAO.getMeses(9, tipoPastagem)/100;
+        String resultadoJul = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area);
+        julho.setText(String.valueOf(resultadoJul));
+        //
+
+        //Agosto
+        TextView agosto = (TextView) linha.getChildAt(10);
+        double mesAgo = (float)dadosSulDAO.getMeses(10, tipoPastagem)/100;
+        String resultadoAgo = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area);
+        agosto.setText(String.valueOf(resultadoAgo));
+        //
+
+        //Setembro
+        TextView setembro = (TextView) linha.getChildAt(11);
+        double mesSet = (float)dadosSulDAO.getMeses(11, tipoPastagem)/100;
+        String resultadoSet = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area);
+        setembro.setText(String.valueOf(resultadoSet));
+        //
+
+
+        //Outubro
+        TextView outubro = (TextView) linha.getChildAt(12);
+        double mesOut = (float)dadosSulDAO.getMeses(12, tipoPastagem)/100;
+        String resultadoOut = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area);
+        outubro.setText(String.valueOf(resultadoOut));
+        //
+
+        //Novembro
+        TextView novembro = (TextView) linha.getChildAt(13);
+        double mesNov = (float)dadosSulDAO.getMeses(13, tipoPastagem)/100;
+        String resultadoNov = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area);
+        novembro.setText(String.valueOf(resultadoNov));
+        //
+
+        //Dezembro
+        TextView dezembro = (TextView) linha.getChildAt(14);
+        double mesDez = (float)dadosSulDAO.getMeses(14, tipoPastagem)/100;
+        String resultadoDez = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area);
+        dezembro.setText(String.valueOf(resultadoDez));
+        //
+
 
 
 

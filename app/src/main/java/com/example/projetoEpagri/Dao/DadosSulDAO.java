@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.DadosSul;
@@ -117,5 +118,74 @@ public class DadosSulDAO {
 
 
         return valorCondicao;
+    }
+
+
+
+
+    public int getMeses(int mes, String tipo){
+
+
+
+        int posicaoColuna = 1;
+
+
+        Cursor c = bd.getBanco().rawQuery("SELECT * FROM dadosSul WHERE tipoPastagem = '"+ tipo +"'", null);
+
+        if (mes == 3){
+             posicaoColuna = 4;
+        }
+        else if(mes == 4){
+            posicaoColuna = 5;
+        }
+
+        else if(mes == 5){
+            posicaoColuna = 6;
+        }
+
+        else if(mes == 6){
+            posicaoColuna = 7;
+        }
+
+        else if(mes == 7){
+            posicaoColuna = 8;
+        }
+
+        else if(mes == 8){
+            posicaoColuna = 9;
+        }
+
+        else if(mes == 9){
+            posicaoColuna = 10;
+        }
+
+        else if(mes == 10){
+            posicaoColuna = 11;
+        }
+
+        else if(mes == 11){
+            posicaoColuna = 12;
+        }
+
+        else if(mes == 12){
+            posicaoColuna = 13;
+        }
+
+        else if(mes == 13){
+            posicaoColuna = 14;
+        }
+
+        else if(mes == 14){
+            posicaoColuna = 15;
+        }
+
+
+
+        while (c.moveToNext()){
+            posicaoColuna = (c.getInt(posicaoColuna));
+        }
+
+        return  posicaoColuna;
+
     }
 }

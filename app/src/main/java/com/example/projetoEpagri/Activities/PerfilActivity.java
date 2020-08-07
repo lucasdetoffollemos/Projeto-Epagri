@@ -44,14 +44,14 @@ public class PerfilActivity extends AppCompatActivity {
         dao = new UsuarioDAO(this);
         //////////////////////////////////
         //INSERINDO A PASTAGEM COMO TESTE
-          daoDadosSul = new DadosSulDAO(this);
-          DadosSul p = new DadosSul("Andropogon", new double[]{4.0, 10.9, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
-          DadosSul p2 = new DadosSul("Angola", new double[]{3.0, 9.7, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
-          DadosSul p3 = new DadosSul("Aveia Branca", new double[]{2.0, 5.0, 8.0}, new int[]{0, 0, 0, 0, 10, 25, 30, 25, 10, 0, 0, 0}, 100);
-          daoDadosSul.inserirPastagem(p);
-          daoDadosSul.inserirPastagem(p2);
-          daoDadosSul.inserirPastagem(p3);
-          Toast.makeText(this, "Pastagem inserida", Toast.LENGTH_SHORT).show();
+//          daoDadosSul = new DadosSulDAO(this);
+//          DadosSul p = new DadosSul("Andropogon", new double[]{4.0, 10.9, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p2 = new DadosSul("Angola", new double[]{3.0, 9.7, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p3 = new DadosSul("Aveia Branca", new double[]{2.0, 5.0, 8.0}, new int[]{0, 0, 0, 0, 10, 25, 30, 25, 10, 0, 0, 0}, 100);
+//          daoDadosSul.inserirPastagem(p);
+//          daoDadosSul.inserirPastagem(p2);
+//          daoDadosSul.inserirPastagem(p3);
+//          Toast.makeText(this, "Pastagem inserida", Toast.LENGTH_SHORT).show();
 
         /*bt_voltar = findViewById(R.id.btVoltar);
         bt_voltar.setOnClickListener(new View.OnClickListener(){
