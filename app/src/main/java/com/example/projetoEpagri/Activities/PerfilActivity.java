@@ -43,23 +43,80 @@ public class PerfilActivity extends AppCompatActivity {
         et_senha = findViewById(R.id.et_senha);
         dao = new UsuarioDAO(this);
         //////////////////////////////////
+
+
         //INSERINDO A PASTAGEM COMO TESTE
-//          daoDadosSul = new DadosSulDAO(this);
+          daoDadosSul = new DadosSulDAO(this);
 //          DadosSul p = new DadosSul("Andropogon", new double[]{4.0, 10.9, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
 //          DadosSul p2 = new DadosSul("Angola", new double[]{3.0, 9.7, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
 //          DadosSul p3 = new DadosSul("Aveia Branca", new double[]{2.0, 5.0, 8.0}, new int[]{0, 0, 0, 0, 10, 25, 30, 25, 10, 0, 0, 0}, 100);
+//          DadosSul p4 = new DadosSul("Aveia Preta", new double[]{2.0, 5.0, 8.0}, new int[]{0, 0, 0, 0, 10, 25, 30, 25, 10, 0, 0, 0}, 100);
+//          DadosSul p5 = new DadosSul("Aveia + Azevém", new double[]{2.0, 5.0, 9.0}, new int[]{0, 0, 0, 0, 5, 25, 25, 25, 15, 5, 0, 0}, 100);
+//          DadosSul p6 = new DadosSul("Azevém", new double[]{2.0, 4.0, 9.0}, new int[]{0, 0, 0, 5, 10, 20, 20, 20, 15, 10, 0, 0}, 100);
+//          DadosSul p7 = new DadosSul("B. Brizanta", new double[]{5.0, 11.3, 18.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p8 = new DadosSul("B. Decumbes", new double[]{4.0, 12.8, 18.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p9 = new DadosSul("B. Humidícola", new double[]{3.0, 7.0, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p10 = new DadosSul("Ruziziensis", new double[]{4.0, 9.5, 12.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p11 = new DadosSul("Coast Cross 1", new double[]{3.0, 11.4, 20.0}, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100);
+//          DadosSul p12 = new DadosSul("Colonião", new double[]{4.0, 9.9, 18.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p13 = new DadosSul("Elefante", new double[]{4.0, 10.0, 25.0}, new int[]{25, 25, 10, 2, 0, 0, 0, 0, 0, 3, 15, 20}, 100);
+//          DadosSul p14 = new DadosSul("Estrela Africana", new double[]{4.0, 11.8, 20.0}, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100);
+//          DadosSul p15 = new DadosSul("Gordura", new double[]{4.0, 4.2, 7.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p16 = new DadosSul("Jaraguá", new double[]{3.0, 8.1, 12.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p17 = new DadosSul("Milheto", new double[]{5.0, 8.0, 18.0}, new int[]{30, 30, 15, 5, 0, 0, 0, 0, 0, 0, 5, 15}, 100);
+//          DadosSul p18 = new DadosSul("Mombaça", new double[]{4.0, 9.9, 18.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p19 = new DadosSul("Pangola", new double[]{4.0, 5.9, 16.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p20 = new DadosSul("Pensacola", new double[]{3.0, 6.0, 18.0}, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100);
+//          DadosSul p21 = new DadosSul("Quicuio", new double[]{4.0, 7.0, 20.0}, new int[]{20, 20, 10, 5, 0, 0, 0, 0, 3, 7, 15, 20}, 100);
+//          DadosSul p22 = new DadosSul("Rhodes", new double[]{4.0, 7.3, 15.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p23 = new DadosSul("Setaria", new double[]{4.0, 6.6, 15.0}, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100);
+//          DadosSul p24 = new DadosSul("Tanzânia", new double[]{4.0, 9.9, 18.0}, new int[]{22, 18, 8, 2, 0, 0, 0, 0, 2, 5, 21, 22}, 100);
+//          DadosSul p25 = new DadosSul("Tifhon 85", new double[]{3.0, 5.2, 20.0}, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100);
+//          DadosSul p26 = new DadosSul("Triticale", new double[]{2.0, 4.0, 11.0}, new int[]{0, 0, 0, 0, 10, 25, 30, 25, 10, 0, 0, 0}, 100);
+//          //DadosSul p27 = new DadosSul("Silagem", new double[]{15.0, 20.0, 25.0}, new int[]{0, 0, 0, 30, 40, 30, 0, 0, 0, 0, 0, 0}, 100);(Nao esta toda preenchida no excel)
+//          DadosSul p28 = new DadosSul("Perene de inverno", new double[]{3.0, 6.0, 12.0}, new int[]{10, 9, 8, 7, 7, 6, 6, 7, 9, 11, 10, 10}, 100);
+//          DadosSul p29 = new DadosSul("Sudão", new double[]{5.0, 8.0, 18.0}, new int[]{30, 30, 15, 5, 0, 0, 0, 0, 0, 0, 5, 15}, 100);
+//          DadosSul p30 = new DadosSul("Pastagem Naturalizada", new double[]{2.0, 5.0, 11.0}, new int[]{15, 14, 10, 7, 2, 0, 0, 5, 8, 10, 14, 15}, 100);
+//          DadosSul p31 = new DadosSul("Outra", new double[]{3.0, 5.2, 20.0}, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100);
+
+
+
 //          daoDadosSul.inserirPastagem(p);
 //          daoDadosSul.inserirPastagem(p2);
 //          daoDadosSul.inserirPastagem(p3);
+//          daoDadosSul.inserirPastagem(p4);
+//          daoDadosSul.inserirPastagem(p5);
+//          daoDadosSul.inserirPastagem(p6);
+//          daoDadosSul.inserirPastagem(p7);
+//          daoDadosSul.inserirPastagem(p8);
+//          daoDadosSul.inserirPastagem(p9);
+//          daoDadosSul.inserirPastagem(p10);
+
+//            daoDadosSul.inserirPastagem(p11);
+////          daoDadosSul.inserirPastagem(p12);
+////          daoDadosSul.inserirPastagem(p13);
+////          daoDadosSul.inserirPastagem(p14);
+////          daoDadosSul.inserirPastagem(p15);
+////          daoDadosSul.inserirPastagem(p16);
+////          daoDadosSul.inserirPastagem(p17);
+////          daoDadosSul.inserirPastagem(p18);
+////          daoDadosSul.inserirPastagem(p19);
+////          daoDadosSul.inserirPastagem(p20);
+
+//          daoDadosSul.inserirPastagem(p21);
+//          daoDadosSul.inserirPastagem(p22);
+//          daoDadosSul.inserirPastagem(p23);
+//          daoDadosSul.inserirPastagem(p24);
+//          daoDadosSul.inserirPastagem(p25);
+//          daoDadosSul.inserirPastagem(p26);
+//          daoDadosSul.inserirPastagem(p28);
+//          daoDadosSul.inserirPastagem(p29);
+//          daoDadosSul.inserirPastagem(p30);
+//          daoDadosSul.inserirPastagem(p31);
+
 //          Toast.makeText(this, "Pastagem inserida", Toast.LENGTH_SHORT).show();
 
-        /*bt_voltar = findViewById(R.id.btVoltar);
-        bt_voltar.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                voltar();
-            }
-        });*/
+
 
         bt_criar = findViewById(R.id.bt_criar);
         bt_criar.setOnClickListener(new View.OnClickListener() {
