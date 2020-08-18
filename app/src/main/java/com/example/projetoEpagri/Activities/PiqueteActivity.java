@@ -29,10 +29,11 @@ import java.util.ArrayList;
 
 public class PiqueteActivity extends AppCompatActivity{
     private  Button bt_adicionar_linha, bt_remover_linha;
-    public int i=-1;
+    public int i=-1, numeroDeLinhas=0;
     private  TableRow linha_tabela;
     private TableLayout table_layout;
     private DadosSulDAO dadosSulDAO;
+    private ArrayList<Double> listaDeAreas;
 
     //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
     private String tipo, condicao, areaS;
@@ -40,15 +41,11 @@ public class PiqueteActivity extends AppCompatActivity{
     private Spinner sp_tipo, sp_condicao;
     private EditText et_area;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piquete);
-
+        listaDeAreas = new ArrayList();
         dadosSulDAO = new DadosSulDAO(PiqueteActivity.this);
 
         table_layout = (TableLayout) findViewById(R.id.table_layout);
@@ -61,6 +58,7 @@ public class PiqueteActivity extends AppCompatActivity{
             public void onClick(View v) {
                 adicionarLinhaTabela();
                 i++;
+                numeroDeLinhas++;
                 //Toast.makeText(getApplicationContext(), "OI", Toast.LENGTH_SHORT).show();
             }
         });
@@ -72,6 +70,9 @@ public class PiqueteActivity extends AppCompatActivity{
             public void onClick(View v) {
                 table_layout.removeView(table_layout.getChildAt(i));
                 i--;
+                listaDeAreas.remove(numeroDeLinhas-1);
+                numeroDeLinhas--;
+                calculaTotais(-2, 0.0);
                 //Toast.makeText(getApplicationContext(), "tCHAU", Toast.LENGTH_SHORT).show();
             }
         });
@@ -421,29 +422,43 @@ public class PiqueteActivity extends AppCompatActivity{
         String strTotalToneladaAnual = String.valueOf(intTotalTonelada);
         total.setText(strTotalToneladaAnual);
 
-
-
-//       //Area total Pastagem
-//        TextView totalHa = (TextView) linha.getChildAt(2);
+        //Chama a função de calcular os totais.
+        calculaTotais((Integer) linha.getTag(), area);
 //        Double intTotalHa = area + area;
 //        String strTotalHa = String.valueOf(intTotalHa);
 //        totalHa.setText(strTotalHa);
 
-//
-            ArrayList<Integer> linhaTags = new ArrayList();
-            linhaTags.add(new Integer(String.valueOf(linha.getChildAt(2))));
 
+        //String texto = linha.getTag().toString();
+        //Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+    }
 
-        for(int i = 0; i < linhaTags.size(); i++) {
-           String sum = linhaTags.get(i).toString();
-            Toast.makeText(this, "AAAlo" + sum, Toast.LENGTH_SHORT).show();
+    public void calculaTotais(int linhaAtual, double area){
+        //Toast.makeText(this, "Linha Atual: " + linhaAtual, Toast.LENGTH_SHORT).show();
+
+        //Testa o tamanho do array com o numero de linha
+        //Entra no if quando o botao de adicionar linhas é pressionado.
+        if(listaDeAreas.size() < numeroDeLinhas){
+            listaDeAreas.add(0.0);
+        }
+        else{
+            //LinhaAtual = -2 quando o botão de remover linha é pressionado.
+            if(linhaAtual != -2) {
+                //linhaAtual+1 pois a primeira posição do array é 0 e a primeira linhaAtual é -1.
+                listaDeAreas.set(linhaAtual + 1, area);
+            }
         }
 
+        double somaDasAreas = 0.0;
+        double somaJan = 0.0;
+        for(int i=0; i<listaDeAreas.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaDasAreas = somaDasAreas + listaDeAreas.get(i);
 
+        }
 
-
-
-//        String texto = linha.getTag().toString();
-//        Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+        //Area total Pastagem
+        TextView totalHa = findViewById(R.id.tv_AreaTotalNum);
+        totalHa.setText(String.valueOf(somaDasAreas));
     }
 }

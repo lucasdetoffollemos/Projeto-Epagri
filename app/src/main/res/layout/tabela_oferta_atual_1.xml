@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="120sp"
+        android:layout_width="200sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
