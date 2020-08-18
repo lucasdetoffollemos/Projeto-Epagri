@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.SparseIntArray;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,6 +39,9 @@ public class PiqueteActivity extends AppCompatActivity{
     private double areaD;
     private Spinner sp_tipo, sp_condicao;
     private EditText et_area;
+
+
+
 
 
     @Override
@@ -212,6 +217,7 @@ public class PiqueteActivity extends AppCompatActivity{
                     areaD = 0;
                 }
 
+
                 calcular(linha, tipo, condicao, areaD);
             }
 
@@ -242,7 +248,7 @@ public class PiqueteActivity extends AppCompatActivity{
      * @param condicao
      * @param area
      */
-    public void calcular(final TableRow linha, String tipoPastagem, String condicao, double area) {
+    public  void calcular(final TableRow linha, String tipoPastagem, String condicao, double area) {
 
         //Arredonda o cálculo para 2 decimais.
          DecimalFormat doisDecimais = new DecimalFormat("#.##");
@@ -254,94 +260,185 @@ public class PiqueteActivity extends AppCompatActivity{
 
         //TO DO.
         //Exemplo
+        TextView tv_prod = (TextView) linha.getChildAt(3);
+        String producaoEstimada = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area );
+        tv_prod.setText(String.valueOf(producaoEstimada));
 
         //Janeiro
-        TextView janeiro = (TextView) linha.getChildAt(3);
-        double mesJan = (float)dadosSulDAO.getMeses(3, tipoPastagem)/100;
+
+        TextView janeiro = (TextView) linha.getChildAt(4);
+        double mesJan = (float)dadosSulDAO.getMeses(1, tipoPastagem)/100;
         String resultadoJan = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan * area );
-        janeiro.setText(String.valueOf(resultadoJan));
+
+        if(mesJan != 0){
+            janeiro.setText(String.valueOf(resultadoJan));
+        }
+        else {
+            janeiro.setText(" ");
+        }
        //
 
 
         //Fevereiro
-        TextView fevereiro = (TextView) linha.getChildAt(4);
-        double mesFev = (float)dadosSulDAO.getMeses(4, tipoPastagem)/100;
+        TextView fevereiro = (TextView) linha.getChildAt(5);
+        double mesFev = (float)dadosSulDAO.getMeses(2, tipoPastagem)/100;
         String resultadoFev = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area);
-        fevereiro.setText(String.valueOf(resultadoFev));
+        if(mesFev != 0){
+            fevereiro.setText(String.valueOf(resultadoFev));
+        }
+        else {
+            fevereiro.setText(" ");
+        }
         //
 
         //Março
-        TextView marco = (TextView) linha.getChildAt(5);
-        double mesMar = (float)dadosSulDAO.getMeses(5, tipoPastagem)/100;
+        TextView marco = (TextView) linha.getChildAt(6);
+        double mesMar = (float)dadosSulDAO.getMeses(3, tipoPastagem)/100;
         String resultadoMar = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area);
-        marco.setText(String.valueOf(resultadoMar));
+        if(mesMar != 0){
+            marco.setText(String.valueOf(resultadoMar));
+        }
+        else {
+            marco.setText(" ");
+        }
         //
 
         //Abril
-        TextView abril = (TextView) linha.getChildAt(6);
-        double mesAbr = (float)dadosSulDAO.getMeses(6, tipoPastagem)/100;
+        TextView abril = (TextView) linha.getChildAt(7);
+        double mesAbr = (float)dadosSulDAO.getMeses(4, tipoPastagem)/100;
         String resultadoAbr = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area);
-        abril.setText(String.valueOf(resultadoAbr));
+        if(mesAbr != 0){
+            abril.setText(String.valueOf(resultadoAbr));
+        }
+        else {
+            abril.setText(" ");
+        }
         //
 
         //Maio
-        TextView maio= (TextView) linha.getChildAt(7);
-        double mesMaio = (float)dadosSulDAO.getMeses(7, tipoPastagem)/100;
+        TextView maio= (TextView) linha.getChildAt(8);
+        double mesMaio = (float)dadosSulDAO.getMeses(5, tipoPastagem)/100;
         String resultadoMaio = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area);
-        maio.setText(String.valueOf(resultadoMaio));
+        if(mesMaio != 0){
+            maio.setText(String.valueOf(resultadoMaio));
+        }
+        else {
+            maio.setText(" ");
+        }
         //
 
 
         //Junho
-        TextView junho = (TextView) linha.getChildAt(8);
-        double mesJunho = (float)dadosSulDAO.getMeses(8, tipoPastagem)/100;
+        TextView junho = (TextView) linha.getChildAt(9);
+        double mesJunho = (float)dadosSulDAO.getMeses(6, tipoPastagem)/100;
         String resultadoJunho = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area);
-        junho.setText(String.valueOf(resultadoJunho));
+        if(mesJunho != 0){
+            junho.setText(String.valueOf(resultadoJunho));
+        }
+        else {
+            junho.setText(" ");
+        }
         //
 
 
         //Julho
-        TextView julho = (TextView) linha.getChildAt(9);
-        double mesJul = (float)dadosSulDAO.getMeses(9, tipoPastagem)/100;
+        TextView julho = (TextView) linha.getChildAt(10);
+        double mesJul = (float)dadosSulDAO.getMeses(7, tipoPastagem)/100;
         String resultadoJul = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area);
-        julho.setText(String.valueOf(resultadoJul));
+        if(mesJul != 0){
+            julho.setText(String.valueOf(resultadoJul));
+        }
+        else {
+            julho.setText(" ");
+        }
         //
 
         //Agosto
-        TextView agosto = (TextView) linha.getChildAt(10);
-        double mesAgo = (float)dadosSulDAO.getMeses(10, tipoPastagem)/100;
+        TextView agosto = (TextView) linha.getChildAt(11);
+        double mesAgo = (float)dadosSulDAO.getMeses(8, tipoPastagem)/100;
         String resultadoAgo = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area);
-        agosto.setText(String.valueOf(resultadoAgo));
+        if(mesAgo != 0){
+            agosto.setText(String.valueOf(resultadoAgo));
+        }
+        else {
+            agosto.setText(" ");
+        }
         //
 
         //Setembro
-        TextView setembro = (TextView) linha.getChildAt(11);
-        double mesSet = (float)dadosSulDAO.getMeses(11, tipoPastagem)/100;
+        TextView setembro = (TextView) linha.getChildAt(12);
+        double mesSet = (float)dadosSulDAO.getMeses(9, tipoPastagem)/100;
         String resultadoSet = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area);
-        setembro.setText(String.valueOf(resultadoSet));
+        if(mesSet != 0){
+            setembro.setText(String.valueOf(resultadoSet));
+        }
+        else {
+            setembro.setText(" ");
+        }
         //
 
 
         //Outubro
-        TextView outubro = (TextView) linha.getChildAt(12);
-        double mesOut = (float)dadosSulDAO.getMeses(12, tipoPastagem)/100;
+        TextView outubro = (TextView) linha.getChildAt(13);
+        double mesOut = (float)dadosSulDAO.getMeses(10, tipoPastagem)/100;
         String resultadoOut = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area);
-        outubro.setText(String.valueOf(resultadoOut));
+        if(mesOut != 0){
+            outubro.setText(String.valueOf(resultadoOut));
+        }
+        else {
+            outubro.setText(" ");
+        }
         //
 
         //Novembro
-        TextView novembro = (TextView) linha.getChildAt(13);
-        double mesNov = (float)dadosSulDAO.getMeses(13, tipoPastagem)/100;
+        TextView novembro = (TextView) linha.getChildAt(14);
+        double mesNov = (float)dadosSulDAO.getMeses(11, tipoPastagem)/100;
         String resultadoNov = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area);
-        novembro.setText(String.valueOf(resultadoNov));
+        if(mesNov != 0){
+            novembro.setText(String.valueOf(resultadoNov));
+        }
+        else {
+            novembro.setText(" ");
+        }
         //
 
         //Dezembro
-        TextView dezembro = (TextView) linha.getChildAt(14);
-        double mesDez = (float)dadosSulDAO.getMeses(14, tipoPastagem)/100;
+        TextView dezembro = (TextView) linha.getChildAt(15);
+        double mesDez = (float)dadosSulDAO.getMeses(12, tipoPastagem)/100;
         String resultadoDez = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area);
-        dezembro.setText(String.valueOf(resultadoDez));
+        if(mesDez != 0){
+            dezembro.setText(String.valueOf(resultadoDez));
+        }
+        else {
+            dezembro.setText(" ");
+        }
         //
+
+        //Total
+        TextView total = (TextView) linha.getChildAt(16);
+        double totalToneladaAnual = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan* area)  + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area) ;
+        Integer intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
+        String strTotalToneladaAnual = String.valueOf(intTotalTonelada);
+        total.setText(strTotalToneladaAnual);
+
+
+
+//       //Area total Pastagem
+//        TextView totalHa = (TextView) linha.getChildAt(2);
+//        Double intTotalHa = area + area;
+//        String strTotalHa = String.valueOf(intTotalHa);
+//        totalHa.setText(strTotalHa);
+
+//
+            ArrayList<Integer> linhaTags = new ArrayList();
+            linhaTags.add(new Integer(String.valueOf(linha.getChildAt(2))));
+
+
+        for(int i = 0; i < linhaTags.size(); i++) {
+           String sum = linhaTags.get(i).toString();
+            Toast.makeText(this, "AAAlo" + sum, Toast.LENGTH_SHORT).show();
+        }
+
 
 
 

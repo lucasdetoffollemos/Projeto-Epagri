@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
-        android:layout_weight="1"/>
+        android:layout_weight="0.1"/>
 
     <Spinner
         android:id="@+id/spinnerCondPiquete"
         android:layout_width="match_parent"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
-        android:layout_weight="1"/>
+        android:layout_weight="0.1"/>
 
     <EditText
         android:id="@+id/editText2"
@@ -28,10 +28,27 @@
         android:inputType="textPersonName"
         android:hint="Área"
         android:textSize="14sp"
-        android:layout_marginRight="50dp"/>
+
+       />
+
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_Prod"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Produção estimada"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:layout_marginRight="25dp"/>
+
+
+
+
+
+    <TextView
+        android:id="@+id/tv_jan"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -40,7 +57,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_fev"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -49,7 +66,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_mar"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -58,7 +75,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tv_abr"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -67,7 +84,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/tv_mai"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -76,7 +93,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/tv_jun"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -85,7 +102,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/tv_jul"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -94,7 +111,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/tv_ago"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -103,7 +120,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/tv_set"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -112,7 +129,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/tv_out"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -121,7 +138,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/tv_nov"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -130,7 +147,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/tv_dez"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
@@ -139,7 +156,7 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/tv_total"
         android:layout_width="100sp"
         android:layout_height="30sp"
         android:gravity="center"

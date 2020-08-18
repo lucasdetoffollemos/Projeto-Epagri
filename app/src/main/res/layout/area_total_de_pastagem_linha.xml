@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+     >
+
+
+    <TextView
+        android:id="@+id/tv_AreaTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginRight="25dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Área total pastagem"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_AreaTotalNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="7ha"
+        android:textSize="14sp"
+        android:layout_marginRight="155dp"
+        android:textColor="@android:color/holo_blue_dark"/>
+
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="35dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Total/mês:"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesJan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Jan"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"
+       />
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesFev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Fev"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesMar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Mar"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesAbr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Abr"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesMai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Mai"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesJun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Jun"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesJul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Jul"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesAgo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Ago"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Set"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Out"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesNov"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Nov"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+    <TextView
+        android:id="@+id/tv_AreaTotalMesDez"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="Dez"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp"
+        android:layout_marginRight="28dp"/>
+
+
+    </TableRow>
