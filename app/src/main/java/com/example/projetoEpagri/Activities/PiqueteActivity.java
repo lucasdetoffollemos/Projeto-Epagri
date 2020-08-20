@@ -33,7 +33,9 @@ public class PiqueteActivity extends AppCompatActivity{
     private  TableRow linha_tabela;
     private TableLayout table_layout;
     private DadosSulDAO dadosSulDAO;
-    private ArrayList<Double> listaDeAreas;
+    private ArrayList<Double> listaDeAreas, listaJan, listaFev, listaMar, listaAbr, listaMai, listaJun, listaJul, listaAgo, listaSet, listaOut, listaNov, listaDez, listaVerao, listaOutono, listaInverno, listaPrimavera;
+
+
 
     //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
     private String tipo, condicao, areaS;
@@ -46,6 +48,26 @@ public class PiqueteActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piquete);
         listaDeAreas = new ArrayList();
+        listaJan = new ArrayList();
+        listaFev = new ArrayList();
+        listaMar = new ArrayList();
+        listaAbr = new ArrayList();
+        listaMai = new ArrayList();
+        listaJun = new ArrayList();
+        listaJul = new ArrayList();
+        listaAgo = new ArrayList();
+        listaSet = new ArrayList();
+        listaOut = new ArrayList();
+        listaNov = new ArrayList();
+        listaDez = new ArrayList();
+        listaVerao = new ArrayList();
+        listaOutono = new ArrayList();
+        listaInverno = new ArrayList();
+        listaPrimavera = new ArrayList();
+
+
+
+
         dadosSulDAO = new DadosSulDAO(PiqueteActivity.this);
 
         table_layout = (TableLayout) findViewById(R.id.table_layout);
@@ -68,11 +90,38 @@ public class PiqueteActivity extends AppCompatActivity{
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 table_layout.removeView(table_layout.getChildAt(i));
                 i--;
-                listaDeAreas.remove(numeroDeLinhas-1);
-                numeroDeLinhas--;
-                calculaTotais(-2, 0.0);
+
+                if(i >= -1){
+                    listaDeAreas.remove(numeroDeLinhas-1);
+                    listaJan.remove(numeroDeLinhas-1);
+                    listaFev.remove(numeroDeLinhas-1);
+                    listaMar.remove(numeroDeLinhas-1);
+                    listaAbr.remove(numeroDeLinhas-1);
+                    listaMai.remove(numeroDeLinhas-1);
+                    listaJun.remove(numeroDeLinhas-1);
+                    listaJul.remove(numeroDeLinhas-1);
+                    listaAgo.remove(numeroDeLinhas-1);
+                    listaSet.remove(numeroDeLinhas-1);
+                    listaOut.remove(numeroDeLinhas-1);
+                    listaNov.remove(numeroDeLinhas-1);
+                    listaDez.remove(numeroDeLinhas-1);
+                    listaVerao.remove(numeroDeLinhas-1);
+                    listaOutono.remove(numeroDeLinhas-1);
+                    listaInverno.remove(numeroDeLinhas-1);
+                    listaPrimavera.remove(numeroDeLinhas-1);
+                    numeroDeLinhas--;
+                    calculaTotais(-2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+                }
+
+                else{
+                   i++;
+                }
+                //ERRO NO CÓDIGO, AOS SER CLICADO DUAS VEZES NO BOTAO DE MENOS
+
+
                 //Toast.makeText(getApplicationContext(), "tCHAU", Toast.LENGTH_SHORT).show();
             }
         });
@@ -269,7 +318,8 @@ public class PiqueteActivity extends AppCompatActivity{
 
         TextView janeiro = (TextView) linha.getChildAt(4);
         double mesJan = (float)dadosSulDAO.getMeses(1, tipoPastagem)/100;
-        String resultadoJan = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan * area );
+        double mesJanD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan* area);
+        String resultadoJan = doisDecimais.format(mesJanD);
 
         if(mesJan != 0){
             janeiro.setText(String.valueOf(resultadoJan));
@@ -283,7 +333,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Fevereiro
         TextView fevereiro = (TextView) linha.getChildAt(5);
         double mesFev = (float)dadosSulDAO.getMeses(2, tipoPastagem)/100;
-        String resultadoFev = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area);
+        double mesFevD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area);
+        String resultadoFev = doisDecimais.format(mesFevD);
         if(mesFev != 0){
             fevereiro.setText(String.valueOf(resultadoFev));
         }
@@ -295,7 +346,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Março
         TextView marco = (TextView) linha.getChildAt(6);
         double mesMar = (float)dadosSulDAO.getMeses(3, tipoPastagem)/100;
-        String resultadoMar = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area);
+        double mesMarD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area);
+        String resultadoMar = doisDecimais.format(mesMarD);
         if(mesMar != 0){
             marco.setText(String.valueOf(resultadoMar));
         }
@@ -307,7 +359,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Abril
         TextView abril = (TextView) linha.getChildAt(7);
         double mesAbr = (float)dadosSulDAO.getMeses(4, tipoPastagem)/100;
-        String resultadoAbr = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area);
+        double mesAbrD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area);
+        String resultadoAbr = doisDecimais.format(mesAbrD);
         if(mesAbr != 0){
             abril.setText(String.valueOf(resultadoAbr));
         }
@@ -319,7 +372,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Maio
         TextView maio= (TextView) linha.getChildAt(8);
         double mesMaio = (float)dadosSulDAO.getMeses(5, tipoPastagem)/100;
-        String resultadoMaio = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area);
+        double mesMaiD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area);
+        String resultadoMaio = doisDecimais.format(mesMaiD);
         if(mesMaio != 0){
             maio.setText(String.valueOf(resultadoMaio));
         }
@@ -332,7 +386,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Junho
         TextView junho = (TextView) linha.getChildAt(9);
         double mesJunho = (float)dadosSulDAO.getMeses(6, tipoPastagem)/100;
-        String resultadoJunho = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area);
+        double mesJunD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area);
+        String resultadoJunho = doisDecimais.format(mesJunD);
         if(mesJunho != 0){
             junho.setText(String.valueOf(resultadoJunho));
         }
@@ -345,7 +400,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Julho
         TextView julho = (TextView) linha.getChildAt(10);
         double mesJul = (float)dadosSulDAO.getMeses(7, tipoPastagem)/100;
-        String resultadoJul = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area);
+        double mesJulD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area);
+        String resultadoJul = doisDecimais.format(mesJulD);
         if(mesJul != 0){
             julho.setText(String.valueOf(resultadoJul));
         }
@@ -357,7 +413,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Agosto
         TextView agosto = (TextView) linha.getChildAt(11);
         double mesAgo = (float)dadosSulDAO.getMeses(8, tipoPastagem)/100;
-        String resultadoAgo = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area);
+        double mesAgoD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area);
+        String resultadoAgo = doisDecimais.format(mesAgoD);
         if(mesAgo != 0){
             agosto.setText(String.valueOf(resultadoAgo));
         }
@@ -369,7 +426,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Setembro
         TextView setembro = (TextView) linha.getChildAt(12);
         double mesSet = (float)dadosSulDAO.getMeses(9, tipoPastagem)/100;
-        String resultadoSet = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area);
+        double mesSetD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area);
+        String resultadoSet = doisDecimais.format(mesSetD);
         if(mesSet != 0){
             setembro.setText(String.valueOf(resultadoSet));
         }
@@ -382,7 +440,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Outubro
         TextView outubro = (TextView) linha.getChildAt(13);
         double mesOut = (float)dadosSulDAO.getMeses(10, tipoPastagem)/100;
-        String resultadoOut = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area);
+        double mesOutD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area);
+        String resultadoOut = doisDecimais.format(mesOutD);
         if(mesOut != 0){
             outubro.setText(String.valueOf(resultadoOut));
         }
@@ -394,7 +453,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Novembro
         TextView novembro = (TextView) linha.getChildAt(14);
         double mesNov = (float)dadosSulDAO.getMeses(11, tipoPastagem)/100;
-        String resultadoNov = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area);
+        double mesNovD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area);
+        String resultadoNov = doisDecimais.format(mesNovD);
         if(mesNov != 0){
             novembro.setText(String.valueOf(resultadoNov));
         }
@@ -406,7 +466,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Dezembro
         TextView dezembro = (TextView) linha.getChildAt(15);
         double mesDez = (float)dadosSulDAO.getMeses(12, tipoPastagem)/100;
-        String resultadoDez = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area);
+        double mesDezD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area);
+        String resultadoDez = doisDecimais.format(mesDezD);
         if(mesDez != 0){
             dezembro.setText(String.valueOf(resultadoDez));
         }
@@ -417,48 +478,256 @@ public class PiqueteActivity extends AppCompatActivity{
 
         //Total
         TextView total = (TextView) linha.getChildAt(16);
-        double totalToneladaAnual = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan* area)  + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area) + ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area) ;
+        double totalToneladaAnual = mesJanD  + mesFevD + mesMarD + mesAbrD + mesMaiD + mesJunD +  mesJulD + mesAgoD + mesSetD + mesOutD + mesNovD + mesDezD;
         Integer intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
         String strTotalToneladaAnual = String.valueOf(intTotalTonelada);
         total.setText(strTotalToneladaAnual);
 
+
+        //Estações
+        double estaVerao = mesJanD + mesFevD + mesDezD;
+        double estaOutono = mesMarD + mesAbrD + mesMaiD;
+        double estaInverno = mesJunD + mesJulD + mesAgoD;
+        double estaPrimavera = mesSetD + mesOutD + mesNovD;
+
         //Chama a função de calcular os totais.
-        calculaTotais((Integer) linha.getTag(), area);
-//        Double intTotalHa = area + area;
-//        String strTotalHa = String.valueOf(intTotalHa);
-//        totalHa.setText(strTotalHa);
-
-
+        calculaTotais((Integer) linha.getTag(), area, mesJanD, mesFevD, mesMarD, mesAbrD, mesMaiD, mesJunD, mesJulD, mesAgoD, mesSetD, mesOutD, mesNovD, mesDezD, estaVerao, estaOutono, estaInverno, estaPrimavera);
         //String texto = linha.getTag().toString();
-        //Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
     }
 
-    public void calculaTotais(int linhaAtual, double area){
+    public void calculaTotais(int linhaAtual, double area, double mesJan, double mesFev, double mesMar, double mesAbr, double mesMai, double mesJun, double mesJul, double mesAgo, double mesSet, double mesOut, double mesNov, double mesDez, double verao, double outono, double inverno, double primavera){
         //Toast.makeText(this, "Linha Atual: " + linhaAtual, Toast.LENGTH_SHORT).show();
 
+         DecimalFormat doisDecimais = new DecimalFormat("#.##");
         //Testa o tamanho do array com o numero de linha
         //Entra no if quando o botao de adicionar linhas é pressionado.
-        if(listaDeAreas.size() < numeroDeLinhas){
+        if(listaDeAreas.size()< numeroDeLinhas && listaJan.size() < numeroDeLinhas && listaFev.size() < numeroDeLinhas && listaMar.size() < numeroDeLinhas && listaAbr.size() < numeroDeLinhas && listaMai.size() < numeroDeLinhas && listaJun.size() < numeroDeLinhas && listaJul.size() < numeroDeLinhas && listaAgo.size() < numeroDeLinhas && listaSet.size() < numeroDeLinhas && listaOut.size() < numeroDeLinhas && listaNov.size() < numeroDeLinhas && listaDez.size() < numeroDeLinhas && listaVerao.size() < numeroDeLinhas && listaOutono.size() < numeroDeLinhas && listaInverno.size() < numeroDeLinhas && listaPrimavera.size() < numeroDeLinhas){
             listaDeAreas.add(0.0);
+            listaJan.add(0.0);
+            listaFev.add(0.0);
+            listaMar.add(0.0);
+            listaAbr.add(0.0);
+            listaMai.add(0.0);
+            listaJun.add(0.0);
+            listaJul.add(0.0);
+            listaAgo.add(0.0);
+            listaSet.add(0.0);
+            listaOut.add(0.0);
+            listaNov.add(0.0);
+            listaDez.add(0.0);
+            listaVerao.add(0.0);
+            listaOutono.add(0.0);
+            listaInverno.add(0.0);
+            listaPrimavera.add(0.0);
         }
         else{
             //LinhaAtual = -2 quando o botão de remover linha é pressionado.
             if(linhaAtual != -2) {
                 //linhaAtual+1 pois a primeira posição do array é 0 e a primeira linhaAtual é -1.
                 listaDeAreas.set(linhaAtual + 1, area);
+                listaJan.set(linhaAtual + 1, mesJan);
+                listaFev.set(linhaAtual + 1, mesFev);
+                listaMar.set(linhaAtual + 1, mesMar);
+                listaAbr.set(linhaAtual + 1, mesAbr);
+                listaMai.set(linhaAtual + 1, mesMai);
+                listaJun.set(linhaAtual + 1, mesJun);
+                listaJul.set(linhaAtual + 1, mesJul);
+                listaAgo.set(linhaAtual + 1, mesAgo);
+                listaSet.set(linhaAtual + 1, mesSet);
+                listaOut.set(linhaAtual + 1, mesOut);
+                listaNov.set(linhaAtual + 1, mesNov);
+                listaDez.set(linhaAtual + 1, mesDez);
+
+                listaVerao.set(linhaAtual + 1, verao);
+                listaOutono.set(linhaAtual + 1, outono);
+                listaInverno.set(linhaAtual + 1, inverno);
+                listaPrimavera.set(linhaAtual + 1, primavera);
             }
         }
 
+        //Area total Pastagem
         double somaDasAreas = 0.0;
-        double somaJan = 0.0;
         for(int i=0; i<listaDeAreas.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaDasAreas = somaDasAreas + listaDeAreas.get(i);
-
         }
 
-        //Area total Pastagem
         TextView totalHa = findViewById(R.id.tv_AreaTotalNum);
-        totalHa.setText(String.valueOf(somaDasAreas));
+        totalHa.setText(String.valueOf(somaDasAreas)+ "ha");
+
+        //Mes janeiro
+        double somaJan = 0.0;
+        for(int i=0; i<listaJan.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaJan = somaJan + listaJan.get(i);
+        }
+
+        TextView totalJan = findViewById(R.id.tv_AreaTotalMesJan);
+        totalJan.setText(String.valueOf(doisDecimais.format(somaJan)));
+
+
+        //Mes fevereiro
+        double somaFev = 0.0;
+        for(int i=0; i<listaFev.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaFev = somaFev + listaFev.get(i);
+        }
+
+        TextView totalFev = findViewById(R.id.tv_AreaTotalMesFev);
+        totalFev.setText(String.valueOf(doisDecimais.format(somaFev)));
+
+
+        //Mes março
+        double somaMar = 0.0;
+        for(int i=0; i<listaMar.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaMar = somaMar + listaMar.get(i);
+        }
+
+        TextView totalMar = findViewById(R.id.tv_AreaTotalMesMar);
+        totalMar.setText(String.valueOf(doisDecimais.format(somaMar)));
+//
+//        //Mes abril
+        double somaAbr = 0.0;
+        for(int i=0; i<listaAbr.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaAbr = somaAbr + listaAbr.get(i);
+        }
+
+        TextView totalAbr = findViewById(R.id.tv_AreaTotalMesAbr);
+        totalAbr.setText(String.valueOf(doisDecimais.format(somaAbr)));
+//
+//
+//        //Mes MAIO
+        double somaMai = 0.0;
+        for(int i=0; i<listaMai.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaMai = somaMai + listaMai.get(i);
+        }
+
+        TextView totalMai = findViewById(R.id.tv_AreaTotalMesMai);
+        totalMai.setText(String.valueOf(doisDecimais.format(somaMai)));
+//
+//        //Mes junho
+        double somaJun = 0.0;
+        for(int i=0; i<listaJun.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaJun = somaJun + listaJun.get(i);
+        }
+
+        TextView totalJun = findViewById(R.id.tv_AreaTotalMesJun);
+        totalJun.setText(String.valueOf(doisDecimais.format(somaJun)));
+
+//        //Mes julho Jul
+        double somaJul = 0.0;
+        for(int i=0; i<listaJul.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaJul = somaJul + listaJul.get(i);
+        }
+
+        TextView totalJul = findViewById(R.id.tv_AreaTotalMesJul);
+        totalJul.setText(String.valueOf(doisDecimais.format(somaJul)));
+//
+//        //Mes agosto
+        double somaAgo = 0.0;
+        for(int i=0; i<listaAgo.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaAgo = somaAgo + listaAgo.get(i);
+        }
+
+        TextView totalAgo = findViewById(R.id.tv_AreaTotalMesAgo);
+        totalAgo.setText(String.valueOf(doisDecimais.format(somaAgo)));
+//
+//        //Mes setembro
+        double somaSet = 0.0;
+        for(int i=0; i<listaSet.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaSet = somaSet + listaSet.get(i);
+        }
+
+        TextView totalSet = findViewById(R.id.tv_AreaTotalMesSet);
+        totalSet.setText(String.valueOf(doisDecimais.format(somaSet)));
+//
+//        //Mes outubro Out
+        double somaOut = 0.0;
+        for(int i=0; i<listaOut.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaOut = somaOut + listaOut.get(i);
+        }
+
+        TextView totalOut = findViewById(R.id.tv_AreaTotalMesOut);
+        totalOut.setText(String.valueOf(doisDecimais.format(somaOut)));
+//
+//        //Mes novembro
+        double somaNov = 0.0;
+        for(int i=0; i<listaNov.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaNov = somaNov + listaNov.get(i);
+        }
+
+        TextView totalNov = findViewById(R.id.tv_AreaTotalMesNov);
+        totalNov.setText(String.valueOf(doisDecimais.format(somaNov)));
+//
+//        //Mes dezembro Dez
+        double somaDez = 0.0;
+        for(int i=0; i<listaDez.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaDez = somaDez + listaDez.get(i);
+        }
+
+        TextView totalDez = findViewById(R.id.tv_AreaTotalMesDez);
+        totalDez.setText(String.valueOf(doisDecimais.format(somaDez)));
+
+
+       //Verao
+        double somaVer = 0.0;
+        for(int i=0; i<listaVerao.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaVer = somaVer + listaVerao.get(i);
+        }
+
+        TextView totalVer = findViewById(R.id.tv_AreaTotalVer);
+        totalVer.setText(String.valueOf(doisDecimais.format(somaVer)));
+
+
+
+
+       //Outono
+        double somaOutono = 0.0;
+        for(int i=0; i<listaOutono.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaOutono = somaOutono + listaOutono.get(i);
+        }
+
+        TextView totalOutono = findViewById(R.id.tv_AreaTotalOut);
+        totalOutono.setText(String.valueOf(doisDecimais.format(somaOutono)));
+
+
+
+
+
+        //Inverno
+        double somaInverno = 0.0;
+        for(int i=0; i<listaInverno.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaInverno = somaInverno + listaInverno.get(i);
+        }
+
+        TextView totalInverno = findViewById(R.id.tv_AreaTotalInve);
+        totalInverno.setText(String.valueOf(doisDecimais.format(somaInverno)));
+
+
+
+        //Primavera
+        double somaPrimavera = 0.0;
+        for(int i=0; i<listaPrimavera.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaPrimavera = somaPrimavera + listaPrimavera.get(i);
+        }
+
+        TextView totalPrimavera = findViewById(R.id.tv_AreaTotalPrim);
+        totalPrimavera.setText(String.valueOf(doisDecimais.format(somaPrimavera)));
+
     }
 }

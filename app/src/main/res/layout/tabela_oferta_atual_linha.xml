@@ -6,36 +6,36 @@
 
     <Spinner
         android:id="@+id/spinnerTipoPiquete"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
-        android:layout_weight="0.1"/>
+        android:layout_weight="1"/>
 
     <Spinner
         android:id="@+id/spinnerCondPiquete"
-        android:layout_width="match_parent"
+        android:layout_width="80dp"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
-        android:layout_weight="0.1"/>
+        android:layout_weight="1"/>
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="match_parent"
+        android:layout_width="50sp"
         android:layout_height="30sp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
+        android:layout_marginRight="30dp"
         android:inputType="textPersonName"
         android:hint="Área"
         android:textSize="14sp"
-
        />
 
 
     <TextView
         android:id="@+id/tv_Prod"
         android:layout_width="50sp"
-        android:layout_height="30sp"
+        android:layout_height="20sp"
         android:gravity="center"
         android:layout_weight="1"
         android:text="Produção estimada"

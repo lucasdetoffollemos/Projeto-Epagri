@@ -6,17 +6,12 @@
     >
 
 
-
-
-
     <TextView
         android:id="@+id/tv_AreaTotalEsta"
-        android:layout_width="wrap_content"
+        android:layout_width="675sp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="550dp"
-        android:layout_marginRight="45dp"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="right"
         android:text="Total/Estação:"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
@@ -25,50 +20,49 @@
 
     <TextView
         android:id="@+id/tv_AreaTotalVer"
-        android:layout_width="wrap_content"
+        android:layout_width="130sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="Ver"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
-        android:layout_marginRight="90dp"
         />
 
     <TextView
         android:id="@+id/tv_AreaTotalOut"
-        android:layout_width="wrap_content"
+        android:layout_width="115sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="Out"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
-        android:layout_marginRight="135dp"/>
+        />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalInve"
-        android:layout_width="wrap_content"
+        android:layout_width="180sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="Inve"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
-        android:layout_marginRight="125dp"/>
+       />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalPrim"
-        android:layout_width="wrap_content"
+        android:layout_width="120sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="Prim"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
-        android:layout_marginRight="28dp"/>
+        />
 
 
 

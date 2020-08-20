@@ -18,6 +18,13 @@
 
             <LinearLayout
 
+                android:id="@+id/piqueteLayout0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <LinearLayout
+
                 android:id="@+id/piqueteLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,27 +49,30 @@
                 android:layout_height="40sp"
                 android:text="-" />
 
-                <View
-                    android:layout_width="580dp"
-                    android:layout_height="1dp"
-                    android:background="@android:color/background_dark"
-                    android:layout_marginLeft="650dp"
-                    android:layout_marginBottom="5dp"/>
-
-                <include layout="@layout/area_total_de_pastagem_linha"></include>
-
-                <View
-                    android:layout_width="580dp"
-                    android:layout_height="1dp"
-                    android:background="@android:color/background_dark"
-                    android:layout_marginLeft="650dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    />
-
-                <include layout="@layout/area_total_de_pastagem_linha_2"></include>
 
 
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="600dp"
+                android:layout_height="1dp"
+                android:background="@android:color/background_dark"
+                android:layout_marginLeft="690dp"
+                android:layout_marginBottom="5dp"/>
+
+            <include layout="@layout/area_total_de_pastagem_linha"></include>
+
+            <View
+                android:layout_width="600dp"
+                android:layout_height="1dp"
+                android:background="@android:color/background_dark"
+                android:layout_marginLeft="690dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <include layout="@layout/area_total_de_pastagem_linha_2"></include>
             </LinearLayout>
 
         </ScrollView>
