@@ -1,6 +1,8 @@
 package com.example.projetoEpagri.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +21,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetoEpagri.Classes.DadosSul;
+import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Dao.DadosSulDAO;
 import com.example.projetoEpagri.R;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 
 
 public class PiqueteActivity extends AppCompatActivity{
-    private  Button bt_adicionar_linha, bt_remover_linha;
+    private  Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
     public int i=-1, numeroDeLinhas=0;
     private  TableRow linha_tabela;
     private TableLayout table_layout;
@@ -67,6 +69,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
 
 
+        escolherRegiao();
 
         dadosSulDAO = new DadosSulDAO(PiqueteActivity.this);
 
@@ -122,9 +125,35 @@ public class PiqueteActivity extends AppCompatActivity{
                 //ERRO NO CÓDIGO, AOS SER CLICADO DUAS VEZES NO BOTAO DE MENOS
 
 
+
+
                 //Toast.makeText(getApplicationContext(), "tCHAU", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        bt_proximo_passo = findViewById(R.id.bt_proximo_passo);
+        bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), AnimaisActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void escolherRegiao() {
+
+        ArrayList<String> regiaoPiquete = new ArrayList<>();
+        regiaoPiquete.add("Sul");
+        regiaoPiquete.add("Norte");
+
+
+        Spinner spinnerRegiaoPiquete = findViewById(R.id.spinnerRegiao);
+        ArrayAdapter<String> spinnerRegiaoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, regiaoPiquete);
+        spinnerRegiaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRegiaoPiquete.setAdapter(spinnerRegiaoAdapter);
     }
 
     /**

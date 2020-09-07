@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#00B050">
+
+    <TextView
+        android:id="@+id/tv_categoria"
+        android:layout_width="200sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Categoria/Lote"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_consumo"
+        android:layout_width="90sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Consumo (%PV)"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tv_n_animais"
+        android:layout_width="70sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="N de animais"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_entrada"
+        android:layout_width="140sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Entrada"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginRight="15sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_peso_ini"
+        android:layout_width="70sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Peso inicial"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_peso_final"
+        android:layout_width="60sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Peso final"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tv_ganho_peso_ver"
+        android:layout_width="180sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Ganho de peso (g/dia) VERÃO"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+        />
+
+
+    <TextView
+        android:id="@+id/tv_ganho_peso_out"
+        android:layout_width="180sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Ganho de peso (g/dia) OUTONO"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_ganho_peso_inv"
+        android:layout_width="180sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Ganho de peso (g/dia) INVERNO"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_ganho_peso_prim"
+        android:layout_width="180sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="Ganho de peso (g/dia) PRIMAVERA"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+
+    <include layout="@layout/tabela_demanda_atual_2"></include>
+
+</LinearLayout>

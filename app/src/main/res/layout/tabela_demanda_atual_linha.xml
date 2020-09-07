@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+
+
+    <Spinner
+        android:id="@+id/spinnerCategoria"
+        android:layout_width="100dp"
+        android:layout_height="30sp"
+        android:spinnerMode="dropdown"
+        android:layout_weight="0.8"/>
+
+
+    <EditText
+        android:id="@+id/et_consumo"
+        android:layout_width="15sp"
+        android:layout_height="30sp"
+        android:layout_weight="0.5"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="cons"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/et_numero_animais"
+        android:layout_width="25sp"
+        android:layout_height="30sp"
+        android:layout_weight="0.5"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="n ani"
+        android:textSize="14sp"
+        />
+
+
+    <Spinner
+        android:id="@+id/spinnerMeses"
+        android:layout_width="10sp"
+        android:layout_height="30sp"
+        android:spinnerMode="dropdown"
+        android:layout_weight="1"
+        android:gravity="center"
+        />
+
+
+    <EditText
+        android:id="@+id/et_peso_inicial"
+        android:layout_width="1sp"
+        android:layout_height="30sp"
+        android:layout_weight="0.5"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="P I"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/et_peso_final"
+        android:layout_width="1sp"
+        android:layout_height="30sp"
+        android:layout_weight="0.5"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="P F"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/et_peso_verao"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="P V"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/et_peso_outono"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="P O"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/et_peso_inverno"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="P INV"
+        android:textSize="14sp"
+        />
+
+    <EditText
+        android:id="@+id/et_peso_primavera"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:hint="P P"
+        android:textSize="14sp"
+        />
+
+
+
+    <TextView
+        android:id="@+id/tv_jan"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_fev"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_mar"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_abr"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_mai"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_jun"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_jul"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_ago"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_set"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_out"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_nov"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_dez"
+        android:layout_width="50sp"
+        android:layout_height="30sp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+
+</TableRow>

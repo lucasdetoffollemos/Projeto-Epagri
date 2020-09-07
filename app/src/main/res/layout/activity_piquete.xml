@@ -25,10 +25,42 @@
 
             <LinearLayout
 
+                android:id="@+id/layoutRegiao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_regiao"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:text="Região:"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="150dp"/>
+
+
+                <Spinner
+                    android:id="@+id/spinnerRegiao"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+
                 android:id="@+id/piqueteLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+
+
 
                 <include layout="@layout/tabela_oferta_atual_1"></include>
 
@@ -61,7 +93,7 @@
                 android:layout_marginLeft="690dp"
                 android:layout_marginBottom="5dp"/>
 
-            <include layout="@layout/area_total_de_pastagem_linha"></include>
+            <include layout="@layout/linha_resultados_tabela_oferta"></include>
 
             <View
                 android:layout_width="600dp"
@@ -72,12 +104,21 @@
                 android:layout_marginBottom="5dp"
                 />
 
-            <include layout="@layout/area_total_de_pastagem_linha_2"></include>
+            <include layout="@layout/linha_resultados_tabela_oferta2"></include>
+
+
+                <Button
+                    android:id="@+id/bt_proximo_passo"
+                    android:layout_width="200sp"
+                    android:layout_marginLeft="50sp"
+                    android:layout_marginTop="15sp"
+                    android:layout_marginBottom="15sp"
+                    android:layout_height="wrap_content"
+                    android:text="Próximo passo" />
             </LinearLayout>
 
         </ScrollView>
     </HorizontalScrollView>
-
 
 </merge>
 

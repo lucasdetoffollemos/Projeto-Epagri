@@ -10,9 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <!-- Activity Principal -->
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,12 +21,12 @@
         <activity
             android:name=".Activities.PerfilActivity"
             android:label=" Criar Perfil"
-            android:parentActivityName=".Activities.MainActivity">
+            android:parentActivityName=".Activities.LoginActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.MainActivity" />
+                android:value="com.example.projetoEpagri.Activities.LoginActivity" />
         </activity> <!-- Activity De lista de usuarios -->
         <activity
             android:name=".Activities.ListaUsuariosActivity"
@@ -40,12 +39,12 @@
         <activity
             android:name=".Activities.IndexActivity"
             android:label="Bem vindo"
-            android:parentActivityName=".Activities.MainActivity">
+            android:parentActivityName=".Activities.LoginActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.MainActivity" />
+                android:value="com.example.projetoEpagri.Activities.LoginActivity" />
         </activity> <!-- Acitivity Propriedade -->
         <activity
             android:name=".Activities.PropriedadeActivity"
@@ -54,17 +53,29 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.IndexActivity" />
-        </activity>
-        <!-- Activity piquete        -->
-        <activity android:name=".Activities.PiqueteActivity"
-            android:screenOrientation="landscape"
+        </activity> <!-- Activity piquete -->
+        <activity
+            android:name=".Activities.PiqueteActivity"
             android:label="Piquete"
             android:parentActivityName=".Activities.PropriedadeActivity"
+            android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.PropriedadeActivity"
-                />
+                android:value="com.example.projetoEpagri.Activities.PropriedadeActivity" />
+        </activity>
+
+
+<!--        Activity Animais-->
+        <activity
+            android:name=".Activities.AnimaisActivity"
+            android:label="Animais"
+            android:parentActivityName=".Activities.PiqueteActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.projetoEpagri.Activities.PiqueteActivity" />
         </activity>
     </application>
 

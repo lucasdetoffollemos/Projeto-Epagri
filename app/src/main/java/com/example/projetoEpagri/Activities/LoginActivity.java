@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.projetoEpagri.R;
 import com.example.projetoEpagri.Dao.UsuarioDAO;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     public TextView tv_criaPerfil;
     private EditText et_nome, et_senha;
     private Button bt_login;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
      * Método responsável por iniciar a Activity Perfil.
      */
     public void criarPerfil() {
-        Intent i = new Intent(MainActivity.this, PerfilActivity.class);
+        Intent i = new Intent(LoginActivity.this, PerfilActivity.class);
         startActivity(i);
     }
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
          if(checkEmailSenha){
              Toast.makeText(getApplicationContext(), "Usuário logado", Toast.LENGTH_SHORT).show();
-             Intent i = new Intent(MainActivity.this, IndexActivity.class);
+             Intent i = new Intent(LoginActivity.this, IndexActivity.class);
              i.putExtra("nome_usuario", nomeLog);
              startActivity(i);
          }

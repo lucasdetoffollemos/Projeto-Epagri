@@ -4,10 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.projetoEpagri.Classes.BancoDeDados;
-import com.example.projetoEpagri.Classes.DadosSul;
+import com.example.projetoEpagri.Classes.Piquete;
 
 import java.util.ArrayList;
 
@@ -27,28 +26,28 @@ public class DadosSulDAO {
      * @param p
      * @return
      */
-    public long inserirPastagem(DadosSul p){
+    public long inserirPastagem(String pastagem, double condicaoDegradada, double condicaoMedia, double condicaoOtima, int [] meses, int total){
         ContentValues values = new ContentValues();
-        values.put("tipoPastagem", p.getTipo());
+        values.put("tipoPastagem", pastagem);
 
-        values.put("condicaoDegradada", p.getCondicao(0));
-        values.put("condicaoMedia", p.getCondicao(1));
-        values.put("condicaoOtima", p.getCondicao(2));
+        values.put("condicaoDegradada", condicaoDegradada);
+        values.put("condicaoMedia", condicaoMedia);
+        values.put("condicaoOtima", condicaoOtima);
 
-        values.put("jan", p.getMeses(0));
-        values.put("fev", p.getMeses(1));
-        values.put("mar", p.getMeses(2));
-        values.put("abri", p.getMeses(3));
-        values.put("mai", p.getMeses(4));
-        values.put("jun", p.getMeses(5));
-        values.put("jul", p.getMeses(6));
-        values.put("ago", p.getMeses(7));
-        values.put("setem", p.getMeses(8));
-        values.put("out", p.getMeses(9));
-        values.put("nov", p.getMeses(10));
-        values.put("dez", p.getMeses(11));
+        values.put("jan", meses[0]);
+        values.put("fev",  meses[1]);
+        values.put("mar",  meses[2]);
+        values.put("abri",  meses[3]);
+        values.put("mai",  meses[4]);
+        values.put("jun",  meses[5]);
+        values.put("jul",  meses[6]);
+        values.put("ago",  meses[7]);
+        values.put("setem",  meses[8]);
+        values.put("out",  meses[9]);
+        values.put("nov",  meses[10]);
+        values.put("dez",  meses[11]);
 
-        values.put("totalPastagem", p.getTotal());
+        values.put("totalPastagem", total);
 
         return bd.getBanco().insert("dadosSul", null, values);
     }

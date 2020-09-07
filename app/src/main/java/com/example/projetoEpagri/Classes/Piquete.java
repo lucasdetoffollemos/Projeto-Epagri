@@ -2,20 +2,26 @@ package com.example.projetoEpagri.Classes;
 
 import java.io.Serializable;
 
-public class DadosSul {
+public class Piquete {
     private String tipo;
     private double condicao [];
+    private double condSelecionada;
+    private double area;
+    private double prodEstimada;
     private int meses [];
     private int total;
 
-    public DadosSul(){}
+    public Piquete(){}
 
-    public DadosSul(String tipo, double condicao[], int meses[], int total){
+    public Piquete (String tipo, double condicao[], int meses[], int total){
         this.condicao = new double[3];
         this.meses = new int[12];
 
         this.tipo = tipo;
         this.condicao = condicao;
+//        this.condSelecionada = condSelecionada;
+//        this.area = area;
+//        this.prodEstimada = prodEstimada;
         this.meses = meses;
         this.total = total;
     }
@@ -33,12 +39,36 @@ public class DadosSul {
         return condicao[posicao];
     }
 
-    public void setCondicao(double [] condicao) {
+    public void  setCondicao(double[]  condicao) {
         this.condicao = condicao;
     }
 
     public void setCondicao(double condicao, int posicao) {
         this.condicao[posicao] = condicao;
+    }
+
+    public double getCondSelecionada() {
+        return condSelecionada;
+    }
+
+    public void setCondSelecionada(double condSelecionada) {
+        this.condSelecionada = condSelecionada;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
+    }
+
+    public double getProdEstimada() {
+        return prodEstimada;
+    }
+
+    public void setProdEstimada(double prodEstimada) {
+        this.prodEstimada = prodEstimada;
     }
 
     public int[] getMeses() {
@@ -64,4 +94,6 @@ public class DadosSul {
     public void setTotal(int total) {
         this.total = total;
     }
+
+
 }
