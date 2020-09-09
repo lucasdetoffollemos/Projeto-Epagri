@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public class Piquete {
     private String tipo;
-    private double condicao [];
-    private double condSelecionada;
+    private double condicao;
     private double area;
     private double prodEstimada;
     private int meses [];
@@ -13,15 +12,13 @@ public class Piquete {
 
     public Piquete(){}
 
-    public Piquete (String tipo, double condicao[], int meses[], int total){
-        this.condicao = new double[3];
+    public Piquete(String tipo, double condicao, double area, double prodEstimada, int meses[], int total){
         this.meses = new int[12];
 
         this.tipo = tipo;
         this.condicao = condicao;
-//        this.condSelecionada = condSelecionada;
-//        this.area = area;
-//        this.prodEstimada = prodEstimada;
+        this.area = area;
+        this.prodEstimada = prodEstimada;
         this.meses = meses;
         this.total = total;
     }
@@ -31,28 +28,12 @@ public class Piquete {
 
     public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public double[] getCondicao() {
+    public double getCondicao() {
         return condicao;
     }
 
-    public double getCondicao(int posicao) {
-        return condicao[posicao];
-    }
-
-    public void  setCondicao(double[]  condicao) {
+    public void  setCondicao(double condicao) {
         this.condicao = condicao;
-    }
-
-    public void setCondicao(double condicao, int posicao) {
-        this.condicao[posicao] = condicao;
-    }
-
-    public double getCondSelecionada() {
-        return condSelecionada;
-    }
-
-    public void setCondSelecionada(double condSelecionada) {
-        this.condSelecionada = condSelecionada;
     }
 
     public double getArea() {
@@ -94,6 +75,5 @@ public class Piquete {
     public void setTotal(int total) {
         this.total = total;
     }
-
 
 }

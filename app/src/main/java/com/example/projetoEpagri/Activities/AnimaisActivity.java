@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.R;
 
@@ -51,12 +53,11 @@ public class AnimaisActivity extends AppCompatActivity {
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                table_layout.removeView(table_layout.getChildAt(i));
+               table_layout.removeView(table_layout.getChildAt(i));
                 i--;
 
-                //Condiçao feita pra qunado digitar multiplas vezes no bota menos, e as linhas ja estiverem acabado, o botao continuar funcionando
-                if(i >= -1){
 
+                if(i >= -1){
                 }
 
                 else{
@@ -70,8 +71,9 @@ public class AnimaisActivity extends AppCompatActivity {
         //Infla a linha para a tabela
         linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_atual_linha, null);
 
+
         //Criando um array de String para as categorias de animais.
-        ArrayList<String> categoriaAnimal = new ArrayList<>();
+        final ArrayList<String> categoriaAnimal = new ArrayList<>();
         categoriaAnimal.add("BEZERROS");
         categoriaAnimal.add("NOVILHOS JOVENS");
         categoriaAnimal.add("NOVILHOS ADULTOS");
@@ -82,11 +84,65 @@ public class AnimaisActivity extends AppCompatActivity {
         categoriaAnimal.add("TOUROS");
 
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
-        Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinnerCategoria);
+        final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinnerCategoria);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, categoriaAnimal);
+        final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, categoriaAnimal);
         spinnerCategoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(spinnerCategoriaAdapter);
+
+
+        //Nesta funçao quando selecionado algum item do spinner categoria de animais, ele seta o valor do consumo, para cada tipo de animal.
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                long spin = spinnerCategoria.getSelectedItemId();
+
+
+                if(spin == 0){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 2;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+                else if(spin == 1){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 2.5;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+                else if(spin == 2){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 3;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+                else if(spin == 3){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 2;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+                else if(spin == 4){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 2.5;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+                else if(spin == 5){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 3;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+                else if(spin == 6){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 3.0;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+                else if(spin == 7){
+                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+                    double resultadoConsumo = 2.5;
+                    tv_consumo.setText(String.valueOf(resultadoConsumo));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
 
 
@@ -106,20 +162,12 @@ public class AnimaisActivity extends AppCompatActivity {
         arrayMeses.add("Dezembro");
 
 
+
+
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         Spinner spinnerMeses = linha_tabela.findViewById(R.id.spinnerMeses);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, arrayMeses){
-//            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-//
-//                View v = super.getDropDownView(position, convertView, parent);
-//
-//                ((TextView) v).setGravity(Gravity.CENTER);
-//
-//                return v;
-//
-//            }
-        };
+        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, arrayMeses);
         spinnerMesesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMeses.setAdapter(spinnerMesesAdapter);
 

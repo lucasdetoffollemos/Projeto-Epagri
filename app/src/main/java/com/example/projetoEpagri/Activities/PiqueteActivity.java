@@ -68,7 +68,7 @@ public class PiqueteActivity extends AppCompatActivity{
         listaPrimavera = new ArrayList();
 
 
-
+        //Método que tem o spinner para selecionar qual regiao o usário deseja
         escolherRegiao();
 
         dadosSulDAO = new DadosSulDAO(PiqueteActivity.this);
@@ -758,5 +758,7 @@ public class PiqueteActivity extends AppCompatActivity{
         TextView totalPrimavera = findViewById(R.id.tv_AreaTotalPrim);
         totalPrimavera.setText(String.valueOf(doisDecimais.format(somaPrimavera)));
 
+
     }
+
 }

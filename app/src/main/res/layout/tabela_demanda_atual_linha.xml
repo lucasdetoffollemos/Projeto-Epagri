@@ -14,7 +14,7 @@
         android:layout_weight="0.8"/>
 
 
-    <EditText
+    <TextView
         android:id="@+id/et_consumo"
         android:layout_width="15sp"
         android:layout_height="30sp"
@@ -22,7 +22,7 @@
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="cons"
+        android:text="0"
         android:textSize="14sp"
         />
 
