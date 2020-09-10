@@ -338,7 +338,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Log.i("CALCULAR", "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area);
 
         //TO DO.
-        //Exemplo
+        //Aqui é feito o calculo da produçao estimada
         TextView tv_prod = (TextView) linha.getChildAt(3);
         String producaoEstimada = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area );
         tv_prod.setText(String.valueOf(producaoEstimada));
