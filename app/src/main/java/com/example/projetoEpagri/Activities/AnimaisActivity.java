@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -282,7 +283,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     pesoPrimD = 0;
                 }
 
-                calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
             }
 
             @Override
@@ -367,7 +370,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     pesoPrimD = 0;
                 }
 
-                calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
             }
 
             @Override
@@ -452,7 +457,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     pesoPrimD = 0;
                 }
 
-                calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
             }
 
             @Override
@@ -537,7 +544,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     pesoPrimD = 0;
                 }
 
-                calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
             }
 
             @Override
@@ -623,7 +632,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     pesoPrimD = 0;
                 }
 
-                calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
             }
 
             @Override
@@ -708,7 +719,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     pesoPrimD = 0;
                 }
 
-                calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
             }
 
             @Override
@@ -793,7 +806,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     pesoPrimD = 0;
                 }
 
-                calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
             }
 
             @Override
@@ -807,174 +822,81 @@ public class AnimaisActivity extends AppCompatActivity {
         DecimalFormat doisDecimais = new DecimalFormat("#.##");
         Double aproveitamento = 0.60;
 
+        double ganho = 0;
+        double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
+        int posicao = 0;
 
+        switch (meses){
+            case "Janeiro":
+                    posicao = 0;
+                break;
 
-        TextView janeiro = (TextView) linha.getChildAt(10);
-        TextView fevereiro = (TextView) linha.getChildAt(11);
-        TextView marco = (TextView) linha.getChildAt(12);
-        TextView abril = (TextView) linha.getChildAt(13);
-        TextView maio = (TextView) linha.getChildAt(14);
-        TextView junho = (TextView) linha.getChildAt(15);
-        TextView julho = (TextView) linha.getChildAt(16);
-        TextView agosto = (TextView) linha.getChildAt(17);
-        TextView setembro = (TextView) linha.getChildAt(18);
-        TextView outubro = (TextView) linha.getChildAt(19);
-        TextView novembro = (TextView) linha.getChildAt(20);
-        TextView dezembro = (TextView) linha.getChildAt(21);
+            case "Fevereiro":
+                posicao = 1;
+                break;
 
-        double inicial = pesoInicial;
-        double finall = pesoFinal;
+            case "Março":
+            posicao = 2;
+            break;
 
+            case "Abril":
+                posicao = 3;
+                break;
 
+            case "Maio":
+                posicao = 4;
+                break;
 
+            case "Junho":
+                posicao = 5;
+                break;
 
-        double calculoPesoMedioVer =0;
-        double calculoPesoMedioPrim = 0;
-        double calculoPesoMedioOut =0;
-        double calculoPesoMedioInv = 0;
+            case "Julho":
+                posicao = 6;
+                break;
 
-        double mesClicado =0;
+            case "Agosto":
+                posicao = 7;
+                break;
 
-        if(meses == "Janeiro"){
-            calculoPesoMedioVer = (pesoVer * 30) /1000;
-            mesClicado = calculoPesoMedioVer + pesoInicial;
-            janeiro.setText(String.valueOf(mesClicado));
+            case "Setembro":
+                posicao = 8;
+                break;
 
-        }
+            case "Outubro":
+                posicao = 9;
+                break;
 
-        else {
-            janeiro.setText(String.valueOf(0));
+            case "Novembro":
+                posicao = 10;
+                break;
 
-        }
-
-        if(meses == "Fevereiro"){
-            calculoPesoMedioVer = (pesoVer * 30) /1000;
-            mesClicado = calculoPesoMedioVer + pesoInicial;
-            fevereiro.setText(String.valueOf(mesClicado));
-
-        }
-        else {
-            fevereiro.setText(String.valueOf(0));
-        }
-
-        if(meses == "Março"){
-             calculoPesoMedioOut = (pesoOut * 30)/1000;
-            mesClicado = calculoPesoMedioInv + pesoInicial;
-            marco.setText(String.valueOf(mesClicado));
+            case "Dezembro":
+                posicao = 11;
+                break;
 
         }
 
-        else{
-            marco.setText(String.valueOf(0));
-        }
 
-        if(meses == "Abril"){
-             calculoPesoMedioOut = (pesoOut * 30)/1000;
-            mesClicado = calculoPesoMedioInv + pesoInicial;
-            abril.setText(String.valueOf(mesClicado));
 
-        }
+            ganho = (ganhoEstacao[posicao] * 30) /1000;
 
-        else {
-            abril.setText(String.valueOf(0));
-        }
+            for(double peso_atual = pesoInicial; peso_atual < pesoFinal;){
 
-        if(meses == "Maio"){
-             calculoPesoMedioOut = (pesoOut * 30)/1000;
-            mesClicado = calculoPesoMedioOut + pesoInicial;
-            maio.setText(String.valueOf(mesClicado));
+                ganho = (ganhoEstacao[posicao] * 30) /1000;
+                peso_atual = (peso_atual + ganho);
+                Log.i("peso", String.valueOf(peso_atual) + " " +String.valueOf(posicao));
 
-        }
+                TextView v = (TextView) linha.getChildAt(posicao + 10);
+                v.setText(String.valueOf(peso_atual));
+                posicao++;
 
-        else {
-            maio.setText(String.valueOf(0));
-        }
-
-        if(meses == "Junho"){
-             calculoPesoMedioInv = (pesoInv * 30)/1000;
-            mesClicado = calculoPesoMedioInv + pesoInicial;
-            junho.setText(String.valueOf(mesClicado));
+                if(posicao > 11){
+                    posicao = 0;
+                    v.setText(String.valueOf(0));
+                }
 
         }
-
-        else {
-            junho.setText(String.valueOf(0));
-        }
-
-        if(meses == "Julho"){
-             calculoPesoMedioInv = (pesoInv * 30)/1000;
-            mesClicado = calculoPesoMedioInv + pesoInicial;
-            julho.setText(String.valueOf(mesClicado));
-
-        }
-
-        else {
-            julho.setText(String.valueOf(0));
-        }
-
-        if(meses == "Agosto"){
-            calculoPesoMedioInv = (pesoInv * 30)/1000;
-            mesClicado = calculoPesoMedioInv + pesoInicial;
-            agosto.setText(String.valueOf(mesClicado));
-
-        }
-
-        else {
-            agosto.setText(String.valueOf(0));
-        }
-
-        if(meses == "Setembro"){
-             calculoPesoMedioPrim = (pesoPrim * 30) /1000;
-            mesClicado = calculoPesoMedioPrim + pesoInicial;
-             setembro.setText(String.valueOf(mesClicado));
-
-        }
-
-        else {
-            setembro.setText(String.valueOf(0));
-        }
-
-        if(meses == "Outubro"){
-             calculoPesoMedioPrim = (pesoPrim * 30) /1000;
-            mesClicado = calculoPesoMedioPrim + pesoInicial;
-            outubro.setText(String.valueOf(mesClicado));
-
-        }
-
-        else {
-            outubro.setText(String.valueOf(0));
-        }
-
-        if(meses == "Novembro"){
-            calculoPesoMedioPrim = (pesoPrim * 30) /1000;
-            mesClicado = calculoPesoMedioPrim + pesoInicial;
-            novembro.setText(String.valueOf(mesClicado));
-
-        }
-
-        else {
-            novembro.setText(String.valueOf(0));
-        }
-
-        if(meses == "Dezembro"){
-             calculoPesoMedioVer = (pesoVer * 30) /1000;
-             mesClicado = calculoPesoMedioVer + pesoInicial;
-             dezembro.setText(String.valueOf(mesClicado));
-
-        }
-
-        else {
-           dezembro.setText(String.valueOf(0));
-        }
-
-        //Depois que o usuário colocou o mes de entrada do animal,
-        // e o sistema cálculou a soma entre o peso inicial, com o peso de ganho mensal do primeiro mes,
-        // fazer um algoritmo que faça a soma deste mes, até o mes que atinja o peso final.
-
-
-
-
-
 
 
     }
