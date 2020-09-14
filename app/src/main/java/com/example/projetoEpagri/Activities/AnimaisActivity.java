@@ -102,58 +102,7 @@ public class AnimaisActivity extends AppCompatActivity {
         spinnerCategoria.setAdapter(spinnerCategoriaAdapter);
 
 
-        //Nesta funçao quando selecionado algum item do spinner categoria de animais, ele seta o valor do consumo, para cada tipo de animal.
-        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                long spin = spinnerCategoria.getSelectedItemId();
 
-
-                if(spin == 0){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 2;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-                else if(spin == 1){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 2.5;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-                else if(spin == 2){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 3;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-                else if(spin == 3){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 2;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-                else if(spin == 4){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 2.5;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-                else if(spin == 5){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 3;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-                else if(spin == 6){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 3.0;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-                else if(spin == 7){
-                    TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
-                    double resultadoConsumo = 2.5;
-                    tv_consumo.setText(String.valueOf(resultadoConsumo));
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
 
 
 
@@ -196,6 +145,7 @@ public class AnimaisActivity extends AppCompatActivity {
     }
 
     public void identiicaElementosLinha(final TableRow linha){
+        final Spinner spinnerCategoria= (Spinner) linha.getChildAt(0);
         final Spinner spinnerMeses = (Spinner) linha.getChildAt(3);
         final EditText etPesoInicial = (EditText) linha.getChildAt(4);
         final EditText etPesoFinal = (EditText) linha.getChildAt(5);
@@ -203,6 +153,39 @@ public class AnimaisActivity extends AppCompatActivity {
         final EditText etPesoOut = (EditText) linha.getChildAt(7);
         final EditText etPesoInv = (EditText) linha.getChildAt(8);
         final EditText etPesoPrim= (EditText) linha.getChildAt(9);
+
+
+        //Nesta funçao quando selecionado algum item do spinner categoria de animais, ele seta o valor do consumo, para cada tipo de animal.
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                long spin = spinnerCategoria.getSelectedItemId();
+
+                TextView tv_consumo = (TextView) linha.getChildAt(1);
+                double resultadoConsumo = 0;
+
+                if(spin == 0){resultadoConsumo = 2;}
+
+                else if(spin == 1){resultadoConsumo = 2.5;}
+
+                else if(spin == 2){ resultadoConsumo = 3; }
+
+                else if(spin == 3){ resultadoConsumo = 2;}
+
+                else if(spin == 4){ resultadoConsumo = 2.5; }
+
+                else if(spin == 5){ resultadoConsumo = 3; }
+
+                else if(spin == 6){ resultadoConsumo = 3; }
+
+                else if(spin == 7){ resultadoConsumo = 2.5; }
+
+                tv_consumo.setText(String.valueOf(resultadoConsumo));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
 
         //Spinner meses
@@ -818,13 +801,11 @@ public class AnimaisActivity extends AppCompatActivity {
 
     public void calculaPesoMedio(final TableRow linha, String meses, double pesoInicial, double pesoFinal, double pesoVer, double pesoOut, double pesoInv, double pesoPrim){
 
-        //Arredonda o cálculo para 2 decimais.
-        DecimalFormat doisDecimais = new DecimalFormat("#.##");
-        Double aproveitamento = 0.60;
-
         double ganho = 0;
         double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
         int posicao = 0;
+
+
 
         switch (meses){
             case "Janeiro":
@@ -879,13 +860,18 @@ public class AnimaisActivity extends AppCompatActivity {
 
 
 
+
             ganho = (ganhoEstacao[posicao] * 30) /1000;
+
+            for(int i = 10; i< 22; i++){
+                TextView v = (TextView) linha.getChildAt(i);
+                v.setText(String.valueOf(0));
+            }
 
             for(double peso_atual = pesoInicial; peso_atual < pesoFinal;){
 
                 ganho = (ganhoEstacao[posicao] * 30) /1000;
                 peso_atual = (peso_atual + ganho);
-                Log.i("peso", String.valueOf(peso_atual) + " " +String.valueOf(posicao));
 
                 TextView v = (TextView) linha.getChildAt(posicao + 10);
                 v.setText(String.valueOf(peso_atual));
@@ -893,10 +879,9 @@ public class AnimaisActivity extends AppCompatActivity {
 
                 if(posicao > 11){
                     posicao = 0;
-                    v.setText(String.valueOf(0));
                 }
 
-        }
+            }
 
 
     }
