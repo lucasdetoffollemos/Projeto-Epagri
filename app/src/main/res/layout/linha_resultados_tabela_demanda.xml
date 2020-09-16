@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:layout_weight="1"
-        android:text="2"
+        android:text="0"
         android:textSize="14sp"
         android:textColor="@android:color/holo_blue_dark"/>
 
@@ -40,7 +40,7 @@
 
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesJan"
+        android:id="@+id/tv_AreaUaMesJan"
         android:layout_width="45sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -51,7 +51,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesFev"
+        android:id="@+id/tv_AreaUaMesFev"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -63,7 +63,7 @@
 
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesMar"
+        android:id="@+id/tv_AreaUaMesMar"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -75,7 +75,7 @@
 
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesAbr"
+        android:id="@+id/tv_AreaUaMesAbr"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -87,7 +87,7 @@
 
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesMai"
+        android:id="@+id/tv_AreaUaMesMai"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -98,7 +98,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesJun"
+        android:id="@+id/tv_AreaUaMesJun"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -109,7 +109,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesJul"
+        android:id="@+id/tv_AreaUaMesJul"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -120,7 +120,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesAgo"
+        android:id="@+id/tv_AreaUaMesAgo"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -131,7 +131,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesSet"
+        android:id="@+id/tv_AreaUaMesSet"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -142,7 +142,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesOut"
+        android:id="@+id/tv_AreaUaMesOut"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -153,7 +153,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesNov"
+        android:id="@+id/tv_AreaUaMesNov"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -164,7 +164,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_AreaTotalMesDez"
+        android:id="@+id/tv_AreaUaMesDez"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:gravity="center"

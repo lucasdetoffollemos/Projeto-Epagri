@@ -28,21 +28,39 @@ import java.util.ArrayList;
 
 public class AnimaisActivity extends AppCompatActivity {
 
-    private Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
+    private Button bt_adicionar_linha, bt_remover_linha;
     public int i=-1, numeroDeLinhas=0;
     private TableRow linha_tabela;
     private TableLayout table_layout;
+    private ArrayList<Double>  listaAnimais, listaJanUa, listaFevUa, listaMarUa, listaAbrUa, listaMaiUa, listaJunUa, listaJulUa, listaAgoUa, listaSetUa, listaOutUa, listaNovUa, listaDezUa;
 
     //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
-    private String meses, pesoInicialS, pesoFinalS, pesoVerS, pesoOutS, pesoInvS, pesoPrimS;
-    private double pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD;
+    private String numAnimaisS, meses, pesoInicialS, pesoFinalS, pesoVerS, pesoOutS, pesoInvS, pesoPrimS;
+    private double numAnimaisD, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD;
     private Spinner sp_meses;
-    private EditText et_pesoInicial, et_pesoFinal, et_pesoVer, et_pesoOut, et_pesoInv, et_pesoPrim;
+    private EditText et_numAnimais, et_pesoInicial, et_pesoFinal, et_pesoVer, et_pesoOut, et_pesoInv, et_pesoPrim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animais);
+        listaAnimais = new ArrayList<>();
+        listaJanUa = new ArrayList<>();
+        listaFevUa = new ArrayList<>();
+        listaMarUa= new ArrayList<>();
+        listaAbrUa = new ArrayList<>();
+        listaMaiUa = new ArrayList<>();
+        listaJunUa = new ArrayList<>();
+        listaJulUa = new ArrayList<>();
+        listaAgoUa = new ArrayList<>();
+        listaSetUa = new ArrayList<>();
+        listaOutUa = new ArrayList<>();
+        listaNovUa = new ArrayList<>();
+        listaDezUa = new ArrayList<>();
+
+
+
+
 
 
         table_layout = (TableLayout) findViewById(R.id.table_layout);
@@ -69,6 +87,22 @@ public class AnimaisActivity extends AppCompatActivity {
 
 
                 if(i >= -1){
+                    listaAnimais.remove(numeroDeLinhas-1);
+                    listaJanUa.remove(numeroDeLinhas-1);
+                    listaFevUa.remove(numeroDeLinhas-1);
+                    listaMarUa.remove(numeroDeLinhas-1);
+                    listaAbrUa.remove(numeroDeLinhas-1);
+                    listaMaiUa.remove(numeroDeLinhas-1);
+                    listaJunUa.remove(numeroDeLinhas-1);
+                    listaJulUa.remove(numeroDeLinhas-1);
+                    listaAgoUa.remove(numeroDeLinhas-1);
+                    listaSetUa.remove(numeroDeLinhas-1);
+                    listaOutUa.remove(numeroDeLinhas-1);
+                    listaNovUa.remove(numeroDeLinhas-1);
+                    listaDezUa.remove(numeroDeLinhas-1);
+
+
+                    calculoUaHa(-2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
                 }
 
                 else{
@@ -144,8 +178,13 @@ public class AnimaisActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Identifica os elementos da linha, dinamicamente, pelo seu index, e guarda os itens que foram selecionado, no spinner, ou armazenados no editText, para uso posterior
+     * @param linha
+     */
     public void identiicaElementosLinha(final TableRow linha){
         final Spinner spinnerCategoria= (Spinner) linha.getChildAt(0);
+        final EditText etNumAnimais = (EditText) linha.getChildAt(2);
         final Spinner spinnerMeses = (Spinner) linha.getChildAt(3);
         final EditText etPesoInicial = (EditText) linha.getChildAt(4);
         final EditText etPesoFinal = (EditText) linha.getChildAt(5);
@@ -187,15 +226,128 @@ public class AnimaisActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        //EditText numero de animais
+        etNumAnimais.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
+
+                //meses
+                sp_meses = spinnerMeses;
+                meses = sp_meses.getSelectedItem().toString();
+
+                //peso inicial
+                et_pesoInicial = etPesoInicial;
+                pesoInicialS = et_pesoInicial.getText().toString();
+
+                if(pesoInicialS.length() > 0) {
+                    pesoInicialD = Double.parseDouble(pesoInicialS);
+                }
+                else{
+                    pesoInicialD = 0;
+                }
+
+                //peso final
+                et_pesoFinal = etPesoFinal;
+                pesoFinalS = et_pesoFinal.getText().toString();
+
+                if(pesoFinalS.length() > 0) {
+                    pesoFinalD = Double.parseDouble(pesoFinalS);
+                }
+                else{
+                    pesoFinalD = 0;
+                }
+
+                //peso verao
+
+                et_pesoVer = etPesoVer;
+                pesoVerS = et_pesoVer.getText().toString();
+
+                if(pesoVerS.length() > 0) {
+                    pesoVerD = Double.parseDouble(pesoVerS);
+                }
+                else{
+                    pesoVerD = 0;
+                }
+
+                //peso outono
+
+                et_pesoOut = etPesoOut;
+                pesoOutS = et_pesoOut.getText().toString();
+
+                if(pesoOutS.length() > 0) {
+                    pesoOutD = Double.parseDouble(pesoOutS);
+                }
+                else{
+                    pesoOutD = 0;
+                }
+                //peso inverno
+                et_pesoInv = etPesoInv;
+                pesoInvS = et_pesoInv.getText().toString();
+
+                if(pesoInvS.length() > 0) {
+                    pesoInvD = Double.parseDouble(pesoInvS);
+                }
+                else{
+                    pesoInvD = 0;
+                }
+
+                //peso primavera
+                et_pesoPrim = etPesoPrim;
+                pesoPrimS = et_pesoPrim.getText().toString();
+
+                if(pesoPrimS.length() > 0) {
+                    pesoPrimD = Double.parseDouble(pesoPrimS);
+                }
+                else{
+                    pesoPrimD = 0;
+                }
+
+                if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+
 
         //Spinner meses
         spinnerMeses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
+
                 //meses
                 sp_meses = spinnerMeses;
-                meses = sp_meses.getSelectedItem().toString();
+                meses = spinnerMeses.getSelectedItem().toString();
 
 
 
@@ -267,7 +419,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
-                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
                 }
             }
 
@@ -282,6 +434,18 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
                 //meses
                 sp_meses = spinnerMeses;
                 meses = sp_meses.getSelectedItem().toString();
@@ -354,7 +518,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
-                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
                 }
             }
 
@@ -369,6 +533,18 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
                 //meses
                 sp_meses = spinnerMeses;
                 meses = sp_meses.getSelectedItem().toString();
@@ -441,7 +617,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
-                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
                 }
             }
 
@@ -456,6 +632,18 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
                 //meses
                 sp_meses = spinnerMeses;
                 meses = sp_meses.getSelectedItem().toString();
@@ -528,7 +716,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
-                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
                 }
             }
 
@@ -544,6 +732,18 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
                 //meses
                 sp_meses = spinnerMeses;
                 meses = sp_meses.getSelectedItem().toString();
@@ -616,7 +816,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
-                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
                 }
             }
 
@@ -631,6 +831,18 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
                 //meses
                 sp_meses = spinnerMeses;
                 meses = sp_meses.getSelectedItem().toString();
@@ -703,7 +915,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
-                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
                 }
             }
 
@@ -718,6 +930,18 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //Numero animais
+                et_numAnimais = etNumAnimais;
+                numAnimaisS = et_numAnimais.getText().toString();
+
+                if(numAnimaisS.length()> 0){
+                    numAnimaisD = Double.parseDouble(numAnimaisS);
+                }
+
+                else {
+                    numAnimaisD = 0;
+                }
                 //meses
                 sp_meses = spinnerMeses;
                 meses = sp_meses.getSelectedItem().toString();
@@ -790,7 +1014,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 if(meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0) {
-                    calculaPesoMedio(linha, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
+                    calculosActivity(linha, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD);
                 }
             }
 
@@ -799,9 +1023,21 @@ public class AnimaisActivity extends AppCompatActivity {
         });
     }
 
-    public void calculaPesoMedio(final TableRow linha, String meses, double pesoInicial, double pesoFinal, double pesoVer, double pesoOut, double pesoInv, double pesoPrim){
 
-        double ganho = 0;
+    /**
+     * Faz toda a parte, que envolve cálculos na tabela desta Activity, cálculos como peso médio, UA/ha, etc...
+     * @param linha
+     * @param meses
+     * @param pesoInicial
+     * @param pesoFinal
+     * @param pesoVer
+     * @param pesoOut
+     * @param pesoInv
+     * @param pesoPrim
+     */
+    public void calculosActivity(final TableRow linha, double numeroAnimais, String meses, double pesoInicial, double pesoFinal, double pesoVer, double pesoOut, double pesoInv, double pesoPrim){
+
+        double ganho = 0, ganhoJan = 0;
         double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
         int posicao = 0;
 
@@ -861,28 +1097,241 @@ public class AnimaisActivity extends AppCompatActivity {
 
 
 
-            ganho = (ganhoEstacao[posicao] * 30) /1000;
+            //ganho = (ganhoEstacao[posicao] * 30) /1000;
 
+
+            //Estrutura de repetiçao feita para cada vez que o usuário trocar, o valor de entrada, os campos de textView de meses, limparem.
             for(int i = 10; i< 22; i++){
                 TextView v = (TextView) linha.getChildAt(i);
                 v.setText(String.valueOf(0));
             }
 
-            for(double peso_atual = pesoInicial; peso_atual < pesoFinal;){
 
-                ganho = (ganhoEstacao[posicao] * 30) /1000;
-                peso_atual = (peso_atual + ganho);
 
-                TextView v = (TextView) linha.getChildAt(posicao + 10);
-                v.setText(String.valueOf(peso_atual));
-                posicao++;
 
-                if(posicao > 11){
-                    posicao = 0;
-                }
+        //Estrutura de repetiçao feita, para gerar a sequencia de somas que resulta no peso final estipulado pelo usuário.\
+        double  peso_atual, peso_agora[] = new double[12];
 
+        for(peso_atual = pesoInicial; peso_atual < pesoFinal;){
+
+            ganho = (ganhoEstacao[posicao] * 30) /1000;
+            peso_atual = (peso_atual + ganho);
+
+            if(posicao == 0){ peso_agora[0] = peso_atual;}
+            else if(posicao == 1){ peso_agora[1] = peso_atual; }
+            else if(posicao == 2){ peso_agora[2] = peso_atual;}
+            else if(posicao == 3){ peso_agora[3] = peso_atual;}
+            else if(posicao == 4){ peso_agora[4] = peso_atual;}
+            else if(posicao == 5){ peso_agora[5] = peso_atual;}
+            else if(posicao == 6){ peso_agora[6] = peso_atual;}
+            else if(posicao == 7){ peso_agora[7] = peso_atual;}
+            else if(posicao == 8){ peso_agora[8] = peso_atual;}
+            else if(posicao == 9){ peso_agora[9] = peso_atual;}
+            else if(posicao == 10){ peso_agora[10] = peso_atual;}
+            else if(posicao == 11){ peso_agora[11] = peso_atual;}
+
+
+
+            TextView v = (TextView) linha.getChildAt(posicao + 10);
+            v.setText(String.valueOf(peso_atual));
+            posicao++;
+
+            if(posicao > 11){
+                posicao = 0;
             }
 
+        }
+
+
+        double mesUaJan = peso_agora[0] * numeroAnimais;
+        double mesUaFev = peso_agora[1] * numeroAnimais;
+        double mesUaMar = peso_agora[2] * numeroAnimais;
+        double mesUaAbr = peso_agora[3] * numeroAnimais;
+        double mesUaMai = peso_agora[4] * numeroAnimais;
+        double mesUaJun = peso_agora[5] * numeroAnimais;
+        double mesUaJul = peso_agora[6] * numeroAnimais;
+        double mesUaAgo = peso_agora[7] * numeroAnimais;
+        double mesUaSet = peso_agora[8] * numeroAnimais;
+        double mesUaOut = peso_agora[9] * numeroAnimais;
+        double mesUaNov= peso_agora[10] * numeroAnimais;
+        double mesUaDez= peso_agora[11] * numeroAnimais;
+
+
+        calculoUaHa((Integer)linha.getTag(), numeroAnimais, mesUaJan, mesUaFev, mesUaMar, mesUaAbr, mesUaMai, mesUaJun, mesUaJul, mesUaAgo, mesUaSet, mesUaOut, mesUaNov, mesUaDez);
+    }
+
+    public void calculoUaHa(int linhaAtual, double qtde_animais, double jan, double fev, double mar, double abr, double mai, double jun, double jul, double ago, double set, double out, double nov, double dez){
+
+        DecimalFormat doisDecimais = new DecimalFormat("#.##");
+        if( listaAnimais.size()< numeroDeLinhas&& listaJanUa.size()< numeroDeLinhas && listaFevUa.size()< numeroDeLinhas && listaMarUa.size()< numeroDeLinhas && listaAbrUa.size()< numeroDeLinhas && listaMaiUa.size()< numeroDeLinhas && listaJunUa.size()< numeroDeLinhas && listaJulUa.size()< numeroDeLinhas && listaAgoUa.size()< numeroDeLinhas && listaSetUa.size()< numeroDeLinhas && listaOutUa.size()< numeroDeLinhas && listaNovUa.size()< numeroDeLinhas && listaDezUa.size()< numeroDeLinhas ){
+            listaAnimais.add(0.0);
+            listaJanUa.add(0.0);
+            listaFevUa.add(0.0);
+            listaMarUa.add(0.0);
+            listaAbrUa.add(0.0);
+            listaMaiUa.add(0.0);
+            listaJunUa.add(0.0);
+            listaJulUa.add(0.0);
+            listaAgoUa.add(0.0);
+            listaSetUa.add(0.0);
+            listaOutUa.add(0.0);
+            listaNovUa.add(0.0);
+            listaDezUa.add(0.0);
+        }
+
+        else{
+            if(linhaAtual != -2){
+                listaAnimais.set(linhaAtual + 1, qtde_animais);
+                listaJanUa.set(linhaAtual + 1, jan);
+                listaFevUa.set(linhaAtual + 1, fev);
+                listaMarUa.set(linhaAtual + 1, mar);
+                listaAbrUa.set(linhaAtual + 1, abr);
+                listaMaiUa.set(linhaAtual + 1, mai);
+                listaJunUa.set(linhaAtual + 1, jun);
+                listaJulUa.set(linhaAtual + 1, jul);
+                listaAgoUa.set(linhaAtual + 1, ago);
+                listaSetUa.set(linhaAtual + 1, set);
+                listaOutUa.set(linhaAtual + 1, out);
+                listaNovUa.set(linhaAtual + 1, nov);
+                listaDezUa.set(linhaAtual + 1, dez);
+
+            }
+        }
+
+
+        //quantidade de animais
+
+        double somaAnimal = 0.0;
+        for(int i =0; i < listaAnimais.size(); i++){
+            somaAnimal = somaAnimal + listaAnimais.get(i);
+
+        }
+
+        TextView quantidadeAnimal = findViewById(R.id.tv_totalAnimais);
+        quantidadeAnimal.setText(String.valueOf(somaAnimal));
+
+        //Mes janeiro
+        double somaJan = 0.0;
+        for(int i=0; i<listaJanUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaJan = (somaJan + listaJanUa.get(i));
+        }
+        double uaJan = somaJan /450;
+        TextView totalJan = findViewById(R.id.tv_AreaUaMesJan);
+        totalJan.setText(String.valueOf(doisDecimais.format(uaJan)));
+
+        //Mes fevereiro
+        double somaFev = 0.0;
+        for(int i=0; i<listaFevUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaFev = (somaFev + listaFevUa.get(i));
+        }
+        double uaFev = somaFev /450;
+        TextView totalFev = findViewById(R.id.tv_AreaUaMesFev);
+        totalFev.setText(String.valueOf(doisDecimais.format(uaFev)));
+
+
+        //Mes março
+        double somaMar = 0.0;
+        for(int i=0; i<listaMarUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaMar = (somaMar + listaMarUa.get(i));
+        }
+        double uaMar = somaMar /450;
+        TextView totalMar = findViewById(R.id.tv_AreaUaMesMar);
+        totalMar.setText(String.valueOf(doisDecimais.format(uaMar)));
+
+
+        //Mes Abril
+        double somaAbr = 0.0;
+        for(int i=0; i<listaAbrUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaAbr = (somaAbr + listaAbrUa.get(i));
+        }
+        double uaAbr = somaAbr /450;
+        TextView totalAbr = findViewById(R.id.tv_AreaUaMesAbr);
+        totalAbr.setText(String.valueOf(doisDecimais.format(uaAbr)));
+
+
+        //Mes Maio
+        double somaMaio = 0.0;
+        for(int i=0; i<listaMaiUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaMaio= (somaMaio + listaMaiUa.get(i));
+        }
+        double uaMai = somaMaio /450;
+        TextView totalMaio = findViewById(R.id.tv_AreaUaMesMai);
+        totalMaio.setText(String.valueOf(doisDecimais.format(uaMai)));
+
+        //Mes junho
+        double somaJun = 0.0;
+        for(int i=0; i<listaJunUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaJun = (somaJun + listaJunUa.get(i));
+        }
+        double uaJun = somaJun /450;
+        TextView totalJun = findViewById(R.id.tv_AreaUaMesJun);
+        totalJun.setText(String.valueOf(doisDecimais.format(uaJun)));
+
+        //Mes julho
+        double somaJul = 0.0;
+        for(int i=0; i<listaJulUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaJul = (somaJul + listaJulUa.get(i));
+        }
+        double uaJul = somaJul /450;
+        TextView totalJul = findViewById(R.id.tv_AreaUaMesJul);
+        totalJul.setText(String.valueOf(doisDecimais.format(uaJul)));
+
+        //Mes agosto
+        double somaAgo = 0.0;
+        for(int i=0; i<listaAgoUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaAgo = (somaAgo + listaAgoUa.get(i));
+        }
+        double uaAgo = somaAgo /450;
+        TextView totalAgo = findViewById(R.id.tv_AreaUaMesAgo);
+        totalAgo.setText(String.valueOf(doisDecimais.format(uaAgo)));
+
+        //Mes setembro
+        double somaSet = 0.0;
+        for(int i=0; i<listaSetUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaSet = (somaSet + listaSetUa.get(i));
+        }
+        double uaSet = somaSet /450;
+        TextView totalSet = findViewById(R.id.tv_AreaUaMesSet);
+        totalSet.setText(String.valueOf(doisDecimais.format(uaSet)));
+
+        //Mes Outubro
+        double somaOut = 0.0;
+        for(int i=0; i<listaOutUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaOut = (somaOut + listaOutUa.get(i));
+        }
+        double uaOut = somaOut /450;
+        TextView totalOut = findViewById(R.id.tv_AreaUaMesOut);
+        totalOut.setText(String.valueOf(doisDecimais.format(uaOut)));
+
+        //Mes Novembro
+        double somaNov = 0.0;
+        for(int i=0; i<listaNovUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaNov = (somaNov + listaNovUa.get(i));
+        }
+        double uaNov = somaNov /450;
+        TextView totalNov = findViewById(R.id.tv_AreaUaMesNov);
+        totalNov.setText(String.valueOf(doisDecimais.format(uaNov)));
+
+        //Mes Dezembro
+        double somaDez = 0.0;
+        for(int i=0; i<listaDezUa.size(); i++){
+            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
+            somaDez = (somaDez + listaDezUa.get(i));
+        }
+        double uaDez = somaDez /450;
+        TextView totalDez = findViewById(R.id.tv_AreaUaMesDez);
+        totalDez.setText(String.valueOf(doisDecimais.format(uaDez)));
 
     }
 }
