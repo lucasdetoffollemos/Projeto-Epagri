@@ -1186,6 +1186,7 @@ public class AnimaisActivity extends AppCompatActivity {
     public void calculoUaHa(int linhaAtual, double qtde_animais, double jan, double fev, double mar, double abr, double mai, double jun, double jul, double ago, double set, double out, double nov, double dez){
 
         DecimalFormat doisDecimais = new DecimalFormat("#.##");
+
         if( listaAnimais.size()< numeroDeLinhas&& listaJanUa.size()< numeroDeLinhas && listaFevUa.size()< numeroDeLinhas && listaMarUa.size()< numeroDeLinhas && listaAbrUa.size()< numeroDeLinhas && listaMaiUa.size()< numeroDeLinhas && listaJunUa.size()< numeroDeLinhas && listaJulUa.size()< numeroDeLinhas && listaAgoUa.size()< numeroDeLinhas && listaSetUa.size()< numeroDeLinhas && listaOutUa.size()< numeroDeLinhas && listaNovUa.size()< numeroDeLinhas && listaDezUa.size()< numeroDeLinhas ){
             listaAnimais.add(0.0);
             listaJanUa.add(0.0);
@@ -1223,19 +1224,15 @@ public class AnimaisActivity extends AppCompatActivity {
 
         //Pegando os dados dos resultados de ha/mes
         Bundle b = this.getIntent().getExtras();
-        double[] array = b.getDoubleArray("Ola");
+        double[] arrayUa = b.getDoubleArray("Ola");
 
-        Log.i("Patati", "onCreate: " + Arrays.toString(array));
-
-
+        Log.i("Patati", "onCreate: " + Arrays.toString(arrayUa));
 
 
         //quantidade de animais
-
         double somaAnimal = 0.0;
         for(int i =0; i < listaAnimais.size(); i++){
             somaAnimal = somaAnimal + listaAnimais.get(i);
-
         }
 
         TextView quantidadeAnimal = findViewById(R.id.tv_totalAnimais);
@@ -1247,9 +1244,13 @@ public class AnimaisActivity extends AppCompatActivity {
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaJan = (somaJan + listaJanUa.get(i));
         }
+
         double uaJan = somaJan /450;
+        String uaHaJan = doisDecimais.format(uaJan/ arrayUa[0]);
         TextView totalJan = findViewById(R.id.tv_AreaUaMesJan);
-        totalJan.setText(String.valueOf(doisDecimais.format(uaJan)));
+        totalJan.setText((uaHaJan));
+
+
 
         //Mes fevereiro
         double somaFev = 0.0;
@@ -1257,9 +1258,11 @@ public class AnimaisActivity extends AppCompatActivity {
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaFev = (somaFev + listaFevUa.get(i));
         }
+
         double uaFev = somaFev /450;
+        String uaHaFev = doisDecimais.format(uaFev/ arrayUa[1]);
         TextView totalFev = findViewById(R.id.tv_AreaUaMesFev);
-        totalFev.setText(String.valueOf(doisDecimais.format(uaFev)));
+        totalFev.setText(uaHaFev);
 
 
         //Mes março
@@ -1269,8 +1272,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaMar = (somaMar + listaMarUa.get(i));
         }
         double uaMar = somaMar /450;
+        String uaHaMar = doisDecimais.format(uaMar/ arrayUa[2]);
         TextView totalMar = findViewById(R.id.tv_AreaUaMesMar);
-        totalMar.setText(String.valueOf(doisDecimais.format(uaMar)));
+        totalMar.setText(uaHaMar);
 
 
         //Mes Abril
@@ -1280,8 +1284,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaAbr = (somaAbr + listaAbrUa.get(i));
         }
         double uaAbr = somaAbr /450;
+        String uaHaAbr = doisDecimais.format(uaAbr/ arrayUa[3]);
         TextView totalAbr = findViewById(R.id.tv_AreaUaMesAbr);
-        totalAbr.setText(String.valueOf(doisDecimais.format(uaAbr)));
+        totalAbr.setText(uaHaAbr);
 
 
         //Mes Maio
@@ -1290,9 +1295,13 @@ public class AnimaisActivity extends AppCompatActivity {
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaMaio= (somaMaio + listaMaiUa.get(i));
         }
+
+
         double uaMai = somaMaio /450;
+        String uaHaMai = doisDecimais.format(uaMai/ arrayUa[4]);
         TextView totalMaio = findViewById(R.id.tv_AreaUaMesMai);
-        totalMaio.setText(String.valueOf(doisDecimais.format(uaMai)));
+        totalMaio.setText(uaHaMai);
+
 
         //Mes junho
         double somaJun = 0.0;
@@ -1301,8 +1310,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaJun = (somaJun + listaJunUa.get(i));
         }
         double uaJun = somaJun /450;
+        String uaHaJun = doisDecimais.format(uaJun/ arrayUa[5]);
         TextView totalJun = findViewById(R.id.tv_AreaUaMesJun);
-        totalJun.setText(String.valueOf(doisDecimais.format(uaJun)));
+        totalJun.setText(uaHaJun);
 
         //Mes julho
         double somaJul = 0.0;
@@ -1311,8 +1321,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaJul = (somaJul + listaJulUa.get(i));
         }
         double uaJul = somaJul /450;
+        String uaHaJul = doisDecimais.format(uaJul/ arrayUa[6]);
         TextView totalJul = findViewById(R.id.tv_AreaUaMesJul);
-        totalJul.setText(String.valueOf(doisDecimais.format(uaJul)));
+        totalJul.setText(uaHaJul);
 
         //Mes agosto
         double somaAgo = 0.0;
@@ -1320,9 +1331,11 @@ public class AnimaisActivity extends AppCompatActivity {
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaAgo = (somaAgo + listaAgoUa.get(i));
         }
+
         double uaAgo = somaAgo /450;
+        String uaHaAgo = doisDecimais.format(uaAgo/ arrayUa[7]);
         TextView totalAgo = findViewById(R.id.tv_AreaUaMesAgo);
-        totalAgo.setText(String.valueOf(doisDecimais.format(uaAgo)));
+        totalAgo.setText(uaHaAgo);
 
         //Mes setembro
         double somaSet = 0.0;
@@ -1331,8 +1344,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaSet = (somaSet + listaSetUa.get(i));
         }
         double uaSet = somaSet /450;
+        String uaHaSet = doisDecimais.format(uaSet/ arrayUa[8]);
         TextView totalSet = findViewById(R.id.tv_AreaUaMesSet);
-        totalSet.setText(String.valueOf(doisDecimais.format(uaSet)));
+        totalSet.setText(uaHaSet);
 
         //Mes Outubro
         double somaOut = 0.0;
@@ -1341,8 +1355,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaOut = (somaOut + listaOutUa.get(i));
         }
         double uaOut = somaOut /450;
+        String uaHaOut = doisDecimais.format(uaOut/ arrayUa[9]);
         TextView totalOut = findViewById(R.id.tv_AreaUaMesOut);
-        totalOut.setText(String.valueOf(doisDecimais.format(uaOut)));
+        totalOut.setText(uaHaOut);
 
         //Mes Novembro
         double somaNov = 0.0;
@@ -1351,8 +1366,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaNov = (somaNov + listaNovUa.get(i));
         }
         double uaNov = somaNov /450;
+        String uaHaNov = doisDecimais.format(uaNov/ arrayUa[10]);
         TextView totalNov = findViewById(R.id.tv_AreaUaMesNov);
-        totalNov.setText(String.valueOf(doisDecimais.format(uaNov)));
+        totalNov.setText(uaHaNov);
 
         //Mes Dezembro
         double somaDez = 0.0;
@@ -1361,8 +1377,9 @@ public class AnimaisActivity extends AppCompatActivity {
             somaDez = (somaDez + listaDezUa.get(i));
         }
         double uaDez = somaDez /450;
+        String uaHaDez = doisDecimais.format(uaDez/ arrayUa[11]);
         TextView totalDez = findViewById(R.id.tv_AreaUaMesDez);
-        totalDez.setText(String.valueOf(doisDecimais.format(uaDez)));
+        totalDez.setText(uaHaDez);
 
     }
 }
