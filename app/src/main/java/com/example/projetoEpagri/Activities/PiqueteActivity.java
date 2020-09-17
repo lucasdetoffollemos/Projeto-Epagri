@@ -21,6 +21,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Dao.DadosSulDAO;
 import com.example.projetoEpagri.R;
@@ -132,16 +133,17 @@ public class PiqueteActivity extends AppCompatActivity{
         });
 
 
-        bt_proximo_passo = findViewById(R.id.bt_proximo_passo);
-        bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getApplicationContext(), AnimaisActivity.class);
-                startActivity(intent);
-            }
-        });
+//        bt_proximo_passo = findViewById(R.id.bt_proximo_passo);
+//        bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                irParaAnimaisActivity(2.0);
+//            }
+//        });
     }
+
+
 
     private void escolherRegiao() {
 
@@ -525,6 +527,8 @@ public class PiqueteActivity extends AppCompatActivity{
         // Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
     }
 
+
+    double somaJan = 0.0, somaFev = 0.0, somaMar = 0.0, somaAbr = 0.0, somaMai = 0.0, somaJun = 0.0, somaJul = 0.0, somaAgo = 0.0, somaSet = 0.0, somaOut = 0.0, somaNov = 0.0, somaDez = 0.0;
     public void calculaTotais(int linhaAtual, double area, double mesJan, double mesFev, double mesMar, double mesAbr, double mesMai, double mesJun, double mesJul, double mesAgo, double mesSet, double mesOut, double mesNov, double mesDez, double verao, double outono, double inverno, double primavera){
         //Toast.makeText(this, "Linha Atual: " + linhaAtual, Toast.LENGTH_SHORT).show();
 
@@ -586,10 +590,11 @@ public class PiqueteActivity extends AppCompatActivity{
         totalHa.setText(String.valueOf(somaDasAreas)+ "ha");
 
         //Mes janeiro
-        double somaJan = 0.0;
+        somaJan = 0.0;
         for(int i=0; i<listaJan.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaJan = somaJan + listaJan.get(i);
+
+             somaJan = somaJan + listaJan.get(i);
         }
 
         TextView totalJan = findViewById(R.id.tv_AreaTotalMesJan);
@@ -597,7 +602,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
 
         //Mes fevereiro
-        double somaFev = 0.0;
+         somaFev = 0.0;
         for(int i=0; i<listaFev.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaFev = somaFev + listaFev.get(i);
@@ -608,7 +613,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
 
         //Mes março
-        double somaMar = 0.0;
+         somaMar = 0.0;
         for(int i=0; i<listaMar.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaMar = somaMar + listaMar.get(i);
@@ -618,7 +623,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalMar.setText(String.valueOf(doisDecimais.format(somaMar)));
 //
 //        //Mes abril
-        double somaAbr = 0.0;
+         somaAbr = 0.0;
         for(int i=0; i<listaAbr.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaAbr = somaAbr + listaAbr.get(i);
@@ -629,7 +634,7 @@ public class PiqueteActivity extends AppCompatActivity{
 //
 //
 //        //Mes MAIO
-        double somaMai = 0.0;
+         somaMai = 0.0;
         for(int i=0; i<listaMai.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaMai = somaMai + listaMai.get(i);
@@ -639,7 +644,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalMai.setText(String.valueOf(doisDecimais.format(somaMai)));
 //
 //        //Mes junho
-        double somaJun = 0.0;
+         somaJun = 0.0;
         for(int i=0; i<listaJun.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaJun = somaJun + listaJun.get(i);
@@ -649,7 +654,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalJun.setText(String.valueOf(doisDecimais.format(somaJun)));
 
 //        //Mes julho Jul
-        double somaJul = 0.0;
+         somaJul = 0.0;
         for(int i=0; i<listaJul.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaJul = somaJul + listaJul.get(i);
@@ -659,7 +664,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalJul.setText(String.valueOf(doisDecimais.format(somaJul)));
 //
 //        //Mes agosto
-        double somaAgo = 0.0;
+         somaAgo = 0.0;
         for(int i=0; i<listaAgo.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaAgo = somaAgo + listaAgo.get(i);
@@ -669,7 +674,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalAgo.setText(String.valueOf(doisDecimais.format(somaAgo)));
 //
 //        //Mes setembro
-        double somaSet = 0.0;
+         somaSet = 0.0;
         for(int i=0; i<listaSet.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaSet = somaSet + listaSet.get(i);
@@ -679,7 +684,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalSet.setText(String.valueOf(doisDecimais.format(somaSet)));
 //
 //        //Mes outubro Out
-        double somaOut = 0.0;
+         somaOut = 0.0;
         for(int i=0; i<listaOut.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaOut = somaOut + listaOut.get(i);
@@ -689,7 +694,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalOut.setText(String.valueOf(doisDecimais.format(somaOut)));
 //
 //        //Mes novembro
-        double somaNov = 0.0;
+         somaNov = 0.0;
         for(int i=0; i<listaNov.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaNov = somaNov + listaNov.get(i);
@@ -699,7 +704,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalNov.setText(String.valueOf(doisDecimais.format(somaNov)));
 //
 //        //Mes dezembro Dez
-        double somaDez = 0.0;
+         somaDez = 0.0;
         for(int i=0; i<listaDez.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaDez = somaDez + listaDez.get(i);
@@ -758,6 +763,18 @@ public class PiqueteActivity extends AppCompatActivity{
         TextView totalPrimavera = findViewById(R.id.tv_AreaTotalPrim);
         totalPrimavera.setText(String.valueOf(doisDecimais.format(somaPrimavera)));
 
+
+    }
+
+    public void irParaAnimaisActivity(View view) {
+
+        double somJan = somaJan, somFev = somaFev, somMar = somaMar, somAbr = somaAbr, somMai = somaMai, somJun = somaJun, somJul = somaJul, somAgo = somaAgo, somSet = somaSet, somOut = somaOut, somNov = somaNov, somDez = somaDez;
+        //Log.i("soma", "irParaAnimaisActivity: "+ somJan);
+        Bundle b = new Bundle();
+        b.putDoubleArray("Ola", new double[]{somJan, somFev, somMar, somAbr, somMai, somJun, somJul, somAgo, somSet, somOut, somNov, somDez});
+        Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
+        i.putExtras(b);
+        startActivity(i);
 
     }
 

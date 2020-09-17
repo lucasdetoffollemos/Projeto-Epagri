@@ -110,10 +110,11 @@
                 <Button
                     android:id="@+id/bt_proximo_passo"
                     android:layout_width="200sp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="50sp"
                     android:layout_marginTop="15sp"
                     android:layout_marginBottom="15sp"
-                    android:layout_height="wrap_content"
+                    android:onClick="irParaAnimaisActivity"
                     android:text="Próximo passo" />
             </LinearLayout>
 

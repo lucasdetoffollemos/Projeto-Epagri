@@ -24,6 +24,7 @@ import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class AnimaisActivity extends AppCompatActivity {
@@ -63,6 +64,10 @@ public class AnimaisActivity extends AppCompatActivity {
 
 
 
+
+
+
+
         table_layout = (TableLayout) findViewById(R.id.table_layout);
 
 
@@ -85,7 +90,7 @@ public class AnimaisActivity extends AppCompatActivity {
                table_layout.removeView(table_layout.getChildAt(i));
                 i--;
 
-
+                //Este if serve pra quando é excluido uma linha, o valor do resultado ua/ha dimnuir, já que a linha contem valores que ajudam a aumentar no resultado.
                 if(i >= -1){
                     listaAnimais.remove(numeroDeLinhas-1);
                     listaJanUa.remove(numeroDeLinhas-1);
@@ -1160,6 +1165,24 @@ public class AnimaisActivity extends AppCompatActivity {
         calculoUaHa((Integer)linha.getTag(), numeroAnimais, mesUaJan, mesUaFev, mesUaMar, mesUaAbr, mesUaMai, mesUaJun, mesUaJul, mesUaAgo, mesUaSet, mesUaOut, mesUaNov, mesUaDez);
     }
 
+
+    /**
+     * Método responsável por setar os valores dos cáculos ua/ha, no seus respectivos lugares
+     * @param linhaAtual
+     * @param qtde_animais
+     * @param jan
+     * @param fev
+     * @param mar
+     * @param abr
+     * @param mai
+     * @param jun
+     * @param jul
+     * @param ago
+     * @param set
+     * @param out
+     * @param nov
+     * @param dez
+     */
     public void calculoUaHa(int linhaAtual, double qtde_animais, double jan, double fev, double mar, double abr, double mai, double jun, double jul, double ago, double set, double out, double nov, double dez){
 
         DecimalFormat doisDecimais = new DecimalFormat("#.##");
@@ -1197,6 +1220,14 @@ public class AnimaisActivity extends AppCompatActivity {
 
             }
         }
+
+        //Pegando os dados dos resultados de ha/mes
+        Bundle b = this.getIntent().getExtras();
+        double[] array = b.getDoubleArray("Ola");
+
+        Log.i("Patati", "onCreate: " + Arrays.toString(array));
+
+
 
 
         //quantidade de animais
