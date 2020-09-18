@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 
 public class PiqueteActivity extends AppCompatActivity{
-    private  Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
+    private  Button bt_adicionar_linha, bt_remover_linha;
     public int i=-1, numeroDeLinhas=0;
     private  TableRow linha_tabela;
     private TableLayout table_layout;
@@ -766,14 +766,18 @@ public class PiqueteActivity extends AppCompatActivity{
 
     }
 
+    /**
+     * Método chamado toda vez que o botão Próximo Passo é clicado, e tem como objetivo levar o usário para outra activity e mandar um array de totais/mês. (Obs: método é acionado, no onclick do Botao Proximo Passo, que se encontra em activity_piquete.xml)
+     * @param view
+     */
     public void irParaAnimaisActivity(View view) {
-
         double somJan = somaJan, somFev = somaFev, somMar = somaMar, somAbr = somaAbr, somMai = somaMai, somJun = somaJun, somJul = somaJul, somAgo = somaAgo, somSet = somaSet, somOut = somaOut, somNov = somaNov, somDez = somaDez;
-        //Log.i("soma", "irParaAnimaisActivity: "+ somJan);
-        Bundle b = new Bundle();
-        b.putDoubleArray("Ola", new double[]{somJan, somFev, somMar, somAbr, somMai, somJun, somJul, somAgo, somSet, somOut, somNov, somDez});
+
+        //Bundle serve  basicamente para passar dados entre Activities.
+        Bundle enviaValores = new Bundle();
+        enviaValores.putDoubleArray("Valores totais/mês Ha", new double[]{somJan, somFev, somMar, somAbr, somMai, somJun, somJul, somAgo, somSet, somOut, somNov, somDez});
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
-        i.putExtras(b);
+        i.putExtras(enviaValores);
         startActivity(i);
 
     }

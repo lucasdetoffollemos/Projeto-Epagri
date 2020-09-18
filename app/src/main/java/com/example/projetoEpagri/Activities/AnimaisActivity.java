@@ -1222,11 +1222,10 @@ public class AnimaisActivity extends AppCompatActivity {
             }
         }
 
-        //Pegando os dados dos resultados de ha/mes
-        Bundle b = this.getIntent().getExtras();
-        double[] arrayUa = b.getDoubleArray("Ola");
 
-        Log.i("Patati", "onCreate: " + Arrays.toString(arrayUa));
+        //Pegando os dados dos resultados de ha/mes, vindos da Activity Piquete
+        Bundle b = this.getIntent().getExtras();
+        double[] arrayUa = b.getDoubleArray("Valores totais/mês Ha");
 
 
         //quantidade de animais
@@ -1246,6 +1245,7 @@ public class AnimaisActivity extends AppCompatActivity {
         }
 
         double uaJan = somaJan /450;
+        //Fazendo o cálculo de UA/HA, e setando nos respectivos TextViews
         String uaHaJan = doisDecimais.format(uaJan/ arrayUa[0]);
         TextView totalJan = findViewById(R.id.tv_AreaUaMesJan);
         totalJan.setText((uaHaJan));
@@ -1380,6 +1380,7 @@ public class AnimaisActivity extends AppCompatActivity {
         String uaHaDez = doisDecimais.format(uaDez/ arrayUa[11]);
         TextView totalDez = findViewById(R.id.tv_AreaUaMesDez);
         totalDez.setText(uaHaDez);
+
 
     }
 }
