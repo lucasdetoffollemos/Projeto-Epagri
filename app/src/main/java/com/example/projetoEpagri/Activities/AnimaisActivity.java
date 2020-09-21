@@ -1226,6 +1226,9 @@ public class AnimaisActivity extends AppCompatActivity {
         //Pegando os dados dos resultados de ha/mes, vindos da Activity Piquete
         Bundle b = this.getIntent().getExtras();
         double[] arrayUa = b.getDoubleArray("Valores totais/mês Ha");
+        double[] arraInt  = b.getDoubleArray("Key");
+
+        Log.i("Teste arra", "pneu " + Arrays.toString(arraInt));
 
 
         //quantidade de animais

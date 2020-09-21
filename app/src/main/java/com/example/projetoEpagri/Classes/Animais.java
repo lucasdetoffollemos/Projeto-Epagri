@@ -13,13 +13,16 @@ public class Animais {
     private double pesoGanhoInv;
     private double pesoGanhoPrim;
     private double [] meses;
+    private int totalNumAnimais;
+    private double uaHaPorMes[];
 
     public Animais(){}
 
 
 
-    public  Animais(String categoria, double consumo, int numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses){
+    public  Animais(String categoria, double consumo, int numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses, int totalNumAnimais, double uaHaPorMes[]){
         this.meses = new double[12];
+        this.uaHaPorMes = new double[12];
 
         this.categoria = categoria;
         this.consumo = consumo;
@@ -32,6 +35,8 @@ public class Animais {
         this.pesoGanhoInv = pesoGanhoInv;
         this.pesoGanhoPrim = pesoGanhoPrim;
         this.meses = meses;
+        this.totalNumAnimais = totalNumAnimais;
+        this.uaHaPorMes = uaHaPorMes;
     }
 
     public String getCategoria() {

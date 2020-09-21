@@ -776,6 +776,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Bundle serve  basicamente para passar dados entre Activities.
         Bundle enviaValores = new Bundle();
         enviaValores.putDoubleArray("Valores totais/mês Ha", new double[]{somJan, somFev, somMar, somAbr, somMai, somJun, somJul, somAgo, somSet, somOut, somNov, somDez});
+        enviaValores.putDoubleArray("Key", new double[]{1,3,7});
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
         i.putExtras(enviaValores);
         startActivity(i);

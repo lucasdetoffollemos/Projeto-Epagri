@@ -9,11 +9,14 @@ public class Piquete {
     private double prodEstimada;
     private int meses [];
     private int total;
+    private double totalColunaHa;
+    private  double totaisMeses [];
 
     public Piquete(){}
 
-    public Piquete(String tipo, double condicao, double area, double prodEstimada, int meses[], int total){
+    public Piquete(String tipo, double condicao, double area, double prodEstimada, int meses[], int total, double totalColunaHa, double totaisMeses[]){
         this.meses = new int[12];
+        this.totaisMeses = new double[12];
 
         this.tipo = tipo;
         this.condicao = condicao;
@@ -21,6 +24,8 @@ public class Piquete {
         this.prodEstimada = prodEstimada;
         this.meses = meses;
         this.total = total;
+        this.totalColunaHa = totalColunaHa;
+        this.totaisMeses = totaisMeses;
     }
 
 
@@ -76,4 +81,19 @@ public class Piquete {
         this.total = total;
     }
 
+    public double getTotalColunaHa() {
+        return totalColunaHa;
+    }
+
+    public void setTotalColunaHa(double totalColunaHa) {
+        this.totalColunaHa = totalColunaHa;
+    }
+
+    public double[] getTotaisMeses() {
+        return totaisMeses;
+    }
+
+    public void setTotaisMeses(double[] totaisMeses) {
+        this.totaisMeses = totaisMeses;
+    }
 }
