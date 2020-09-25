@@ -3,6 +3,7 @@ package com.example.projetoEpagri.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
@@ -29,7 +31,7 @@ import java.util.Arrays;
 
 public class AnimaisActivity extends AppCompatActivity {
 
-    private Button bt_adicionar_linha, bt_remover_linha;
+    private Button bt_adicionar_linha, bt_remover_linha, bt_finalizar_envio;
     public int i=-1, numeroDeLinhas=0;
     private TableRow linha_tabela;
     private TableLayout table_layout;
@@ -115,7 +117,22 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        bt_finalizar_envio = findViewById(R.id.bt_finalizar_envio);
+        bt_finalizar_envio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                finalizaEnvio();
+            }
+        });
+
     }
+
+
 
     private void adicionarLinhaTabela(){
         //Infla a linha para a tabela
@@ -180,6 +197,7 @@ public class AnimaisActivity extends AppCompatActivity {
         table_layout.addView(linha_tabela);
 
         identiicaElementosLinha(linha_tabela);
+
 
     }
 
@@ -1226,9 +1244,6 @@ public class AnimaisActivity extends AppCompatActivity {
         //Pegando os dados dos resultados de ha/mes, vindos da Activity Piquete
         Bundle b = this.getIntent().getExtras();
         double[] arrayUa = b.getDoubleArray("Valores totais/mês Ha");
-        double[] arraInt  = b.getDoubleArray("Key");
-
-        Log.i("Teste arra", "pneu " + Arrays.toString(arraInt));
 
 
         //quantidade de animais
@@ -1384,6 +1399,21 @@ public class AnimaisActivity extends AppCompatActivity {
         TextView totalDez = findViewById(R.id.tv_AreaUaMesDez);
         totalDez.setText(uaHaDez);
 
+    }
 
+    private void finalizaEnvio() {
+        int [] arrayInteiro = {1,2, 3,4};
+
+        Bundle enviaArray = new Bundle();
+
+        Animais a = new Animais("1", 2.0, 2, "Fev", 35, 200, 1000, 1000, 1000, 1000, new double[]{0.1, 0.2, 0.3}, 7, new double[]{0.9,0.8});
+
+
+
+        enviaArray.putIntArray("keyName", arrayInteiro);
+        Intent intent = new Intent();
+        intent.putExtra("Animais", a);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

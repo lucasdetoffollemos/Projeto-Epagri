@@ -28,15 +28,17 @@ import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class PiqueteActivity extends AppCompatActivity{
-    private  Button bt_adicionar_linha, bt_remover_linha;
+    private  Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
     public int i=-1, numeroDeLinhas=0;
     private  TableRow linha_tabela;
     private TableLayout table_layout;
     private DadosSulDAO dadosSulDAO;
     private ArrayList<Double> listaDeAreas, listaJan, listaFev, listaMar, listaAbr, listaMai, listaJun, listaJul, listaAgo, listaSet, listaOut, listaNov, listaDez, listaVerao, listaOutono, listaInverno, listaPrimavera;
+    private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
 
 
 
@@ -133,14 +135,14 @@ public class PiqueteActivity extends AppCompatActivity{
         });
 
 
-//        bt_proximo_passo = findViewById(R.id.bt_proximo_passo);
-//        bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                irParaAnimaisActivity(2.0);
-//            }
-//        });
+        bt_proximo_passo = findViewById(R.id.bt_proximo_passo);
+        bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                irParaAnimaisActivity();
+            }
+        });
     }
 
 
@@ -768,19 +770,40 @@ public class PiqueteActivity extends AppCompatActivity{
 
     /**
      * Método chamado toda vez que o botão Próximo Passo é clicado, e tem como objetivo levar o usário para outra activity e mandar um array de totais/mês. (Obs: método é acionado, no onclick do Botao Proximo Passo, que se encontra em activity_piquete.xml)
-     * @param view
      */
-    public void irParaAnimaisActivity(View view) {
+    public void irParaAnimaisActivity() {
         double somJan = somaJan, somFev = somaFev, somMar = somaMar, somAbr = somaAbr, somMai = somaMai, somJun = somaJun, somJul = somaJul, somAgo = somaAgo, somSet = somaSet, somOut = somaOut, somNov = somaNov, somDez = somaDez;
 
         //Bundle serve  basicamente para passar dados entre Activities.
         Bundle enviaValores = new Bundle();
         enviaValores.putDoubleArray("Valores totais/mês Ha", new double[]{somJan, somFev, somMar, somAbr, somMai, somJun, somJul, somAgo, somSet, somOut, somNov, somDez});
-        enviaValores.putDoubleArray("Key", new double[]{1,3,7});
+
+
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
         i.putExtras(enviaValores);
-        startActivity(i);
+        startActivityForResult(i,CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
 
+    }
+
+
+    // This method is called when the second activity finishes
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // check that it is the SecondActivity with an OK result
+        if (requestCode == CODIGO_REQUISICAO_ANIMAIS_ACTIVITY) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+
+                // get String data from Intent
+
+
+                Animais a = data.getParcelableExtra("animais");
+                //int [] arrayRetorno = data.getIntArrayExtra("animais");
+
+                Log.i("retornando array","Opa " + a);
+            }
+        }
     }
 
 }

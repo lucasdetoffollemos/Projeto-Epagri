@@ -1,6 +1,9 @@
 package com.example.projetoEpagri.Classes;
 
-public class Animais {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Animais implements Parcelable {
 
     private String categoria;
     private double consumo;
@@ -14,11 +17,9 @@ public class Animais {
     private double pesoGanhoPrim;
     private double [] meses;
     private int totalNumAnimais;
-    private double uaHaPorMes[];
+    private double [] uaHaPorMes;
 
     public Animais(){}
-
-
 
     public  Animais(String categoria, double consumo, int numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses, int totalNumAnimais, double uaHaPorMes[]){
         this.meses = new double[12];
@@ -38,6 +39,21 @@ public class Animais {
         this.totalNumAnimais = totalNumAnimais;
         this.uaHaPorMes = uaHaPorMes;
     }
+
+
+//    private Animais(Parcel p){
+//        categoria = p.readString();
+//        consumo = p.readDouble();
+//        numAnimais = p.readInt();
+//        entradaMes = p.readString();
+//        pesoInicial = p.readDouble();
+//        pesoFinal = p.readDouble();
+//        pesoGanhoVer= p.readDouble();
+//        pesoGanhoOut = p.readDouble();
+//        pesoGanhoInv = p.readDouble();
+//        pesoGanhoPrim = p.readDouble();
+//        meses = p.readDoubleArray();
+//    }
 
     public String getCategoria() {
         return categoria;
@@ -126,4 +142,29 @@ public class Animais {
     public void setMeses(double[] meses) {
         this.meses = meses;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(categoria);
+        dest.writeDouble(consumo);
+        dest.writeInt(numAnimais);
+        dest.writeString(entradaMes);
+        dest.writeDouble(pesoInicial);
+        dest.writeDouble(pesoFinal);
+        dest.writeDouble(pesoGanhoVer);
+        dest.writeDouble(pesoGanhoOut);
+        dest.writeDouble(pesoGanhoInv);
+        dest.writeDouble(pesoGanhoPrim);
+        dest.writeDoubleArray(meses);
+        dest.writeInt(totalNumAnimais);
+        dest.writeDoubleArray(uaHaPorMes);
+    }
+
+
+
 }

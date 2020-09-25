@@ -60,6 +60,16 @@
 
                 <include layout="@layout/linha_resultados_tabela_demanda"></include>
 
+                <Button
+                    android:id="@+id/bt_finalizar_envio"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50sp"
+                    android:layout_marginTop="15sp"
+                    android:layout_marginBottom="15sp"
+                    android:text="Finalizar" />
+
+
             </LinearLayout>
 
         </ScrollView>
