@@ -1445,11 +1445,21 @@ public class AnimaisActivity extends AppCompatActivity {
     private void finalizaEnvio() {
 
 
-        Animais a = new Animais(spinCategoria, resultadoConsumo, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD,  arrayPesoMedioMes, somaAnimal, arrayUaHa);
+        if(spinCategoria != "" && resultadoConsumo != 0 && numAnimaisD != 0 && meses != "" && pesoInicialD != 0 && pesoFinalD != 0 && pesoVerD != 0 && pesoOutD != 0 && pesoInvD != 0 && pesoPrimD != 0){
 
-        Intent intent = new Intent();
-        intent.putExtra("Animais", a);
-        setResult(RESULT_OK, intent);
-        finish();
+            Animais a = new Animais(spinCategoria, resultadoConsumo, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD,  arrayPesoMedioMes, somaAnimal, arrayUaHa);
+
+            Intent intent = new Intent();
+            intent.putExtra("Animais", a);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
+        else{
+            Toast.makeText(getApplicationContext(), "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
+        }
+
+
+
     }
 }

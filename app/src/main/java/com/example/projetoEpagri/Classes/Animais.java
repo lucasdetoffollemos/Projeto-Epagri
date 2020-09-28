@@ -42,7 +42,7 @@ public class Animais implements Parcelable {
         this.uaHaPorMes = uaHaPorMes;
     }
 
-
+    //Construtor Parcelable
     private Animais(Parcel p){
         categoria = p.readString();
         consumo = p.readDouble();

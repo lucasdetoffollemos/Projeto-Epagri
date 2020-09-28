@@ -5,20 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Classes.Animais;
+import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.R;
+
+import java.util.Arrays;
 
 public class PropriedadeActivity extends AppCompatActivity {
     private Button bt_proximo;
     private EditText et_nomePropriedade;
     private EditText et_qtdePiquetes;
     private String nomeUsuario;
-    private int codigoRequisicao = 1;
+    private int  CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +51,8 @@ public class PropriedadeActivity extends AppCompatActivity {
         if(!nomePropriedade.equals("")){
             Intent i = new Intent(PropriedadeActivity.this, PiqueteActivity.class);
             i.putExtra("nome_propriedade", nomePropriedade);
-            startActivity(i);
+            startActivityForResult(i, CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY);
         }
-
 
         else {
             Toast.makeText(getApplicationContext(), "Insira o nome da propriedade", Toast.LENGTH_SHORT).show();
@@ -96,6 +100,30 @@ public class PropriedadeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    // This method is called when the second activity finishes
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // check that it is the SecondActivity with an OK result
+        if (requestCode == CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+
+                Piquete p = data.getParcelableExtra("Piquete");
+                //int [] arrayRetorno = data.getIntArrayExtra("animais");
+
+                Log.i(" PIQUETE ", " TIPO: "+ p.getTipo() + " COND " + p.getCondicao() + " AREA " + p.getArea()+ " PRODUCAO "+ p.getProdEstimada() + " ARRAY MESES " + Arrays.toString(p.getMeses()) + " TOTAL "+ p.getTotal()+ " SOMA AREAS " + p.getTotalColunaHa() + " TOTAIS MESES "+ Arrays.toString(p.getTotaisMeses()) + " TOTAIS ESTACÃO " + Arrays.toString(p.getTotaisEstacao()));
+
+                Animais a = data.getParcelableExtra("Animal");
+                //int [] arrayRetorno = data.getIntArrayExtra("animais");
+
+                Log.i("Animal", "Oi " + a.getCategoria() +" "+ a.getConsumo()+" "+ a.getNumAnimais() +" "+ a.getEntradaMes() +" "+ a.getPesoInicial() +" "+ a.getPesoFinal() +" "+ a.getPesoGanhoVer() +" "+ a.getPesoGanhoOut() +" "+ a.getPesoGanhoInv() +" "+ a.getPesoGanhoPrim() +" "+ Arrays.toString(a.getMeses())+" "+ a.getTotalNumAnimais()+" "+ Arrays.toString(a.getUaHaPorMes()));
+
+            }
+        }
     }
 }
 

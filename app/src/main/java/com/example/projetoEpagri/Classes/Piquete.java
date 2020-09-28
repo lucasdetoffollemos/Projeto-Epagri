@@ -1,43 +1,74 @@
 package com.example.projetoEpagri.Classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class Piquete {
+public class Piquete implements Parcelable {
     private String tipo;
-    private double condicao;
+    private String condicao;
     private double area;
     private double prodEstimada;
-    private int meses [];
-    private int total;
+    private double mesesProd [];
+    private int  total;
     private double totalColunaHa;
     private  double totaisMeses [];
+    private double totaisEstacao[];
 
     public Piquete(){}
 
-    public Piquete(String tipo, double condicao, double area, double prodEstimada, int meses[], int total, double totalColunaHa, double totaisMeses[]){
-        this.meses = new int[12];
+    public Piquete(String tipo, String condicao, double area, double prodEstimada, double mesesProd[], int total, double totalColunaHa, double totaisMeses[], double totaisEstacao[]){
+        this.mesesProd = new double[12];
         this.totaisMeses = new double[12];
+        this.totaisEstacao = new double[4];
 
         this.tipo = tipo;
         this.condicao = condicao;
         this.area = area;
         this.prodEstimada = prodEstimada;
-        this.meses = meses;
+        this.mesesProd = mesesProd;
         this.total = total;
         this.totalColunaHa = totalColunaHa;
         this.totaisMeses = totaisMeses;
+        this.totaisEstacao = totaisEstacao;
     }
 
+   private Piquete(Parcel p){
+        tipo = p.readString();
+        condicao = p.readString();
+        area = p.readDouble();
+        prodEstimada = p.readDouble();
+        mesesProd = p.createDoubleArray();
+        total = p.readInt();
+        totalColunaHa = p.readDouble();
+        totaisMeses = p.createDoubleArray();
+        totaisEstacao = p.createDoubleArray();
+
+   }
+
+
+    public static final Creator<Piquete> CREATOR = new Creator<Piquete>() {
+        @Override
+        public Piquete createFromParcel(Parcel in) {
+            return new Piquete(in);
+        }
+
+        @Override
+        public Piquete[] newArray(int size) {
+            return new Piquete[size];
+        }
+    };
 
     public String getTipo() { return tipo; }
 
     public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public double getCondicao() {
+    public String getCondicao() {
         return condicao;
     }
 
-    public void  setCondicao(double condicao) {
+    public void  setCondicao(String condicao) {
         this.condicao = condicao;
     }
 
@@ -57,20 +88,20 @@ public class Piquete {
         this.prodEstimada = prodEstimada;
     }
 
-    public int[] getMeses() {
-        return meses;
+    public double[] getMeses() {
+        return mesesProd;
     }
 
-    public int getMeses(int posicao) {
-        return meses[posicao];
+    public double getMeses(int posicao) {
+        return mesesProd[posicao];
     }
 
-    public void setMeses(int [] meses) {
-        this.meses = meses;
+    public void setMeses(double [] meses) {
+        this.mesesProd = meses;
     }
 
     public void setMeses(int meses, int posicao) {
-        this.meses[posicao] = meses;
+        this.mesesProd[posicao] = meses;
     }
 
     public int getTotal() {
@@ -95,5 +126,31 @@ public class Piquete {
 
     public void setTotaisMeses(double[] totaisMeses) {
         this.totaisMeses = totaisMeses;
+    }
+
+    public double[] getTotaisEstacao() {
+        return totaisEstacao;
+    }
+
+    public void setTotaisEstacao(double[] totaisEstacao) {
+        this.totaisEstacao = totaisEstacao;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(tipo);
+        dest.writeString(condicao);
+        dest.writeDouble(area);
+        dest.writeDouble(prodEstimada);
+        dest.writeDoubleArray(mesesProd);
+        dest.writeInt(total);
+        dest.writeDouble(totalColunaHa);
+        dest.writeDoubleArray(totaisMeses);
+        dest.writeDoubleArray(totaisEstacao);
     }
 }

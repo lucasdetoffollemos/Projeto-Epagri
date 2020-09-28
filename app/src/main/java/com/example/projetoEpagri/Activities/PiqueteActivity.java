@@ -324,6 +324,12 @@ public class PiqueteActivity extends AppCompatActivity{
 
     */
 
+    //Criando as variaveis fora do método, para depois leva-las para o Objeto.
+    double producaoEstimadaD,  mesJanD, mesFevD, mesMarD, mesAbrD, mesMaiD, mesJunD, mesJulD, mesAgoD, mesSetD, mesOutD, mesNovD, mesDezD;
+    double [] arrayMesesProd;
+    Integer intTotalTonelada;
+
+
     /**
      * Método responsavel, por pegar os valores dos spinners, TIPO e CONDIÇÃO, e pegar o editText ÁREA, e realizar os cáculos de pastagem mensal. Também setar uma tag para cada elemento da linha.
      * @param linha
@@ -344,14 +350,15 @@ public class PiqueteActivity extends AppCompatActivity{
         //TO DO.
         //Aqui é feito o calculo da produçao estimada
         TextView tv_prod = (TextView) linha.getChildAt(3);
-        String producaoEstimada = doisDecimais.format((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area );
+        producaoEstimadaD = (dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
+        String producaoEstimada = doisDecimais.format( producaoEstimadaD);
         tv_prod.setText(String.valueOf(producaoEstimada));
 
         //Janeiro
 
         TextView janeiro = (TextView) linha.getChildAt(4);
         double mesJan = (float)dadosSulDAO.getMeses(1, tipoPastagem)/100;
-        double mesJanD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan* area);
+         mesJanD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan* area);
         String resultadoJan = doisDecimais.format(mesJanD);
 
         if(mesJan != 0){
@@ -366,7 +373,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Fevereiro
         TextView fevereiro = (TextView) linha.getChildAt(5);
         double mesFev = (float)dadosSulDAO.getMeses(2, tipoPastagem)/100;
-        double mesFevD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area);
+         mesFevD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area);
         String resultadoFev = doisDecimais.format(mesFevD);
         if(mesFev != 0){
             fevereiro.setText(String.valueOf(resultadoFev));
@@ -379,7 +386,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Março
         TextView marco = (TextView) linha.getChildAt(6);
         double mesMar = (float)dadosSulDAO.getMeses(3, tipoPastagem)/100;
-        double mesMarD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area);
+        mesMarD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area);
         String resultadoMar = doisDecimais.format(mesMarD);
         if(mesMar != 0){
             marco.setText(String.valueOf(resultadoMar));
@@ -392,7 +399,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Abril
         TextView abril = (TextView) linha.getChildAt(7);
         double mesAbr = (float)dadosSulDAO.getMeses(4, tipoPastagem)/100;
-        double mesAbrD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area);
+        mesAbrD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area);
         String resultadoAbr = doisDecimais.format(mesAbrD);
         if(mesAbr != 0){
             abril.setText(String.valueOf(resultadoAbr));
@@ -405,7 +412,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Maio
         TextView maio= (TextView) linha.getChildAt(8);
         double mesMaio = (float)dadosSulDAO.getMeses(5, tipoPastagem)/100;
-        double mesMaiD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area);
+        mesMaiD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area);
         String resultadoMaio = doisDecimais.format(mesMaiD);
         if(mesMaio != 0){
             maio.setText(String.valueOf(resultadoMaio));
@@ -419,7 +426,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Junho
         TextView junho = (TextView) linha.getChildAt(9);
         double mesJunho = (float)dadosSulDAO.getMeses(6, tipoPastagem)/100;
-        double mesJunD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area);
+        mesJunD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area);
         String resultadoJunho = doisDecimais.format(mesJunD);
         if(mesJunho != 0){
             junho.setText(String.valueOf(resultadoJunho));
@@ -433,7 +440,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Julho
         TextView julho = (TextView) linha.getChildAt(10);
         double mesJul = (float)dadosSulDAO.getMeses(7, tipoPastagem)/100;
-        double mesJulD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area);
+         mesJulD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area);
         String resultadoJul = doisDecimais.format(mesJulD);
         if(mesJul != 0){
             julho.setText(String.valueOf(resultadoJul));
@@ -446,7 +453,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Agosto
         TextView agosto = (TextView) linha.getChildAt(11);
         double mesAgo = (float)dadosSulDAO.getMeses(8, tipoPastagem)/100;
-        double mesAgoD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area);
+        mesAgoD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area);
         String resultadoAgo = doisDecimais.format(mesAgoD);
         if(mesAgo != 0){
             agosto.setText(String.valueOf(resultadoAgo));
@@ -459,7 +466,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Setembro
         TextView setembro = (TextView) linha.getChildAt(12);
         double mesSet = (float)dadosSulDAO.getMeses(9, tipoPastagem)/100;
-        double mesSetD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area);
+       mesSetD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area);
         String resultadoSet = doisDecimais.format(mesSetD);
         if(mesSet != 0){
             setembro.setText(String.valueOf(resultadoSet));
@@ -473,7 +480,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Outubro
         TextView outubro = (TextView) linha.getChildAt(13);
         double mesOut = (float)dadosSulDAO.getMeses(10, tipoPastagem)/100;
-        double mesOutD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area);
+        mesOutD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area);
         String resultadoOut = doisDecimais.format(mesOutD);
         if(mesOut != 0){
             outubro.setText(String.valueOf(resultadoOut));
@@ -486,7 +493,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Novembro
         TextView novembro = (TextView) linha.getChildAt(14);
         double mesNov = (float)dadosSulDAO.getMeses(11, tipoPastagem)/100;
-        double mesNovD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area);
+       mesNovD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area);
         String resultadoNov = doisDecimais.format(mesNovD);
         if(mesNov != 0){
             novembro.setText(String.valueOf(resultadoNov));
@@ -499,7 +506,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Dezembro
         TextView dezembro = (TextView) linha.getChildAt(15);
         double mesDez = (float)dadosSulDAO.getMeses(12, tipoPastagem)/100;
-        double mesDezD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area);
+        mesDezD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area);
         String resultadoDez = doisDecimais.format(mesDezD);
         if(mesDez != 0){
             dezembro.setText(String.valueOf(resultadoDez));
@@ -507,12 +514,14 @@ public class PiqueteActivity extends AppCompatActivity{
         else {
             dezembro.setText(" ");
         }
-        //
+        //Array que sera levado para o objeto Piquete
+        arrayMesesProd = new double[]{mesJanD, mesFevD, mesMarD, mesAbrD, mesMaiD, mesJunD, mesJulD, mesAgoD, mesSetD, mesOutD, mesNovD, mesDezD};
+
 
         //Total
         TextView total = (TextView) linha.getChildAt(16);
         double totalToneladaAnual = mesJanD  + mesFevD + mesMarD + mesAbrD + mesMaiD + mesJunD +  mesJulD + mesAgoD + mesSetD + mesOutD + mesNovD + mesDezD;
-        Integer intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
+        intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
         String strTotalToneladaAnual = String.valueOf(intTotalTonelada);
         total.setText(strTotalToneladaAnual);
 
@@ -530,7 +539,11 @@ public class PiqueteActivity extends AppCompatActivity{
     }
 
 
-    double somaJan = 0.0, somaFev = 0.0, somaMar = 0.0, somaAbr = 0.0, somaMai = 0.0, somaJun = 0.0, somaJul = 0.0, somaAgo = 0.0, somaSet = 0.0, somaOut = 0.0, somaNov = 0.0, somaDez = 0.0;
+    //
+    double [] totaisEstacao;
+    double [] totaisMeses;
+    double somaJan = 0.0, somaFev = 0.0, somaMar = 0.0, somaAbr = 0.0, somaMai = 0.0, somaJun = 0.0, somaJul = 0.0, somaAgo = 0.0, somaSet = 0.0, somaOut = 0.0, somaNov = 0.0, somaDez = 0.0, somaVer, somaOutono, somaInverno, somaPrimavera, somaDasAreas;
+
     public void calculaTotais(int linhaAtual, double area, double mesJan, double mesFev, double mesMar, double mesAbr, double mesMai, double mesJun, double mesJul, double mesAgo, double mesSet, double mesOut, double mesNov, double mesDez, double verao, double outono, double inverno, double primavera){
         //Toast.makeText(this, "Linha Atual: " + linhaAtual, Toast.LENGTH_SHORT).show();
 
@@ -582,7 +595,7 @@ public class PiqueteActivity extends AppCompatActivity{
         }
 
         //Area total Pastagem
-        double somaDasAreas = 0.0;
+        somaDasAreas = 0.0;
         for(int i=0; i<listaDeAreas.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaDasAreas = somaDasAreas + listaDeAreas.get(i);
@@ -666,7 +679,7 @@ public class PiqueteActivity extends AppCompatActivity{
         totalJul.setText(String.valueOf(doisDecimais.format(somaJul)));
 //
 //        //Mes agosto
-         somaAgo = 0.0;
+        somaAgo = 0.0;
         for(int i=0; i<listaAgo.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaAgo = somaAgo + listaAgo.get(i);
@@ -717,7 +730,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
 
        //Verao
-        double somaVer = 0.0;
+        somaVer = 0.0;
         for(int i=0; i<listaVerao.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaVer = somaVer + listaVerao.get(i);
@@ -730,7 +743,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
 
        //Outono
-        double somaOutono = 0.0;
+        somaOutono = 0.0;
         for(int i=0; i<listaOutono.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaOutono = somaOutono + listaOutono.get(i);
@@ -744,7 +757,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
 
         //Inverno
-        double somaInverno = 0.0;
+        somaInverno = 0.0;
         for(int i=0; i<listaInverno.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaInverno = somaInverno + listaInverno.get(i);
@@ -756,7 +769,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
 
         //Primavera
-        double somaPrimavera = 0.0;
+        somaPrimavera = 0.0;
         for(int i=0; i<listaPrimavera.size(); i++){
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaPrimavera = somaPrimavera + listaPrimavera.get(i);
@@ -766,26 +779,33 @@ public class PiqueteActivity extends AppCompatActivity{
         totalPrimavera.setText(String.valueOf(doisDecimais.format(somaPrimavera)));
 
 
+        totaisMeses = new double[] {somaJan, somaFev, somaMar, somaAbr, somaMai, somaJun, somaJul, somaAgo, somaSet, somaOut, somaNov, somaDez};
+        totaisEstacao = new double[]{somaVer, somaOutono, somaInverno, somaPrimavera};
+
+
+
+        //Log.i(" PIQUETE ", " TIPO: "+ p.getTipo() + " COND " + p.getCondicao() + " AREA " + p.getArea()+ " PRODUCAO "+ p.getProdEstimada() + " ARRAY MESES " + Arrays.toString(p.getMeses()) + " TOTAL "+ p.getTotal()+ " SOMA AREAS " + p.getTotalColunaHa() + " TOTAIS MESES "+ Arrays.toString(p.getTotaisMeses()) + " TOTAIS ESTACÃO " + Arrays.toString(p.getTotaisEstacao()));
     }
 
     /**
      * Método chamado toda vez que o botão Próximo Passo é clicado, e tem como objetivo levar o usário para outra activity e mandar um array de totais/mês. (Obs: método é acionado, no onclick do Botao Proximo Passo, que se encontra em activity_piquete.xml)
      */
     public void irParaAnimaisActivity() {
-        double somJan = somaJan, somFev = somaFev, somMar = somaMar, somAbr = somaAbr, somMai = somaMai, somJun = somaJun, somJul = somaJul, somAgo = somaAgo, somSet = somaSet, somOut = somaOut, somNov = somaNov, somDez = somaDez;
+
+
 
         //Bundle serve  basicamente para passar dados entre Activities.
         Bundle enviaValores = new Bundle();
-        enviaValores.putDoubleArray("Valores totais/mês Ha", new double[]{somJan, somFev, somMar, somAbr, somMai, somJun, somJul, somAgo, somSet, somOut, somNov, somDez});
-
+        enviaValores.putDoubleArray("Valores totais/mês Ha", totaisMeses);
 
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
         i.putExtras(enviaValores);
-        startActivityForResult(i,CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
+        startActivityForResult(i, CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
 
     }
 
 
+    Animais a = new Animais();
     // This method is called when the second activity finishes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -798,14 +818,31 @@ public class PiqueteActivity extends AppCompatActivity{
                 // get String data from Intent
 
 
-                Animais a = data.getParcelableExtra("Animais");
+                a = data.getParcelableExtra("Animais");
                 //int [] arrayRetorno = data.getIntArrayExtra("animais");
 
-                Log.i("retornando array", "Oi " + a.getCategoria() +" "+ a.getConsumo()+" "+ a.getNumAnimais() +" "+ a.getEntradaMes() +" "+ a.getPesoInicial() +" "+ a.getPesoFinal() +" "+ a.getPesoGanhoVer() +" "+ a.getPesoGanhoOut() +" "+ a.getPesoGanhoInv() +" "+ a.getPesoGanhoPrim() +" "+ Arrays.toString(a.getMeses())+" "+ a.getTotalNumAnimais()+" "+ Arrays.toString(a.getUaHaPorMes()));
+               //Log.i("Animais", "Oi " + a.getCategoria() +" "+ a.getConsumo()+" "+ a.getNumAnimais() +" "+ a.getEntradaMes() +" "+ a.getPesoInicial() +" "+ a.getPesoFinal() +" "+ a.getPesoGanhoVer() +" "+ a.getPesoGanhoOut() +" "+ a.getPesoGanhoInv() +" "+ a.getPesoGanhoPrim() +" "+ Arrays.toString(a.getMeses())+" "+ a.getTotalNumAnimais()+" "+ Arrays.toString(a.getUaHaPorMes()));
 
-                //Log.d("myTag", a.toString());
+               finalizaEnvio();
+
+
+
             }
         }
+    }
+
+
+    private void finalizaEnvio() {
+
+           a = new Animais(a.getCategoria(), a.getConsumo(), a.getNumAnimais(), a.getEntradaMes(), a.getPesoInicial(), a.getPesoFinal(), a.getPesoGanhoVer(),a.getPesoGanhoOut(), a.getPesoGanhoInv(),a.getPesoGanhoPrim(), a.getMeses(), a.getTotalNumAnimais(), a.getUaHaPorMes());
+
+
+            Piquete p = new Piquete(tipo, condicao, areaD, producaoEstimadaD, arrayMesesProd, intTotalTonelada, somaDasAreas, totaisMeses, totaisEstacao);
+            Intent intent = new Intent();
+            intent.putExtra("Animal", a);
+            intent.putExtra("Piquete", p);
+            setResult(RESULT_OK, intent);
+            finish();
     }
 
 }
