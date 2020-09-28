@@ -123,9 +123,6 @@ public class AnimaisActivity extends AppCompatActivity {
         bt_finalizar_envio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
                 finalizaEnvio();
             }
         });
@@ -201,6 +198,17 @@ public class AnimaisActivity extends AppCompatActivity {
 
     }
 
+    //Setando os valores fora dos métodos, para serem levados com o objeto
+
+    //Categoria
+     String spinCategoria;
+
+    //Consumo
+    double resultadoConsumo;
+
+    //Número de animais
+
+
     /**
      * Identifica os elementos da linha, dinamicamente, pelo seu index, e guarda os itens que foram selecionado, no spinner, ou armazenados no editText, para uso posterior
      * @param linha
@@ -221,26 +229,26 @@ public class AnimaisActivity extends AppCompatActivity {
         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                long spin = spinnerCategoria.getSelectedItemId();
+                spinCategoria = (String) spinnerCategoria.getSelectedItem();
 
                 TextView tv_consumo = (TextView) linha.getChildAt(1);
-                double resultadoConsumo = 0;
+                resultadoConsumo = 0;
 
-                if(spin == 0){resultadoConsumo = 2;}
+                if(spinCategoria.equals("BEZERROS")){resultadoConsumo = 2;}
 
-                else if(spin == 1){resultadoConsumo = 2.5;}
+                    else if(spinCategoria.equals("NOVILHOS JOVENS")){resultadoConsumo = 2.5;}
 
-                else if(spin == 2){ resultadoConsumo = 3; }
+                else if(spinCategoria.equals("NOVILHOS ADULTOS")){ resultadoConsumo = 3; }
 
-                else if(spin == 3){ resultadoConsumo = 2;}
+                else if(spinCategoria.equals("BEZERRAS")){ resultadoConsumo = 2;}
 
-                else if(spin == 4){ resultadoConsumo = 2.5; }
+                else if (spinCategoria.equals("NOVILHAS JOVENS")){ resultadoConsumo = 2.5; }
 
-                else if(spin == 5){ resultadoConsumo = 3; }
+                else if(spinCategoria.equals("NOVILHAS ADULTOS")){ resultadoConsumo = 3; }
 
-                else if(spin == 6){ resultadoConsumo = 3; }
+                else if(spinCategoria.equals("VACAS (MATRIZES)")){ resultadoConsumo = 3; }
 
-                else if(spin == 7){ resultadoConsumo = 2.5; }
+                else if(spinCategoria.equals("TOUROS")){ resultadoConsumo = 2.5; }
 
                 tv_consumo.setText(String.valueOf(resultadoConsumo));
             }
@@ -1047,6 +1055,10 @@ public class AnimaisActivity extends AppCompatActivity {
     }
 
 
+
+
+    //Setando array de peso médio dos meses para  usar no Objeto
+    double [] arrayPesoMedioMes = new double[12];
     /**
      * Faz toda a parte, que envolve cálculos na tabela desta Activity, cálculos como peso médio, UA/ha, etc...
      * @param linha
@@ -1060,7 +1072,7 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     public void calculosActivity(final TableRow linha, double numeroAnimais, String meses, double pesoInicial, double pesoFinal, double pesoVer, double pesoOut, double pesoInv, double pesoPrim){
 
-        double ganho = 0, ganhoJan = 0;
+        double ganho = 0;
         double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
         int posicao = 0;
 
@@ -1180,8 +1192,17 @@ public class AnimaisActivity extends AppCompatActivity {
         double mesUaDez= peso_agora[11] * numeroAnimais;
 
 
+
+        arrayPesoMedioMes = new double[]{peso_agora[0], peso_agora[1], peso_agora[2], peso_agora[3], peso_agora[4], peso_agora[5], peso_agora[6], peso_agora[7], peso_agora[8], peso_agora[9], peso_agora[10], peso_agora[11]};
+
+
         calculoUaHa((Integer)linha.getTag(), numeroAnimais, mesUaJan, mesUaFev, mesUaMar, mesUaAbr, mesUaMai, mesUaJun, mesUaJul, mesUaAgo, mesUaSet, mesUaOut, mesUaNov, mesUaDez);
     }
+
+
+    //Setando os valores fora dos métodos, para serem levados com o objeto
+    double somaAnimal,  uaHaJanD, uaHaFevD, uaHaMarD, uaHaAbrD, uaHaMaiD, uaHaJunD, uaHaJulD, uaHaAgoD, uaHaSetD, uaHaOutD, uaHaNovD, uaHaDezD;
+    double [] arrayUaHa = new double[12];
 
 
     /**
@@ -1247,7 +1268,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
 
         //quantidade de animais
-        double somaAnimal = 0.0;
+        somaAnimal = 0.0;
         for(int i =0; i < listaAnimais.size(); i++){
             somaAnimal = somaAnimal + listaAnimais.get(i);
         }
@@ -1264,9 +1285,14 @@ public class AnimaisActivity extends AppCompatActivity {
 
         double uaJan = somaJan /450;
         //Fazendo o cálculo de UA/HA, e setando nos respectivos TextViews
-        String uaHaJan = doisDecimais.format(uaJan/ arrayUa[0]);
+
+        uaHaJanD = uaJan/ arrayUa[0];
+        String uaHaJan = doisDecimais.format(uaHaJanD);
+
         TextView totalJan = findViewById(R.id.tv_AreaUaMesJan);
         totalJan.setText((uaHaJan));
+
+
 
 
 
@@ -1278,7 +1304,8 @@ public class AnimaisActivity extends AppCompatActivity {
         }
 
         double uaFev = somaFev /450;
-        String uaHaFev = doisDecimais.format(uaFev/ arrayUa[1]);
+        uaHaFevD = uaFev/ arrayUa[1];
+        String uaHaFev = doisDecimais.format(uaHaFevD);
         TextView totalFev = findViewById(R.id.tv_AreaUaMesFev);
         totalFev.setText(uaHaFev);
 
@@ -1289,8 +1316,10 @@ public class AnimaisActivity extends AppCompatActivity {
             //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
             somaMar = (somaMar + listaMarUa.get(i));
         }
+
         double uaMar = somaMar /450;
-        String uaHaMar = doisDecimais.format(uaMar/ arrayUa[2]);
+        uaHaMarD = uaMar/ arrayUa[2];
+        String uaHaMar = doisDecimais.format(uaHaMarD);
         TextView totalMar = findViewById(R.id.tv_AreaUaMesMar);
         totalMar.setText(uaHaMar);
 
@@ -1302,7 +1331,8 @@ public class AnimaisActivity extends AppCompatActivity {
             somaAbr = (somaAbr + listaAbrUa.get(i));
         }
         double uaAbr = somaAbr /450;
-        String uaHaAbr = doisDecimais.format(uaAbr/ arrayUa[3]);
+        uaHaAbrD = uaAbr/ arrayUa[3];
+        String uaHaAbr = doisDecimais.format(uaHaAbrD);
         TextView totalAbr = findViewById(R.id.tv_AreaUaMesAbr);
         totalAbr.setText(uaHaAbr);
 
@@ -1316,7 +1346,8 @@ public class AnimaisActivity extends AppCompatActivity {
 
 
         double uaMai = somaMaio /450;
-        String uaHaMai = doisDecimais.format(uaMai/ arrayUa[4]);
+        uaHaMaiD = uaMai/ arrayUa[4];
+        String uaHaMai = doisDecimais.format(uaHaMaiD);
         TextView totalMaio = findViewById(R.id.tv_AreaUaMesMai);
         totalMaio.setText(uaHaMai);
 
@@ -1328,7 +1359,8 @@ public class AnimaisActivity extends AppCompatActivity {
             somaJun = (somaJun + listaJunUa.get(i));
         }
         double uaJun = somaJun /450;
-        String uaHaJun = doisDecimais.format(uaJun/ arrayUa[5]);
+        uaHaJunD = uaJun/ arrayUa[5];
+        String uaHaJun = doisDecimais.format(uaHaJunD);
         TextView totalJun = findViewById(R.id.tv_AreaUaMesJun);
         totalJun.setText(uaHaJun);
 
@@ -1339,7 +1371,8 @@ public class AnimaisActivity extends AppCompatActivity {
             somaJul = (somaJul + listaJulUa.get(i));
         }
         double uaJul = somaJul /450;
-        String uaHaJul = doisDecimais.format(uaJul/ arrayUa[6]);
+        uaHaJulD = uaJul/ arrayUa[6];
+        String uaHaJul = doisDecimais.format(uaHaJulD);
         TextView totalJul = findViewById(R.id.tv_AreaUaMesJul);
         totalJul.setText(uaHaJul);
 
@@ -1351,7 +1384,8 @@ public class AnimaisActivity extends AppCompatActivity {
         }
 
         double uaAgo = somaAgo /450;
-        String uaHaAgo = doisDecimais.format(uaAgo/ arrayUa[7]);
+        uaHaAgoD = uaAgo/ arrayUa[7];
+        String uaHaAgo = doisDecimais.format(uaHaAgoD);
         TextView totalAgo = findViewById(R.id.tv_AreaUaMesAgo);
         totalAgo.setText(uaHaAgo);
 
@@ -1362,7 +1396,8 @@ public class AnimaisActivity extends AppCompatActivity {
             somaSet = (somaSet + listaSetUa.get(i));
         }
         double uaSet = somaSet /450;
-        String uaHaSet = doisDecimais.format(uaSet/ arrayUa[8]);
+        uaHaSetD = uaSet/ arrayUa[8];
+        String uaHaSet = doisDecimais.format(uaHaSetD);
         TextView totalSet = findViewById(R.id.tv_AreaUaMesSet);
         totalSet.setText(uaHaSet);
 
@@ -1373,7 +1408,8 @@ public class AnimaisActivity extends AppCompatActivity {
             somaOut = (somaOut + listaOutUa.get(i));
         }
         double uaOut = somaOut /450;
-        String uaHaOut = doisDecimais.format(uaOut/ arrayUa[9]);
+        uaHaOutD = uaOut/ arrayUa[9];
+        String uaHaOut = doisDecimais.format(uaHaOutD);
         TextView totalOut = findViewById(R.id.tv_AreaUaMesOut);
         totalOut.setText(uaHaOut);
 
@@ -1384,7 +1420,8 @@ public class AnimaisActivity extends AppCompatActivity {
             somaNov = (somaNov + listaNovUa.get(i));
         }
         double uaNov = somaNov /450;
-        String uaHaNov = doisDecimais.format(uaNov/ arrayUa[10]);
+        uaHaNovD = uaNov/ arrayUa[10];
+        String uaHaNov = doisDecimais.format(uaHaNovD);
         TextView totalNov = findViewById(R.id.tv_AreaUaMesNov);
         totalNov.setText(uaHaNov);
 
@@ -1395,22 +1432,21 @@ public class AnimaisActivity extends AppCompatActivity {
             somaDez = (somaDez + listaDezUa.get(i));
         }
         double uaDez = somaDez /450;
-        String uaHaDez = doisDecimais.format(uaDez/ arrayUa[11]);
+        uaHaDezD = uaDez/ arrayUa[11];
+        String uaHaDez = doisDecimais.format(uaHaDezD);
         TextView totalDez = findViewById(R.id.tv_AreaUaMesDez);
         totalDez.setText(uaHaDez);
+
+        arrayUaHa = new double[]{uaHaJanD, uaHaFevD, uaHaMarD, uaHaAbrD, uaHaMaiD, uaHaJunD, uaHaJulD, uaHaAgoD, uaHaSetD, uaHaOutD, uaHaNovD, uaHaDezD};
+
 
     }
 
     private void finalizaEnvio() {
-        int [] arrayInteiro = {1,2, 3,4};
-
-        Bundle enviaArray = new Bundle();
-
-        Animais a = new Animais("1", 2.0, 2, "Fev", 35, 200, 1000, 1000, 1000, 1000, new double[]{0.1, 0.2, 0.3}, 7, new double[]{0.9,0.8});
 
 
+        Animais a = new Animais(spinCategoria, resultadoConsumo, numAnimaisD, meses, pesoInicialD, pesoFinalD, pesoVerD, pesoOutD, pesoInvD, pesoPrimD,  arrayPesoMedioMes, somaAnimal, arrayUaHa);
 
-        enviaArray.putIntArray("keyName", arrayInteiro);
         Intent intent = new Intent();
         intent.putExtra("Animais", a);
         setResult(RESULT_OK, intent);

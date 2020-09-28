@@ -7,7 +7,7 @@ public class Animais implements Parcelable {
 
     private String categoria;
     private double consumo;
-    private int numAnimais;
+    private double numAnimais;
     private String entradaMes;
     private double pesoInicial;
     private double pesoFinal;
@@ -16,12 +16,14 @@ public class Animais implements Parcelable {
     private double pesoGanhoInv;
     private double pesoGanhoPrim;
     private double [] meses;
-    private int totalNumAnimais;
+    private double totalNumAnimais;
     private double [] uaHaPorMes;
+
+
 
     public Animais(){}
 
-    public  Animais(String categoria, double consumo, int numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses, int totalNumAnimais, double uaHaPorMes[]){
+    public  Animais(String categoria, double consumo, double numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses, double totalNumAnimais, double uaHaPorMes[]){
         this.meses = new double[12];
         this.uaHaPorMes = new double[12];
 
@@ -41,19 +43,34 @@ public class Animais implements Parcelable {
     }
 
 
-//    private Animais(Parcel p){
-//        categoria = p.readString();
-//        consumo = p.readDouble();
-//        numAnimais = p.readInt();
-//        entradaMes = p.readString();
-//        pesoInicial = p.readDouble();
-//        pesoFinal = p.readDouble();
-//        pesoGanhoVer= p.readDouble();
-//        pesoGanhoOut = p.readDouble();
-//        pesoGanhoInv = p.readDouble();
-//        pesoGanhoPrim = p.readDouble();
-//        meses = p.readDoubleArray();
-//    }
+    private Animais(Parcel p){
+        categoria = p.readString();
+        consumo = p.readDouble();
+        numAnimais = p.readDouble();
+        entradaMes = p.readString();
+        pesoInicial = p.readDouble();
+        pesoFinal = p.readDouble();
+        pesoGanhoVer= p.readDouble();
+        pesoGanhoOut = p.readDouble();
+        pesoGanhoInv = p.readDouble();
+        pesoGanhoPrim = p.readDouble();
+        meses = p.createDoubleArray();
+        totalNumAnimais = p.readDouble();
+        uaHaPorMes= p.createDoubleArray();
+    }
+
+
+    public static final Parcelable.Creator<Animais>
+            CREATOR = new Parcelable.Creator<Animais>() {
+
+        public Animais createFromParcel(Parcel in) {
+            return new Animais(in);
+        }
+
+        public Animais[] newArray(int size) {
+            return new Animais[size];
+        }
+    };
 
     public String getCategoria() {
         return categoria;
@@ -71,11 +88,11 @@ public class Animais implements Parcelable {
         this.consumo = consumo;
     }
 
-    public int getNumAnimais() {
+    public double getNumAnimais() {
         return numAnimais;
     }
 
-    public void setNumAnimais(int numAnimais) {
+    public void setNumAnimais(double numAnimais) {
         this.numAnimais = numAnimais;
     }
 
@@ -135,12 +152,30 @@ public class Animais implements Parcelable {
         this.pesoGanhoPrim = pesoGanhoPrim;
     }
 
+
+
     public double[] getMeses() {
         return meses;
     }
 
     public void setMeses(double[] meses) {
         this.meses = meses;
+    }
+
+    public double getTotalNumAnimais() {
+        return totalNumAnimais;
+    }
+
+    public void setTotalNumAnimais(double totalNumAnimais) {
+        this.totalNumAnimais = totalNumAnimais;
+    }
+
+    public double[] getUaHaPorMes() {
+        return uaHaPorMes;
+    }
+
+    public void setUaHaPorMes(double[] uaHaPorMes) {
+        this.uaHaPorMes = uaHaPorMes;
     }
 
     @Override
@@ -152,7 +187,7 @@ public class Animais implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(categoria);
         dest.writeDouble(consumo);
-        dest.writeInt(numAnimais);
+        dest.writeDouble(numAnimais);
         dest.writeString(entradaMes);
         dest.writeDouble(pesoInicial);
         dest.writeDouble(pesoFinal);
@@ -161,7 +196,7 @@ public class Animais implements Parcelable {
         dest.writeDouble(pesoGanhoInv);
         dest.writeDouble(pesoGanhoPrim);
         dest.writeDoubleArray(meses);
-        dest.writeInt(totalNumAnimais);
+        dest.writeDouble(totalNumAnimais);
         dest.writeDoubleArray(uaHaPorMes);
     }
 

@@ -798,10 +798,12 @@ public class PiqueteActivity extends AppCompatActivity{
                 // get String data from Intent
 
 
-                Animais a = data.getParcelableExtra("animais");
+                Animais a = data.getParcelableExtra("Animais");
                 //int [] arrayRetorno = data.getIntArrayExtra("animais");
 
-                Log.i("retornando array","Opa " + a);
+                Log.i("retornando array", "Oi " + a.getCategoria() +" "+ a.getConsumo()+" "+ a.getNumAnimais() +" "+ a.getEntradaMes() +" "+ a.getPesoInicial() +" "+ a.getPesoFinal() +" "+ a.getPesoGanhoVer() +" "+ a.getPesoGanhoOut() +" "+ a.getPesoGanhoInv() +" "+ a.getPesoGanhoPrim() +" "+ Arrays.toString(a.getMeses())+" "+ a.getTotalNumAnimais()+" "+ Arrays.toString(a.getUaHaPorMes()));
+
+                //Log.d("myTag", a.toString());
             }
         }
     }
