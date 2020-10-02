@@ -19,8 +19,6 @@ public class UsuarioDAO {
 
     private BancoDeDados bd;
 
-
-
     /**
      * Este método conecta o banco com o arquivo Banco de Dados.
      * @param context

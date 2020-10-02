@@ -22,7 +22,15 @@ public class IndexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
 
-        //Pegando a mensagem da activity anterior(MainActivity)
+        inicializa();
+        setListeners();
+    }
+
+    /**
+     * Método utilizado para inicializar os componentes da interface e os objetos da classe.
+     */
+    public void inicializa(){
+        //Recebe a mensagem (nome do usuário) da activity anterior (LoginActivity).
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
 
@@ -30,6 +38,12 @@ public class IndexActivity extends AppCompatActivity {
         tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
 
         bt_cadastrarPropriedade = findViewById(R.id.bt_index);
+    }
+
+    /**
+     * Método utilizado para setar os listener dos botões e tudo mais que for clicável na tela login.
+     */
+    public void setListeners(){
         bt_cadastrarPropriedade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +53,8 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     /**
-     * Pegando o nome do usuário e enviando para a activity propriedade, para depois retorná-lo
+     * Método responsável por iniciar a PropriedadeActivity.
+     * O nome precisa ser enviado junto, caso contrário, quando o usuário retorna, ele é perdido.
      */
     public void cadastrarPropiedade() {
         Intent i = new Intent(IndexActivity.this, PropriedadeActivity.class);
@@ -47,13 +62,19 @@ public class IndexActivity extends AppCompatActivity {
         startActivityForResult(i, this.codigoRequisicao);
     }
 
+    /**
+     * Método responsável por lidar com as respostas enviadas da activity Propriedade.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == this.codigoRequisicao) {
             if(resultCode == Activity.RESULT_OK){
-                nomeUsuario = data.getStringExtra("resultado");
+                nomeUsuario = data.getStringExtra("nomeUsuario");
                 tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
             }
             if (resultCode == Activity.RESULT_CANCELED) {

@@ -1,8 +1,10 @@
 package com.example.projetoEpagri.Classes;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Nesta classe é conectado o banco com o projeto, e aqui sao criados os bancos, as tabelas e as colunas de cada tabela.
@@ -29,7 +31,8 @@ public class BancoDeDados extends SQLiteOpenHelper {
      * @param db
      */
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db){
+        Log.i("banco", "Criei as tabelas!");
         //Tabela de dados do usuário
         db.execSQL("create table usuario(id integer primary key autoincrement,  nome varchar(50), email varchar(100), telefone varchar(50), senha varchar(50))");
         //Tabela de dados da pastagem do sul
@@ -53,5 +56,48 @@ public class BancoDeDados extends SQLiteOpenHelper {
 
     public void setBanco(SQLiteDatabase banco) {
         this.banco = banco;
+    }
+
+    /**
+     * Método utilizado pra verificar se uma tabela existe no banco de dados.
+     * @param tableName
+     * @return
+     */
+    public boolean verificaExistenciaTabela(String tableName) {
+        boolean existe = false;
+        Cursor cursor = this.banco.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName + "'", null);
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                existe = true;
+            }
+            cursor.close();
+        }
+        return existe;
+    }
+
+    /**
+     * Método utilizado para verificar se uma tabela existente está vazia.
+     * @param nomeTabela
+     * @return
+     */
+    public boolean verificaTabelaVazia(String nomeTabela){
+        boolean vazia = true;
+        int count = 0;
+
+        Cursor cursor = this.banco.rawQuery("select * from '" + nomeTabela + "'", null);
+        cursor.moveToFirst();
+
+        if (cursor != null){
+            while(cursor.isAfterLast() == false){
+                cursor.moveToNext();
+                count++;
+            }
+        }
+
+        if(count > 0){
+            vazia = false;
+        }
+
+        return vazia;
     }
 }

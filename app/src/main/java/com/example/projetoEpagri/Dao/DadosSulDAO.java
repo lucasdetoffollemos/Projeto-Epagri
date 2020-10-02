@@ -23,7 +23,6 @@ public class DadosSulDAO {
 
     /**
      * Método para inserir os dados da tabela dadosSul no banco de dados.
-     * @param p
      * @return
      */
     public long inserirPastagem(String pastagem, double condicaoDegradada, double condicaoMedia, double condicaoOtima, int [] meses, int total){
@@ -42,7 +41,7 @@ public class DadosSulDAO {
         values.put("jun",  meses[5]);
         values.put("jul",  meses[6]);
         values.put("ago",  meses[7]);
-        values.put("setem",  meses[8]);
+        values.put("setem", meses[8]);
         values.put("out",  meses[9]);
         values.put("nov",  meses[10]);
         values.put("dez",  meses[11]);
@@ -89,7 +88,6 @@ public class DadosSulDAO {
         Double valorCondicao = 1.0;
         int posicaoColuna = 1;
 
-
         //Aqui é feito a query selecionando os dados vindo do arquivo BancoDeDados.java
         //Seleciona toda a linha da tabela dadosSul, onde o tipo da Pastagem guardada no banco de dados é igual ao tipo  selecionado pelo usuário no spinner.
         Cursor c = bd.getBanco().rawQuery("SELECT * FROM dadosSul WHERE tipoPastagem = '" + tipo +"'", null);
@@ -106,85 +104,48 @@ public class DadosSulDAO {
                 break;
         }
 
-
-
         while (c.moveToNext()) {
-
             valorCondicao = (c.getDouble(posicaoColuna));
-
-            //dadosSul.add(d);
         }
-
 
         return valorCondicao;
     }
 
 
-
-
     public int getMeses(int mes, String tipo){
-
-
-
-        int posicaoColuna = 1;
-
+        int posicaoColuna;
+        int valorDoMes = 1;
 
         Cursor c = bd.getBanco().rawQuery("SELECT * FROM dadosSul WHERE tipoPastagem = '"+ tipo +"'", null);
 
-        if (mes == 1){
-             posicaoColuna = 4;
+        switch (mes){
+            case 1: posicaoColuna = 4; break;
+            case 2: posicaoColuna = 5; break;
+            case 3: posicaoColuna = 6; break;
+            case 4: posicaoColuna = 7; break;
+            case 5: posicaoColuna = 8; break;
+            case 6: posicaoColuna = 9; break;
+            case 7: posicaoColuna = 10; break;
+            case 8: posicaoColuna = 11; break;
+            case 9: posicaoColuna = 12; break;
+            case 10: posicaoColuna = 13; break;
+            case 11: posicaoColuna = 14; break;
+            case 12: posicaoColuna = 15; break;
+            default: posicaoColuna = 1; break;
         }
-        else if(mes == 2){
-            posicaoColuna = 5;
-        }
-
-        else if(mes == 3){
-            posicaoColuna = 6;
-        }
-
-        else if(mes == 4){
-            posicaoColuna = 7;
-        }
-
-        else if(mes == 5){
-            posicaoColuna = 8;
-        }
-
-        else if(mes == 6){
-            posicaoColuna = 9;
-        }
-
-        else if(mes == 7){
-            posicaoColuna = 10;
-        }
-
-        else if(mes == 8){
-            posicaoColuna = 11;
-        }
-
-        else if(mes == 9){
-            posicaoColuna = 12;
-        }
-
-        else if(mes == 10){
-            posicaoColuna = 13;
-        }
-
-        else if(mes == 11){
-            posicaoColuna = 14;
-        }
-
-        else if(mes == 12){
-            posicaoColuna = 15;
-        }
-
-
 
         while (c.moveToNext()){
-            posicaoColuna = (c.getInt(posicaoColuna));
+            valorDoMes = (c.getInt(posicaoColuna));
         }
 
-        return  posicaoColuna;
+        return  valorDoMes;
+    }
 
+    public BancoDeDados getBd() {
+        return bd;
+    }
+
+    public void setBd(BancoDeDados bd) {
+        this.bd = bd;
     }
 }

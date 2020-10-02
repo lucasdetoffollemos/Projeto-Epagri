@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class PropriedadeActivity extends AppCompatActivity {
     private Button bt_proximo;
     private EditText et_nomePropriedade;
-    private EditText et_qtdePiquetes;
+
     private String nomeUsuario;
     private int  CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY = 0;
 
@@ -30,13 +30,25 @@ public class PropriedadeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_propriedade);
 
+        inicializa();
+        setListener();
+    }
+
+    /**
+     * Método utilizado para inicializar os componentes da interface e os objetos da classe.
+     */
+    public void inicializa(){
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
-//        et_qtdePiquetes = findViewById(R.id.et_qtdePiquetes);
-
         bt_proximo = findViewById(R.id.bt_proximo);
+    }
+
+    /**
+     * Método utilizado para setar os listener dos botões e tudo mais que for clicável na tela login.
+     */
+    public void setListener(){
         bt_proximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,6 +57,9 @@ public class PropriedadeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método chamado ao clicar no botão Próximo Passo.
+     */
     public void cadastrarPiquete() {
         String nomePropriedade = et_nomePropriedade.getText().toString();
 
@@ -57,32 +72,17 @@ public class PropriedadeActivity extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Insira o nome da propriedade", Toast.LENGTH_SHORT).show();
         }
-
-//            String qtdePiquetes = et_qtdePiquetes.getText().toString();
-//
-//            i.putExtra("qtde_piquetes", qtdePiquetes);
-//            startActivityForResult(i, this.codigoRequisicao);
-
-
-    }
-
-    public void enviaResposta(){
-        Intent intent = new Intent();
-        intent.putExtra("resultado", nomeUsuario);
-        setResult(Activity.RESULT_OK, intent);
-        finish();
     }
 
     /**
-     * Método chamado ao clicar no botão voltar do celular
+     * Método utilizado para enviar de volta para a IndexActivity o nome do usuário caso ele clique no botão voltar.
      */
-//    @Override
-//    public void onBackPressed (){
-//        enviaResposta();
-//        super.onBackPressed();
-//        Toast.makeText(this, "executei ", Toast.LENGTH_SHORT).show();
-//
-//    }
+    public void enviaResposta(){
+        Intent intent = new Intent();
+        intent.putExtra("nomeUsuario", nomeUsuario);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
 
     /**
      * Método que volta para activity anterior(Index), pela seta de voltar em cima da tela.
@@ -93,17 +93,19 @@ public class PropriedadeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-
                 enviaResposta();
                 return true;
-
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-    // This method is called when the second activity finishes
+    /**
+     * Método responsável por lidar com as respostas enviadas da activity Piquete.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

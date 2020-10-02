@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.util.SparseIntArray;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,140 +16,154 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.Classes.Animais;
-import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Dao.DadosSulDAO;
 import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class PiqueteActivity extends AppCompatActivity{
     private  Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
-    public int i=-1, numeroDeLinhas=0;
-    private  TableRow linha_tabela;
+    public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
+    private TableRow linha_tabela;
     private TableLayout table_layout;
     private DadosSulDAO dadosSulDAO;
-    private ArrayList<Double> listaDeAreas, listaJan, listaFev, listaMar, listaAbr, listaMai, listaJun, listaJul, listaAgo, listaSet, listaOut, listaNov, listaDez, listaVerao, listaOutono, listaInverno, listaPrimavera;
+    private double producaoEstimadaD;
+    private int intTotalTonelada;
+    private ArrayList<double[]> listaTotaisMeses;       //matriz que armazena os valores calculados de todas as linhas para todos os meses.
+    private ArrayList<Double> listaTotaisEstacoes;      //lista de 4 posiçõe para guardar os valores das estações.
+    private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
+    private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
+
     private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
-
-
 
     //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
     private String tipo, condicao, areaS;
     private double areaD;
-    private Spinner sp_tipo, sp_condicao;
-    private EditText et_area;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piquete);
-        listaDeAreas = new ArrayList();
-        listaJan = new ArrayList();
-        listaFev = new ArrayList();
-        listaMar = new ArrayList();
-        listaAbr = new ArrayList();
-        listaMai = new ArrayList();
-        listaJun = new ArrayList();
-        listaJul = new ArrayList();
-        listaAgo = new ArrayList();
-        listaSet = new ArrayList();
-        listaOut = new ArrayList();
-        listaNov = new ArrayList();
-        listaDez = new ArrayList();
-        listaVerao = new ArrayList();
-        listaOutono = new ArrayList();
-        listaInverno = new ArrayList();
-        listaPrimavera = new ArrayList();
 
+        inicializa();
+        setListeners();
+    }
 
-        //Método que tem o spinner para selecionar qual regiao o usário deseja
-        escolherRegiao();
-
+    /**
+     * Método utilizado para inicializar os componentes da interface e os objetos da classe.
+     */
+    public void inicializa(){
+        listaDeAreas = new ArrayList<Double>();
+        listaTotaisMeses = new ArrayList<double[]>();
+        listaTotaisEstacoes = new ArrayList<Double>();
+        listaTextViewTotaisMes = new ArrayList<TextView>();
         dadosSulDAO = new DadosSulDAO(PiqueteActivity.this);
 
+        TextView jan = findViewById(R.id.tv_AreaTotalMesJan);
+        TextView fev = findViewById(R.id.tv_AreaTotalMesFev);
+        TextView mar = findViewById(R.id.tv_AreaTotalMesMar);
+        TextView abr = findViewById(R.id.tv_AreaTotalMesAbr);
+        TextView mai = findViewById(R.id.tv_AreaTotalMesMai);
+        TextView jun = findViewById(R.id.tv_AreaTotalMesJun);
+        TextView jul = findViewById(R.id.tv_AreaTotalMesJul);
+        TextView ago = findViewById(R.id.tv_AreaTotalMesAgo);
+        TextView set = findViewById(R.id.tv_AreaTotalMesSet);
+        TextView out = findViewById(R.id.tv_AreaTotalMesOut);
+        TextView nov = findViewById(R.id.tv_AreaTotalMesNov);
+        TextView dez = findViewById(R.id.tv_AreaTotalMesDez);
+
+        listaTextViewTotaisMes.add(jan);
+        listaTextViewTotaisMes.add(fev);
+        listaTextViewTotaisMes.add(mar);
+        listaTextViewTotaisMes.add(abr);
+        listaTextViewTotaisMes.add(mai);
+        listaTextViewTotaisMes.add(jun);
+        listaTextViewTotaisMes.add(jul);
+        listaTextViewTotaisMes.add(ago);
+        listaTextViewTotaisMes.add(set);
+        listaTextViewTotaisMes.add(out);
+        listaTextViewTotaisMes.add(nov);
+        listaTextViewTotaisMes.add(dez);
+
         table_layout = (TableLayout) findViewById(R.id.table_layout);
-
-
         bt_adicionar_linha = findViewById(R.id.bt_adicionar_linha);
+        bt_remover_linha = findViewById(R.id.bt_remover_linha);
+    }
+
+    /**
+     * Método utilizado para setar os listener dos botões.
+     */
+    public void setListeners(){
         //Quando clicado no botao de mais, é acionado está funçao.
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adicionarLinhaTabela();
-                i++;
+                //Infla a linha para a tabela
+                linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
+                adicionarLinhaTabela(linha_tabela);
+                setListenersDinamicos(linha_tabela);
+
+                posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
                 numeroDeLinhas++;
-                //Toast.makeText(getApplicationContext(), "OI", Toast.LENGTH_SHORT).show();
+
+                if(listaDeAreas.size() < numeroDeLinhas){
+                    listaDeAreas.add(0.0);
+                }
             }
         });
 
         //Quando clicado no botao de menos, é acionado está funçao, que tem como objetivo excluir cada linha da tabela.
-        bt_remover_linha = findViewById(R.id.bt_remover_linha);
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
+                posicaoLinhaTabela--;
 
-                table_layout.removeView(table_layout.getChildAt(i));
-                i--;
-
-                if(i >= -1){
+                if(posicaoLinhaTabela >= -1){
                     listaDeAreas.remove(numeroDeLinhas-1);
-                    listaJan.remove(numeroDeLinhas-1);
-                    listaFev.remove(numeroDeLinhas-1);
-                    listaMar.remove(numeroDeLinhas-1);
-                    listaAbr.remove(numeroDeLinhas-1);
-                    listaMai.remove(numeroDeLinhas-1);
-                    listaJun.remove(numeroDeLinhas-1);
-                    listaJul.remove(numeroDeLinhas-1);
-                    listaAgo.remove(numeroDeLinhas-1);
-                    listaSet.remove(numeroDeLinhas-1);
-                    listaOut.remove(numeroDeLinhas-1);
-                    listaNov.remove(numeroDeLinhas-1);
-                    listaDez.remove(numeroDeLinhas-1);
-                    listaVerao.remove(numeroDeLinhas-1);
-                    listaOutono.remove(numeroDeLinhas-1);
-                    listaInverno.remove(numeroDeLinhas-1);
-                    listaPrimavera.remove(numeroDeLinhas-1);
+                    listaTotaisMeses.remove(numeroDeLinhas-1);
+
+                    double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+                    if(listaTotaisMeses.size() < numeroDeLinhas){
+                        listaTotaisMeses.add(startArray);
+                    }
+
                     numeroDeLinhas--;
-                    calculaTotais(-2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
                 }
-
                 else{
-                   i++;
+                    listaTotaisEstacoes.set(0, 0.0);
+                    listaTotaisEstacoes.set(1, 0.0);
+                    listaTotaisEstacoes.set(2, 0.0);
+                    listaTotaisEstacoes.set(3, 0.0);
+
+                    posicaoLinhaTabela = -1;
                 }
-                //ERRO NO CÓDIGO, AOS SER CLICADO DUAS VEZES NO BOTAO DE MENOS
-
-
-
-
-                //Toast.makeText(getApplicationContext(), "tCHAU", Toast.LENGTH_SHORT).show();
+                calculaTotais();
             }
         });
-
 
         bt_proximo_passo = findViewById(R.id.bt_proximo_passo);
         bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 irParaAnimaisActivity();
             }
         });
+
+        //Método que tem o spinner para selecionar qual regiao o usário deseja
+        escolherRegiao();
     }
 
-
-
+    /**
+     * Método responsável por retornar valores de cálculo do banco dependendo da escolha do usuário (região norte ou sul).
+     */
     private void escolherRegiao() {
-
         ArrayList<String> regiaoPiquete = new ArrayList<>();
         regiaoPiquete.add("Sul");
         regiaoPiquete.add("Norte");
-
 
         Spinner spinnerRegiaoPiquete = findViewById(R.id.spinnerRegiao);
         ArrayAdapter<String> spinnerRegiaoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, regiaoPiquete);
@@ -163,10 +174,7 @@ public class PiqueteActivity extends AppCompatActivity{
     /**
      * Método responsável por adicionar uma linha na tabela oferta atual e configurar o adapter dos spinners.
      */
-    private void adicionarLinhaTabela(){
-        //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
-
+    private void adicionarLinhaTabela(TableRow linha_tabela){
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
         ArrayList<String> tipoPiquete = dadosSulDAO.getTiposPastagem();
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
@@ -190,87 +198,46 @@ public class PiqueteActivity extends AppCompatActivity{
         spinnerCondicaoPiquete.setAdapter(spinnerCondicaoAdapter);
 
         // Define uma tag para cada linha da tabela.
-        linha_tabela.setTag(i);
+        linha_tabela.setTag(posicaoLinhaTabela);
 
         //Adicionando as Linhas da tabela no layout da tabela
         table_layout.addView(linha_tabela);
-
-        identificaElementosDaLinha(linha_tabela);
     }
 
-
-
-
-
+     /* primeira linha = -1
+        segunda linha = 0
+        terceira linha = 1
+        Dentro da linha
+            spinnerTipo = getchildAt(0)
+            spinnerCondicao = getchildAt(1)
+            campoArea = getchildAt(2) */
 
     /**
      * Identifica os elementos dentro da TableRow que foi inflada e chama o método de calcular quando algum valor
      * é escolhido nos spinners ou texto digitado no campo área.
-     * @param linha
+     * @param linha_tabela
      */
-    private void identificaElementosDaLinha(final TableRow linha) {
-        final Spinner spinnerTipo = (Spinner) linha.getChildAt(0);
-        final Spinner spinnerCondicao = (Spinner) linha.getChildAt(1);
-        final EditText editTextArea = (EditText) linha.getChildAt(2);
-
-
+    private void setListenersDinamicos(final TableRow linha_tabela) {
+        final Spinner spinnerTipo = (Spinner) linha_tabela.getChildAt(0);
+        final Spinner spinnerCondicao = (Spinner) linha_tabela.getChildAt(1);
+        final EditText editTextArea = (EditText) linha_tabela.getChildAt(2);
 
         //Quando o spinner TIPO for clicado, a funçao ira convereter o spinner para string, e logo depois ira chamar a funçao calcular().
         spinnerTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sp_tipo = spinnerTipo;
-                tipo = sp_tipo.getSelectedItem().toString();
-
-                sp_condicao = spinnerCondicao;
-                condicao = sp_condicao.getSelectedItem().toString();
-
-                et_area = editTextArea;
-                areaS = et_area.getText().toString();
-
-                if(areaS.length() > 0) {
-                    areaD = Double.parseDouble(areaS);
-                }
-                else{
-                    areaD = 0;
-                }
-
-                calcular(linha, tipo, condicao, areaD);
-
+                lerValoresLinhaECalcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
             }
-
-
-
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-
-
-
         //Quando o spinner CONDIÇAO for clicado, a funçao ira converter o spinner para string, e logo depeois chamar a funçao calcular()
         spinnerCondicao.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sp_tipo = spinnerTipo;
-                tipo = sp_tipo.getSelectedItem().toString();
-
-                sp_condicao = spinnerCondicao;
-                condicao = sp_condicao.getSelectedItem().toString();
-
-                et_area = editTextArea;
-
-                areaS = et_area.getText().toString();
-
-                if(areaS.length() > 0) {
-                    areaD = Double.parseDouble(areaS);
-                }
-                else{
-                    areaD = 0;
-                }
-
-                calcular(linha, tipo, condicao, areaD);
+                lerValoresLinhaECalcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
             }
 
             @Override
@@ -284,524 +251,251 @@ public class PiqueteActivity extends AppCompatActivity{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sp_tipo = spinnerTipo;
-                tipo = sp_tipo.getSelectedItem().toString();
-
-                sp_condicao = spinnerCondicao;
-                condicao = sp_condicao.getSelectedItem().toString();
-
-                et_area = editTextArea;
-                areaS = et_area.getText().toString();
-
-                if(areaS.length() > 0) {
-                    areaD = Double.parseDouble(areaS);
-                }
-                else{
-                    areaD = 0;
-                }
-
-
-                calcular(linha, tipo, condicao, areaD);
+                lerValoresLinhaECalcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-
     }
 
+    /**
+     * Método utilizado para ler os valores preenchidos pelo usuário (spinners e área) e fazer os cálculos de produção
+     * estimada, meses e total.
+     * @param linha_tabela
+     * @param spinnerTipo
+     * @param spinnerCondicao
+     * @param editTextArea
+     */
+    public void lerValoresLinhaECalcular(final TableRow linha_tabela, Spinner spinnerTipo, Spinner spinnerCondicao, EditText editTextArea){
+        tipo = spinnerTipo.getSelectedItem().toString();
+        condicao = spinnerCondicao.getSelectedItem().toString();
+        areaS = editTextArea.getText().toString();
 
+        int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
 
-    /*
-        primeira linha = -1
-        segunda linha = 0
-        terceira linha = 1
-        Dentro da linha
-            spinnerTipo = getchildAt(0)
-            spinnerCondicao = getchildAt(1)
-            campoArea = getchildAt(2)
+        //Adiciona as áreas digitadas na lista de áreas.
+        if(areaS.length() > 0) {
+            areaD = Double.parseDouble(areaS);
+        }
+        else{
+            areaD = 0;
+        }
+        listaDeAreas.set(posicao, areaD);
 
-    */
+        //Cálcula a producão estimada.
+        calculaProducaoEstimada(linha_tabela, tipo, condicao, areaD);
 
-    //Criando as variaveis fora do método, para depois leva-las para o Objeto.
-    double producaoEstimadaD,  mesJanD, mesFevD, mesMarD, mesAbrD, mesMaiD, mesJunD, mesJulD, mesAgoD, mesSetD, mesOutD, mesNovD, mesDezD;
-    double [] arrayMesesProd;
-    Integer intTotalTonelada;
+        //Cálcula a produção para cada mês.
+        double [] arrayMesesProd = new double[12];
+        double totalToneladaAnual = 0;
+        for(int i=1; i<=12; i++){
+            arrayMesesProd[i-1] = calculaMes(linha_tabela, tipo, condicao, areaD, i);
+            totalToneladaAnual = totalToneladaAnual + arrayMesesProd[i-1];
+        }
 
+        //Mostra o Total (direita).
+        TextView total = (TextView) linha_tabela.getChildAt(16);
+        intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
+        total.setText(String.valueOf(intTotalTonelada));
+
+        /*Mapeia os dados para a matriz.
+        Salva os valores calculados para cada mes (em todas as linhas) em uma matriz.
+        Adiciona inicialmente um array de zeros na lista pois o método é chamado antes do cálculo ser realizado.
+        Ao clicar no botão de adicionar linha, o método já é chamado e adiciona-se o vetor de zeros.
+        Ao preencher os campos, chama-se novamente, atualizando o vetor de zeros.*/
+        double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+        if(listaTotaisMeses.size() < numeroDeLinhas){
+            listaTotaisMeses.add(startArray);
+        }
+        else{
+            listaTotaisMeses.set(posicao, arrayMesesProd);
+        }
+
+        calculaTotais();
+    }
 
     /**
-     * Método responsavel, por pegar os valores dos spinners, TIPO e CONDIÇÃO, e pegar o editText ÁREA, e realizar os cáculos de pastagem mensal. Também setar uma tag para cada elemento da linha.
-     * @param linha
+     * Método para calcula a produção estimada.
+     */
+    public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
+        DecimalFormat doisDecimais = new DecimalFormat("#.##");
+        TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
+        producaoEstimadaD = (dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
+        String producaoEstimada = doisDecimais.format(producaoEstimadaD);
+        tv_prod.setText(String.valueOf(producaoEstimada));
+    }
+
+    /**
+     * Método para calcular a produção em cada um dos meses.
+     * @param linha_tabela
      * @param tipoPastagem
      * @param condicao
      * @param area
+     * @param mes
      */
-    public  void calcular(final TableRow linha, String tipoPastagem, String condicao, double area) {
-
+    public double calculaMes(final TableRow linha_tabela, String tipoPastagem, String condicao, double area, int mes){
         //Arredonda o cálculo para 2 decimais.
-         DecimalFormat doisDecimais = new DecimalFormat("#.##");
-         Double aproveitamento = 0.60;
+        DecimalFormat doisDecimais = new DecimalFormat("#.##");
+        Double aproveitamento = 0.60;
 
+        //Janeiro está na posição 4, por isso mes+3.
+        TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
-//        Toast.makeText(this, "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area, Toast.LENGTH_SHORT).show();
-        //Log.i("CALCULAR", "Tipo: " + tipoPastagem + " Cond: " + condicao + " Área: " + area);
+        double valor = (float)dadosSulDAO.getMeses(mes, tipoPastagem)/100;
+        valor = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
+        String resultado = doisDecimais.format(valor);
 
-        //TO DO.
-        //Aqui é feito o calculo da produçao estimada
-        TextView tv_prod = (TextView) linha.getChildAt(3);
-        producaoEstimadaD = (dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
-        String producaoEstimada = doisDecimais.format( producaoEstimadaD);
-        tv_prod.setText(String.valueOf(producaoEstimada));
-
-        //Janeiro
-
-        TextView janeiro = (TextView) linha.getChildAt(4);
-        double mesJan = (float)dadosSulDAO.getMeses(1, tipoPastagem)/100;
-         mesJanD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJan* area);
-        String resultadoJan = doisDecimais.format(mesJanD);
-
-        if(mesJan != 0){
-            janeiro.setText(String.valueOf(resultadoJan));
+        if(valor != 0){
+            tv_mes.setText(String.valueOf(resultado));
         }
         else {
-            janeiro.setText(" ");
+            tv_mes.setText(" ");
         }
-       //
 
-
-        //Fevereiro
-        TextView fevereiro = (TextView) linha.getChildAt(5);
-        double mesFev = (float)dadosSulDAO.getMeses(2, tipoPastagem)/100;
-         mesFevD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesFev* area);
-        String resultadoFev = doisDecimais.format(mesFevD);
-        if(mesFev != 0){
-            fevereiro.setText(String.valueOf(resultadoFev));
-        }
-        else {
-            fevereiro.setText(" ");
-        }
-        //
-
-        //Março
-        TextView marco = (TextView) linha.getChildAt(6);
-        double mesMar = (float)dadosSulDAO.getMeses(3, tipoPastagem)/100;
-        mesMarD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMar* area);
-        String resultadoMar = doisDecimais.format(mesMarD);
-        if(mesMar != 0){
-            marco.setText(String.valueOf(resultadoMar));
-        }
-        else {
-            marco.setText(" ");
-        }
-        //
-
-        //Abril
-        TextView abril = (TextView) linha.getChildAt(7);
-        double mesAbr = (float)dadosSulDAO.getMeses(4, tipoPastagem)/100;
-        mesAbrD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAbr* area);
-        String resultadoAbr = doisDecimais.format(mesAbrD);
-        if(mesAbr != 0){
-            abril.setText(String.valueOf(resultadoAbr));
-        }
-        else {
-            abril.setText(" ");
-        }
-        //
-
-        //Maio
-        TextView maio= (TextView) linha.getChildAt(8);
-        double mesMaio = (float)dadosSulDAO.getMeses(5, tipoPastagem)/100;
-        mesMaiD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesMaio* area);
-        String resultadoMaio = doisDecimais.format(mesMaiD);
-        if(mesMaio != 0){
-            maio.setText(String.valueOf(resultadoMaio));
-        }
-        else {
-            maio.setText(" ");
-        }
-        //
-
-
-        //Junho
-        TextView junho = (TextView) linha.getChildAt(9);
-        double mesJunho = (float)dadosSulDAO.getMeses(6, tipoPastagem)/100;
-        mesJunD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJunho* area);
-        String resultadoJunho = doisDecimais.format(mesJunD);
-        if(mesJunho != 0){
-            junho.setText(String.valueOf(resultadoJunho));
-        }
-        else {
-            junho.setText(" ");
-        }
-        //
-
-
-        //Julho
-        TextView julho = (TextView) linha.getChildAt(10);
-        double mesJul = (float)dadosSulDAO.getMeses(7, tipoPastagem)/100;
-         mesJulD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesJul* area);
-        String resultadoJul = doisDecimais.format(mesJulD);
-        if(mesJul != 0){
-            julho.setText(String.valueOf(resultadoJul));
-        }
-        else {
-            julho.setText(" ");
-        }
-        //
-
-        //Agosto
-        TextView agosto = (TextView) linha.getChildAt(11);
-        double mesAgo = (float)dadosSulDAO.getMeses(8, tipoPastagem)/100;
-        mesAgoD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesAgo* area);
-        String resultadoAgo = doisDecimais.format(mesAgoD);
-        if(mesAgo != 0){
-            agosto.setText(String.valueOf(resultadoAgo));
-        }
-        else {
-            agosto.setText(" ");
-        }
-        //
-
-        //Setembro
-        TextView setembro = (TextView) linha.getChildAt(12);
-        double mesSet = (float)dadosSulDAO.getMeses(9, tipoPastagem)/100;
-       mesSetD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesSet* area);
-        String resultadoSet = doisDecimais.format(mesSetD);
-        if(mesSet != 0){
-            setembro.setText(String.valueOf(resultadoSet));
-        }
-        else {
-            setembro.setText(" ");
-        }
-        //
-
-
-        //Outubro
-        TextView outubro = (TextView) linha.getChildAt(13);
-        double mesOut = (float)dadosSulDAO.getMeses(10, tipoPastagem)/100;
-        mesOutD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesOut* area);
-        String resultadoOut = doisDecimais.format(mesOutD);
-        if(mesOut != 0){
-            outubro.setText(String.valueOf(resultadoOut));
-        }
-        else {
-            outubro.setText(" ");
-        }
-        //
-
-        //Novembro
-        TextView novembro = (TextView) linha.getChildAt(14);
-        double mesNov = (float)dadosSulDAO.getMeses(11, tipoPastagem)/100;
-       mesNovD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesNov* area);
-        String resultadoNov = doisDecimais.format(mesNovD);
-        if(mesNov != 0){
-            novembro.setText(String.valueOf(resultadoNov));
-        }
-        else {
-            novembro.setText(" ");
-        }
-        //
-
-        //Dezembro
-        TextView dezembro = (TextView) linha.getChildAt(15);
-        double mesDez = (float)dadosSulDAO.getMeses(12, tipoPastagem)/100;
-        mesDezD = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * mesDez* area);
-        String resultadoDez = doisDecimais.format(mesDezD);
-        if(mesDez != 0){
-            dezembro.setText(String.valueOf(resultadoDez));
-        }
-        else {
-            dezembro.setText(" ");
-        }
-        //Array que sera levado para o objeto Piquete
-        arrayMesesProd = new double[]{mesJanD, mesFevD, mesMarD, mesAbrD, mesMaiD, mesJunD, mesJulD, mesAgoD, mesSetD, mesOutD, mesNovD, mesDezD};
-
-
-        //Total
-        TextView total = (TextView) linha.getChildAt(16);
-        double totalToneladaAnual = mesJanD  + mesFevD + mesMarD + mesAbrD + mesMaiD + mesJunD +  mesJulD + mesAgoD + mesSetD + mesOutD + mesNovD + mesDezD;
-        intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
-        String strTotalToneladaAnual = String.valueOf(intTotalTonelada);
-        total.setText(strTotalToneladaAnual);
-
-
-        //Estações
-        double estaVerao = mesJanD + mesFevD + mesDezD;
-        double estaOutono = mesMarD + mesAbrD + mesMaiD;
-        double estaInverno = mesJunD + mesJulD + mesAgoD;
-        double estaPrimavera = mesSetD + mesOutD + mesNovD;
-
-        //Chama a função de calcular os totais.
-        calculaTotais((Integer) linha.getTag(), area, mesJanD, mesFevD, mesMarD, mesAbrD, mesMaiD, mesJunD, mesJulD, mesAgoD, mesSetD, mesOutD, mesNovD, mesDezD, estaVerao, estaOutono, estaInverno, estaPrimavera);
-        //String texto = linha.getTag().toString();
-        // Toast.makeText(getApplicationContext(), texto, Toast.LENGTH_SHORT).show();
+        return valor;
     }
 
+    /**
+     * Método para calcular os totais de cada coluna (mês).
+     */
+    public void calculaTotais(){
+        //Arredonda o cálculo para 2 decimais.
+        DecimalFormat doisDecimais = new DecimalFormat("#.##");
 
-    //
-    double [] totaisEstacao;
-    double [] totaisMeses;
-    double somaJan = 0.0, somaFev = 0.0, somaMar = 0.0, somaAbr = 0.0, somaMai = 0.0, somaJun = 0.0, somaJul = 0.0, somaAgo = 0.0, somaSet = 0.0, somaOut = 0.0, somaNov = 0.0, somaDez = 0.0, somaVer, somaOutono, somaInverno, somaPrimavera, somaDasAreas;
-
-    public void calculaTotais(int linhaAtual, double area, double mesJan, double mesFev, double mesMar, double mesAbr, double mesMai, double mesJun, double mesJul, double mesAgo, double mesSet, double mesOut, double mesNov, double mesDez, double verao, double outono, double inverno, double primavera){
-        //Toast.makeText(this, "Linha Atual: " + linhaAtual, Toast.LENGTH_SHORT).show();
-
-         DecimalFormat doisDecimais = new DecimalFormat("#.##");
-        //Testa o tamanho do array com o numero de linha
-        //Entra no if quando o botao de adicionar linhas é pressionado.
-        if(listaDeAreas.size()< numeroDeLinhas && listaJan.size() < numeroDeLinhas && listaFev.size() < numeroDeLinhas && listaMar.size() < numeroDeLinhas && listaAbr.size() < numeroDeLinhas && listaMai.size() < numeroDeLinhas && listaJun.size() < numeroDeLinhas && listaJul.size() < numeroDeLinhas && listaAgo.size() < numeroDeLinhas && listaSet.size() < numeroDeLinhas && listaOut.size() < numeroDeLinhas && listaNov.size() < numeroDeLinhas && listaDez.size() < numeroDeLinhas && listaVerao.size() < numeroDeLinhas && listaOutono.size() < numeroDeLinhas && listaInverno.size() < numeroDeLinhas && listaPrimavera.size() < numeroDeLinhas){
-            listaDeAreas.add(0.0);
-            listaJan.add(0.0);
-            listaFev.add(0.0);
-            listaMar.add(0.0);
-            listaAbr.add(0.0);
-            listaMai.add(0.0);
-            listaJun.add(0.0);
-            listaJul.add(0.0);
-            listaAgo.add(0.0);
-            listaSet.add(0.0);
-            listaOut.add(0.0);
-            listaNov.add(0.0);
-            listaDez.add(0.0);
-            listaVerao.add(0.0);
-            listaOutono.add(0.0);
-            listaInverno.add(0.0);
-            listaPrimavera.add(0.0);
+        //Calcula a área total.
+        double areaTotal = 0.0;
+        for(int i=0; i<listaDeAreas.size(); i++){
+            areaTotal = areaTotal + listaDeAreas.get(i);
         }
-        else{
-            //LinhaAtual = -2 quando o botão de remover linha é pressionado.
-            if(linhaAtual != -2) {
-                //linhaAtual+1 pois a primeira posição do array é 0 e a primeira linhaAtual é -1.
-                listaDeAreas.set(linhaAtual + 1, area);
-                listaJan.set(linhaAtual + 1, mesJan);
-                listaFev.set(linhaAtual + 1, mesFev);
-                listaMar.set(linhaAtual + 1, mesMar);
-                listaAbr.set(linhaAtual + 1, mesAbr);
-                listaMai.set(linhaAtual + 1, mesMai);
-                listaJun.set(linhaAtual + 1, mesJun);
-                listaJul.set(linhaAtual + 1, mesJul);
-                listaAgo.set(linhaAtual + 1, mesAgo);
-                listaSet.set(linhaAtual + 1, mesSet);
-                listaOut.set(linhaAtual + 1, mesOut);
-                listaNov.set(linhaAtual + 1, mesNov);
-                listaDez.set(linhaAtual + 1, mesDez);
+        TextView area = findViewById(R.id.tv_AreaTotalNum);
+        area.setText(doisDecimais.format(areaTotal));
 
-                listaVerao.set(linhaAtual + 1, verao);
-                listaOutono.set(linhaAtual + 1, outono);
-                listaInverno.set(linhaAtual + 1, inverno);
-                listaPrimavera.set(linhaAtual + 1, primavera);
+        //Inicializa a lista de totais das estações. Somente entra no if na primeira execução (quando o botão de + é clicado
+        //e o numero de linhas é maior que o tamanho da lista.
+        //Adiciona-se valores zero para depois serem atualizados conforme os cálculos vão sendo realizados.
+        if(listaTotaisEstacoes.size() < numeroDeLinhas){
+            listaTotaisEstacoes.add(0.0); //Verao
+            listaTotaisEstacoes.add(0.0); //Outono
+            listaTotaisEstacoes.add(0.0); //Inverno
+            listaTotaisEstacoes.add(0.0); //Primavera
+        }
+        else{  //evita que o valor já calculado seja somado novamente, pois o método é chamado uma vez para cada spinner (quando adiciona-se uma linha).
+            listaTotaisEstacoes.set(0, 0.0);
+            listaTotaisEstacoes.set(1, 0.0);
+            listaTotaisEstacoes.set(2, 0.0);
+            listaTotaisEstacoes.set(3, 0.0);
+        }
+
+        double total = 0.0;
+        int i=0, j=0;
+
+        //Calcula o total para cada mês percorrendo a matriz de valores.
+        //i = linha e j = coluna.
+        while(i<listaTotaisMeses.size()){
+            total = total + listaTotaisMeses.get(i)[j];
+
+            //Ao chegar na última linha, retorna para a primeira e passa para a proxima coluna.
+            if((i+1) == listaTotaisMeses.size()){
+                i=0;
+
+                //Define o texto nos textviews de acordo com cada mês.
+                switch (j){
+                    case 0:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 1:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 2:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 3:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 4:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 5:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 6:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 7:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 8:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 9:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 10:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                    case 11:
+                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
+                        break;
+                }
+
+                //Enquanto não chega no último mês, vai armazendo os valores calculados na lista de totais da estação.
+                //Ao chegar no final, atualiza o texto dos textviews.
+                if(j+1 < 12) {
+                    //Verao
+                    if(( j == 0 || j == 1)){
+                        listaTotaisEstacoes.set(0, listaTotaisEstacoes.get(0) + total);
+                    }
+
+                    //Outono
+                    if(j == 2 || j == 3 || j == 4){
+                        listaTotaisEstacoes.set(1, listaTotaisEstacoes.get(1) + total);
+                    }
+
+                    //Inverno
+                    if(j == 5 || j == 6 || j == 7){
+                        listaTotaisEstacoes.set(2, listaTotaisEstacoes.get(2) + total);
+                    }
+
+                    //Primavera
+                    if(j == 8 || j == 9 || j == 10){
+                        listaTotaisEstacoes.set(3, listaTotaisEstacoes.get(3) + total);
+                    }
+
+                    j++;
+                    total = 0.0;
+                }
+                else{
+                    //Esse cálculo fica aqui pois quando o j=11 ele não entra no if (acima).
+                    if(j == 11){
+                        listaTotaisEstacoes.set(0, listaTotaisEstacoes.get(0) + total);
+                    }
+
+                    TextView totalVer = findViewById(R.id.tv_AreaTotalVer);
+                    TextView totalOut = findViewById(R.id.tv_AreaTotalOut);
+                    TextView totalInv = findViewById(R.id.tv_AreaTotalInve);
+                    TextView totalPrim = findViewById(R.id.tv_AreaTotalPrim);
+
+                    totalVer.setText(doisDecimais.format(listaTotaisEstacoes.get(0)));
+                    totalOut.setText(doisDecimais.format(listaTotaisEstacoes.get(1)));
+                    totalInv.setText(doisDecimais.format(listaTotaisEstacoes.get(2)));
+                    totalPrim.setText(doisDecimais.format(listaTotaisEstacoes.get(3)));
+                    break;
+                }
+            }
+            else{
+                i++;
             }
         }
-
-        //Area total Pastagem
-        somaDasAreas = 0.0;
-        for(int i=0; i<listaDeAreas.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaDasAreas = somaDasAreas + listaDeAreas.get(i);
-        }
-
-        TextView totalHa = findViewById(R.id.tv_AreaTotalNum);
-        totalHa.setText(String.valueOf(somaDasAreas)+ "ha");
-
-        //Mes janeiro
-        somaJan = 0.0;
-        for(int i=0; i<listaJan.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-
-             somaJan = somaJan + listaJan.get(i);
-        }
-
-        TextView totalJan = findViewById(R.id.tv_AreaTotalMesJan);
-        totalJan.setText(String.valueOf(doisDecimais.format(somaJan)));
-
-
-        //Mes fevereiro
-         somaFev = 0.0;
-        for(int i=0; i<listaFev.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaFev = somaFev + listaFev.get(i);
-        }
-
-        TextView totalFev = findViewById(R.id.tv_AreaTotalMesFev);
-        totalFev.setText(String.valueOf(doisDecimais.format(somaFev)));
-
-
-        //Mes março
-         somaMar = 0.0;
-        for(int i=0; i<listaMar.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaMar = somaMar + listaMar.get(i);
-        }
-
-        TextView totalMar = findViewById(R.id.tv_AreaTotalMesMar);
-        totalMar.setText(String.valueOf(doisDecimais.format(somaMar)));
-//
-//        //Mes abril
-         somaAbr = 0.0;
-        for(int i=0; i<listaAbr.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaAbr = somaAbr + listaAbr.get(i);
-        }
-
-        TextView totalAbr = findViewById(R.id.tv_AreaTotalMesAbr);
-        totalAbr.setText(String.valueOf(doisDecimais.format(somaAbr)));
-//
-//
-//        //Mes MAIO
-         somaMai = 0.0;
-        for(int i=0; i<listaMai.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaMai = somaMai + listaMai.get(i);
-        }
-
-        TextView totalMai = findViewById(R.id.tv_AreaTotalMesMai);
-        totalMai.setText(String.valueOf(doisDecimais.format(somaMai)));
-//
-//        //Mes junho
-         somaJun = 0.0;
-        for(int i=0; i<listaJun.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaJun = somaJun + listaJun.get(i);
-        }
-
-        TextView totalJun = findViewById(R.id.tv_AreaTotalMesJun);
-        totalJun.setText(String.valueOf(doisDecimais.format(somaJun)));
-
-//        //Mes julho Jul
-         somaJul = 0.0;
-        for(int i=0; i<listaJul.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaJul = somaJul + listaJul.get(i);
-        }
-
-        TextView totalJul = findViewById(R.id.tv_AreaTotalMesJul);
-        totalJul.setText(String.valueOf(doisDecimais.format(somaJul)));
-//
-//        //Mes agosto
-        somaAgo = 0.0;
-        for(int i=0; i<listaAgo.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaAgo = somaAgo + listaAgo.get(i);
-        }
-
-        TextView totalAgo = findViewById(R.id.tv_AreaTotalMesAgo);
-        totalAgo.setText(String.valueOf(doisDecimais.format(somaAgo)));
-//
-//        //Mes setembro
-         somaSet = 0.0;
-        for(int i=0; i<listaSet.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaSet = somaSet + listaSet.get(i);
-        }
-
-        TextView totalSet = findViewById(R.id.tv_AreaTotalMesSet);
-        totalSet.setText(String.valueOf(doisDecimais.format(somaSet)));
-//
-//        //Mes outubro Out
-         somaOut = 0.0;
-        for(int i=0; i<listaOut.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaOut = somaOut + listaOut.get(i);
-        }
-
-        TextView totalOut = findViewById(R.id.tv_AreaTotalMesOut);
-        totalOut.setText(String.valueOf(doisDecimais.format(somaOut)));
-//
-//        //Mes novembro
-         somaNov = 0.0;
-        for(int i=0; i<listaNov.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaNov = somaNov + listaNov.get(i);
-        }
-
-        TextView totalNov = findViewById(R.id.tv_AreaTotalMesNov);
-        totalNov.setText(String.valueOf(doisDecimais.format(somaNov)));
-//
-//        //Mes dezembro Dez
-         somaDez = 0.0;
-        for(int i=0; i<listaDez.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaDez = somaDez + listaDez.get(i);
-        }
-
-        TextView totalDez = findViewById(R.id.tv_AreaTotalMesDez);
-        totalDez.setText(String.valueOf(doisDecimais.format(somaDez)));
-
-
-       //Verao
-        somaVer = 0.0;
-        for(int i=0; i<listaVerao.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaVer = somaVer + listaVerao.get(i);
-        }
-
-        TextView totalVer = findViewById(R.id.tv_AreaTotalVer);
-        totalVer.setText(String.valueOf(doisDecimais.format(somaVer)));
-
-
-
-
-       //Outono
-        somaOutono = 0.0;
-        for(int i=0; i<listaOutono.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaOutono = somaOutono + listaOutono.get(i);
-        }
-
-        TextView totalOutono = findViewById(R.id.tv_AreaTotalOut);
-        totalOutono.setText(String.valueOf(doisDecimais.format(somaOutono)));
-
-
-
-
-
-        //Inverno
-        somaInverno = 0.0;
-        for(int i=0; i<listaInverno.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaInverno = somaInverno + listaInverno.get(i);
-        }
-
-        TextView totalInverno = findViewById(R.id.tv_AreaTotalInve);
-        totalInverno.setText(String.valueOf(doisDecimais.format(somaInverno)));
-
-
-
-        //Primavera
-        somaPrimavera = 0.0;
-        for(int i=0; i<listaPrimavera.size(); i++){
-            //Log.i("LISTA AREA", ""+listaDeAreas.get(i));
-            somaPrimavera = somaPrimavera + listaPrimavera.get(i);
-        }
-
-        TextView totalPrimavera = findViewById(R.id.tv_AreaTotalPrim);
-        totalPrimavera.setText(String.valueOf(doisDecimais.format(somaPrimavera)));
-
-
-        totaisMeses = new double[] {somaJan, somaFev, somaMar, somaAbr, somaMai, somaJun, somaJul, somaAgo, somaSet, somaOut, somaNov, somaDez};
-        totaisEstacao = new double[]{somaVer, somaOutono, somaInverno, somaPrimavera};
-
-
-
-        //Log.i(" PIQUETE ", " TIPO: "+ p.getTipo() + " COND " + p.getCondicao() + " AREA " + p.getArea()+ " PRODUCAO "+ p.getProdEstimada() + " ARRAY MESES " + Arrays.toString(p.getMeses()) + " TOTAL "+ p.getTotal()+ " SOMA AREAS " + p.getTotalColunaHa() + " TOTAIS MESES "+ Arrays.toString(p.getTotaisMeses()) + " TOTAIS ESTACÃO " + Arrays.toString(p.getTotaisEstacao()));
     }
 
     /**
      * Método chamado toda vez que o botão Próximo Passo é clicado, e tem como objetivo levar o usário para outra activity e mandar um array de totais/mês. (Obs: método é acionado, no onclick do Botao Proximo Passo, que se encontra em activity_piquete.xml)
      */
     public void irParaAnimaisActivity() {
-
-
-
-        //Bundle serve  basicamente para passar dados entre Activities.
-        Bundle enviaValores = new Bundle();
-        enviaValores.putDoubleArray("Valores totais/mês Ha", totaisMeses);
-
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
-        i.putExtras(enviaValores);
+        i.putExtra("listaTotaisMeses", listaTotaisMeses);
         startActivityForResult(i, CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
-
     }
 
 
@@ -814,35 +508,24 @@ public class PiqueteActivity extends AppCompatActivity{
         // check that it is the SecondActivity with an OK result
         if (requestCode == CODIGO_REQUISICAO_ANIMAIS_ACTIVITY) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-
                 // get String data from Intent
-
 
                 a = data.getParcelableExtra("Animais");
                 //int [] arrayRetorno = data.getIntArrayExtra("animais");
-
                //Log.i("Animais", "Oi " + a.getCategoria() +" "+ a.getConsumo()+" "+ a.getNumAnimais() +" "+ a.getEntradaMes() +" "+ a.getPesoInicial() +" "+ a.getPesoFinal() +" "+ a.getPesoGanhoVer() +" "+ a.getPesoGanhoOut() +" "+ a.getPesoGanhoInv() +" "+ a.getPesoGanhoPrim() +" "+ Arrays.toString(a.getMeses())+" "+ a.getTotalNumAnimais()+" "+ Arrays.toString(a.getUaHaPorMes()));
-
-               finalizaEnvio();
-
-
-
+               //finalizaEnvio();
             }
         }
     }
 
 
-    private void finalizaEnvio() {
-
+    /*private void finalizaEnvio() {
            a = new Animais(a.getCategoria(), a.getConsumo(), a.getNumAnimais(), a.getEntradaMes(), a.getPesoInicial(), a.getPesoFinal(), a.getPesoGanhoVer(),a.getPesoGanhoOut(), a.getPesoGanhoInv(),a.getPesoGanhoPrim(), a.getMeses(), a.getTotalNumAnimais(), a.getUaHaPorMes());
-
-
             Piquete p = new Piquete(tipo, condicao, areaD, producaoEstimadaD, arrayMesesProd, intTotalTonelada, somaDasAreas, totaisMeses, totaisEstacao);
             Intent intent = new Intent();
             intent.putExtra("Animal", a);
             intent.putExtra("Piquete", p);
             setResult(RESULT_OK, intent);
             finish();
-    }
-
+    }*/
 }
