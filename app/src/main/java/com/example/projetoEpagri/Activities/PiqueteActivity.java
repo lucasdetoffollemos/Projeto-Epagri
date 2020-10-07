@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PiqueteActivity extends AppCompatActivity{
     private  Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
@@ -30,9 +32,9 @@ public class PiqueteActivity extends AppCompatActivity{
     private TableRow linha_tabela;
     private TableLayout table_layout;
     private DadosSulDAO dadosSulDAO;
-    private double producaoEstimadaD;
+    private double producaoEstimadaD, areaTotal;
     private int intTotalTonelada;
-    private ArrayList<double[]> listaTotaisMeses;       //matriz que armazena os valores calculados de todas as linhas para todos os meses.
+    private ArrayList<double[]> matrizMeses;       //matriz que armazena os valores calculados de todas as linhas para todos os meses.
     private ArrayList<Double> listaTotaisEstacoes;      //lista de 4 posiçõe para guardar os valores das estações.
     private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
     private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
@@ -57,7 +59,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void inicializa(){
         listaDeAreas = new ArrayList<Double>();
-        listaTotaisMeses = new ArrayList<double[]>();
+        matrizMeses = new ArrayList<double[]>();
         listaTotaisEstacoes = new ArrayList<Double>();
         listaTextViewTotaisMes = new ArrayList<TextView>();
         dadosSulDAO = new DadosSulDAO(PiqueteActivity.this);
@@ -124,11 +126,15 @@ public class PiqueteActivity extends AppCompatActivity{
 
                 if(posicaoLinhaTabela >= -1){
                     listaDeAreas.remove(numeroDeLinhas-1);
-                    listaTotaisMeses.remove(numeroDeLinhas-1);
+                    matrizMeses.remove(numeroDeLinhas-1);
 
+                    //Limpa a matriz com valores 0 para remover os cálculo dos totais.
+                    //Se não eles continuam aparecendo mesmo após remover todas as linhas.
+                    //Isso ocorre pois no método calculaTotais os valores dos textviews são setados em um while com condição
+                    //matrizMeses.size() > 0.
                     double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-                    if(listaTotaisMeses.size() < numeroDeLinhas){
-                        listaTotaisMeses.add(startArray);
+                    if(matrizMeses.size() < numeroDeLinhas){
+                        matrizMeses.add(startArray);
                     }
 
                     numeroDeLinhas--;
@@ -305,11 +311,11 @@ public class PiqueteActivity extends AppCompatActivity{
         Ao clicar no botão de adicionar linha, o método já é chamado e adiciona-se o vetor de zeros.
         Ao preencher os campos, chama-se novamente, atualizando o vetor de zeros.*/
         double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-        if(listaTotaisMeses.size() < numeroDeLinhas){
-            listaTotaisMeses.add(startArray);
+        if(matrizMeses.size() < numeroDeLinhas){
+            matrizMeses.add(startArray);
         }
         else{
-            listaTotaisMeses.set(posicao, arrayMesesProd);
+            matrizMeses.set(posicao, arrayMesesProd);
         }
 
         calculaTotais();
@@ -364,7 +370,7 @@ public class PiqueteActivity extends AppCompatActivity{
         DecimalFormat doisDecimais = new DecimalFormat("#.##");
 
         //Calcula a área total.
-        double areaTotal = 0.0;
+        areaTotal = 0.0;
         for(int i=0; i<listaDeAreas.size(); i++){
             areaTotal = areaTotal + listaDeAreas.get(i);
         }
@@ -392,11 +398,11 @@ public class PiqueteActivity extends AppCompatActivity{
 
         //Calcula o total para cada mês percorrendo a matriz de valores.
         //i = linha e j = coluna.
-        while(i<listaTotaisMeses.size()){
-            total = total + listaTotaisMeses.get(i)[j];
+        while(i<matrizMeses.size()){
+            total = total + matrizMeses.get(i)[j];
 
             //Ao chegar na última linha, retorna para a primeira e passa para a proxima coluna.
-            if((i+1) == listaTotaisMeses.size()){
+            if((i+1) == matrizMeses.size()){
                 i=0;
 
                 //Define o texto nos textviews de acordo com cada mês.
@@ -494,38 +500,31 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void irParaAnimaisActivity() {
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
-        i.putExtra("listaTotaisMeses", listaTotaisMeses);
+        i.putExtra("areaTotal", areaTotal);
         startActivityForResult(i, CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
     }
 
-
-    Animais a = new Animais();
     // This method is called when the second activity finishes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // check that it is the SecondActivity with an OK result
         if (requestCode == CODIGO_REQUISICAO_ANIMAIS_ACTIVITY) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                // get String data from Intent
+                ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
+                ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("totais");
 
-                a = data.getParcelableExtra("Animais");
-                //int [] arrayRetorno = data.getIntArrayExtra("animais");
-               //Log.i("Animais", "Oi " + a.getCategoria() +" "+ a.getConsumo()+" "+ a.getNumAnimais() +" "+ a.getEntradaMes() +" "+ a.getPesoInicial() +" "+ a.getPesoFinal() +" "+ a.getPesoGanhoVer() +" "+ a.getPesoGanhoOut() +" "+ a.getPesoGanhoInv() +" "+ a.getPesoGanhoPrim() +" "+ Arrays.toString(a.getMeses())+" "+ a.getTotalNumAnimais()+" "+ Arrays.toString(a.getUaHaPorMes()));
-               //finalizaEnvio();
+                /*for(int i=0; i<listaAnimal.size(); i++){
+                    Log.i("Animais", listaAnimal.get(i).getCategoria() + " " + listaAnimal.get(i).getConsumo() + " " + listaAnimal.get(i).getNumAnimais() + " " + listaAnimal.get(i).getEntradaMes() + " " + listaAnimal.get(i).getPesoInicial()+ " " + listaAnimal.get(i).getPesoFinal() + " " + listaAnimal.get(i).getPesoGanhoVer() + " " + listaAnimal.get(i).getPesoGanhoOut() + " " + listaAnimal.get(i).getPesoGanhoInv() + " " + listaAnimal.get(i).getPesoGanhoPrim() + " " + Arrays.toString(listaAnimal.get(i).getMeses()));
+                }
+                Log.i("Totais", String.valueOf(totais));*/
+
+                Intent intent = new Intent();
+                intent.putExtra("listaAnimais", listaAnimais);
+                intent.putExtra("totais", listaTotalUAHA);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         }
     }
-
-
-    /*private void finalizaEnvio() {
-           a = new Animais(a.getCategoria(), a.getConsumo(), a.getNumAnimais(), a.getEntradaMes(), a.getPesoInicial(), a.getPesoFinal(), a.getPesoGanhoVer(),a.getPesoGanhoOut(), a.getPesoGanhoInv(),a.getPesoGanhoPrim(), a.getMeses(), a.getTotalNumAnimais(), a.getUaHaPorMes());
-            Piquete p = new Piquete(tipo, condicao, areaD, producaoEstimadaD, arrayMesesProd, intTotalTonelada, somaDasAreas, totaisMeses, totaisEstacao);
-            Intent intent = new Intent();
-            intent.putExtra("Animal", a);
-            intent.putExtra("Piquete", p);
-            setResult(RESULT_OK, intent);
-            finish();
-    }*/
 }

@@ -4,29 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Animais implements Parcelable {
-
-    private String categoria;
-    private double consumo;
-    private double numAnimais;
-    private String entradaMes;
-    private double pesoInicial;
-    private double pesoFinal;
-    private double pesoGanhoVer;
-    private double pesoGanhoOut;
-    private double pesoGanhoInv;
-    private double pesoGanhoPrim;
+    private String categoria, entradaMes;
+    private double consumo, numAnimais, pesoInicial, pesoFinal, pesoGanhoVer, pesoGanhoOut, pesoGanhoInv, pesoGanhoPrim;
     private double [] meses;
-    private double totalNumAnimais;
-    private double [] uaHaPorMes;
-
-
 
     public Animais(){}
 
-    public  Animais(String categoria, double consumo, double numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses, double totalNumAnimais, double uaHaPorMes[]){
+    public  Animais(String categoria, double consumo, double numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses){
         this.meses = new double[12];
-        this.uaHaPorMes = new double[12];
-
         this.categoria = categoria;
         this.consumo = consumo;
         this.numAnimais = numAnimais;
@@ -38,8 +23,6 @@ public class Animais implements Parcelable {
         this.pesoGanhoInv = pesoGanhoInv;
         this.pesoGanhoPrim = pesoGanhoPrim;
         this.meses = meses;
-        this.totalNumAnimais = totalNumAnimais;
-        this.uaHaPorMes = uaHaPorMes;
     }
 
     //Construtor Parcelable
@@ -55,18 +38,13 @@ public class Animais implements Parcelable {
         pesoGanhoInv = p.readDouble();
         pesoGanhoPrim = p.readDouble();
         meses = p.createDoubleArray();
-        totalNumAnimais = p.readDouble();
-        uaHaPorMes= p.createDoubleArray();
     }
-
 
     public static final Parcelable.Creator<Animais>
             CREATOR = new Parcelable.Creator<Animais>() {
-
         public Animais createFromParcel(Parcel in) {
             return new Animais(in);
         }
-
         public Animais[] newArray(int size) {
             return new Animais[size];
         }
@@ -152,30 +130,12 @@ public class Animais implements Parcelable {
         this.pesoGanhoPrim = pesoGanhoPrim;
     }
 
-
-
     public double[] getMeses() {
         return meses;
     }
 
     public void setMeses(double[] meses) {
         this.meses = meses;
-    }
-
-    public double getTotalNumAnimais() {
-        return totalNumAnimais;
-    }
-
-    public void setTotalNumAnimais(double totalNumAnimais) {
-        this.totalNumAnimais = totalNumAnimais;
-    }
-
-    public double[] getUaHaPorMes() {
-        return uaHaPorMes;
-    }
-
-    public void setUaHaPorMes(double[] uaHaPorMes) {
-        this.uaHaPorMes = uaHaPorMes;
     }
 
     @Override
@@ -196,10 +156,5 @@ public class Animais implements Parcelable {
         dest.writeDouble(pesoGanhoInv);
         dest.writeDouble(pesoGanhoPrim);
         dest.writeDoubleArray(meses);
-        dest.writeDouble(totalNumAnimais);
-        dest.writeDoubleArray(uaHaPorMes);
     }
-
-
-
 }

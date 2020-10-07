@@ -113,17 +113,8 @@ public class PropriedadeActivity extends AppCompatActivity {
         // check that it is the SecondActivity with an OK result
         if (requestCode == CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-
-                Piquete p = data.getParcelableExtra("Piquete");
-                //int [] arrayRetorno = data.getIntArrayExtra("animais");
-
-                Log.i(" PIQUETE ", " TIPO: "+ p.getTipo() + " COND " + p.getCondicao() + " AREA " + p.getArea()+ " PRODUCAO "+ p.getProdEstimada() + " ARRAY MESES " + Arrays.toString(p.getMeses()) + " TOTAL "+ p.getTotal()+ " SOMA AREAS " + p.getTotalColunaHa() + " TOTAIS MESES "+ Arrays.toString(p.getTotaisMeses()) + " TOTAIS ESTACÃO " + Arrays.toString(p.getTotaisEstacao()));
-
-                Animais a = data.getParcelableExtra("Animal");
-                //int [] arrayRetorno = data.getIntArrayExtra("animais");
-
-                Log.i("Animal", "Oi " + a.getCategoria() +" "+ a.getConsumo()+" "+ a.getNumAnimais() +" "+ a.getEntradaMes() +" "+ a.getPesoInicial() +" "+ a.getPesoFinal() +" "+ a.getPesoGanhoVer() +" "+ a.getPesoGanhoOut() +" "+ a.getPesoGanhoInv() +" "+ a.getPesoGanhoPrim() +" "+ Arrays.toString(a.getMeses())+" "+ a.getTotalNumAnimais()+" "+ Arrays.toString(a.getUaHaPorMes()));
-
+                Toast.makeText(getApplicationContext(), "Oi bebe!", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }
