@@ -17,14 +17,14 @@
 
             <LinearLayout
 
-                android:id="@+id/animaisLayout1"
+                android:id="@+id/linearLayout1_animais"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
 
-                    android:id="@+id/animaisLayout2"
+                    android:id="@+id/linearLayout2_animais"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -33,21 +33,21 @@
                     <include layout="@layout/tabela_demanda_atual_1"></include>
 
                     <TableLayout
-                        android:id="@+id/table_layout"
+                        android:id="@+id/tableLayout_tabelaAnimais"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <Button
-                        android:id="@+id/bt_adicionar_linha"
+                        android:id="@+id/bt_adicionarLinha"
                         android:layout_width="40sp"
                         android:layout_height="40sp"
-                        android:text="+" />
+                        android:text="@string/txt_bt_adicionar" />
 
                     <Button
-                        android:id="@+id/bt_remover_linha"
+                        android:id="@+id/bt_removerLinha"
                         android:layout_width="40sp"
                         android:layout_height="40sp"
-                        android:text="-" />
+                        android:text="@string/txt_bt_remover" />
                 </LinearLayout>
 
 
@@ -61,13 +61,13 @@
                 <include layout="@layout/linha_resultados_tabela_demanda"></include>
 
                 <Button
-                    android:id="@+id/bt_finalizar_envio"
+                    android:id="@+id/bt_finalizarEnvio"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50sp"
                     android:layout_marginTop="15sp"
                     android:layout_marginBottom="15sp"
-                    android:text="Finalizar" />
+                    android:text="@string/txt_bt_finalizar" />
 
 
             </LinearLayout>

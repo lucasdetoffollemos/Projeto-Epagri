@@ -7,7 +7,7 @@
     tools:context="com.example.projetoEpagri.Activities.IndexActivity">
 
     <TextView
-        android:id="@+id/tv_bemVindo"
+        android:id="@+id/tv_tituloIndex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="80dp"
-        android:text="Bem vindo Osvaldo."
+        android:text="@string/txt_tv_bemVindo"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.147" />
 
     <Button
-        android:id="@+id/bt_index"
+        android:id="@+id/bt_levaPropriedade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
         android:layout_marginTop="250dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Cadastrar Propriedade"
+        android:text="@string/txt_bt_cadastroPropriedade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

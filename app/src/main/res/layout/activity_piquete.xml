@@ -18,14 +18,14 @@
 
             <LinearLayout
 
-                android:id="@+id/piqueteLayout0"
+                android:id="@+id/linearLayout1_piquete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
             <LinearLayout
 
-                android:id="@+id/layoutRegiao"
+                android:id="@+id/linearLayout_regiao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -34,7 +34,7 @@
                     android:id="@+id/tv_regiao"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
-                    android:text="Região:"
+                    android:text="@string/txt_tv_regiao"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:layout_marginBottom="10dp"
@@ -54,7 +54,7 @@
 
             <LinearLayout
 
-                android:id="@+id/piqueteLayout"
+                android:id="@+id/linearLayout2_piquete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -65,24 +65,21 @@
                 <include layout="@layout/tabela_oferta_atual_1"></include>
 
                 <TableLayout
-                    android:id="@+id/table_layout"
+                    android:id="@+id/tableLayout_tabelaPiquete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/bt_adicionar_linha"
+                    android:id="@+id/bt_adicionarLinha"
                     android:layout_width="40sp"
                     android:layout_height="40sp"
-                    android:text="+" />
+                    android:text="@string/txt_bt_adicionar" />
 
                 <Button
-                android:id="@+id/bt_remover_linha"
+                android:id="@+id/bt_removerLinha"
                 android:layout_width="40sp"
                 android:layout_height="40sp"
-                android:text="-" />
-
-
-
+                android:text="@string/txt_bt_remover" />
 
             </LinearLayout>
 
@@ -108,13 +105,13 @@
 
 
                 <Button
-                    android:id="@+id/bt_proximo_passo"
+                    android:id="@+id/bt_proximoPasso"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50sp"
                     android:layout_marginTop="15sp"
                     android:layout_marginBottom="15sp"
-                    android:text="Próximo passo" />
+                    android:text="@string/txt_bt_proximo_passo" />
             </LinearLayout>
 
         </ScrollView>

@@ -1,20 +1,86 @@
 <resources>
-    <string name="app_name">Cadastro</string>
-    <string name="txt_criar_perfil">Criar perfil</string>
-    <string name="txt_login">Faça o Login</string>
-    <string name="txt_bt_login">Login</string>
-    <string name="txt_hint_nome">Nome de Usuário</string>
-    <string name="txt_hint_senha">Senha</string>
-    <string name="txt_hint_email">Email</string>
-    <string name="txt_hint_telefone">Telefone</string>
-    <string name="txt_criar">Criar</string>
-    <string name="txt_deletar_usuarios">Deletar todos os usuários</string>
-    <string name="txt_listar_usuarios">Listar Usuários</string>
-    <string name="txt_cadastrar_propriedade">Cadastre sua Propriedade</string>
-    <string name="txt_hint_nome_prorpriedade">Nome da Prorpriedade</string>
-    <string name="txt_hint_qtde_piquetes">Quantidade de Piquetes</string>
-    <string name="txt_bt_proximo_passo">Próximo Passo</string>
+    <string name="app_name">Epagri</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Hint's-->
+        <!--Edit Text's   -->
+            <string name="hint_et_nome">Nome de Usuário</string>
+            <string name="hint_et_senha">Senha</string>
+            <string name="hint_et_email">Email</string>
+            <string name="hint_et_telefone">Telefone</string>
+            <string name="hint_numero_animais">n ani</string>
+            <string name="hint_et_pesoInicial">P I</string>
+            <string name="hint_et_pesoFinal">P F</string>
+            <string name="hint_et_pesoVerao">P V</string>
+            <string name="hint_et_pesoOutono">P O</string>
+            <string name="hint_et_pesoInverno">P INV</string>
+            <string name="hint_et_pesoPrimavera">P P</string>
+            <string name="hint_et_nomeProrpriedade">Nome da sua propriedade</string>
+
+
+
+
+    <!--Text's    -->
+        <!--TextViews -->
+            <string name="txt_tv_criarPerfil">Criar perfil</string>
+            <string name="txt_tv_login">Faça o Login</string>
+            <string name="txt_tv_cadastraPropriedade">Cadastre sua Propriedade</string>
+            <string name="txt_tv_regiao">Região:</string>
+            <string name="txt_tv_total">Total</string>
+            <string name="txt_tv_zero">0</string>
+            <string name="txt_tv_uaHa">UA/HA</string>
+            <string name="txt_tv_janeiro">Jan</string>
+            <string name="txt_tv_fevereiro">Fev</string>
+            <string name="txt_tv_marco">Mar</string>
+            <string name="txt_tv_abril">Abr</string>
+            <string name="txt_tv_maio">Mai</string>
+            <string name="txt_tv_junho">Jun</string>
+            <string name="txt_tv_julho">Jul</string>
+            <string name="txt_tv_agosto">Ago</string>
+            <string name="txt_tv_setembro">Set</string>
+            <string name="txt_tv_outubro">Out</string>
+            <string name="txt_tv_novembro">Nov</string>
+            <string name="txt_tv_dezembro">Dez</string>
+            <string name="txt_tv_AreaTotalPastagem">Área total pastagem</string>
+            <string name="txt_tv_ha">HA</string>
+            <string name="txt_tv_TotalMes">Total/mês:</string>
+            <string name="txt_tv_totalEstacao">Total/Estação:</string>
+            <string name="txt_tv_verao">Ver</string>
+            <string name="txt_tv_outono">Out</string>
+            <string name="txt_tv_inverno">Inve</string>
+            <string name="txt_tv_primavera">Prim</string>
+            <string name="txt_tv_categoriaLote">Categoria/Lote</string>
+            <string name="txt_tv_Consumo">Consumo (%PV)</string>
+            <string name="txt_tv_numeroAnimais">N de animais</string>
+            <string name="txt_tv_entrada">Entrada</string>
+            <string name="txt_tv_pesoInicial">Peso inicial</string>
+            <string name="txt_tv_pesoFinal">Peso final</string>
+            <string name="txt_tv_ganhoPesoDiaVerao">Ganho de peso (g/dia) VERÃO</string>
+            <string name="txt_tv_ganhoPesoDiaOutono">Ganho de peso (g/dia) OUTONO</string>
+            <string name="txt_tv_ganhoPesoDiaInverno">Ganho de peso (g/dia) INVERNO</string>
+            <string name="txt_tv_ganhoPesoDiaPrimavera">Ganho de peso (g/dia) PRIMAVERA</string>
+            <string name="txt_tv_pesoMedioAnimaisMes">PESO MÉDIO DOS ANIMAIS (kg/mês)</string>
+            <string name="txt_tv_piquete">Piquetes / \nPastagens</string>
+            <string name="txt_tv_condicaoPastagem">Condição da\nPastagem</string>
+            <string name="txt_tv_areaHa">Área\n(ha)*</string>
+            <string name="txt_tv_producaoEstimadaAno">PRODUÇÃO ESTIMADA (T.MS/ha.ano)</string>
+
+
+
+
+    <!--Buttons   -->
+            <string name="txt_bt_login">Login</string>
+            <string name="txt_bt_criar">Criar</string>
+            <string name="txt_bt_deletarUsuarios">Deletar todos os usuários</string>
+            <string name="txt_bt_listarUsuarios">Listar Usuários</string>
+            <string name="txt_bt_proximo_passo">Próximo Passo</string>
+            <string name="txt_bt_adicionar">+</string>
+            <string name="txt_bt_remover">-</string>
+            <string name="txt_bt_finalizar">Finalizar</string>
+            <string name="txt_tv_bemVindo">Bem vindo.</string>
+            <string name="txt_bt_cadastroPropriedade">Cadastrar Propriedade</string>
+    <string name="txt_tv_producaoEstimadaMes">Produção Estimada (Ton. MS/mês)</string>
+    <string name="hint_et_area">Área</string>
+    <string name="txt_tv_producaoEstimada">Produção estimada</string>
+
+
 </resources>

@@ -11,7 +11,7 @@
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Categoria/Lote"
+        android:text="@string/txt_tv_categoriaLote"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -23,20 +23,20 @@
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Consumo (%PV)"
+        android:text="@string/txt_tv_Consumo"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         />
 
     <TextView
-        android:id="@+id/tv_n_animais"
+        android:id="@+id/tv_Nanimais"
         android:layout_width="70sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="N de animais"
+        android:text="@string/txt_tv_numeroAnimais"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -48,7 +48,7 @@
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Entrada"
+        android:text="@string/txt_tv_entrada"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -56,13 +56,13 @@
         />
 
     <TextView
-        android:id="@+id/tv_peso_ini"
+        android:id="@+id/tv_pesoInicial"
         android:layout_width="70sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Peso inicial"
+        android:text="@string/txt_tv_pesoInicial"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -70,26 +70,26 @@
         />
 
     <TextView
-        android:id="@+id/tv_peso_final"
+        android:id="@+id/tv_pesoFinal"
         android:layout_width="60sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Peso final"
+        android:text="@string/txt_tv_pesoFinal"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold"
         />
 
     <TextView
-        android:id="@+id/tv_ganho_peso_ver"
+        android:id="@+id/tv_ganhoPesoVer"
         android:layout_width="180sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Ganho de peso (g/dia) VERÃO"
+        android:text="@string/txt_tv_ganhoPesoDiaVerao"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -98,27 +98,13 @@
 
 
     <TextView
-        android:id="@+id/tv_ganho_peso_out"
+        android:id="@+id/tv_ganhoPesoOut"
         android:layout_width="180sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Ganho de peso (g/dia) OUTONO"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
-
-        />
-
-    <TextView
-        android:id="@+id/tv_ganho_peso_inv"
-        android:layout_width="180sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
-        android:gravity="center"
-        android:text="Ganho de peso (g/dia) INVERNO"
+        android:text="@string/txt_tv_ganhoPesoDiaOutono"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -126,13 +112,27 @@
         />
 
     <TextView
-        android:id="@+id/tv_ganho_peso_prim"
+        android:id="@+id/tv_ganhoPesoInv"
         android:layout_width="180sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Ganho de peso (g/dia) PRIMAVERA"
+        android:text="@string/txt_tv_ganhoPesoDiaInverno"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_ganhoPesoPrim"
+        android:layout_width="180sp"
+        android:layout_height="80sp"
+        android:layout_weight="1"
+        android:background="#00B050"
+        android:gravity="center"
+        android:text="@string/txt_tv_ganhoPesoDiaPrimavera"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:textStyle="bold"

@@ -16,7 +16,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30sp"
         android:layout_marginBottom="25sp"
-        android:text="@string/txt_login"
+        android:text="@string/txt_tv_login"
         android:textAlignment="center"
         android:textColor="#0B0B0A"
         android:textSize="24sp" />
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/txt_hint_nome"
+        android:hint="@string/hint_et_nome"
         android:importantForAutofill="no"
         android:inputType="textPersonName" />
 
@@ -37,7 +37,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
-        android:hint="@string/txt_hint_senha"
+        android:hint="@string/hint_et_senha"
         android:importantForAutofill="no"
         android:inputType="textPassword" />
 
@@ -54,7 +54,7 @@
         android:layout_gravity="end"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="25dp"
-        android:text="@string/txt_criar_perfil"
+        android:text="@string/txt_tv_criarPerfil"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="18sp" />
 </LinearLayout>

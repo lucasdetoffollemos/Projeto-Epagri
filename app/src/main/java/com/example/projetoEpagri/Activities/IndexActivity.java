@@ -34,10 +34,10 @@ public class IndexActivity extends AppCompatActivity {
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
 
-        tv_bemVindo = findViewById(R.id.tv_bemVindo);
+        tv_bemVindo = findViewById(R.id.tv_tituloIndex);
         tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
 
-        bt_cadastrarPropriedade = findViewById(R.id.bt_index);
+        bt_cadastrarPropriedade = findViewById(R.id.bt_levaPropriedade);
     }
 
     /**

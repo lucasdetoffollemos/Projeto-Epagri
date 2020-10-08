@@ -42,7 +42,7 @@ public class PropriedadeActivity extends AppCompatActivity {
         nomeUsuario = intent.getStringExtra("nome_usuario");
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
-        bt_proximo = findViewById(R.id.bt_proximo);
+        bt_proximo = findViewById(R.id.bt_levaPiquete);
     }
 
     /**

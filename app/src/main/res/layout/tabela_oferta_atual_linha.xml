@@ -5,21 +5,21 @@
 
 
     <Spinner
-        android:id="@+id/spinnerTipoPiquete"
+        android:id="@+id/spinner_tipoPiquete"
         android:layout_width="100dp"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
         android:layout_weight="1"/>
 
     <Spinner
-        android:id="@+id/spinnerCondPiquete"
+        android:id="@+id/spinner_condPiquete"
         android:layout_width="80dp"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
         android:layout_weight="1"/>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/et_area"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:layout_weight="1"
@@ -27,18 +27,18 @@
         android:gravity="center"
         android:layout_marginRight="30dp"
         android:inputType="textPersonName"
-        android:hint="Área"
+        android:hint="@string/hint_et_area"
         android:textSize="14sp"
        />
 
 
     <TextView
-        android:id="@+id/tv_Prod"
+        android:id="@+id/tv_prod"
         android:layout_width="50sp"
         android:layout_height="20sp"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Produção estimada"
+        android:text="@string/txt_tv_producaoEstimada"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:layout_marginRight="25dp"/>
@@ -52,7 +52,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -61,7 +61,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -70,7 +70,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -79,7 +79,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -88,7 +88,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -97,7 +97,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -106,7 +106,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -115,7 +115,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -124,7 +124,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -133,7 +133,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -142,7 +142,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -151,16 +151,16 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/tv_total"
+        android:id="@+id/tv_totalSomaMeses"
         android:layout_width="100sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 

@@ -7,7 +7,7 @@
 
 
     <Spinner
-        android:id="@+id/spinnerCategoria"
+        android:id="@+id/spinner_categoria"
         android:layout_width="100dp"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
@@ -22,25 +22,25 @@
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textSize="14sp"
         />
 
     <EditText
-        android:id="@+id/et_numero_animais"
+        android:id="@+id/et_numeroAnimais"
         android:layout_width="25sp"
         android:layout_height="30sp"
         android:layout_weight="0.5"
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="n ani"
+        android:hint="@string/hint_numero_animais"
         android:textSize="14sp"
         />
 
 
     <Spinner
-        android:id="@+id/spinnerMeses"
+        android:id="@+id/spinner_meses"
         android:layout_width="10sp"
         android:layout_height="30sp"
         android:spinnerMode="dropdown"
@@ -50,74 +50,74 @@
 
 
     <EditText
-        android:id="@+id/et_peso_inicial"
+        android:id="@+id/et_pesoInicial"
         android:layout_width="1sp"
         android:layout_height="30sp"
         android:layout_weight="0.5"
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="P I"
+        android:hint="@string/hint_et_pesoInicial"
         android:textSize="14sp"
         />
 
     <EditText
-        android:id="@+id/et_peso_final"
+        android:id="@+id/et_pesoFinal"
         android:layout_width="1sp"
         android:layout_height="30sp"
         android:layout_weight="0.5"
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="P F"
+        android:hint="@string/hint_et_pesoFinal"
         android:textSize="14sp"
         />
 
     <EditText
-        android:id="@+id/et_peso_verao"
+        android:id="@+id/et_pesoVerao"
         android:layout_width="30sp"
         android:layout_height="30sp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="P V"
+        android:hint="@string/hint_et_pesoVerao"
         android:textSize="14sp"
         />
 
     <EditText
-        android:id="@+id/et_peso_outono"
+        android:id="@+id/et_pesoOutono"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="P O"
+        android:hint="@string/hint_et_pesoOutono"
         android:textSize="14sp"
         />
 
     <EditText
-        android:id="@+id/et_peso_inverno"
+        android:id="@+id/et_pesoInverno"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="P INV"
+        android:hint="@string/hint_et_pesoInverno"
         android:textSize="14sp"
         />
 
     <EditText
-        android:id="@+id/et_peso_primavera"
+        android:id="@+id/et_pesoPrimavera"
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:hint="P P"
+        android:hint="@string/hint_et_pesoPrimavera"
         android:textSize="14sp"
         />
 
@@ -128,7 +128,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -137,7 +137,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -146,7 +146,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -155,7 +155,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -164,7 +164,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -173,7 +173,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -182,7 +182,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -191,7 +191,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -200,7 +200,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -209,7 +209,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -218,7 +218,7 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -227,9 +227,8 @@
         android:layout_width="50sp"
         android:layout_height="30sp"
         android:gravity="center"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
-
 
 </TableRow>

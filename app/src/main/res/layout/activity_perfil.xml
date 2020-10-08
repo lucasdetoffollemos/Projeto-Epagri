@@ -12,12 +12,12 @@
 
 
     <TextView
-        android:id="@+id/tv_titulo"
+        android:id="@+id/tv_tituloPerfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="25dp"
-        android:text="@string/txt_criar_perfil"
+        android:text="@string/txt_tv_criarPerfil"
         android:gravity="center_horizontal"
         android:textColor="#0B0B0A"
         android:textSize="24sp" />
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:ems="10"
-        android:hint="@string/txt_hint_nome"
+        android:hint="@string/hint_et_nome"
         android:inputType="textPersonName"
         android:importantForAutofill="no"
         android:textSize="18sp" />
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="@string/txt_hint_email"
+        android:hint="@string/hint_et_email"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress" />
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="@string/txt_hint_telefone"
+        android:hint="@string/hint_et_telefone"
         android:importantForAutofill="no"
         android:inputType="phone" />
 
@@ -60,7 +60,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
-        android:hint="@string/txt_hint_senha"
+        android:hint="@string/hint_et_senha"
         android:importantForAutofill="no"
         android:inputType="textPassword" />
 
@@ -68,20 +68,20 @@
         android:id="@+id/bt_criar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_criar" />
+        android:text="@string/txt_bt_criar" />
 
     <Button
         android:id="@+id/bt_listar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/txt_listar_usuarios" />
+        android:text="@string/txt_bt_listarUsuarios" />
 
     <Button
         android:id="@+id/bt_deletar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/txt_deletar_usuarios" />
+        android:text="@string/txt_bt_deletarUsuarios" />
 
 </LinearLayout>

@@ -5,50 +5,50 @@
     android:background="#00B050">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tv_piquetePastagem"
         android:layout_width="200sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Piquetes / \nPastagens"
+        android:text="@string/txt_tv_piquete"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_condicao"
         android:layout_width="140sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Condição da\nPastagem"
+        android:text="@string/txt_tv_condicaoPastagem"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_area"
         android:layout_width="170sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="Área\n(ha)*"
+        android:text="@string/txt_tv_areaHa"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_prodEstimadaAno"
         android:layout_width="170sp"
         android:layout_height="80sp"
         android:layout_weight="1"
         android:background="#00B050"
         android:gravity="center"
-        android:text="PRODUÇÃO ESTIMADA (T.MS/ha.ano)"
+        android:text="@string/txt_tv_producaoEstimadaAno"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"

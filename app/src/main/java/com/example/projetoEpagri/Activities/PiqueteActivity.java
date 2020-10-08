@@ -90,9 +90,9 @@ public class PiqueteActivity extends AppCompatActivity{
         listaTextViewTotaisMes.add(nov);
         listaTextViewTotaisMes.add(dez);
 
-        table_layout = (TableLayout) findViewById(R.id.table_layout);
-        bt_adicionar_linha = findViewById(R.id.bt_adicionar_linha);
-        bt_remover_linha = findViewById(R.id.bt_remover_linha);
+        table_layout = (TableLayout) findViewById(R.id.tableLayout_tabelaPiquete);
+        bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
+        bt_remover_linha = findViewById(R.id.bt_removerLinha);
     }
 
     /**
@@ -151,7 +151,7 @@ public class PiqueteActivity extends AppCompatActivity{
             }
         });
 
-        bt_proximo_passo = findViewById(R.id.bt_proximo_passo);
+        bt_proximo_passo = findViewById(R.id.bt_proximoPasso);
         bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,7 +184,7 @@ public class PiqueteActivity extends AppCompatActivity{
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
         ArrayList<String> tipoPiquete = dadosSulDAO.getTiposPastagem();
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
-        Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinnerTipoPiquete);
+        Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
         ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, tipoPiquete);
         spinnerTipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -197,7 +197,7 @@ public class PiqueteActivity extends AppCompatActivity{
         condicaoPiquete.add("Ótima");
 
         //Localiza o spinner condicao no arquivo xml tabela_oferta_atual_linha.
-        Spinner spinnerCondicaoPiquete = linha_tabela.findViewById(R.id.spinnerCondPiquete);
+        Spinner spinnerCondicaoPiquete = linha_tabela.findViewById(R.id.spinner_condPiquete);
         //Cria um ArrayAdpter usando o array de string com condicoes "degradada", "média" e "ótima". //Cria um ArrayAdapter que pega o Array de string "condicaoPiquete" e transforma em um spinner.
         ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, condicaoPiquete);
         spinnerCondicaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -374,7 +374,7 @@ public class PiqueteActivity extends AppCompatActivity{
         for(int i=0; i<listaDeAreas.size(); i++){
             areaTotal = areaTotal + listaDeAreas.get(i);
         }
-        TextView area = findViewById(R.id.tv_AreaTotalNum);
+        TextView area = findViewById(R.id.tv_AreaTotalNumHa);
         area.setText(doisDecimais.format(areaTotal));
 
         //Inicializa a lista de totais das estações. Somente entra no if na primeira execução (quando o botão de + é clicado

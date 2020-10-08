@@ -99,11 +99,11 @@ public class AnimaisActivity extends AppCompatActivity {
 
         matrizUA = new ArrayList<>();
 
-        table_layout = findViewById(R.id.table_layout);
+        table_layout = findViewById(R.id.tableLayout_tabelaAnimais);
 
-        bt_adicionar_linha = findViewById(R.id.bt_adicionar_linha);
-        bt_remover_linha = findViewById(R.id.bt_remover_linha);
-        bt_finalizar_envio = findViewById(R.id.bt_finalizar_envio);
+        bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
+        bt_remover_linha = findViewById(R.id.bt_removerLinha);
+        bt_finalizar_envio = findViewById(R.id.bt_finalizarEnvio);
     }
 
     /**
@@ -170,14 +170,14 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     private void adicionarLinhaTabela(TableRow linha_tabela){
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
-        final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinnerCategoria);
+        final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinner_categoria);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
         final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, categoriaAnimal);
         spinnerCategoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(spinnerCategoriaAdapter);
 
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
-        Spinner spinnerMeses = linha_tabela.findViewById(R.id.spinnerMeses);
+        Spinner spinnerMeses = linha_tabela.findViewById(R.id.spinner_meses);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
         ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, arrayMeses);
         spinnerMesesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

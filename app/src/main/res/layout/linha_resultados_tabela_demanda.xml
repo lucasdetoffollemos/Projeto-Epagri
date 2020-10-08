@@ -7,12 +7,12 @@
 
 
     <TextView
-        android:id="@+id/tv_total"
+        android:id="@+id/tv_totalDemanda"
         android:layout_width="310sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="left"
-        android:text="Total"
+        android:text="@string/txt_tv_total"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         android:layout_marginLeft="20dp"
@@ -24,17 +24,17 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:layout_weight="1"
-        android:text="0"
+        android:text="@string/txt_tv_zero"
         android:textSize="14sp"
         android:textColor="@android:color/holo_blue_dark"/>
 
     <TextView
-        android:id="@+id/tv_ua_ha"
+        android:id="@+id/tv_uaHa"
         android:layout_width="95sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="UA/HA"
+        android:text="@string/txt_tv_uaHa"
         android:textSize="14sp"
         android:textColor="@android:color/holo_blue_dark"/>
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Jan"
+        android:text="@string/txt_tv_janeiro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Fev"
+        android:text="@string/txt_tv_fevereiro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Mar"
+        android:text="@string/txt_tv_marco"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Abr"
+        android:text="@string/txt_tv_abril"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Mai"
+        android:text="@string/txt_tv_maio"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Jun"
+        android:text="@string/txt_tv_junho"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Jul"
+        android:text="@string/txt_tv_julho"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -125,7 +125,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Ago"
+        android:text="@string/txt_tv_agosto"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -136,7 +136,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Set"
+        android:text="@string/txt_tv_setembro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -147,7 +147,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Out"
+        android:text="@string/txt_tv_outubro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -158,7 +158,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Nov"
+        android:text="@string/txt_tv_novembro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />
@@ -169,7 +169,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Dez"
+        android:text="@string/txt_tv_dezembro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
         />

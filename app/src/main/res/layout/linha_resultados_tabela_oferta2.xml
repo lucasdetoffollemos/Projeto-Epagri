@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="right"
-        android:text="Total/Estação:"
+        android:text="@string/txt_tv_totalEstacao"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
         />
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Ver"
+        android:text="@string/txt_tv_verao"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
         />
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Out"
+        android:text="@string/txt_tv_outono"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
         />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Inve"
+        android:text="@string/txt_tv_inverno"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
        />
@@ -59,13 +59,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
-        android:text="Prim"
+        android:text="@string/txt_tv_primavera"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
         />
-
-
-
-
-
 </TableRow>
