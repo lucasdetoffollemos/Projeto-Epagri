@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     >
 
@@ -56,6 +56,7 @@
                     android:layout_height="1dp"
                     android:background="@android:color/background_dark"
                     android:layout_marginLeft="1365dp"
+                    android:layout_marginStart="1365dp"
                     android:layout_marginBottom="5dp"/>
 
                 <include layout="@layout/linha_resultados_ua_ha_demanda"></include>
@@ -65,6 +66,7 @@
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50sp"
+                    android:layout_marginStart="50sp"
                     android:layout_marginTop="15sp"
                     android:layout_marginBottom="15sp"
                     android:text="@string/txt_bt_finalizar" />

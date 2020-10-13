@@ -14,7 +14,7 @@
         android:layout_weight="0.8"/>
 
 
-    <TextView
+    <EditText
         android:id="@+id/et_consumo"
         android:layout_width="15sp"
         android:layout_height="30sp"
@@ -22,9 +22,9 @@
         android:background="@null"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:text="@string/txt_tv_zero"
+        android:hint="@string/txt_tv_zero"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_numeroAnimais"
@@ -36,7 +36,7 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_numero_animais"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
 
     <Spinner
@@ -59,7 +59,7 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_et_pesoInicial"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_pesoFinal"
@@ -71,7 +71,7 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_et_pesoFinal"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_pesoVerao"
@@ -83,7 +83,7 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_et_pesoVerao"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_pesoOutono"
@@ -95,7 +95,7 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_et_pesoOutono"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_pesoInverno"
@@ -107,7 +107,7 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_et_pesoInverno"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_pesoPrimavera"
@@ -119,7 +119,7 @@
         android:inputType="textPersonName"
         android:hint="@string/hint_et_pesoPrimavera"
         android:textSize="14sp"
-        />
+        android:autofillHints="" />
 
 
 

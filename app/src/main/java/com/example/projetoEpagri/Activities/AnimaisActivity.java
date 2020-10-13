@@ -196,7 +196,7 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     public void setListenersDinamicos(final TableRow linha_tabela){
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
-        final TextView tv_consumo = (TextView) linha_tabela.getChildAt(1);
+        final EditText tv_consumo = (EditText) linha_tabela.getChildAt(1);
         final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(2);
         final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(3);
         final EditText etPesoInicial = (EditText) linha_tabela.getChildAt(4);
