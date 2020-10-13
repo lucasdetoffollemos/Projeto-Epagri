@@ -39,6 +39,7 @@
                     android:textSize="14sp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginLeft="150dp"/>
 
 
@@ -87,27 +88,30 @@
                 android:layout_width="600dp"
                 android:layout_height="1dp"
                 android:background="@android:color/background_dark"
+                android:layout_marginStart="690dp"
                 android:layout_marginLeft="690dp"
                 android:layout_marginBottom="5dp"/>
 
-            <include layout="@layout/linha_resultados_tabela_oferta"></include>
+            <include layout="@layout/linha_totais_somas_meses_oferta"></include>
 
             <View
                 android:layout_width="600dp"
                 android:layout_height="1dp"
                 android:background="@android:color/background_dark"
+                android:layout_marginStart="690dp"
                 android:layout_marginLeft="690dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 />
 
-            <include layout="@layout/linha_resultados_tabela_oferta2"></include>
+            <include layout="@layout/linha_totais_somas_estacoes_oferta"></include>
 
 
                 <Button
                     android:id="@+id/bt_proximoPasso"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="50sp"
                     android:layout_marginLeft="50sp"
                     android:layout_marginTop="15sp"
                     android:layout_marginBottom="15sp"

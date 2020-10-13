@@ -58,7 +58,7 @@
                     android:layout_marginLeft="1365dp"
                     android:layout_marginBottom="5dp"/>
 
-                <include layout="@layout/linha_resultados_tabela_demanda"></include>
+                <include layout="@layout/linha_resultados_ua_ha_demanda"></include>
 
                 <Button
                     android:id="@+id/bt_finalizarEnvio"

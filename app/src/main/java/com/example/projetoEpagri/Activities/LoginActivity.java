@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Método que insere os dados de pastagem.
         if(daoDadosSul.getBd().verificaTabelaVazia("dadosSul")){
-            Log.i("verifica", "tabela Vazia!");
+            //Log.i("verifica", "tabela Vazia!");
             inseriDadosTabelaPastagemSul();
         }
     }

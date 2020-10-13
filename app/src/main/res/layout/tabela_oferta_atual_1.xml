@@ -53,6 +53,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginRight="7dp"
+        android:layout_marginEnd="7dp"
         />
 
         <include layout="@layout/tabela_oferta_atual_2"></include>

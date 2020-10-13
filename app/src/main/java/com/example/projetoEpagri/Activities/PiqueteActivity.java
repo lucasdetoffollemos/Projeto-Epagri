@@ -93,6 +93,7 @@ public class PiqueteActivity extends AppCompatActivity{
         table_layout = (TableLayout) findViewById(R.id.tableLayout_tabelaPiquete);
         bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
         bt_remover_linha = findViewById(R.id.bt_removerLinha);
+        bt_proximo_passo = findViewById(R.id.bt_proximoPasso);
     }
 
     /**
@@ -101,19 +102,19 @@ public class PiqueteActivity extends AppCompatActivity{
     public void setListeners(){
         //Quando clicado no botao de mais, é acionado está funçao.
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Infla a linha para a tabela
-                linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
-                adicionarLinhaTabela(linha_tabela);
-                setListenersDinamicos(linha_tabela);
+                    @Override
+                    public void onClick(View v) {
+                        //Infla a linha para a tabela
+                        linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
+                        adicionarLinhaTabela(linha_tabela);
+                        setListenersDinamicos(linha_tabela);
 
-                posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
-                numeroDeLinhas++;
+                        posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
+                        numeroDeLinhas++;
 
-                if(listaDeAreas.size() < numeroDeLinhas){
-                    listaDeAreas.add(0.0);
-                }
+                        if(listaDeAreas.size() < numeroDeLinhas){
+                            listaDeAreas.add(0.0);
+                        }
             }
         });
 
@@ -151,7 +152,7 @@ public class PiqueteActivity extends AppCompatActivity{
             }
         });
 
-        bt_proximo_passo = findViewById(R.id.bt_proximoPasso);
+
         bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,7 +293,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Cálcula a producão estimada.
         calculaProducaoEstimada(linha_tabela, tipo, condicao, areaD);
 
-        //Cálcula a produção para cada mês.
+        //Cálcula a produção para cada mês. E faz a soma de todos os meses
         double [] arrayMesesProd = new double[12];
         double totalToneladaAnual = 0;
         for(int i=1; i<=12; i++){

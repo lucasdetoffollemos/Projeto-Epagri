@@ -11,11 +11,11 @@
         android:layout_width="675sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="right"
+        android:gravity="end"
         android:text="@string/txt_tv_totalEstacao"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp"
-        />
+         />
 
 
     <TextView

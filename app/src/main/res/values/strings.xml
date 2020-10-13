@@ -15,6 +15,7 @@
             <string name="hint_et_pesoInverno">P INV</string>
             <string name="hint_et_pesoPrimavera">P P</string>
             <string name="hint_et_nomeProrpriedade">Nome da sua propriedade</string>
+            <string name="hint_et_area">Área</string>
 
 
 
@@ -63,6 +64,9 @@
             <string name="txt_tv_condicaoPastagem">Condição da\nPastagem</string>
             <string name="txt_tv_areaHa">Área\n(ha)*</string>
             <string name="txt_tv_producaoEstimadaAno">PRODUÇÃO ESTIMADA (T.MS/ha.ano)</string>
+            <string name="txt_tv_producaoEstimadaMes">Produção Estimada (Ton. MS/mês)</string>
+            <string name="txt_tv_producaoEstimada">Produção estimada</string>
+            <string name="txt_tv_bemVindo">Bem vindo.</string>
 
 
 
@@ -76,11 +80,8 @@
             <string name="txt_bt_adicionar">+</string>
             <string name="txt_bt_remover">-</string>
             <string name="txt_bt_finalizar">Finalizar</string>
-            <string name="txt_tv_bemVindo">Bem vindo.</string>
             <string name="txt_bt_cadastroPropriedade">Cadastrar Propriedade</string>
-    <string name="txt_tv_producaoEstimadaMes">Produção Estimada (Ton. MS/mês)</string>
-    <string name="hint_et_area">Área</string>
-    <string name="txt_tv_producaoEstimada">Produção estimada</string>
+
 
 
 </resources>
