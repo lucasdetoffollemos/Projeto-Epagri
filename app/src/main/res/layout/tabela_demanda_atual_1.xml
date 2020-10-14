@@ -140,6 +140,6 @@
         />
 
 
-    <include layout="@layout/tabela_demanda_atual_2"></include>
+    <include layout="@layout/tabela_demanda_atual_2"/>
 
 </LinearLayout>

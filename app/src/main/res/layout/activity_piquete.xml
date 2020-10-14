@@ -63,7 +63,7 @@
 
 
 
-                <include layout="@layout/tabela_oferta_atual_1"></include>
+                <include layout="@layout/tabela_oferta_atual_1"/>
 
                 <TableLayout
                     android:id="@+id/tableLayout_tabelaPiquete"
@@ -92,7 +92,7 @@
                 android:layout_marginLeft="690dp"
                 android:layout_marginBottom="5dp"/>
 
-            <include layout="@layout/linha_totais_somas_meses_oferta"></include>
+            <include layout="@layout/linha_totais_somas_meses_oferta"/>
 
             <View
                 android:layout_width="600dp"
@@ -104,7 +104,7 @@
                 android:layout_marginBottom="5dp"
                 />
 
-            <include layout="@layout/linha_totais_somas_estacoes_oferta"></include>
+            <include layout="@layout/linha_totais_somas_estacoes_oferta"/>
 
 
                 <Button
