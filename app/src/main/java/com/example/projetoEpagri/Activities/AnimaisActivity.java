@@ -124,6 +124,11 @@ public class AnimaisActivity extends AppCompatActivity {
                 if(qtdeAnimais.size() < numeroDeLinhas){
                     qtdeAnimais.add(0.0);
                 }
+
+                if(listaAnimais.size() < numeroDeLinhas){
+                    Animais temp = new Animais();
+                    listaAnimais.add(temp);
+                }
             }
         });
 
@@ -153,6 +158,8 @@ public class AnimaisActivity extends AppCompatActivity {
                 else{
                     posicaoLinhaTabela = -1;
                 }
+
+                calculaTotalAnimais();
                 calculoUaHa(matrizUA);
             }
         });
@@ -241,6 +248,16 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                double numeroAnimais = 0.0;
+                int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
+
+                if(!verificaVazioET(etNumAnimais)){
+                    numeroAnimais = converteTextoEmDouble(etNumAnimais);
+                }
+                //Salva no array a quantidade de animais digitada para determinada linha.
+                qtdeAnimais.set(posicao, numeroAnimais);
+
+                calculaTotalAnimais();
                 lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
@@ -387,6 +404,23 @@ public class AnimaisActivity extends AppCompatActivity {
     }
 
     /**
+     * Método responsável por calcular a soma total dos animais e atualizar o valor do TextView.
+     */
+    public void calculaTotalAnimais(){
+        //Calcula o total de animais.
+        somaAnimal = 0.0;
+
+        if(!qtdeAnimais.isEmpty()){
+            for(int i =0; i < qtdeAnimais.size(); i++){
+                somaAnimal = somaAnimal + qtdeAnimais.get(i);
+            }
+        }
+
+        TextView quantidadeAnimal = findViewById(R.id.tv_totalAnimais);
+        quantidadeAnimal.setText(String.valueOf(somaAnimal));
+    }
+
+    /**
      * Método responsável por ler os valores do spinner e das caixas de texto e realizar os cálculos.
      * @param linha_tabela
      * @param spinnerCategoria
@@ -438,9 +472,6 @@ public class AnimaisActivity extends AppCompatActivity {
             double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
             int posicao = 0;  //posicão utilizada para inserir o animal em determinado mês de acordo com a entrada.
             int posicaoLinha = Integer.parseInt(linha_tabela.getTag().toString())+1;
-
-            //Salva no array a quantidade de animais digitada para determinada linha.
-            qtdeAnimais.set(posicaoLinha, numeroAnimais);
 
             //Define qual a posição que será utilizada no array ganhoEstacao e acordo com o mês de entrada do animal.
             switch (meses){
@@ -535,8 +566,9 @@ public class AnimaisActivity extends AppCompatActivity {
                     }
                 }
 
+                DecimalFormat doisDecimais = new DecimalFormat("#.##");
                 TextView v = (TextView) linha_tabela.getChildAt(posicao + 10);
-                v.setText(String.valueOf(peso_atual));
+                v.setText(doisDecimais.format(peso_atual));
                 posicao++;
 
                 //Quando chega no mês de dezembro, dá a volta, vai para janeiro.
@@ -555,51 +587,18 @@ public class AnimaisActivity extends AppCompatActivity {
             matrizUA.set(posicaoLinha, pesoVezesAnimal);
             calculoUaHa(matrizUA);
 
-            if(listaAnimais.size() < numeroDeLinhas){
-                Animais temp = new Animais();
-                listaAnimais.add(temp);
-            }
-            else{
+            if(listaAnimais.size() >= numeroDeLinhas){
                 Animais animal = new Animais(categoria, consumo, numeroAnimais, meses, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim, pesos);
                 listaAnimais.set(posicaoLinha, animal);
             }
         }
-    }
-
-    /**
-     * Método responsável por percorrer a matriz e somar os valores coluna por coluna.
-     * @param matriz
-     * @return array com os valores totais por coluna.
-     */
-    public ArrayList<Double> percorreMatrizESoma(ArrayList<double[]> matriz){
-        //i = linha | j = coluna.
-        int i=0, j=0;
-        double soma = 0.0;
-        ArrayList<Double> resultado = new ArrayList<Double>();
-
-        while (i<matriz.size()){
-            soma = soma + matriz.get(i)[j];
-
-            if((i+1) == matriz.size()) {
-                i = 0;
-
-                if(j+1 < 12){
-                    resultado.add(soma);
-                    j++;
-                    soma = 0.0;
-                }
-                else{
-                    if(j == 11){
-                        resultado.add(soma);
-                    }
-                    break;
-                }
-            }
-            else{
-                i++;
+        else{
+            //Estrutura de repetiçao feita para cada vez que o usuário trocar, o valor de entrada, os campos de textView de meses, limparem.
+            for(int i = 10; i< 22; i++){
+                TextView v = (TextView) linha_tabela.getChildAt(i);
+                v.setText(String.valueOf(0));
             }
         }
-        return resultado;
     }
 
     /**
@@ -607,14 +606,6 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     public void calculoUaHa(ArrayList<double []> matrizUA){
         DecimalFormat doisDecimais = new DecimalFormat("#.##");
-
-        //Calcula o total de animais.
-        somaAnimal = 0.0;
-        for(int i =0; i < qtdeAnimais.size(); i++){
-            somaAnimal = somaAnimal + qtdeAnimais.get(i);
-        }
-        TextView quantidadeAnimal = findViewById(R.id.tv_totalAnimais);
-        quantidadeAnimal.setText(String.valueOf(somaAnimal));
 
         //Transforma os totais de cada mês em UA (1 UA = 450KG.).
         ArrayList<Double> listaTotalUA = percorreMatrizESoma(matrizUA);
@@ -663,6 +654,42 @@ public class AnimaisActivity extends AppCompatActivity {
         //for(int k=0; k<listaTotalUAHA.size(); k++){
         //    Log.i("lista", "listaTotalUAHA[" + k + "] =" + String.valueOf(listaTotalUAHA.get(k)));
         //}
+    }
+
+    /**
+     * Método responsável por percorrer a matriz e somar os valores coluna por coluna.
+     * @param matriz
+     * @return array com os valores totais por coluna.
+     */
+    public ArrayList<Double> percorreMatrizESoma(ArrayList<double[]> matriz){
+        //i = linha | j = coluna.
+        int i=0, j=0;
+        double soma = 0.0;
+        ArrayList<Double> resultado = new ArrayList<Double>();
+
+        while (i<matriz.size()){
+            soma = soma + matriz.get(i)[j];
+
+            if((i+1) == matriz.size()) {
+                i = 0;
+
+                if(j+1 < 12){
+                    resultado.add(soma);
+                    j++;
+                    soma = 0.0;
+                }
+                else{
+                    if(j == 11){
+                        resultado.add(soma);
+                    }
+                    break;
+                }
+            }
+            else{
+                i++;
+            }
+        }
+        return resultado;
     }
 
     //ARRUMAR.
