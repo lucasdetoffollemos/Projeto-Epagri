@@ -11,16 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projetoEpagri.R;
 import com.example.projetoEpagri.Classes.Usuario;
-import com.example.projetoEpagri.Dao.UsuarioDAO;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class PerfilActivity extends AppCompatActivity {
     private EditText et_nome, et_email, et_telefone, et_senha;
-    private UsuarioDAO dao;
-
-    public Button bt_criar, bt_deletar, bt_listar;
+    public Button bt_criar, bt_atualizar, bt_deletar, bt_listar;
 
     @Override
      protected void onCreate(Bundle savedInstanceState) {
@@ -32,25 +29,24 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     /**
-     * Método utilizado para inicializar os componentes da interface e os objetos da classe.
+     * Método responsável por inicializar os componentes da interface e os objetos da classe.
      */
     public void inicializa(){
-        et_nome = findViewById(R.id.et_nome);
-        et_email = findViewById(R.id.et_email);
-        et_telefone = findViewById(R.id.et_telefone);
-        et_senha = findViewById(R.id.et_senha);
-        bt_criar = findViewById(R.id.bt_criar);
-        bt_listar = findViewById(R.id.bt_listar);
-        bt_deletar = findViewById(R.id.bt_deletar);
-
-        dao = new UsuarioDAO(this);
+        this.et_nome = findViewById(R.id.et_nome);
+        this.et_email = findViewById(R.id.et_email);
+        this.et_telefone = findViewById(R.id.et_telefone);
+        this.et_senha = findViewById(R.id.et_senha);
+        this.bt_criar = findViewById(R.id.bt_criar);
+        this.bt_atualizar = findViewById(R.id.bt_atualizar);
+        this.bt_listar = findViewById(R.id.bt_listar);
+        this.bt_deletar = findViewById(R.id.bt_deletar);
     }
 
     /**
-     * Método utilizado para setar os listener dos botões e tudo mais que for clicável na tela login.
+     * Método responsável por setar os listener dos botões e tudo mais que for clicável na tela de perfil.
      */
     public void setListener(){
-        bt_criar.setOnClickListener(new View.OnClickListener() {
+        this.bt_criar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nome, email, telefone, senha;
@@ -63,14 +59,27 @@ public class PerfilActivity extends AppCompatActivity {
             }
         });
 
-        bt_listar.setOnClickListener(new View.OnClickListener() {
+        this.bt_atualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nome, email, telefone, senha;
+                nome = et_nome.getText().toString();
+                email = et_email.getText().toString();
+                telefone = et_telefone.getText().toString();
+                senha = et_senha.getText().toString();
+
+                LoginActivity.bancoDeDados.usuarioDAO.updateUsuario(1, nome, email, telefone, senha);
+            }
+        });
+
+        this.bt_listar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listarUsuarios();
             }
         });
 
-        bt_deletar.setOnClickListener(new View.OnClickListener() {
+        this.bt_deletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deletarTodosUsuario();
@@ -79,12 +88,13 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     /**
-     * Método executado ao clicar no botão "criar" na tela Perfil.
+     * Método responsável por criar um usuário e salvar no banco de dados.
      */
     public void criarPerfil(String nome, String email, String telefone, String senha){
         Usuario u = new Usuario(nome, email, telefone, senha);
-        long id = dao.inserirUsuario(u);
+        long id = LoginActivity.bancoDeDados.usuarioDAO.inserirUsuario(u);
         Toast.makeText(this, "Usuario inserido com id " + id, Toast.LENGTH_SHORT).show();
+
         //O código abaixo da um tempo da 2 seg até voltar a outra página.
         new Timer().schedule(new TimerTask() {
             @Override
@@ -92,11 +102,12 @@ public class PerfilActivity extends AppCompatActivity {
                 finish();
             }
         }, 2000);
+
         limparDados();
     }
 
     /**
-     *Método criado para levar a página, onde são criados os usuários
+     * Método responsável por mostrar a tela de listagem dos usuários.
      */
     private void listarUsuarios() {
         Intent i = new Intent(PerfilActivity.this, ListaUsuariosActivity.class);
@@ -104,21 +115,20 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     /**
-     * Método responsavel por deletar todos os usuário da lista.
+     * Método responsável por deletar todos os usuário da lista.
      */
     public void deletarTodosUsuario(){
-        dao.excluiTodosUsuarios();
+        LoginActivity.bancoDeDados.usuarioDAO.deleteAllUsuarios();
         Toast.makeText(this, "Usuários deletados", Toast.LENGTH_SHORT).show();
-        //limparDados();
     }
 
     /**
      * Método responsável por limpar os dados do formulário de login.
      */
     private void limparDados() {
-        et_nome.setText("");
-        et_email.setText("");
-        et_telefone.setText("");
-        et_senha.setText("");
+        this.et_nome.setText("");
+        this.et_email.setText("");
+        this.et_telefone.setText("");
+        this.et_senha.setText("");
     }
 }

@@ -3,6 +3,7 @@ package com.example.projetoEpagri.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,7 +32,6 @@ public class PiqueteActivity extends AppCompatActivity{
     public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
     private TableRow linha_tabela;
     private TableLayout table_layout;
-    private DadosSulDAO dadosSulDAO;
     private double producaoEstimadaD, areaTotal;
     private int intTotalTonelada;
     private ArrayList<double[]> matrizMeses;       //matriz que armazena os valores calculados de todas as linhas para todos os meses.
@@ -62,7 +62,6 @@ public class PiqueteActivity extends AppCompatActivity{
         matrizMeses = new ArrayList<double[]>();
         listaTotaisEstacoes = new ArrayList<Double>();
         listaTextViewTotaisMes = new ArrayList<TextView>();
-        dadosSulDAO = new DadosSulDAO(PiqueteActivity.this);
 
         TextView jan = findViewById(R.id.tv_AreaTotalMesJan);
         TextView fev = findViewById(R.id.tv_AreaTotalMesFev);
@@ -183,7 +182,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     private void adicionarLinhaTabela(TableRow linha_tabela){
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
-        ArrayList<String> tipoPiquete = dadosSulDAO.getTiposPastagem();
+        ArrayList<String> tipoPiquete = LoginActivity.bancoDeDados.dadosSulDAO.getTiposPastagem();
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
@@ -328,7 +327,7 @@ public class PiqueteActivity extends AppCompatActivity{
     public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
         DecimalFormat doisDecimais = new DecimalFormat("#.##");
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
-        producaoEstimadaD = (dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
+        producaoEstimadaD = (LoginActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
         String producaoEstimada = doisDecimais.format(producaoEstimadaD);
         tv_prod.setText(String.valueOf(producaoEstimada));
     }
@@ -349,8 +348,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Janeiro está na posição 4, por isso mes+3.
         TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
-        double valor = (float)dadosSulDAO.getMeses(mes, tipoPastagem)/100;
-        valor = ((dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
+        double valor = (float)LoginActivity.bancoDeDados.dadosSulDAO.getMeses(mes, tipoPastagem)/100;
+        valor = ((LoginActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
         String resultado = doisDecimais.format(valor);
 
         if(valor != 0){

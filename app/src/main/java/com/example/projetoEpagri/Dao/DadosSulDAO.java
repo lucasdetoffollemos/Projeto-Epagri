@@ -1,96 +1,78 @@
 package com.example.projetoEpagri.Dao;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.projetoEpagri.Classes.BancoDeDados;
-import com.example.projetoEpagri.Classes.Piquete;
+import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSulSchema;
 
 import java.util.ArrayList;
 
-public class DadosSulDAO {
-    private BancoDeDados bd;
+public class DadosSulDAO implements IDadosSulSchema {
+    private SQLiteDatabase bancoDeDados;
 
-    /**
-     * Este método conecta o banco com o arquivo Banco de Dados.
-     * @param context
-     */
-    public DadosSulDAO(Context context){
-        bd = new BancoDeDados(context);
+    public DadosSulDAO(SQLiteDatabase bancoDeDados){
+        this.bancoDeDados = bancoDeDados;
     }
 
     /**
-     * Método para inserir os dados da tabela dadosSul no banco de dados.
-     * @return
+     * Método para inserir uma pastagem no banco de dados (tabela dados_sul).
      */
-    public long inserirPastagem(String pastagem, double condicaoDegradada, double condicaoMedia, double condicaoOtima, int [] meses, int total){
+    public void inserirPastagem(String pastagem, double condicaoDegradada, double condicaoMedia, double condicaoOtima, int [] meses, int total){
         ContentValues values = new ContentValues();
-        values.put("tipoPastagem", pastagem);
+        values.put(COLUNA_TIPO, pastagem);
+        values.put(COLUNA_CONDICAO_DEGRADADA, condicaoDegradada);
+        values.put(COLUNA_CONDICAO_MEDIA, condicaoMedia);
+        values.put(COLUNA_CONDICAO_OTIMA, condicaoOtima);
+        values.put(COLUNA_JAN, meses[0]);
+        values.put(COLUNA_FEV, meses[1]);
+        values.put(COLUNA_MAR, meses[2]);
+        values.put(COLUNA_ABR, meses[3]);
+        values.put(COLUNA_MAI, meses[4]);
+        values.put(COLUNA_JUN, meses[5]);
+        values.put(COLUNA_JUL, meses[6]);
+        values.put(COLUNA_AGO, meses[7]);
+        values.put(COLUNA_SET, meses[8]);
+        values.put(COLUNA_OUT, meses[9]);
+        values.put(COLUNA_NOV, meses[10]);
+        values.put(COLUNA_DEZ, meses[11]);
+        values.put(COLUNA_TOTAL_PASTAGEM, total);
 
-        values.put("condicaoDegradada", condicaoDegradada);
-        values.put("condicaoMedia", condicaoMedia);
-        values.put("condicaoOtima", condicaoOtima);
-
-        values.put("jan", meses[0]);
-        values.put("fev",  meses[1]);
-        values.put("mar",  meses[2]);
-        values.put("abri",  meses[3]);
-        values.put("mai",  meses[4]);
-        values.put("jun",  meses[5]);
-        values.put("jul",  meses[6]);
-        values.put("ago",  meses[7]);
-        values.put("setem", meses[8]);
-        values.put("out",  meses[9]);
-        values.put("nov",  meses[10]);
-        values.put("dez",  meses[11]);
-
-        values.put("totalPastagem", total);
-
-        return bd.getBanco().insert("dadosSul", null, values);
+        this.bancoDeDados.insert(TABELA_DADOS_SUL, null, values);
     }
 
     /**
-     *
-     * @return
+     * Método para recuperar todos os tipos de pastagem.
+     * @return ArrayList de String com os tipos de pastagem.
      */
     public ArrayList<String> getTiposPastagem() {
-        ArrayList<String> arrayList=new ArrayList<>();
+        ArrayList<String> arrayList = new ArrayList<>();
 
-
-        Cursor cursor =  bd.getBanco().rawQuery( "select * from dadosSul", null );
+        String sql_query = "SELECT * FROM " + TABELA_DADOS_SUL;
+        Cursor cursor =  this.bancoDeDados.rawQuery(sql_query , null );
         cursor.moveToFirst();
 
         if (cursor != null){
-            while(cursor.isAfterLast() == false){
-                arrayList.add(cursor.getString(cursor.getColumnIndex("tipoPastagem")));
-                Log.d("tipoPastagem",arrayList.toString());
-
+            while(!cursor.isAfterLast()){
+                arrayList.add(cursor.getString(cursor.getColumnIndex(COLUNA_TIPO)));
                 cursor.moveToNext();
             }}
         return arrayList;
     }
 
-    //Se ele escolheu “grama” no tipo e “média” na condição,
-    //então eu tenho que retornar do banco o valor 5,
-    //por exemplo, se for “grama” e “ótima”, retorna 7, e assim por diante
-    //QUERY COM O WHERE
-    //select * from dadosSul WHERE tipoPastagem = tipo
-
     /**
-     * Método responsável por associar o tipo da pastagem, com a sua condição. e retornar o valor da condicao da respectiva pastagem.
-     * @param tipo
-     * @param condicao
-     * @return
+     * Método responsável por recuperar o valor numérico da condição baseado nos valores "degradada", "média" e "ótima".
+     * @param tipo Tipo da pastagem.
+     * @param condicao Condição da pastagem (degradada, média ou ótima).
+     * @return Valor númerico da condição.
      */
     public Double getCondicao(String tipo, String condicao) {
         Double valorCondicao = 1.0;
         int posicaoColuna = 1;
 
-        //Aqui é feito a query selecionando os dados vindo do arquivo BancoDeDados.java
-        //Seleciona toda a linha da tabela dadosSul, onde o tipo da Pastagem guardada no banco de dados é igual ao tipo  selecionado pelo usuário no spinner.
-        Cursor c = bd.getBanco().rawQuery("SELECT * FROM dadosSul WHERE tipoPastagem = '" + tipo +"'", null);
+        String sql_query = "SELECT * FROM " + TABELA_DADOS_SUL + " WHERE " + COLUNA_TIPO + " = '" + tipo +"'";
+        Cursor c = this.bancoDeDados.rawQuery(sql_query, null);
 
         switch (condicao) {
             case "Degradada":
@@ -111,12 +93,18 @@ public class DadosSulDAO {
         return valorCondicao;
     }
 
-
+    /**
+     * Método responsável por recuperar o valor numérico do mês para certo tipo de pastagem na tabela dados_sul.
+     * @param mes Mês do ano.
+     * @param tipo Tipo da pastagem.
+     * @return Valor númerico do mês.
+     */
     public int getMeses(int mes, String tipo){
         int posicaoColuna;
         int valorDoMes = 1;
 
-        Cursor c = bd.getBanco().rawQuery("SELECT * FROM dadosSul WHERE tipoPastagem = '"+ tipo +"'", null);
+        String sql_query = "SELECT * FROM " + TABELA_DADOS_SUL + " WHERE "+ COLUNA_TIPO + " = '"+ tipo +"'";
+        Cursor c = this.bancoDeDados.rawQuery(sql_query, null);
 
         switch (mes){
             case 1: posicaoColuna = 4; break;
@@ -139,13 +127,5 @@ public class DadosSulDAO {
         }
 
         return  valorDoMes;
-    }
-
-    public BancoDeDados getBd() {
-        return bd;
-    }
-
-    public void setBd(BancoDeDados bd) {
-        this.bd = bd;
     }
 }

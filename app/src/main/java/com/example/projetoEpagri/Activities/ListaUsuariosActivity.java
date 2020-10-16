@@ -2,6 +2,7 @@ package com.example.projetoEpagri.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -13,11 +14,10 @@ import com.example.projetoEpagri.R;
 import java.util.List;
 
 public class ListaUsuariosActivity extends AppCompatActivity {
-    private ListView listaUsuarios;
-    private UsuarioDAO daoUser;
-    private List<Usuario> usuarios;
-    //private  List<Usuario> usuariosFiltrados = new ArrayList<>();
+    private ListView lv_usuarios;
+    private List<Usuario> listaUsuarios;
     ArrayAdapter<Usuario> adaptador;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,37 +25,16 @@ public class ListaUsuariosActivity extends AppCompatActivity {
 
         inicializa();
         setListeners();
-
-        listaUsuarios = findViewById(R.id.lista_usuarios);
-        daoUser = new UsuarioDAO(this);
-        usuarios = daoUser.listarTodosUsuarios();
-        //Apenas usuarios consultados
-        //usuariosFiltrados.addAll(usuarios);
-
-        /**
-         * Adaptador de listas, adcionando a lista de usuarios dentro da listview do lista_usuarios.xml
-         */
-        ArrayAdapter<Usuario> adaptador = new ArrayAdapter<Usuario>(this, android.R.layout.simple_list_item_1, usuarios);
-
     }
 
-
-
     private void inicializa() {
+        this.lv_usuarios = findViewById(R.id.lista_usuarios);
+        this.listaUsuarios = LoginActivity.bancoDeDados.usuarioDAO.getAllUsuarios();
 
-        listaUsuarios = findViewById(R.id.lista_usuarios);
-        daoUser = new UsuarioDAO(this);
-        usuarios = daoUser.listarTodosUsuarios();
-        //Apenas usuarios consultados
-        //usuariosFiltrados.addAll(usuarios);
-
-        /**
-         * Adaptador de listas, adcionando a lista de usuarios dentro da listview do lista_usuarios.xml
-         */
-        adaptador = new ArrayAdapter<Usuario>(this, android.R.layout.simple_list_item_1, usuarios);
+        this.adaptador = new ArrayAdapter<Usuario>(this, android.R.layout.simple_list_item_1, this.listaUsuarios);
     }
 
     private void setListeners() {
-        listaUsuarios.setAdapter(adaptador);
+        lv_usuarios.setAdapter(adaptador);
     }
 }
