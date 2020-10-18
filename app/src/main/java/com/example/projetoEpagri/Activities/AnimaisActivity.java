@@ -37,7 +37,8 @@ public class AnimaisActivity extends AppCompatActivity {
     private ArrayList<Animais> listaAnimais;
     ArrayList<Double> listaTotalUAHA;
     private ArrayList<double[]> matrizUA; //matrizes para mapear a UA de cada mês/linha.
-    private double somaAnimal;
+    private int somaAnimal;
+    private double areaTotal;
     //Consumo
     private double resultadoConsumo;
     //Número de animais
@@ -408,11 +409,11 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     public void calculaTotalAnimais(){
         //Calcula o total de animais.
-        somaAnimal = 0.0;
+        somaAnimal = 0;
 
         if(!qtdeAnimais.isEmpty()){
             for(int i =0; i < qtdeAnimais.size(); i++){
-                somaAnimal = somaAnimal + qtdeAnimais.get(i);
+                somaAnimal = (int) (somaAnimal + qtdeAnimais.get(i));
             }
         }
 
@@ -614,7 +615,7 @@ public class AnimaisActivity extends AppCompatActivity {
         }
 
         //Recupera a área total vinda da Activity Piquete.
-        double areaTotal = getIntent().getDoubleExtra("areaTotal", 1.0);
+        areaTotal = getIntent().getDoubleExtra("areaTotal", 1.0);
 
         for(int i=0; i<listaTotalUA.size(); i++){
             listaTotalUAHA.set(i, Double.parseDouble(doisDecimais.format(listaTotalUA.get(i) / areaTotal).replace(",",".")));
@@ -696,7 +697,9 @@ public class AnimaisActivity extends AppCompatActivity {
     public void finalizaEnvio() {
         Intent intent = new Intent();
         intent.putExtra("listaAnimais", listaAnimais);
-        intent.putExtra("totais", listaTotalUAHA);
+        intent.putExtra("listaTotaisUAHA", listaTotalUAHA);
+        intent.putExtra("qtdeAnimal", somaAnimal);
+        intent.putExtra("area", areaTotal);
         setResult(RESULT_OK, intent);
         finish();
     }

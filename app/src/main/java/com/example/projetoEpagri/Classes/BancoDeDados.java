@@ -9,11 +9,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSulSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.IPropriedadeSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimaisAtual;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacaoAtual;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMesAtual;
 import com.example.projetoEpagri.BancoDeDadosSchema.IUsuarioSchema;
+import com.example.projetoEpagri.Dao.AnimaisDAO;
 import com.example.projetoEpagri.Dao.DadosSulDAO;
+import com.example.projetoEpagri.Dao.PiqueteDAO;
+import com.example.projetoEpagri.Dao.PropriedadeDAO;
+import com.example.projetoEpagri.Dao.TotalAnimaisDAO;
+import com.example.projetoEpagri.Dao.TotalPiqueteEstacaoAtualDAO;
+import com.example.projetoEpagri.Dao.TotalPiqueteMesAtualDAO;
 import com.example.projetoEpagri.Dao.UsuarioDAO;
 
 public class BancoDeDados{
@@ -26,6 +33,12 @@ public class BancoDeDados{
 
     public static UsuarioDAO usuarioDAO;
     public static DadosSulDAO dadosSulDAO;
+    public static PropriedadeDAO propriedadeDAO;
+    public static PiqueteDAO piqueteDAO;
+    public static TotalPiqueteMesAtualDAO totalPiqueteMesAtualDAO;
+    public static TotalPiqueteEstacaoAtualDAO totalPiqueteEstacaoAtualDAO;
+    public static AnimaisDAO animaisDAO;
+    public static TotalAnimaisDAO totalAnimaisDAO;
 
     public BancoDeDados(Context context) {
         this.context = context;
@@ -43,6 +56,12 @@ public class BancoDeDados{
 
         usuarioDAO = new UsuarioDAO(sqLiteDatabase);
         dadosSulDAO = new DadosSulDAO(sqLiteDatabase);
+        propriedadeDAO = new PropriedadeDAO(sqLiteDatabase);
+        piqueteDAO = new PiqueteDAO(sqLiteDatabase);
+        totalPiqueteMesAtualDAO = new TotalPiqueteMesAtualDAO(sqLiteDatabase);
+        totalPiqueteEstacaoAtualDAO = new TotalPiqueteEstacaoAtualDAO(sqLiteDatabase);
+        animaisDAO = new AnimaisDAO(sqLiteDatabase);
+        totalAnimaisDAO = new TotalAnimaisDAO(sqLiteDatabase);
 
         return this;
     }
@@ -106,16 +125,15 @@ public class BancoDeDados{
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(IUsuarioSchema.CREATE_TABELA_USUARIO);
             db.execSQL(IDadosSulSchema.CREATE_TABELA_DADOS_SUL);
-            //db.execSQL(IPiqueteSchema.CREATE_TABELA_PIQUETE_ATUAL);
-            //db.execSQL(ITotalPiqueteMesAtual.CREATE_TABELA_TOTAL_PIQUETE_MES_ATUAL);
-            //db.execSQL(ITotalPiqueteEstacaoAtual.CREATE_TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
-            //db.execSQL(IAnimaisSchema.CREATE_TABELA_ANIMAIS_ATUAL);
-            //db.execSQL(ITotalAnimaisAtual.CREATE_TABELA_TOTAL_ANIMAIS_ATUAL);
+            db.execSQL(IPropriedadeSchema.CREATE_TABELA_PROPRIEDADE);
+            db.execSQL(IPiqueteSchema.CREATE_TABELA_PIQUETE_ATUAL);
+            db.execSQL(ITotalPiqueteMesAtual.CREATE_TABELA_TOTAL_PIQUETE_MES_ATUAL);
+            db.execSQL(ITotalPiqueteEstacaoAtual.CREATE_TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+            db.execSQL(IAnimaisSchema.CREATE_TABELA_ANIMAIS_ATUAL);
+            db.execSQL(ITotalAnimaisAtual.CREATE_TABELA_TOTAL_ANIMAIS_ATUAL);
         }
 
         @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        }
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
     }
 }

@@ -17,6 +17,7 @@ public interface ITotalPiqueteEstacaoAtual {
             + COLUNA_TOTAL_OUT + " real, "
             + COLUNA_TOTAL_INV + " real, "
             + COLUNA_TOTAL_PRIM + " real, "
+            + COLUNA_ID_PROPRIEDADE + " integer, "
             + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
 
     String[] TOTAL_PIQUETE_ESTACAO_ATUAL_COLUNAS = new String[] {

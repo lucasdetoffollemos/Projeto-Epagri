@@ -20,6 +20,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.projetoEpagri.Classes.Animais;
+import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Dao.DadosSulDAO;
 import com.example.projetoEpagri.R;
 
@@ -34,7 +35,9 @@ public class PiqueteActivity extends AppCompatActivity{
     private TableLayout table_layout;
     private double producaoEstimadaD, areaTotal;
     private int intTotalTonelada;
-    private ArrayList<double[]> matrizMeses;       //matriz que armazena os valores calculados de todas as linhas para todos os meses.
+    private ArrayList<double[]> matrizMeses;            //matriz que armazena os valores calculados de todas as linhas para todos os meses.
+    private ArrayList<Piquete> listaPiquetes;
+    private  ArrayList<Double> listaTotaisMes;
     private ArrayList<Double> listaTotaisEstacoes;      //lista de 4 posiçõe para guardar os valores das estações.
     private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
     private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
@@ -58,10 +61,18 @@ public class PiqueteActivity extends AppCompatActivity{
      * Método utilizado para inicializar os componentes da interface e os objetos da classe.
      */
     public void inicializa(){
-        listaDeAreas = new ArrayList<Double>();
-        matrizMeses = new ArrayList<double[]>();
-        listaTotaisEstacoes = new ArrayList<Double>();
-        listaTextViewTotaisMes = new ArrayList<TextView>();
+        listaDeAreas = new ArrayList<>();
+        matrizMeses = new ArrayList<>();
+        listaPiquetes = new ArrayList<>();
+        listaTotaisMes = new ArrayList<>();
+        listaTotaisEstacoes = new ArrayList<>();
+        listaTextViewTotaisMes = new ArrayList<>();
+
+        if(listaTotaisMes.isEmpty()){
+            for(int i=0; i<12; i++){
+                listaTotaisMes.add(0.0);
+            }
+        }
 
         TextView jan = findViewById(R.id.tv_AreaTotalMesJan);
         TextView fev = findViewById(R.id.tv_AreaTotalMesFev);
@@ -114,6 +125,11 @@ public class PiqueteActivity extends AppCompatActivity{
                         if(listaDeAreas.size() < numeroDeLinhas){
                             listaDeAreas.add(0.0);
                         }
+
+                        if(listaPiquetes.size() < numeroDeLinhas){
+                            Piquete temp = new Piquete();
+                            listaPiquetes.add(temp);
+                        }
             }
         });
 
@@ -127,6 +143,7 @@ public class PiqueteActivity extends AppCompatActivity{
                 if(posicaoLinhaTabela >= -1){
                     listaDeAreas.remove(numeroDeLinhas-1);
                     matrizMeses.remove(numeroDeLinhas-1);
+                    listaPiquetes.remove(numeroDeLinhas-1);
 
                     //Limpa a matriz com valores 0 para remover os cálculo dos totais.
                     //Se não eles continuam aparecendo mesmo após remover todas as linhas.
@@ -319,6 +336,11 @@ public class PiqueteActivity extends AppCompatActivity{
         }
 
         calculaTotais();
+
+        if(listaPiquetes.size() >= numeroDeLinhas){
+            Piquete p = new Piquete(tipo, condicao, areaD, producaoEstimadaD, arrayMesesProd, intTotalTonelada);
+            listaPiquetes.set(posicao, p);
+        }
     }
 
     /**
@@ -376,6 +398,14 @@ public class PiqueteActivity extends AppCompatActivity{
         }
         TextView area = findViewById(R.id.tv_AreaTotalNumHa);
         area.setText(doisDecimais.format(areaTotal));
+
+        if(numeroDeLinhas == 0){
+            if(listaTotaisMes.isEmpty()){
+                for(int i=0; i<12; i++){
+                    listaTotaisMes.set(i, 0.0);
+                }
+            }
+        }
 
         //Inicializa a lista de totais das estações. Somente entra no if na primeira execução (quando o botão de + é clicado
         //e o numero de linhas é maior que o tamanho da lista.
@@ -468,12 +498,14 @@ public class PiqueteActivity extends AppCompatActivity{
                         listaTotaisEstacoes.set(3, listaTotaisEstacoes.get(3) + total);
                     }
 
+                    listaTotaisMes.set(j, total);
                     j++;
                     total = 0.0;
                 }
                 else{
                     //Esse cálculo fica aqui pois quando o j=11 ele não entra no if (acima).
                     if(j == 11){
+                        listaTotaisMes.set(j, total);
                         listaTotaisEstacoes.set(0, listaTotaisEstacoes.get(0) + total);
                     }
 
@@ -512,7 +544,9 @@ public class PiqueteActivity extends AppCompatActivity{
         if (requestCode == CODIGO_REQUISICAO_ANIMAIS_ACTIVITY) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
-                ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("totais");
+                ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("listaTotaisUAHA");
+                int qtdeAnimais = data.getIntExtra("qtdeAnimal", 0);
+                double area = data.getDoubleExtra("area", 1.0);
 
                 /*for(int i=0; i<listaAnimal.size(); i++){
                     Log.i("Animais", listaAnimal.get(i).getCategoria() + " " + listaAnimal.get(i).getConsumo() + " " + listaAnimal.get(i).getNumAnimais() + " " + listaAnimal.get(i).getEntradaMes() + " " + listaAnimal.get(i).getPesoInicial()+ " " + listaAnimal.get(i).getPesoFinal() + " " + listaAnimal.get(i).getPesoGanhoVer() + " " + listaAnimal.get(i).getPesoGanhoOut() + " " + listaAnimal.get(i).getPesoGanhoInv() + " " + listaAnimal.get(i).getPesoGanhoPrim() + " " + Arrays.toString(listaAnimal.get(i).getMeses()));
@@ -521,7 +555,12 @@ public class PiqueteActivity extends AppCompatActivity{
 
                 Intent intent = new Intent();
                 intent.putExtra("listaAnimais", listaAnimais);
-                intent.putExtra("totais", listaTotalUAHA);
+                intent.putExtra("listaTotaisUAHA", listaTotalUAHA);
+                intent.putExtra("qtdeAnimal", qtdeAnimais);
+                intent.putExtra("area", area);
+                intent.putExtra("listaPiquetes", listaPiquetes);
+                intent.putExtra("listaTotaisMes", listaTotaisMes);
+                intent.putExtra("listaTotaisEstacoes", listaTotaisEstacoes);
                 setResult(RESULT_OK, intent);
                 finish();
             }

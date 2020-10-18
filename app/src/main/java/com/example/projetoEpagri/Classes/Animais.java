@@ -134,8 +134,16 @@ public class Animais implements Parcelable {
         return meses;
     }
 
+    public double getMeses(int posicao){
+        return this.meses[posicao];
+    }
+
     public void setMeses(double[] meses) {
         this.meses = meses;
+    }
+
+    public void setMeses(double valor, int posicao){
+        this.meses[posicao] = valor;
     }
 
     @Override

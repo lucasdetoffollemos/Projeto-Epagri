@@ -28,6 +28,7 @@ public class UsuarioDAO implements IUsuarioSchema {
         values.put(COLUNA_EMAIL, usuario.getEmail());
         values.put(COLUNA_TELEFONE, usuario.getTelefone());
         values.put(COLUNA_SENHA, usuario.getSenha());
+
         return this.bancoDeDados.insert(TABELA_USUARIO, null, values);
     }
 
@@ -49,6 +50,22 @@ public class UsuarioDAO implements IUsuarioSchema {
             usuario.setSenha(cursor.getString(4));
         }
         return usuario;
+    }
+
+    /**
+     * Método para recuperar o id de um usuário baseado no nome.
+     * @param nome Nome do usuário que deseja-se saber o id.
+     * @return id do usuário.
+     */
+    public int getUSuarioId(String nome){
+        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=\"" + nome + "\"";
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
+
+        int id = -1;
+        if (cursor.moveToLast()) {
+            id = cursor.getInt(0);
+        }
+        return id;
     }
 
     /**

@@ -19,6 +19,7 @@ public interface IPiqueteSchema {
     String COLUNA_PRODUCAO_OUT = "prod_out";
     String COLUNA_PRODUCAO_NOV = "prod_nov";
     String COLUNA_PRODUCAO_DEZ = "prod_dez";
+    String COLUNA_TOTAL = "total";
     String COLUNA_ID_PROPRIEDADE = "id_propriedade";
     String TABELA_PROPRIEDADE = "propriedades";
 
@@ -41,6 +42,8 @@ public interface IPiqueteSchema {
             + COLUNA_PRODUCAO_OUT + " real, "
             + COLUNA_PRODUCAO_NOV + " real, "
             + COLUNA_PRODUCAO_DEZ + " real, "
+            + COLUNA_TOTAL + " real, "
+            + COLUNA_ID_PROPRIEDADE + " integer, "
             + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + "))";
 
     String[] PIQUETE_ATUAL_COLUNAS = new String[] {
@@ -61,6 +64,7 @@ public interface IPiqueteSchema {
             COLUNA_PRODUCAO_OUT,
             COLUNA_PRODUCAO_NOV,
             COLUNA_PRODUCAO_DEZ,
+            COLUNA_TOTAL,
             COLUNA_ID_PROPRIEDADE
     };
 }

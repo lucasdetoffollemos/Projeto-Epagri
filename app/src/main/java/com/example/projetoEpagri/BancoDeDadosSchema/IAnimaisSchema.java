@@ -53,6 +53,7 @@ public interface IAnimaisSchema {
             + COLUNA_PESO_OUT + " real, "
             + COLUNA_PESO_NOV + " real, "
             + COLUNA_PESO_DEZ + " real, "
+            + COLUNA_ID_PROPRIEDADE + " integer, "
             + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + "))";
 
     String[] ANIMAIS_ATUAL_COLUNAS = new String[] {

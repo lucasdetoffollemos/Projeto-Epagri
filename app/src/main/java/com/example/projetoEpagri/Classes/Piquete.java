@@ -3,8 +3,6 @@ package com.example.projetoEpagri.Classes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 public class Piquete implements Parcelable {
     private String tipo;
     private String condicao;
@@ -12,16 +10,11 @@ public class Piquete implements Parcelable {
     private double prodEstimada;
     private double mesesProd [];
     private int  total;
-    private double totalColunaHa;
-    private  double totaisMeses [];
-    private double totaisEstacao[];
 
     public Piquete(){}
 
-    public Piquete(String tipo, String condicao, double area, double prodEstimada, double mesesProd[], int total, double totalColunaHa, double totaisMeses[], double totaisEstacao[]){
+    public Piquete(String tipo, String condicao, double area, double prodEstimada, double mesesProd[], int total){
         this.mesesProd = new double[12];
-        this.totaisMeses = new double[12];
-        this.totaisEstacao = new double[4];
 
         this.tipo = tipo;
         this.condicao = condicao;
@@ -29,9 +22,6 @@ public class Piquete implements Parcelable {
         this.prodEstimada = prodEstimada;
         this.mesesProd = mesesProd;
         this.total = total;
-        this.totalColunaHa = totalColunaHa;
-        this.totaisMeses = totaisMeses;
-        this.totaisEstacao = totaisEstacao;
     }
 
    private Piquete(Parcel p){
@@ -41,12 +31,7 @@ public class Piquete implements Parcelable {
         prodEstimada = p.readDouble();
         mesesProd = p.createDoubleArray();
         total = p.readInt();
-        totalColunaHa = p.readDouble();
-        totaisMeses = p.createDoubleArray();
-        totaisEstacao = p.createDoubleArray();
-
    }
-
 
     public static final Creator<Piquete> CREATOR = new Creator<Piquete>() {
         @Override
@@ -100,7 +85,7 @@ public class Piquete implements Parcelable {
         this.mesesProd = meses;
     }
 
-    public void setMeses(int meses, int posicao) {
+    public void setMeses(double meses, int posicao) {
         this.mesesProd[posicao] = meses;
     }
 
@@ -110,30 +95,6 @@ public class Piquete implements Parcelable {
 
     public void setTotal(int total) {
         this.total = total;
-    }
-
-    public double getTotalColunaHa() {
-        return totalColunaHa;
-    }
-
-    public void setTotalColunaHa(double totalColunaHa) {
-        this.totalColunaHa = totalColunaHa;
-    }
-
-    public double[] getTotaisMeses() {
-        return totaisMeses;
-    }
-
-    public void setTotaisMeses(double[] totaisMeses) {
-        this.totaisMeses = totaisMeses;
-    }
-
-    public double[] getTotaisEstacao() {
-        return totaisEstacao;
-    }
-
-    public void setTotaisEstacao(double[] totaisEstacao) {
-        this.totaisEstacao = totaisEstacao;
     }
 
     @Override
@@ -149,8 +110,5 @@ public class Piquete implements Parcelable {
         dest.writeDouble(prodEstimada);
         dest.writeDoubleArray(mesesProd);
         dest.writeInt(total);
-        dest.writeDouble(totalColunaHa);
-        dest.writeDoubleArray(totaisMeses);
-        dest.writeDoubleArray(totaisEstacao);
     }
 }

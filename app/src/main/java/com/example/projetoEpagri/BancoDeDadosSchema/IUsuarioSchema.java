@@ -10,7 +10,7 @@ public interface IUsuarioSchema {
 
     String CREATE_TABELA_USUARIO = "CREATE TABLE IF NOT EXISTS "
         + TABELA_USUARIO + "("
-        + COLUNA_ID + " integer PRIMARY KEY AUTOINCREMENT,  "
+        + COLUNA_ID + " integer PRIMARY KEY AUTOINCREMENT, "
         + COLUNA_NOME + " varchar(50), "
         + COLUNA_EMAIL + " varchar(50), "
         + COLUNA_TELEFONE + " varchar(50), "

@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
+
+import java.util.ArrayList;
 
 public class IndexActivity extends AppCompatActivity {
     private TextView tv_bemVindo;
@@ -76,10 +80,17 @@ public class IndexActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 nomeUsuario = data.getStringExtra("nomeUsuario");
                 tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
 
+                ArrayList<Propriedade> listaPropriedade = LoginActivity.bancoDeDados.propriedadeDAO.getAllPropriedades();
+
+                for(int i=0; i<listaPropriedade.size(); i++){
+                    Log.i("listaPropriedade", listaPropriedade.get(i).getNome() + " "
+                            + listaPropriedade.get(i).getArea() + " "
+                            + listaPropriedade.get(i).getQtdeAnimais());
+                }
             }
+
+            if (resultCode == Activity.RESULT_CANCELED) {}
         }
     }
 }

@@ -33,6 +33,7 @@ public interface ITotalAnimaisAtual {
             + COLUNA_TOTAL_OUT + " real, "
             + COLUNA_TOTAL_NOV + " real, "
             + COLUNA_TOTAL_DEZ + " real, "
+            + COLUNA_ID_PROPRIEDADE + " integer, "
             + "FOREIGN KEY ("+ COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
 
     String[] TOTAL_ANIMAIS_ATUAL_COLUNAS = new String[] {
