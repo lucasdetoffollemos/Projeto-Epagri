@@ -39,6 +39,7 @@ public class AnimaisActivity extends AppCompatActivity {
     private ArrayList<double[]> matrizUA; //matrizes para mapear a UA de cada mês/linha.
     private int somaAnimal;
     private double areaTotal;
+    String nomeUsuario;
     //Consumo
     private double resultadoConsumo;
     //Número de animais
@@ -105,6 +106,10 @@ public class AnimaisActivity extends AppCompatActivity {
         bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
         bt_remover_linha = findViewById(R.id.bt_removerLinha);
         bt_finalizar_envio = findViewById(R.id.bt_finalizarEnvio);
+
+        Intent intent = getIntent();
+        nomeUsuario = intent.getStringExtra("nome_usuario");
+        Toast.makeText(AnimaisActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -696,6 +701,7 @@ public class AnimaisActivity extends AppCompatActivity {
     //ARRUMAR.
     public void finalizaEnvio() {
         Intent intent = new Intent();
+        intent.putExtra("nome_usuario", nomeUsuario);
         intent.putExtra("listaAnimais", listaAnimais);
         intent.putExtra("listaTotaisUAHA", listaTotalUAHA);
         intent.putExtra("qtdeAnimal", somaAnimal);

@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.Piquete;
@@ -37,6 +38,7 @@ public class PiqueteActivity extends AppCompatActivity{
     private ArrayList<Double> listaTotaisEstacoes;      //lista de 4 posiçõe para guardar os valores das estações.
     private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
     private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
+    private String nomeUsuario;
 
     private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
 
@@ -107,6 +109,10 @@ public class PiqueteActivity extends AppCompatActivity{
         bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
         bt_remover_linha = findViewById(R.id.bt_removerLinha);
         bt_proximo_passo = findViewById(R.id.bt_proximoPasso);
+
+        Intent intent = getIntent();
+        nomeUsuario = intent.getStringExtra("nome_usuario");
+        Toast.makeText(PiqueteActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -525,6 +531,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void irParaAnimaisActivity() {
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
+        i.putExtra("nome_usuario", nomeUsuario);
         i.putExtra("areaTotal", areaTotal);
         startActivityForResult(i, CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
     }
@@ -536,6 +543,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
         if (requestCode == CODIGO_REQUISICAO_ANIMAIS_ACTIVITY) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+                nomeUsuario = data.getStringExtra("nome_usuario");
                 ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
                 ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("listaTotaisUAHA");
                 int qtdeAnimais = data.getIntExtra("qtdeAnimal", 0);
@@ -547,6 +555,7 @@ public class PiqueteActivity extends AppCompatActivity{
                 Log.i("Totais", String.valueOf(totais));*/
 
                 Intent intent = new Intent();
+                intent.putExtra("nome_usuario", nomeUsuario);
                 intent.putExtra("listaAnimais", listaAnimais);
                 intent.putExtra("listaTotaisUAHA", listaTotalUAHA);
                 intent.putExtra("qtdeAnimal", qtdeAnimais);

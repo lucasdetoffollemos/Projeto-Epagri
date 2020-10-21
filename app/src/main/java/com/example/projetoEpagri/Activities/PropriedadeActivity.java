@@ -41,6 +41,7 @@ public class PropriedadeActivity extends AppCompatActivity {
     public void inicializa(){
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
+        Toast.makeText(PropriedadeActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
         bt_proximo = findViewById(R.id.bt_levaPiquete);
@@ -66,6 +67,7 @@ public class PropriedadeActivity extends AppCompatActivity {
 
         if(!nomePropriedade.equals("")){
             Intent i = new Intent(PropriedadeActivity.this, PiqueteActivity.class);
+            i.putExtra("nome_usuario", nomeUsuario);
             i.putExtra("nome_propriedade", nomePropriedade);
             startActivityForResult(i, CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY);
         }
@@ -80,7 +82,7 @@ public class PropriedadeActivity extends AppCompatActivity {
      */
     public void enviaResposta(){
         Intent intent = new Intent();
-        intent.putExtra("nomeUsuario", nomeUsuario);
+        intent.putExtra("nome_usuario", nomeUsuario);
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
@@ -117,6 +119,7 @@ public class PropriedadeActivity extends AppCompatActivity {
                 //Informações Animais.
                 ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
                 ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("listaTotaisUAHA");
+                nomeUsuario = data.getStringExtra("nome_usuario");
                 int qtdeAnimais = data.getIntExtra("qtdeAnimal", 0);
                 double area = data.getDoubleExtra("area", 1.0);
 
@@ -174,6 +177,7 @@ public class PropriedadeActivity extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent();
+                intent.putExtra("nome_usuario", nomeUsuario);
                 setResult(RESULT_OK, intent);
 
                 finish();

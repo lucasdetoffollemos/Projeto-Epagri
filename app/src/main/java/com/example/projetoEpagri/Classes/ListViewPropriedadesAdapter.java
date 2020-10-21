@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ListViewPropriedadesAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<Propriedade> listaPropriedades;
+    public ArrayList<Propriedade> listaPropriedades;
     private TextView tv_nome, tv_area, tv_qtde;
     private Button bt_ver_dados, bt_excluir;
 

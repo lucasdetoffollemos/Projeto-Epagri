@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.Classes.ListViewPropriedadesAdapter;
 import com.example.projetoEpagri.Classes.Propriedade;
@@ -44,6 +45,8 @@ public class IndexActivity extends AppCompatActivity {
         //Recebe a mensagem (nome do usuário) da activity anterior (LoginActivity).
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
+
+        Toast.makeText(IndexActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
         tv_bemVindo = findViewById(R.id.tv_tituloIndex);
         tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
@@ -111,7 +114,7 @@ public class IndexActivity extends AppCompatActivity {
 
         if (requestCode == this.codigoRequisicao) {
             if(resultCode == Activity.RESULT_OK){
-                nomeUsuario = data.getStringExtra("nomeUsuario");
+                nomeUsuario = data.getStringExtra("nome_usuario");
                 tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
 
                 /*for(int i=0; i<listaPropriedade.size(); i++){
@@ -120,6 +123,7 @@ public class IndexActivity extends AppCompatActivity {
                             + listaPropriedade.get(i).getQtdeAnimais());
                 }*/
                 atualizaListView();
+                Toast.makeText(this.getApplicationContext(), nomeUsuario, Toast.LENGTH_SHORT).show();
             }
 
             if (resultCode == Activity.RESULT_CANCELED) {}
