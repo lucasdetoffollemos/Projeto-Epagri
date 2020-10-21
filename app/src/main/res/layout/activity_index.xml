@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.projetoEpagri.Activities.IndexActivity">
 
+    <ListView
+        android:id="@+id/lv_propriedades"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_levaPropriedade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_tituloIndex"
         android:layout_width="wrap_content"

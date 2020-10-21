@@ -68,7 +68,7 @@ public class PerfilActivity extends AppCompatActivity {
                 telefone = et_telefone.getText().toString();
                 senha = et_senha.getText().toString();
 
-                LoginActivity.bancoDeDados.usuarioDAO.updateUsuario(1, nome, email, telefone, senha);
+                MainActivity.bancoDeDados.usuarioDAO.updateUsuario(1, nome, email, telefone, senha);
             }
         });
 
@@ -92,7 +92,7 @@ public class PerfilActivity extends AppCompatActivity {
      */
     public void criarPerfil(String nome, String email, String telefone, String senha){
         Usuario u = new Usuario(nome, email, telefone, senha);
-        long id = LoginActivity.bancoDeDados.usuarioDAO.inserirUsuario(u);
+        long id = MainActivity.bancoDeDados.usuarioDAO.inserirUsuario(u);
         Toast.makeText(this, "Usuario inserido com id " + id, Toast.LENGTH_SHORT).show();
 
         //O código abaixo da um tempo da 2 seg até voltar a outra página.
@@ -118,7 +118,7 @@ public class PerfilActivity extends AppCompatActivity {
      * Método responsável por deletar todos os usuário da lista.
      */
     public void deletarTodosUsuario(){
-        LoginActivity.bancoDeDados.usuarioDAO.deleteAllUsuarios();
+        MainActivity.bancoDeDados.usuarioDAO.deleteAllUsuarios();
         Toast.makeText(this, "Usuários deletados", Toast.LENGTH_SHORT).show();
     }
 

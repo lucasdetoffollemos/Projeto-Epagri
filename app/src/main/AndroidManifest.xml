@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- Activity Principal -->
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,12 +21,12 @@
         <activity
             android:name=".Activities.PerfilActivity"
             android:label=" Criar Perfil"
-            android:parentActivityName=".Activities.LoginActivity">
+            android:parentActivityName=".Activities.MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.LoginActivity" />
+                android:value="com.example.projetoEpagri.Activities.MainActivity" />
         </activity> <!-- Activity De lista de usuarios -->
         <activity
             android:name=".Activities.ListaUsuariosActivity"
@@ -39,12 +39,12 @@
         <activity
             android:name=".Activities.IndexActivity"
             android:label="Bem vindo"
-            android:parentActivityName=".Activities.LoginActivity">
+            android:parentActivityName=".Activities.MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.LoginActivity" />
+                android:value="com.example.projetoEpagri.Activities.MainActivity" />
         </activity> <!-- Acitivity Propriedade -->
         <activity
             android:name=".Activities.PropriedadeActivity"

@@ -102,6 +102,27 @@ public class PropriedadeDAO implements IPropriedadeSchema {
     }
 
     /**
+     * Método para recuperar todas as propriedades cadastradas.
+     */
+    public ArrayList<Propriedade> getAllPropriedadesByUserId(int usuarioId){
+        ArrayList<Propriedade> listaPropriedades = new ArrayList<>();
+
+        String sql_query = "SELECT * FROM " + TABELA_PROPRIEDADE + " WHERE " + COLUNA_ID_USUARIO + "=" + "\"" + usuarioId + "\"";
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
+
+        while(cursor.moveToNext()){
+            Propriedade p = new Propriedade();
+            p.setNome(cursor.getString(1));
+            p.setArea(cursor.getDouble(2));
+            p.setQtdeAnimais(cursor.getInt(3));
+            p.setListaPiqueteAtual(null); //Precisa consultar na outra tabela.
+            p.setListaAnimaisAtual(null);
+            listaPropriedades.add(p);
+        }
+        return listaPropriedades;
+    }
+
+    /**
      * Método para remover uma única propriedade baseado no nome.
      * @param nome Nome da propriedade a ser removida.
      */

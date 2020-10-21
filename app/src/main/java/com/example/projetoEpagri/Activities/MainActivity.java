@@ -2,7 +2,6 @@ package com.example.projetoEpagri.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +20,7 @@ import com.example.projetoEpagri.R;
     - Implementar tratamento de exceção em todas as interações com o banco.
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private TextView tv_criaPerfil;
     private EditText et_nome, et_senha;
     private Button bt_login;
@@ -78,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
      * Método responsável por iniciar a Activity Perfil.
      */
     public void criarPerfil() {
-        Intent i = new Intent(LoginActivity.this, PerfilActivity.class);
+        Intent i = new Intent(MainActivity.this, PerfilActivity.class);
         startActivity(i);
     }
 
@@ -92,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
          if(checkEmailSenha){
              Toast.makeText(getApplicationContext(), "Usuário logado", Toast.LENGTH_SHORT).show();
-             Intent i = new Intent(LoginActivity.this, IndexActivity.class);
+             Intent i = new Intent(MainActivity.this, IndexActivity.class);
              i.putExtra("nome_usuario", nome);
              startActivity(i);
          }

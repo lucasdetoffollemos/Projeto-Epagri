@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_marginLeft="10sp"
     android:layout_marginRight="10sp"
-    tools:context=".Activities.LoginActivity">
+    tools:context=".Activities.MainActivity">
 
     <TextView
         android:id="@+id/tv_titulo"

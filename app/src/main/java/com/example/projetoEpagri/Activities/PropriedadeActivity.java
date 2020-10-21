@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +17,6 @@ import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PropriedadeActivity extends AppCompatActivity {
     private String nomePropriedade;
@@ -154,24 +152,24 @@ public class PropriedadeActivity extends AppCompatActivity {
                 Log.i("listaTotaisEstacoes", String.valueOf(listaTotaisEstacoes));*/
 
                 //Valor para representar que não encontrou o usuário com o nome recebido por parâmetro (-1).
-                int usuarioId = LoginActivity.bancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
+                int usuarioId = MainActivity.bancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
                 if(usuarioId != -1){
                     Propriedade p = new Propriedade(nomePropriedade, area, qtdeAnimais, listaPiquete, listaAnimais);
-                    LoginActivity.bancoDeDados.propriedadeDAO.inserirPropriedade(p, usuarioId);
+                    MainActivity.bancoDeDados.propriedadeDAO.inserirPropriedade(p, usuarioId);
 
-                    int propriedadeId = LoginActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
+                    int propriedadeId = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
                     if(propriedadeId != -1){
                         for(int i=0; i<listaPiquete.size(); i++){
-                            LoginActivity.bancoDeDados.piqueteDAO.inserirPiquete(listaPiquete.get(i), propriedadeId);
+                            MainActivity.bancoDeDados.piqueteDAO.inserirPiquete(listaPiquete.get(i), propriedadeId);
                         }
 
-                        LoginActivity.bancoDeDados.totalPiqueteMesAtualDAO.inserirTotalMes(listaTotaisMes, propriedadeId);
-                        LoginActivity.bancoDeDados.totalPiqueteEstacaoAtualDAO.inserirTotalEstacao(listaTotaisEstacoes, propriedadeId);
+                        MainActivity.bancoDeDados.totalPiqueteMesAtualDAO.inserirTotalMes(listaTotaisMes, propriedadeId);
+                        MainActivity.bancoDeDados.totalPiqueteEstacaoAtualDAO.inserirTotalEstacao(listaTotaisEstacoes, propriedadeId);
 
                         for(int i=0; i<listaAnimais.size(); i++){
-                            LoginActivity.bancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId);
+                            MainActivity.bancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId);
                         }
-                        LoginActivity.bancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId);
+                        MainActivity.bancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId);
                     }
                 }
 

@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.projetoEpagri.Classes.ListViewPropriedadesAdapter;
 import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
 
@@ -17,9 +20,13 @@ import java.util.ArrayList;
 
 public class IndexActivity extends AppCompatActivity {
     private TextView tv_bemVindo;
+    private ArrayList<Propriedade> listaPropriedade;
+    private ListView lv_propriedades;
+    private ListViewPropriedadesAdapter listViewPropriedadesAdapter;
     private Button bt_cadastrarPropriedade;
     private String nomeUsuario;
     private int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
+    private int usuarioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +48,18 @@ public class IndexActivity extends AppCompatActivity {
         tv_bemVindo = findViewById(R.id.tv_tituloIndex);
         tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
 
+        lv_propriedades = findViewById(R.id.lv_propriedades);
         bt_cadastrarPropriedade = findViewById(R.id.bt_levaPropriedade);
+
+        usuarioId = MainActivity.bancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
+        listaPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getAllPropriedadesByUserId(usuarioId);
+
+        if(listaPropriedade.size() > 0){
+            tv_bemVindo.setVisibility(View.INVISIBLE);
+        }
+
+        listViewPropriedadesAdapter = new ListViewPropriedadesAdapter(this, listaPropriedade);
+        lv_propriedades.setAdapter(listViewPropriedadesAdapter);
     }
 
     /**
@@ -66,6 +84,21 @@ public class IndexActivity extends AppCompatActivity {
         startActivityForResult(i, this.codigoRequisicao);
     }
 
+    public void atualizaListView(){
+        //Consulta o banco e atualiza o listview.
+        listaPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getAllPropriedadesByUserId(usuarioId);
+        listViewPropriedadesAdapter.getData().clear();
+        listViewPropriedadesAdapter.getData().addAll(listaPropriedade);
+        listViewPropriedadesAdapter.notifyDataSetChanged();
+
+        if(listaPropriedade.size() > 0){
+            tv_bemVindo.setVisibility(View.INVISIBLE);
+        }
+        else{
+            tv_bemVindo.setVisibility(View.VISIBLE);
+        }
+    }
+
     /**
      * Método responsável por lidar com as respostas enviadas da activity Propriedade.
      * @param requestCode
@@ -81,13 +114,12 @@ public class IndexActivity extends AppCompatActivity {
                 nomeUsuario = data.getStringExtra("nomeUsuario");
                 tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
 
-                ArrayList<Propriedade> listaPropriedade = LoginActivity.bancoDeDados.propriedadeDAO.getAllPropriedades();
-
-                for(int i=0; i<listaPropriedade.size(); i++){
+                /*for(int i=0; i<listaPropriedade.size(); i++){
                     Log.i("listaPropriedade", listaPropriedade.get(i).getNome() + " "
                             + listaPropriedade.get(i).getArea() + " "
                             + listaPropriedade.get(i).getQtdeAnimais());
-                }
+                }*/
+                atualizaListView();
             }
 
             if (resultCode == Activity.RESULT_CANCELED) {}

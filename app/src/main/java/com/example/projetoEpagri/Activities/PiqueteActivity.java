@@ -3,11 +3,9 @@ package com.example.projetoEpagri.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,12 +19,10 @@ import android.widget.TextView;
 
 import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.Piquete;
-import com.example.projetoEpagri.Dao.DadosSulDAO;
 import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PiqueteActivity extends AppCompatActivity{
     private  Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
@@ -72,6 +68,13 @@ public class PiqueteActivity extends AppCompatActivity{
             for(int i=0; i<12; i++){
                 listaTotaisMes.add(0.0);
             }
+        }
+
+        if(listaTotaisEstacoes.isEmpty() ){
+            listaTotaisEstacoes.add(0.0); //Verao
+            listaTotaisEstacoes.add(0.0); //Outono
+            listaTotaisEstacoes.add(0.0); //Inverno
+            listaTotaisEstacoes.add(0.0); //Primavera
         }
 
         TextView jan = findViewById(R.id.tv_AreaTotalMesJan);
@@ -199,7 +202,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     private void adicionarLinhaTabela(TableRow linha_tabela){
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
-        ArrayList<String> tipoPiquete = LoginActivity.bancoDeDados.dadosSulDAO.getTiposPastagem();
+        ArrayList<String> tipoPiquete = MainActivity.bancoDeDados.dadosSulDAO.getTiposPastagem();
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
@@ -349,7 +352,7 @@ public class PiqueteActivity extends AppCompatActivity{
     public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
         DecimalFormat doisDecimais = new DecimalFormat("#.##");
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
-        producaoEstimadaD = (LoginActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
+        producaoEstimadaD = (MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
         String producaoEstimada = doisDecimais.format(producaoEstimadaD);
         tv_prod.setText(String.valueOf(producaoEstimada));
     }
@@ -370,8 +373,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Janeiro está na posição 4, por isso mes+3.
         TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
-        double valor = (float)LoginActivity.bancoDeDados.dadosSulDAO.getMeses(mes, tipoPastagem)/100;
-        valor = ((LoginActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
+        double valor = (float) MainActivity.bancoDeDados.dadosSulDAO.getMeses(mes, tipoPastagem)/100;
+        valor = ((MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
         String resultado = doisDecimais.format(valor);
 
         if(valor != 0){
@@ -407,21 +410,11 @@ public class PiqueteActivity extends AppCompatActivity{
             }
         }
 
-        //Inicializa a lista de totais das estações. Somente entra no if na primeira execução (quando o botão de + é clicado
-        //e o numero de linhas é maior que o tamanho da lista.
-        //Adiciona-se valores zero para depois serem atualizados conforme os cálculos vão sendo realizados.
-        if(listaTotaisEstacoes.size() < numeroDeLinhas){
-            listaTotaisEstacoes.add(0.0); //Verao
-            listaTotaisEstacoes.add(0.0); //Outono
-            listaTotaisEstacoes.add(0.0); //Inverno
-            listaTotaisEstacoes.add(0.0); //Primavera
-        }
-        else{  //evita que o valor já calculado seja somado novamente, pois o método é chamado uma vez para cada spinner (quando adiciona-se uma linha).
-            listaTotaisEstacoes.set(0, 0.0);
-            listaTotaisEstacoes.set(1, 0.0);
-            listaTotaisEstacoes.set(2, 0.0);
-            listaTotaisEstacoes.set(3, 0.0);
-        }
+
+        listaTotaisEstacoes.set(0, 0.0);
+        listaTotaisEstacoes.set(1, 0.0);
+        listaTotaisEstacoes.set(2, 0.0);
+        listaTotaisEstacoes.set(3, 0.0);
 
         double total = 0.0;
         int i=0, j=0;
