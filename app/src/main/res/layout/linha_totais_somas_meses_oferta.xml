@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
      >
@@ -41,137 +42,172 @@
 
     <TextView
         android:id="@+id/tv_AreaTotalMesJan"
-        android:layout_width="45sp"
+        android:layout_width="82sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_janeiro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
-       />
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry" />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesFev"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_fevereiro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
        />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalMesMar"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_marco"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
        />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalMesAbr"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_abril"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
         />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalMesMai"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_maio"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
         />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesJun"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_junho"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
         />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesJul"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_julho"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
         />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesAgo"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_agosto"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
         />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesSet"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_setembro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
        />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesOut"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_outubro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
         />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesNov"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_novembro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
         />
 
     <TextView
         android:id="@+id/tv_AreaTotalMesDez"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
         android:text="@string/txt_tv_dezembro"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
        />
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -20,22 +21,21 @@
 
     <EditText
         android:id="@+id/et_area"
-        android:layout_width="50sp"
+        android:layout_marginLeft="15sp"
+        android:layout_width="60sp"
         android:layout_height="30sp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
-        android:layout_marginRight="30dp"
-        android:layout_marginEnd="30dp"
         android:inputType="textPersonName"
         android:hint="@string/hint_et_area"
         android:textSize="14sp"
-        android:autofillHints="" />
+        android:autofillHints=""
+        android:layout_marginStart="15sp" />
 
 
     <TextView
         android:id="@+id/tv_prod"
-        android:layout_width="50sp"
         android:layout_height="20sp"
         android:gravity="center"
         android:layout_weight="1"
@@ -51,111 +51,155 @@
 
     <TextView
         android:id="@+id/tv_jan"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry" />
+
 
     <TextView
         android:id="@+id/tv_fev"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry" />
 
     <TextView
         android:id="@+id/tv_mar"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
+        />
 
     <TextView
         android:id="@+id/tv_abr"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
+        />
 
     <TextView
         android:id="@+id/tv_mai"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
+        />
 
     <TextView
         android:id="@+id/tv_jun"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
+        />
 
     <TextView
         android:id="@+id/tv_jul"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"/>
 
     <TextView
         android:id="@+id/tv_ago"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"/>
 
     <TextView
         android:id="@+id/tv_set"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
+        />
 
     <TextView
         android:id="@+id/tv_out"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
+        />
 
     <TextView
         android:id="@+id/tv_nov"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"/>
 
     <TextView
         android:id="@+id/tv_dez"
-        android:layout_width="50sp"
+        android:layout_width="70sp"
         android:layout_height="30sp"
         android:gravity="center"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        tools:ignore="RtlSymmetry"
+        />
 
     <TextView
         android:id="@+id/tv_totalSomaMeses"

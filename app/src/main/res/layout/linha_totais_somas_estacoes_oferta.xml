@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tv_AreaTotalVer"
-        android:layout_width="130sp"
+        android:layout_width="210sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/tv_AreaTotalOut"
-        android:layout_width="115sp"
+        android:layout_width="100sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"
@@ -42,7 +42,7 @@
 
     <TextView
         android:id="@+id/tv_AreaTotalInve"
-        android:layout_width="180sp"
+        android:layout_width="350sp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1"

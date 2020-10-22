@@ -85,7 +85,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="600dp"
+                android:layout_width="850dp"
                 android:layout_height="1dp"
                 android:background="@android:color/background_dark"
                 android:layout_marginStart="690dp"
@@ -95,7 +95,7 @@
             <include layout="@layout/linha_totais_somas_meses_oferta"/>
 
             <View
-                android:layout_width="600dp"
+                android:layout_width="850dp"
                 android:layout_height="1dp"
                 android:background="@android:color/background_dark"
                 android:layout_marginStart="690dp"

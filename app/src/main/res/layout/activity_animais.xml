@@ -52,7 +52,7 @@
 
 
                 <View
-                    android:layout_width="600dp"
+                    android:layout_width="950dp"
                     android:layout_height="1dp"
                     android:background="@android:color/background_dark"
                     android:layout_marginLeft="1365dp"
