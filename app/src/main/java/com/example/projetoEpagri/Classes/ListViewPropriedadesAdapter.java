@@ -2,8 +2,11 @@ package com.example.projetoEpagri.Classes;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
     public ArrayList<Propriedade> listaPropriedades;
     private TextView tv_nome, tv_area, tv_qtde;
     private Button bt_ver_dados, bt_excluir;
+    //Atributo para animação no botão
 
     public ListViewPropriedadesAdapter(Context context, ArrayList<Propriedade> lista){
         this.context = context;
@@ -59,6 +63,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
         bt_excluir = row.findViewById(R.id.lv_bt_excluir);
 
+
         //Cria um objeto para cada item da lista.
         final Propriedade propriedade = (Propriedade) this.getItem(position);
 
@@ -84,9 +89,13 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
                 listaPropriedades.remove(position);
                 notifyDataSetChanged();
                 notifyDataSetInvalidated();
+
             }
         });
+
         
         return row;
+
     }
+
 }
