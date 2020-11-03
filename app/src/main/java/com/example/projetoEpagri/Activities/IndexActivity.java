@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,7 +44,7 @@ public class IndexActivity extends AppCompatActivity {
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
 
-        Toast.makeText(IndexActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(IndexActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
         tv_bemVindo = findViewById(R.id.tv_tituloIndex);
         tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
@@ -54,9 +52,12 @@ public class IndexActivity extends AppCompatActivity {
         lv_propriedades = findViewById(R.id.lv_propriedades);
         bt_cadastrarPropriedade = findViewById(R.id.bt_levaPropriedade);
 
+        //Recupera o ID do usuário baseado no nome recebido da activity Main.
         usuarioId = MainActivity.bancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
+        //Recupera as propriedades do usuário baseado no seu ID.
         listaPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getAllPropriedadesByUserId(usuarioId);
 
+        //Se existirem propriedades, esconde o textview "Bem vindo Usuário"
         if(listaPropriedade.size() > 0){
             tv_bemVindo.setVisibility(View.INVISIBLE);
         }
@@ -72,7 +73,7 @@ public class IndexActivity extends AppCompatActivity {
         bt_cadastrarPropriedade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cadastrarPropiedade();
+                vaiParaActivityPropiedade(nomeUsuario);
             }
         });
     }
@@ -81,7 +82,7 @@ public class IndexActivity extends AppCompatActivity {
      * Método responsável por iniciar a PropriedadeActivity.
      * O nome precisa ser enviado junto, caso contrário, quando o usuário retorna, ele é perdido.
      */
-    public void cadastrarPropiedade() {
+    public void vaiParaActivityPropiedade(String nomeUsuario) {
         Intent i = new Intent(IndexActivity.this, PropriedadeActivity.class);
         i.putExtra("nome_usuario", nomeUsuario);
         startActivityForResult(i, this.codigoRequisicao);
@@ -117,13 +118,14 @@ public class IndexActivity extends AppCompatActivity {
                 nomeUsuario = data.getStringExtra("nome_usuario");
                 tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
 
+                atualizaListView();
+                Toast.makeText(this.getApplicationContext(), nomeUsuario, Toast.LENGTH_SHORT).show();
+
                 /*for(int i=0; i<listaPropriedade.size(); i++){
                     Log.i("listaPropriedade", listaPropriedade.get(i).getNome() + " "
                             + listaPropriedade.get(i).getArea() + " "
                             + listaPropriedade.get(i).getQtdeAnimais());
                 }*/
-                atualizaListView();
-                Toast.makeText(this.getApplicationContext(), nomeUsuario, Toast.LENGTH_SHORT).show();
             }
 
             if (resultCode == Activity.RESULT_CANCELED) {}

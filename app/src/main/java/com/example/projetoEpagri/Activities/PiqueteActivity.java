@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.Piquete;
@@ -26,20 +25,21 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PiqueteActivity extends AppCompatActivity{
-    private  Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
-    public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
-    private TableRow linha_tabela;
+    private Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
     private TableLayout table_layout;
-    private double producaoEstimadaD, areaTotal;
-    private int intTotalTonelada;
-    private ArrayList<double[]> matrizMeses;            //matriz que armazena os valores calculados de todas as linhas para todos os meses.
-    private ArrayList<Piquete> listaPiquetes;
-    private  ArrayList<Double> listaTotaisMes;
-    private ArrayList<Double> listaTotaisEstacoes;      //lista de 4 posiçõe para guardar os valores das estações.
-    private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
-    private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
-    private String nomeUsuario;
+    private TableRow linha_tabela;
+    public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
 
+    private double producaoEstimadaD, areaTotal;
+    private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
+    private ArrayList<double[]> matrizMeses;            //matriz que armazena os valores calculados de todas as linhas para todos os meses.
+    private ArrayList<Double> listaTotaisMes;
+    private ArrayList<Double> listaTotaisEstacoes;      //lista de 4 posiçõe para guardar os valores das estações.
+    private ArrayList<Piquete> listaPiquetes;
+    private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
+
+    private String nomeUsuario;
+    private DecimalFormat doisDecimais;
     private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
 
     //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
@@ -61,9 +61,9 @@ public class PiqueteActivity extends AppCompatActivity{
     public void inicializa(){
         listaDeAreas = new ArrayList<>();
         matrizMeses = new ArrayList<>();
-        listaPiquetes = new ArrayList<>();
         listaTotaisMes = new ArrayList<>();
         listaTotaisEstacoes = new ArrayList<>();
+        listaPiquetes = new ArrayList<>();
         listaTextViewTotaisMes = new ArrayList<>();
 
         if(listaTotaisMes.isEmpty()){
@@ -112,7 +112,9 @@ public class PiqueteActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
-        Toast.makeText(PiqueteActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(PiqueteActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
+
+        doisDecimais = new DecimalFormat("#.##");
     }
 
     /**
@@ -121,24 +123,31 @@ public class PiqueteActivity extends AppCompatActivity{
     public void setListeners(){
         //Quando clicado no botao de mais, é acionado está funçao.
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Infla a linha para a tabela
-                        linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
-                        adicionarLinhaTabela(linha_tabela);
-                        setListenersDinamicos(linha_tabela);
+            @Override
+            public void onClick(View v) {
+                //Infla a linha para a tabela
+                linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
+                criarLinha(linha_tabela);
+                setListenersLinha(linha_tabela);
 
-                        posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
-                        numeroDeLinhas++;
+                posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
+                numeroDeLinhas++;
 
-                        if(listaDeAreas.size() < numeroDeLinhas){
-                            listaDeAreas.add(0.0);
-                        }
+                //Adiciona elementos sem valor nas listas para garantir que tenham o mesmo tamanho que o número de linhas.
+                //Isso permite controlar o tamanho das listas no momento que as linhas são adicionadas ou removidas.
+                if (listaDeAreas.size() < numeroDeLinhas) {
+                    listaDeAreas.add(0.0);
+                }
 
-                        if(listaPiquetes.size() < numeroDeLinhas){
-                            Piquete temp = new Piquete();
-                            listaPiquetes.add(temp);
-                        }
+                double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+                if(matrizMeses.size() < numeroDeLinhas){
+                    matrizMeses.add(startArray);
+                }
+
+                if (listaPiquetes.size() < numeroDeLinhas) {
+                    Piquete temp = new Piquete();
+                    listaPiquetes.add(temp);
+                }
             }
         });
 
@@ -147,36 +156,29 @@ public class PiqueteActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
-                posicaoLinhaTabela--;
 
-                if(posicaoLinhaTabela >= -1){
+                if(numeroDeLinhas > 0){
                     listaDeAreas.remove(numeroDeLinhas-1);
                     matrizMeses.remove(numeroDeLinhas-1);
                     listaPiquetes.remove(numeroDeLinhas-1);
 
-                    //Limpa a matriz com valores 0 para remover os cálculo dos totais.
-                    //Se não eles continuam aparecendo mesmo após remover todas as linhas.
-                    //Isso ocorre pois no método calculaTotais os valores dos textviews são setados em um while com condição
-                    //matrizMeses.size() > 0.
-                    double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-                    if(matrizMeses.size() < numeroDeLinhas){
-                        matrizMeses.add(startArray);
-                    }
-
+                    posicaoLinhaTabela--;
                     numeroDeLinhas--;
-                }
-                else{
-                    listaTotaisEstacoes.set(0, 0.0);
-                    listaTotaisEstacoes.set(1, 0.0);
-                    listaTotaisEstacoes.set(2, 0.0);
-                    listaTotaisEstacoes.set(3, 0.0);
 
-                    posicaoLinhaTabela = -1;
+                    if(numeroDeLinhas == 0){
+                        for(int i=0; i<listaTotaisMes.size(); i++){
+                            listaTotaisMes.set(i, 0.0);
+                        }
+
+                        for(int i=0; i<listaTotaisEstacoes.size(); i++){
+                            listaTotaisEstacoes.set(i, 0.0);
+                        }
+                    }
                 }
+
                 calculaTotais();
             }
         });
-
 
         bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,29 +186,12 @@ public class PiqueteActivity extends AppCompatActivity{
                 irParaAnimaisActivity();
             }
         });
-
-        //Método que tem o spinner para selecionar qual regiao o usário deseja
-        escolherRegiao();
-    }
-
-    /**
-     * Método responsável por retornar valores de cálculo do banco dependendo da escolha do usuário (região norte ou sul).
-     */
-    private void escolherRegiao() {
-        ArrayList<String> regiaoPiquete = new ArrayList<>();
-        regiaoPiquete.add("Sul");
-        regiaoPiquete.add("Norte");
-
-        Spinner spinnerRegiaoPiquete = findViewById(R.id.spinnerRegiao);
-        ArrayAdapter<String> spinnerRegiaoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, regiaoPiquete);
-        spinnerRegiaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRegiaoPiquete.setAdapter(spinnerRegiaoAdapter);
     }
 
     /**
      * Método responsável por adicionar uma linha na tabela oferta atual e configurar o adapter dos spinners.
      */
-    private void adicionarLinhaTabela(TableRow linha_tabela){
+    private void criarLinha(TableRow linha_tabela){
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
         ArrayList<String> tipoPiquete = MainActivity.bancoDeDados.dadosSulDAO.getTiposPastagem();
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
@@ -249,7 +234,7 @@ public class PiqueteActivity extends AppCompatActivity{
      * é escolhido nos spinners ou texto digitado no campo área.
      * @param linha_tabela
      */
-    private void setListenersDinamicos(final TableRow linha_tabela) {
+    private void setListenersLinha(final TableRow linha_tabela) {
         final Spinner spinnerTipo = (Spinner) linha_tabela.getChildAt(0);
         final Spinner spinnerCondicao = (Spinner) linha_tabela.getChildAt(1);
         final EditText editTextArea = (EditText) linha_tabela.getChildAt(2);
@@ -258,7 +243,7 @@ public class PiqueteActivity extends AppCompatActivity{
         spinnerTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
+                calcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
             }
 
             @Override
@@ -269,7 +254,7 @@ public class PiqueteActivity extends AppCompatActivity{
         spinnerCondicao.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
+                calcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
             }
 
             @Override
@@ -283,7 +268,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
+                calcular(linha_tabela, spinnerTipo, spinnerCondicao, editTextArea);
             }
 
             @Override
@@ -299,50 +284,44 @@ public class PiqueteActivity extends AppCompatActivity{
      * @param spinnerCondicao
      * @param editTextArea
      */
-    public void lerValoresLinhaECalcular(final TableRow linha_tabela, Spinner spinnerTipo, Spinner spinnerCondicao, EditText editTextArea){
-        tipo = spinnerTipo.getSelectedItem().toString();
-        condicao = spinnerCondicao.getSelectedItem().toString();
-        areaS = editTextArea.getText().toString();
+    public void calcular(final TableRow linha_tabela, Spinner spinnerTipo, Spinner spinnerCondicao, EditText editTextArea){
+        this.tipo = spinnerTipo.getSelectedItem().toString();
+        this.condicao = spinnerCondicao.getSelectedItem().toString();
+        this.areaS = editTextArea.getText().toString();
 
         int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
 
         //Adiciona as áreas digitadas na lista de áreas.
-        if(areaS.length() > 0) {
-            areaD = Double.parseDouble(areaS);
+        if(this.areaS.length() > 0) {
+            this.areaD = Double.parseDouble(this.areaS);
         }
         else{
-            areaD = 0;
+            this.areaD = 0;
         }
-        listaDeAreas.set(posicao, areaD);
+        this.listaDeAreas.set(posicao, this.areaD);
 
         //Cálcula a producão estimada.
-        calculaProducaoEstimada(linha_tabela, tipo, condicao, areaD);
+        calculaProducaoEstimada(linha_tabela, this.tipo, this.condicao, this.areaD);
 
         //Cálcula a produção para cada mês. E faz a soma de todos os meses
         double [] arrayMesesProd = new double[12];
         double totalToneladaAnual = 0;
         for(int i=1; i<=12; i++){
-            arrayMesesProd[i-1] = calculaMes(linha_tabela, tipo, condicao, areaD, i);
+            arrayMesesProd[i-1] = calculaMes(linha_tabela, this.tipo, this.condicao, this.areaD, i);
             totalToneladaAnual = totalToneladaAnual + arrayMesesProd[i-1];
+        }
+
+        /*Mapeia os dados para a matriz.
+        Salva os valores calculados para cada mes (em todas as linhas) em uma matriz.
+        */
+        if(matrizMeses.size() >= numeroDeLinhas){
+            matrizMeses.set(posicao, arrayMesesProd);
         }
 
         //Mostra o Total (direita).
         TextView total = (TextView) linha_tabela.getChildAt(16);
-        intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
+        int intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
         total.setText(String.valueOf(intTotalTonelada));
-
-        /*Mapeia os dados para a matriz.
-        Salva os valores calculados para cada mes (em todas as linhas) em uma matriz.
-        Adiciona inicialmente um array de zeros na lista pois o método é chamado antes do cálculo ser realizado.
-        Ao clicar no botão de adicionar linha, o método já é chamado e adiciona-se o vetor de zeros.
-        Ao preencher os campos, chama-se novamente, atualizando o vetor de zeros.*/
-        double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-        if(matrizMeses.size() < numeroDeLinhas){
-            matrizMeses.add(startArray);
-        }
-        else{
-            matrizMeses.set(posicao, arrayMesesProd);
-        }
 
         calculaTotais();
 
@@ -356,11 +335,10 @@ public class PiqueteActivity extends AppCompatActivity{
      * Método para calcula a produção estimada.
      */
     public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
-        DecimalFormat doisDecimais = new DecimalFormat("#.##");
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
-        producaoEstimadaD = (MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
-        String producaoEstimada = doisDecimais.format(producaoEstimadaD);
-        tv_prod.setText(String.valueOf(producaoEstimada));
+        this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
+        String producaoEstimada = this.doisDecimais.format(this.producaoEstimadaD);
+        tv_prod.setText(producaoEstimada);
     }
 
     /**
@@ -372,8 +350,6 @@ public class PiqueteActivity extends AppCompatActivity{
      * @param mes
      */
     public double calculaMes(final TableRow linha_tabela, String tipoPastagem, String condicao, double area, int mes){
-        //Arredonda o cálculo para 2 decimais.
-        DecimalFormat doisDecimais = new DecimalFormat("#.##");
         Double aproveitamento = 0.60;
 
         //Janeiro está na posição 4, por isso mes+3.
@@ -381,10 +357,10 @@ public class PiqueteActivity extends AppCompatActivity{
 
         double valor = (float) MainActivity.bancoDeDados.dadosSulDAO.getMeses(mes, tipoPastagem)/100;
         valor = ((MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
-        String resultado = doisDecimais.format(valor);
+        String resultado = this.doisDecimais.format(valor);
 
         if(valor != 0){
-            tv_mes.setText(String.valueOf(resultado));
+            tv_mes.setText(resultado);
         }
         else {
             tv_mes.setText(" ");
@@ -397,132 +373,88 @@ public class PiqueteActivity extends AppCompatActivity{
      * Método para calcular os totais de cada coluna (mês).
      */
     public void calculaTotais(){
-        //Arredonda o cálculo para 2 decimais.
-        DecimalFormat doisDecimais = new DecimalFormat("#.##");
-
         //Calcula a área total.
-        areaTotal = 0.0;
-        for(int i=0; i<listaDeAreas.size(); i++){
-            areaTotal = areaTotal + listaDeAreas.get(i);
+        this.areaTotal = 0.0;
+        for (int i = 0; i < this.listaDeAreas.size(); i++) {
+            this.areaTotal = this.areaTotal + this.listaDeAreas.get(i);
         }
         TextView area = findViewById(R.id.tv_AreaTotalNumHa);
-        area.setText(doisDecimais.format(areaTotal));
-
-        if(numeroDeLinhas == 0){
-            if(listaTotaisMes.isEmpty()){
-                for(int i=0; i<12; i++){
-                    listaTotaisMes.set(i, 0.0);
-                }
-            }
-        }
-
-
-        listaTotaisEstacoes.set(0, 0.0);
-        listaTotaisEstacoes.set(1, 0.0);
-        listaTotaisEstacoes.set(2, 0.0);
-        listaTotaisEstacoes.set(3, 0.0);
+        area.setText(this.doisDecimais.format(this.areaTotal));
 
         double total = 0.0;
-        int i=0, j=0;
+        int i = 0, j = 0;
 
         //Calcula o total para cada mês percorrendo a matriz de valores.
         //i = linha e j = coluna.
-        while(i<matrizMeses.size()){
-            total = total + matrizMeses.get(i)[j];
+        while (i < this.matrizMeses.size()) {
+            total = total + this.matrizMeses.get(i)[j];
 
             //Ao chegar na última linha, retorna para a primeira e passa para a proxima coluna.
-            if((i+1) == matrizMeses.size()){
-                i=0;
-
-                //Define o texto nos textviews de acordo com cada mês.
-                switch (j){
-                    case 0:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 1:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 2:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 3:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 4:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 5:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 6:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 7:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 8:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 9:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 10:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                    case 11:
-                        listaTextViewTotaisMes.get(j).setText(doisDecimais.format((total)));
-                        break;
-                }
+            if ((i + 1) == this.matrizMeses.size()) {
+                i = 0;
 
                 //Enquanto não chega no último mês, vai armazendo os valores calculados na lista de totais da estação.
                 //Ao chegar no final, atualiza o texto dos textviews.
-                if(j+1 < 12) {
+                if (j + 1 < 12) {
                     //Verao
-                    if(( j == 0 || j == 1)){
-                        listaTotaisEstacoes.set(0, listaTotaisEstacoes.get(0) + total);
+                    if ((j == 0 || j == 1)) {
+                        this.listaTotaisEstacoes.set(0, this.listaTotaisEstacoes.get(0) + total);
                     }
 
                     //Outono
-                    if(j == 2 || j == 3 || j == 4){
-                        listaTotaisEstacoes.set(1, listaTotaisEstacoes.get(1) + total);
+                    if (j == 2 || j == 3 || j == 4) {
+                        this.listaTotaisEstacoes.set(1, this.listaTotaisEstacoes.get(1) + total);
                     }
 
                     //Inverno
-                    if(j == 5 || j == 6 || j == 7){
-                        listaTotaisEstacoes.set(2, listaTotaisEstacoes.get(2) + total);
+                    if (j == 5 || j == 6 || j == 7) {
+                        this.listaTotaisEstacoes.set(2, this.listaTotaisEstacoes.get(2) + total);
                     }
 
                     //Primavera
-                    if(j == 8 || j == 9 || j == 10){
-                        listaTotaisEstacoes.set(3, listaTotaisEstacoes.get(3) + total);
+                    if (j == 8 || j == 9 || j == 10) {
+                        this.listaTotaisEstacoes.set(3, this.listaTotaisEstacoes.get(3) + total);
                     }
 
-                    listaTotaisMes.set(j, total);
+                    this.listaTotaisMes.set(j, total);
                     j++;
                     total = 0.0;
-                }
-                else{
+                } else {
                     //Esse cálculo fica aqui pois quando o j=11 ele não entra no if (acima).
-                    if(j == 11){
-                        listaTotaisMes.set(j, total);
-                        listaTotaisEstacoes.set(0, listaTotaisEstacoes.get(0) + total);
+                    if (j == 11) {
+                        this.listaTotaisMes.set(j, total);
+                        this.listaTotaisEstacoes.set(0, this.listaTotaisEstacoes.get(0) + total);
                     }
-
-                    TextView totalVer = findViewById(R.id.tv_AreaTotalVer);
-                    TextView totalOut = findViewById(R.id.tv_AreaTotalOut);
-                    TextView totalInv = findViewById(R.id.tv_AreaTotalInve);
-                    TextView totalPrim = findViewById(R.id.tv_AreaTotalPrim);
-
-                    totalVer.setText(doisDecimais.format(listaTotaisEstacoes.get(0)));
-                    totalOut.setText(doisDecimais.format(listaTotaisEstacoes.get(1)));
-                    totalInv.setText(doisDecimais.format(listaTotaisEstacoes.get(2)));
-                    totalPrim.setText(doisDecimais.format(listaTotaisEstacoes.get(3)));
                     break;
                 }
-            }
-            else{
+            } else {
                 i++;
             }
+        }
+
+        setTextViewsTotais(listaTotaisMes, listaTotaisEstacoes);
+    }
+
+    /**
+     * Método responsável por alterar o texto dos textviews dos totais dos meses e das estaçoes.
+     */
+    public void setTextViewsTotais(ArrayList<Double> listaTotaisMes, ArrayList<Double> listaTotaisEstacoes){
+        if(listaTotaisMes.size() > 0){
+            for(int j=0; j<listaTotaisMes.size(); j++){
+                this.listaTextViewTotaisMes.get(j).setText(this.doisDecimais.format((listaTotaisMes.get(j))));
+            }
+        }
+
+        TextView totalVer = findViewById(R.id.tv_AreaTotalVer);
+        TextView totalOut = findViewById(R.id.tv_AreaTotalOut);
+        TextView totalInv = findViewById(R.id.tv_AreaTotalInve);
+        TextView totalPrim = findViewById(R.id.tv_AreaTotalPrim);
+
+        if(listaTotaisEstacoes.size() > 0){
+            totalVer.setText(this.doisDecimais.format(listaTotaisEstacoes.get(0)));
+            totalOut.setText(this.doisDecimais.format(listaTotaisEstacoes.get(1)));
+            totalInv.setText(this.doisDecimais.format(listaTotaisEstacoes.get(2)));
+            totalPrim.setText(this.doisDecimais.format(listaTotaisEstacoes.get(3)));
         }
     }
 
@@ -531,12 +463,11 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void irParaAnimaisActivity() {
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
-        i.putExtra("nome_usuario", nomeUsuario);
-        i.putExtra("areaTotal", areaTotal);
-        startActivityForResult(i, CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
+        i.putExtra("nome_usuario", this.nomeUsuario);
+        i.putExtra("areaTotal", this.areaTotal);
+        startActivityForResult(i, this.CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
     }
 
-    // This method is called when the second activity finishes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

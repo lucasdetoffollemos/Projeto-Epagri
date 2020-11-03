@@ -5,19 +5,25 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icone_3"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icone_3"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- Activity Principal -->
-        <activity android:name=".Activities.MainActivity">
+
+        <!-- Splash Screen -->
+        <activity
+            android:name=".Activities.SplashScreenActivity"
+            android:theme="@style/Activity_Sem_Action_Bar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Activity Perfil -->
+        </activity>
+
+        <!-- Activity Principal -->
+        <activity android:name=".Activities.MainActivity"></activity> <!-- Activity Perfil -->
         <activity
             android:name=".Activities.PerfilActivity"
             android:label=" Criar Perfil"
@@ -26,8 +32,10 @@
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.MainActivity" />
-        </activity> <!-- Activity De lista de usuarios -->
+                android:value="com.example.projetoEpagri.Activities.SplashScreenActivity" />
+        </activity>
+
+        <!-- Activity De lista de usuarios -->
         <activity
             android:name=".Activities.ListaUsuariosActivity"
             android:label="Lista de Usuarios"
@@ -35,7 +43,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.PerfilActivity" />
-        </activity> <!-- Activity index -->
+        </activity>
+
+        <!-- Activity index -->
         <activity
             android:name=".Activities.IndexActivity"
             android:label="Bem vindo"
@@ -45,7 +55,19 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.MainActivity" />
-        </activity> <!-- Acitivity Propriedade -->
+        </activity>
+
+        <!-- Acitivity Tabs -->
+        <activity android:name=".Activities.TabsActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.projetoEpagri.Activities.IndexActivity" />
+        </activity>
+
+        <!-- Acitivity Propriedade -->
         <activity
             android:name=".Activities.PropriedadeActivity"
             android:label="Propriedade"
@@ -63,10 +85,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.PropriedadeActivity" />
-        </activity>
-
-
-<!--        Activity Animais-->
+        </activity> <!-- Activity Animais -->
         <activity
             android:name=".Activities.AnimaisActivity"
             android:label="Animais"
@@ -77,6 +96,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.PiqueteActivity" />
         </activity>
-    </application>
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
 </manifest>

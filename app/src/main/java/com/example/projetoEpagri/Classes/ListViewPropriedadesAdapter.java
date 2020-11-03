@@ -1,18 +1,16 @@
 package com.example.projetoEpagri.Classes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.MainActivity;
+import com.example.projetoEpagri.Activities.TabsActivity;
 import com.example.projetoEpagri.R;
 
 import java.util.ArrayList;
@@ -76,7 +74,8 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_ver_dados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TO-DO.
+                Intent i = new Intent(context, TabsActivity.class);
+                context.startActivity(i);
             }
         });
 
@@ -89,7 +88,6 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
                 listaPropriedades.remove(position);
                 notifyDataSetChanged();
                 notifyDataSetInvalidated();
-
             }
         });
 

@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,21 +24,23 @@ import java.util.ArrayList;
 
 public class AnimaisActivity extends AppCompatActivity {
     private Button bt_adicionar_linha, bt_remover_linha, bt_finalizar_envio;
-    private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
+
     private TableLayout table_layout;
     private TableRow linha_tabela;
-    private ArrayList<String> categoriaAnimal;
-    private ArrayList<String> arrayMeses;
+    private ArrayList<String> categoriaAnimal; //Array utilizado para setar os valores das categorias de animais no spinner categoria.
+    private ArrayList<String> arrayMeses; //Array utilizado para setar os valores mostrados no spinner entrada
+    private double resultadoConsumo; //Variável utilizada para setar o consumo de acordo com a categoria do animal escolhido.
+    private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
+
     private ArrayList<Double> qtdeAnimais; //array para armazenar os valores de qtde digitados para cada animal.
-    private ArrayList<Animais> listaAnimais;
-    ArrayList<Double> listaTotalUAHA;
     private ArrayList<double[]> matrizUA; //matrizes para mapear a UA de cada mês/linha.
+    private ArrayList<Animais> listaAnimais;
+    private ArrayList<Double> listaTotalUAHA;
+
     private int somaAnimal;
     private double areaTotal;
-    String nomeUsuario;
-    //Consumo
-    private double resultadoConsumo;
-    //Número de animais
+    private String nomeUsuario;
+    private DecimalFormat doisDecimais;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,22 +82,12 @@ public class AnimaisActivity extends AppCompatActivity {
         arrayMeses.add("Dezembro");
 
         qtdeAnimais = new ArrayList<>();
+        matrizUA = new ArrayList<>();
         listaAnimais = new ArrayList<>();
         listaTotalUAHA = new ArrayList<>();
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-        listaTotalUAHA.add(0.0);
-
-        matrizUA = new ArrayList<>();
+        for(int i=0; i<12; i++){
+            listaTotalUAHA.add(0.0);
+        }
 
         table_layout = findViewById(R.id.tableLayout_tabelaAnimais);
 
@@ -106,7 +97,9 @@ public class AnimaisActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
-        Toast.makeText(AnimaisActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
+
+        doisDecimais = new DecimalFormat("#.##");
+        //Toast.makeText(AnimaisActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -118,14 +111,19 @@ public class AnimaisActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Infla a linha para a tabela
                 linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_atual_linha, null);
-                adicionarLinhaTabela(linha_tabela);
-                setListenersDinamicos(linha_tabela);
+                criarLinha(linha_tabela);
+                setListenersLinha(linha_tabela);
 
                 posicaoLinhaTabela++;
                 numeroDeLinhas++;
 
                 if(qtdeAnimais.size() < numeroDeLinhas){
                     qtdeAnimais.add(0.0);
+                }
+
+                double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+                if(matrizUA.size() < numeroDeLinhas){
+                    matrizUA.add(startArray);
                 }
 
                 if(listaAnimais.size() < numeroDeLinhas){
@@ -140,26 +138,14 @@ public class AnimaisActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
-                posicaoLinhaTabela--;
 
-                if(posicaoLinhaTabela >= -1){
+                if(numeroDeLinhas > 0){
                     qtdeAnimais.remove(numeroDeLinhas-1);
                     matrizUA.remove(numeroDeLinhas-1);
                     listaAnimais.remove(numeroDeLinhas-1);
 
-                    //Limpa a matriz com valores 0 para remover os cálculo dos totais.
-                    //Se não eles continuam aparecendo mesmo após remover todas as linhas.
-                    //Isso ocorre pois no método calculaTotais os valores dos textviews são setados em um while com condição
-                    //matrizMeses.size() > 0.
-                    double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-                    if(matrizUA.size() < numeroDeLinhas){
-                        matrizUA.add(startArray);
-                    }
-
+                    posicaoLinhaTabela--;
                     numeroDeLinhas--;
-                }
-                else{
-                    posicaoLinhaTabela = -1;
                 }
 
                 calculaTotalAnimais();
@@ -178,7 +164,7 @@ public class AnimaisActivity extends AppCompatActivity {
     /**
      * Método responsável por adicionar uma linha na tabela demanda atual e configurar o adapter dos spinners.
      */
-    private void adicionarLinhaTabela(TableRow linha_tabela){
+    private void criarLinha(TableRow linha_tabela){
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinner_categoria);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
@@ -204,7 +190,7 @@ public class AnimaisActivity extends AppCompatActivity {
      * Identifica os elementos da linha, dinamicamente, pelo seu index, e guarda os itens que foram selecionado, no spinner, ou armazenados no editText, para uso posterior
      * @param linha_tabela
      */
-    public void setListenersDinamicos(final TableRow linha_tabela){
+    public void setListenersLinha(final TableRow linha_tabela){
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
         final EditText tv_consumo = (EditText) linha_tabela.getChildAt(1);
         final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(2);
@@ -237,7 +223,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
 
                 tv_consumo.setText(String.valueOf(resultadoConsumo));
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -261,7 +247,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 qtdeAnimais.set(posicao, numeroAnimais);
 
                 calculaTotalAnimais();
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -272,7 +258,7 @@ public class AnimaisActivity extends AppCompatActivity {
         spinnerMeses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -286,7 +272,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -300,7 +286,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -314,7 +300,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -328,7 +314,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -342,7 +328,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -356,54 +342,12 @@ public class AnimaisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lerValoresLinhaECalcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
-    }
-
-    /**
-     * Método para converter um texto digitado num campo de texto para double.
-     * @param et
-     * @return
-     */
-    public double converteTextoEmDouble(EditText et){
-        String texto = et.getText().toString();
-        double textoEmDouble = 0.0;
-
-        textoEmDouble = Double.parseDouble(texto);
-
-        return textoEmDouble;
-    }
-
-    /**
-     * Método para verificar se um Edit Text é vazio.
-     * @param et
-     * @return
-     */
-    public boolean verificaVazioET(EditText et){
-        if(et.getText().toString().length() > 0){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    /**
-     * Método para verificar se um Spinner é vazio.
-     * @param p
-     * @return
-     */
-    public boolean verificaVazioSP(Spinner p){
-        if(p.getSelectedItem().toString().length() > 0){
-            return false;
-        }
-        else{
-            return true;
-        }
     }
 
     /**
@@ -436,14 +380,9 @@ public class AnimaisActivity extends AppCompatActivity {
      * @param etPesoInv
      * @param etPesoPrim
      */
-    public void lerValoresLinhaECalcular(TableRow linha_tabela, Spinner spinnerCategoria, TextView textViewConsumo, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim){
+    public void calcular(TableRow linha_tabela, Spinner spinnerCategoria, TextView textViewConsumo, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim){
         String categoria;
         double consumo, numeroAnimais, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim;
-
-        double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-        if(matrizUA.size() < numeroDeLinhas){
-            matrizUA.add(startArray);
-        }
 
         if(!verificaVazioSP(spinnerCategoria) &&
            !verificaVazioET(etNumAnimais) &&
@@ -466,7 +405,8 @@ public class AnimaisActivity extends AppCompatActivity {
             pesoPrim = converteTextoEmDouble(etPesoPrim);
 
             double peso_atual;
-            double [] pesoVezesAnimal = new double[12];  double [] pesos = new double[12];
+            double [] pesoVezesQtdeAnimal = new double[12];
+            double [] pesos = new double[12];
 
             String meses = spinnerMeses.getSelectedItem().toString();
 
@@ -509,67 +449,66 @@ public class AnimaisActivity extends AppCompatActivity {
                 switch (posicao){
                     case 0: {
                         pesos[0] = peso_atual;
-                        pesoVezesAnimal[0] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[0] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 1: {
                         pesos[1] = peso_atual;
-                        pesoVezesAnimal[1] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[1] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 2: {
                         pesos[2] = peso_atual;
-                        pesoVezesAnimal[2] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[2] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 3: {
                         pesos[3] = peso_atual;
-                        pesoVezesAnimal[3] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[3] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 4: {
                         pesos[4] = peso_atual;
-                        pesoVezesAnimal[4] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[4] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 5: {
                         pesos[5] = peso_atual;
-                        pesoVezesAnimal[5] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[5] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 6: {
                         pesos[6] = peso_atual;
-                        pesoVezesAnimal[6] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[6] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 7: {
                         pesos[7] = peso_atual;
-                        pesoVezesAnimal[7] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[7] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 8: {
                         pesos[8] = peso_atual;
-                        pesoVezesAnimal[8] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[8] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 9: {
                         pesos[9] = peso_atual;
-                        pesoVezesAnimal[9] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[9] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 10: {
                         pesos[10] = peso_atual;
-                        pesoVezesAnimal[10] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[10] = peso_atual * numeroAnimais;
                         break;
                     }
                     case 11: {
                         pesos[11] = peso_atual;
-                        pesoVezesAnimal[11] = peso_atual * numeroAnimais;
+                        pesoVezesQtdeAnimal[11] = peso_atual * numeroAnimais;
                         break;
                     }
                 }
 
-                DecimalFormat doisDecimais = new DecimalFormat("#.##");
                 TextView v = (TextView) linha_tabela.getChildAt(posicao + 10);
                 v.setText(doisDecimais.format(peso_atual));
                 posicao++;
@@ -587,7 +526,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 }
             }
 
-            matrizUA.set(posicaoLinha, pesoVezesAnimal);
+            matrizUA.set(posicaoLinha, pesoVezesQtdeAnimal);
             calculoUaHa(matrizUA);
 
             if(listaAnimais.size() >= numeroDeLinhas){
@@ -608,8 +547,6 @@ public class AnimaisActivity extends AppCompatActivity {
      * Método responsável por realizar os cáculos de ua/ha e alterar o valor dos textviews.
      */
     public void calculoUaHa(ArrayList<double []> matrizUA){
-        DecimalFormat doisDecimais = new DecimalFormat("#.##");
-
         //Transforma os totais de cada mês em UA (1 UA = 450KG.).
         ArrayList<Double> listaTotalUA = percorreMatrizESoma(matrizUA);
         for(int i=0; i<listaTotalUA.size(); i++){
@@ -668,7 +605,12 @@ public class AnimaisActivity extends AppCompatActivity {
         //i = linha | j = coluna.
         int i=0, j=0;
         double soma = 0.0;
+
         ArrayList<Double> resultado = new ArrayList<Double>();
+        //Inicializa o array com os totais de cada mês com zero.
+        for(int k=0; k<12; k++){
+            resultado.add(k, 0.0);
+        }
 
         while (i<matriz.size()){
             soma = soma + matriz.get(i)[j];
@@ -677,13 +619,13 @@ public class AnimaisActivity extends AppCompatActivity {
                 i = 0;
 
                 if(j+1 < 12){
-                    resultado.add(soma);
+                    resultado.set(j, soma);
                     j++;
                     soma = 0.0;
                 }
                 else{
                     if(j == 11){
-                        resultado.add(soma);
+                        resultado.set(j, soma);
                     }
                     break;
                 }
@@ -695,7 +637,48 @@ public class AnimaisActivity extends AppCompatActivity {
         return resultado;
     }
 
-    //ARRUMAR.
+    /**
+     * Método para converter um texto digitado num campo de texto para double.
+     * @param et
+     * @return
+     */
+    public double converteTextoEmDouble(EditText et){
+        String texto = et.getText().toString();
+        double textoEmDouble = 0.0;
+
+        textoEmDouble = Double.parseDouble(texto);
+
+        return textoEmDouble;
+    }
+
+    /**
+     * Método para verificar se um Edit Text é vazio.
+     * @param et
+     * @return
+     */
+    public boolean verificaVazioET(EditText et){
+        if(et.getText().toString().length() > 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    /**
+     * Método para verificar se um Spinner é vazio.
+     * @param p
+     * @return
+     */
+    public boolean verificaVazioSP(Spinner p){
+        if(p.getSelectedItem().toString().length() > 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public void finalizaEnvio() {
         Intent intent = new Intent();
         intent.putExtra("nome_usuario", nomeUsuario);

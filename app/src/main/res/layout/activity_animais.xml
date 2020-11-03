@@ -1,80 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
-
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteX="0dp"
 
-    <HorizontalScrollView
+    tools:layout_editor_absoluteY="0dp">
+
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="wrap_content">
 
-        <ScrollView
+        <LinearLayout
+
+            android:id="@+id/linearLayout1_animais"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
 
-                android:id="@+id/linearLayout1_animais"
+                android:id="@+id/linearLayout2_animais"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
 
-                    android:id="@+id/linearLayout2_animais"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                <include layout="@layout/tabela_demanda_atual_1" />
 
-
-                    <include layout="@layout/tabela_demanda_atual_1"/>
-
-                    <TableLayout
-                        android:id="@+id/tableLayout_tabelaAnimais"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <Button
-                        android:id="@+id/bt_adicionarLinha"
-                        android:layout_width="40sp"
-                        android:layout_height="40sp"
-                        android:text="@string/txt_bt_adicionar" />
-
-                    <Button
-                        android:id="@+id/bt_removerLinha"
-                        android:layout_width="40sp"
-                        android:layout_height="40sp"
-                        android:text="@string/txt_bt_remover" />
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="950dp"
-                    android:layout_height="1dp"
-                    android:background="@android:color/background_dark"
-                    android:layout_marginLeft="1365dp"
-                    android:layout_marginStart="1365dp"
-                    android:layout_marginBottom="5dp"/>
-
-                <include layout="@layout/linha_resultados_ua_ha_demanda"/>
+                <TableLayout
+                    android:id="@+id/tableLayout_tabelaAnimais"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/bt_finalizarEnvio"
-                    android:layout_width="200sp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50sp"
-                    android:layout_marginStart="50sp"
-                    android:layout_marginTop="15sp"
-                    android:layout_marginBottom="15sp"
-                    android:text="@string/txt_bt_finalizar" />
+                    android:id="@+id/bt_adicionarLinha"
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:text="@string/txt_bt_adicionar" />
 
-
+                <Button
+                    android:id="@+id/bt_removerLinha"
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:text="@string/txt_bt_remover" />
             </LinearLayout>
 
-        </ScrollView>
-    </HorizontalScrollView>
 
-</merge>
+            <View
+                android:layout_width="950dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="1365dp"
+                android:layout_marginLeft="1365dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/background_dark" />
+
+            <include layout="@layout/linha_resultados_ua_ha_demanda" />
+
+            <Button
+                android:id="@+id/bt_finalizarEnvio"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50sp"
+                android:layout_marginLeft="50sp"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="15sp"
+                android:text="@string/txt_bt_finalizar" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</HorizontalScrollView>

@@ -10,12 +10,6 @@
         android:id="@+id/tv_tituloPropriedade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/txt_tv_cadastraPropriedade"
         android:textColor="@android:color/black"
         android:textSize="20sp"
@@ -24,27 +18,48 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintVertical_bias="0.3" />
 
 
     <EditText
         android:id="@+id/et_nomePropriedade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="@string/hint_et_nomeProrpriedade"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tituloPropriedade" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_tituloPropriedade"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_regiao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_tv_regiao"
+        android:textColor="@color/preto"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_levaPiquete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_nomePropriedade"
+        app:layout_constraintVertical_bias="0.19999999" />
+
+    <Spinner
+        android:id="@+id/sp_regiao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_levaPiquete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_regiao"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/bt_levaPiquete"

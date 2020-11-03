@@ -68,17 +68,9 @@ public class MainActivity extends AppCompatActivity {
         this.tv_criaPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                criarPerfil();
+                vaiParaActivityPerfil();
             }
         });
-    }
-
-    /**
-     * Método responsável por iniciar a Activity Perfil.
-     */
-    public void criarPerfil() {
-        Intent i = new Intent(MainActivity.this, PerfilActivity.class);
-        startActivity(i);
     }
 
     /**
@@ -91,15 +83,31 @@ public class MainActivity extends AppCompatActivity {
 
          if(checkEmailSenha){
              Toast.makeText(getApplicationContext(), "Usuário logado", Toast.LENGTH_SHORT).show();
-             Intent i = new Intent(MainActivity.this, IndexActivity.class);
-             i.putExtra("nome_usuario", nome);
-             startActivity(i);
+             vaiParaActivityIndex(nome);
          }
          else {
              Toast.makeText(getApplicationContext(), "Nome de usuário ou senha incorretos", Toast.LENGTH_SHORT).show();
          }
 
          limparDados();
+    }
+
+    /**
+     * Método responsável por iniciar a Activity Perfil.
+     */
+    public void vaiParaActivityPerfil() {
+        Intent i = new Intent(MainActivity.this, PerfilActivity.class);
+        startActivity(i);
+    }
+
+    /**
+     * Método responsável por iniciar a Activity Index.
+     * @param nomeUsuario
+     */
+    public void vaiParaActivityIndex(String nomeUsuario){
+        Intent i = new Intent(MainActivity.this, IndexActivity.class);
+        i.putExtra("nome_usuario", nomeUsuario);
+        startActivity(i);
     }
 
     /**

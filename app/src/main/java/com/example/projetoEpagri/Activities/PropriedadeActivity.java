@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Classes.Animais;
@@ -41,10 +43,13 @@ public class PropriedadeActivity extends AppCompatActivity {
     public void inicializa(){
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
-        Toast.makeText(PropriedadeActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(PropriedadeActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
         bt_proximo = findViewById(R.id.bt_levaPiquete);
+
+        //Método para inicializar o Spinner com as regiões.
+        escolherRegiao();
     }
 
     /**
@@ -54,27 +59,37 @@ public class PropriedadeActivity extends AppCompatActivity {
         bt_proximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cadastrarPiquete();
+                nomePropriedade = et_nomePropriedade.getText().toString();
+
+                if(!nomeUsuario.isEmpty()){
+                    vaiParaActivityPiquete(nomeUsuario, nomePropriedade);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Insira o nome da propriedade", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
+    public void vaiParaActivityPiquete(String nomeUsuario, String nomePropriedade){
+        Intent i = new Intent(PropriedadeActivity.this, PiqueteActivity.class);
+        i.putExtra("nome_usuario", nomeUsuario);
+        i.putExtra("nome_propriedade", nomePropriedade);
+        startActivityForResult(i, CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY);
+    }
+
     /**
-     * Método chamado ao clicar no botão Próximo Passo.
+     * Método responsável por retornar valores de cálculo do banco dependendo da escolha do usuário (região norte ou sul).
      */
-    public void cadastrarPiquete() {
-        nomePropriedade = et_nomePropriedade.getText().toString();
+    private void escolherRegiao() {
+        ArrayList<String> regiaoPiquete = new ArrayList<>();
+        regiaoPiquete.add("cfa");
+        regiaoPiquete.add("cfb");
 
-        if(!nomePropriedade.equals("")){
-            Intent i = new Intent(PropriedadeActivity.this, PiqueteActivity.class);
-            i.putExtra("nome_usuario", nomeUsuario);
-            i.putExtra("nome_propriedade", nomePropriedade);
-            startActivityForResult(i, CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY);
-        }
-
-        else {
-            Toast.makeText(getApplicationContext(), "Insira o nome da propriedade", Toast.LENGTH_SHORT).show();
-        }
+        Spinner spinnerRegiaoPiquete = findViewById(R.id.sp_regiao);
+        ArrayAdapter<String> spinnerRegiaoAdapter = new ArrayAdapter<String>(PropriedadeActivity.this, android.R.layout.simple_spinner_item, regiaoPiquete);
+        spinnerRegiaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRegiaoPiquete.setAdapter(spinnerRegiaoAdapter);
     }
 
     /**
@@ -103,6 +118,7 @@ public class PropriedadeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //REVISAR.
     /**
      * Método responsável por lidar com as respostas enviadas da activity Piquete.
      * @param requestCode
@@ -113,7 +129,6 @@ public class PropriedadeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // check that it is the SecondActivity with an OK result
         if (requestCode == CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 //Informações Animais.
