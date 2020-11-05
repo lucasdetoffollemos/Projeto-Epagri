@@ -7,59 +7,59 @@
 
     <TextView
         android:id="@+id/tv_AreaTotalEsta"
-        android:layout_width="675sp"
+        android:layout_width="600dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginStart="-4dp"
+        android:layout_marginLeft="-4dp"
         android:gravity="end"
         android:text="@string/txt_tv_totalEstacao"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="14sp"
-         />
+        android:textSize="14sp" />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalVer"
-        android:layout_width="210sp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_verao"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="14sp"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaTotalOut"
-        android:layout_width="100sp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_outono"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="14sp"
-        />
+        android:textSize="14sp" />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalInve"
-        android:layout_width="350sp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_inverno"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="14sp"
-       />
+        android:textSize="14sp" />
 
 
     <TextView
         android:id="@+id/tv_AreaTotalPrim"
-        android:layout_width="120sp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_primavera"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="14sp"
-        />
+        android:textSize="14sp" />
 </TableRow>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Activities.TabsActivity;
@@ -61,7 +62,6 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
         bt_excluir = row.findViewById(R.id.lv_bt_excluir);
 
-
         //Cria um objeto para cada item da lista.
         final Propriedade propriedade = (Propriedade) this.getItem(position);
 
@@ -75,6 +75,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, TabsActivity.class);
+                i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
                 context.startActivity(i);
             }
         });

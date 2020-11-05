@@ -32,8 +32,8 @@ public class AnimaisActivity extends AppCompatActivity {
     private double resultadoConsumo; //Variável utilizada para setar o consumo de acordo com a categoria do animal escolhido.
     private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
 
-    private ArrayList<Double> qtdeAnimais; //array para armazenar os valores de qtde digitados para cada animal.
-    private ArrayList<double[]> matrizUA; //matrizes para mapear a UA de cada mês/linha.
+    private ArrayList<Double> qtdeAnimais; //Array para armazenar os valores de qtde digitados para cada animal.
+    private ArrayList<double[]> matrizUA; //Matriz para mapear a UA de cada mês/linha.
     private ArrayList<Animais> listaAnimais;
     private ArrayList<Double> listaTotalUAHA;
 
@@ -97,9 +97,9 @@ public class AnimaisActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
-
         doisDecimais = new DecimalFormat("#.##");
         //Toast.makeText(AnimaisActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
+        adicionaLinha();
     }
 
     /**
@@ -109,45 +109,14 @@ public class AnimaisActivity extends AppCompatActivity {
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Infla a linha para a tabela
-                linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_atual_linha, null);
-                criarLinha(linha_tabela);
-                setListenersLinha(linha_tabela);
-
-                posicaoLinhaTabela++;
-                numeroDeLinhas++;
-
-                if(qtdeAnimais.size() < numeroDeLinhas){
-                    qtdeAnimais.add(0.0);
-                }
-
-                double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-                if(matrizUA.size() < numeroDeLinhas){
-                    matrizUA.add(startArray);
-                }
-
-                if(listaAnimais.size() < numeroDeLinhas){
-                    Animais temp = new Animais();
-                    listaAnimais.add(temp);
-                }
+               adicionaLinha();
             }
         });
 
-        //ARRUMAR!
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
-
-                if(numeroDeLinhas > 0){
-                    qtdeAnimais.remove(numeroDeLinhas-1);
-                    matrizUA.remove(numeroDeLinhas-1);
-                    listaAnimais.remove(numeroDeLinhas-1);
-
-                    posicaoLinhaTabela--;
-                    numeroDeLinhas--;
-                }
-
+                removeLinha();
                 calculaTotalAnimais();
                 calculoUaHa(matrizUA);
             }
@@ -159,6 +128,49 @@ public class AnimaisActivity extends AppCompatActivity {
                 finalizaEnvio();
             }
         });
+    }
+
+    /**
+     * Método responsável por adicionar uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
+     */
+    public void adicionaLinha(){
+        //Infla a linha para a tabela
+        linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_atual_linha, null);
+        criarLinha(linha_tabela);
+        setListenersLinha(linha_tabela);
+
+        posicaoLinhaTabela++;
+        numeroDeLinhas++;
+
+        if(qtdeAnimais.size() < numeroDeLinhas){
+            qtdeAnimais.add(0.0);
+        }
+
+        double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+        if(matrizUA.size() < numeroDeLinhas){
+            matrizUA.add(startArray);
+        }
+
+        if(listaAnimais.size() < numeroDeLinhas){
+            Animais temp = new Animais();
+            listaAnimais.add(temp);
+        }
+    }
+
+    /**
+     * Método responsável por remover uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
+     */
+    public void removeLinha(){
+        table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
+
+        if(numeroDeLinhas > 0){
+            qtdeAnimais.remove(numeroDeLinhas-1);
+            matrizUA.remove(numeroDeLinhas-1);
+            listaAnimais.remove(numeroDeLinhas-1);
+
+            posicaoLinhaTabela--;
+            numeroDeLinhas--;
+        }
     }
 
     /**

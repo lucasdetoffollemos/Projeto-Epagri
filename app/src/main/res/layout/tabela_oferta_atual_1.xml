@@ -6,10 +6,9 @@
 
     <TextView
         android:id="@+id/tv_piquetePastagem"
-        android:layout_width="200sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_piquete"
         android:textColor="@android:color/black"
@@ -18,23 +17,24 @@
 
     <TextView
         android:id="@+id/tv_condicao"
-        android:layout_width="140sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_condicaoPastagem"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_area"
-        android:layout_width="170sp"
+        android:layout_width="60dp"
         android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_areaHa"
         android:textColor="@android:color/black"
@@ -43,18 +43,16 @@
 
     <TextView
         android:id="@+id/tv_prodEstimadaAno"
-        android:layout_width="170sp"
+        android:layout_width="190sp"
         android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_producaoEstimadaAno"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginRight="27dp"
-        android:layout_marginEnd="27dp"
-        />
+        android:textStyle="bold" />
 
         <include layout="@layout/tabela_oferta_atual_2"/>
 

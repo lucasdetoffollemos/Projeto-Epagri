@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.FragmentOfertaAtual">
 
-    <include layout="@layout/activity_piquete"/>
+    <include layout="@layout/activity_piquete" android:id="@+id/included_layout_piquete"/>
 
 </FrameLayout>

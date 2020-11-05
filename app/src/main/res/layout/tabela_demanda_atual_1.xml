@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#00B050">
+    android:layout_height="80dp"
+    android:background="#00B050"
+    android:baselineAligned="false">
 
     <TextView
         android:id="@+id/tv_categoria"
-        android:layout_width="200sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_categoriaLote"
         android:textColor="@android:color/black"
@@ -18,23 +18,24 @@
 
     <TextView
         android:id="@+id/tv_consumo"
-        android:layout_width="90sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_Consumo"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_Nanimais"
-        android:layout_width="70sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_numeroAnimais"
         android:textColor="@android:color/black"
@@ -43,103 +44,101 @@
 
     <TextView
         android:id="@+id/tv_entrada"
-        android:layout_width="140sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_entrada"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="15sp"
-        android:layout_marginRight="15sp"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_pesoInicial"
-        android:layout_width="70sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_pesoInicial"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
 
-        />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_pesoFinal"
-        android:layout_width="60sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_pesoFinal"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_ganhoPesoVer"
-        android:layout_width="180sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="170dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaVerao"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
 
-        />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
 
     <TextView
         android:id="@+id/tv_ganhoPesoOut"
-        android:layout_width="180sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="170dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaOutono"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
 
-        />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_ganhoPesoInv"
-        android:layout_width="180sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="170dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaInverno"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
 
-        />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_ganhoPesoPrim"
-        android:layout_width="180sp"
-        android:layout_height="80sp"
-        android:layout_weight="1"
-        android:background="#00B050"
+        android:layout_width="170dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaPrimavera"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
 
-    <include layout="@layout/tabela_demanda_atual_2"/>
+    <include layout="@layout/tabela_demanda_atual_2" />
 
 </LinearLayout>

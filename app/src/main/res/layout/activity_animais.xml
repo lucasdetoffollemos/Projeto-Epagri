@@ -1,74 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:layout_editor_absoluteX="0dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    tools:layout_editor_absoluteY="0dp">
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-
-            android:id="@+id/linearLayout1_animais"
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <LinearLayout
 
-                android:id="@+id/linearLayout2_animais"
+                android:id="@+id/linearLayout1_piquete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
 
-                <include layout="@layout/tabela_demanda_atual_1" />
+                    android:id="@+id/linearLayout2_piquete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <TableLayout
-                    android:id="@+id/tableLayout_tabelaAnimais"
+
+                    <include layout="@layout/tabela_demanda_atual_1" />
+
+                    <TableLayout
+                        android:id="@+id/tableLayout_tabelaAnimais"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="948dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="1275dp"
+                    android:layout_marginLeft="1275dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@android:color/background_dark" />
+
+                <include layout="@layout/linha_resultados_ua_ha_demanda" />
+
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/bt_adicionarLinha"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:text="@string/txt_bt_adicionar" />
-
-                <Button
-                    android:id="@+id/bt_removerLinha"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:text="@string/txt_bt_remover" />
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp" />
             </LinearLayout>
 
+        </ScrollView>
+    </HorizontalScrollView>
 
-            <View
-                android:layout_width="950dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="1365dp"
-                android:layout_marginLeft="1365dp"
-                android:layout_marginBottom="5dp"
-                android:background="@android:color/background_dark" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <include layout="@layout/linha_resultados_ua_ha_demanda" />
+        <Button
+            android:id="@+id/bt_adicionarLinha"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:gravity="center"
+            android:text="@string/txt_bt_adicionar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:id="@+id/bt_finalizarEnvio"
-                android:layout_width="200sp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50sp"
-                android:layout_marginLeft="50sp"
-                android:layout_marginTop="15sp"
-                android:layout_marginBottom="15sp"
-                android:text="@string/txt_bt_finalizar" />
+        <Button
+            android:id="@+id/bt_finalizarEnvio"
+            android:layout_width="200sp"
+            android:layout_height="40dp"
+            android:text="@string/txt_bt_proximo_passo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
+        <Button
+            android:id="@+id/bt_removerLinha"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:gravity="center"
+            android:text="@string/txt_bt_remover"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
-</HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

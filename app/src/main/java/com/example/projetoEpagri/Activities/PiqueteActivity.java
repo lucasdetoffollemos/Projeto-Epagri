@@ -105,16 +105,17 @@ public class PiqueteActivity extends AppCompatActivity{
         listaTextViewTotaisMes.add(nov);
         listaTextViewTotaisMes.add(dez);
 
-        table_layout = (TableLayout) findViewById(R.id.tableLayout_tabelaPiquete);
+        table_layout = findViewById(R.id.tableLayout_tabelaAnimais);
         bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
         bt_remover_linha = findViewById(R.id.bt_removerLinha);
-        bt_proximo_passo = findViewById(R.id.bt_proximoPasso);
+        bt_proximo_passo = findViewById(R.id.bt_finalizarEnvio);
 
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
         //Toast.makeText(PiqueteActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
-
         doisDecimais = new DecimalFormat("#.##");
+
+        adicionaLinha();
     }
 
     /**
@@ -125,29 +126,7 @@ public class PiqueteActivity extends AppCompatActivity{
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Infla a linha para a tabela
-                linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
-                criarLinha(linha_tabela);
-                setListenersLinha(linha_tabela);
-
-                posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
-                numeroDeLinhas++;
-
-                //Adiciona elementos sem valor nas listas para garantir que tenham o mesmo tamanho que o número de linhas.
-                //Isso permite controlar o tamanho das listas no momento que as linhas são adicionadas ou removidas.
-                if (listaDeAreas.size() < numeroDeLinhas) {
-                    listaDeAreas.add(0.0);
-                }
-
-                double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-                if(matrizMeses.size() < numeroDeLinhas){
-                    matrizMeses.add(startArray);
-                }
-
-                if (listaPiquetes.size() < numeroDeLinhas) {
-                    Piquete temp = new Piquete();
-                    listaPiquetes.add(temp);
-                }
+                adicionaLinha();
             }
         });
 
@@ -155,27 +134,7 @@ public class PiqueteActivity extends AppCompatActivity{
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
-
-                if(numeroDeLinhas > 0){
-                    listaDeAreas.remove(numeroDeLinhas-1);
-                    matrizMeses.remove(numeroDeLinhas-1);
-                    listaPiquetes.remove(numeroDeLinhas-1);
-
-                    posicaoLinhaTabela--;
-                    numeroDeLinhas--;
-
-                    if(numeroDeLinhas == 0){
-                        for(int i=0; i<listaTotaisMes.size(); i++){
-                            listaTotaisMes.set(i, 0.0);
-                        }
-
-                        for(int i=0; i<listaTotaisEstacoes.size(); i++){
-                            listaTotaisEstacoes.set(i, 0.0);
-                        }
-                    }
-                }
-
+                removeLinha();
                 calculaTotais();
             }
         });
@@ -186,6 +145,61 @@ public class PiqueteActivity extends AppCompatActivity{
                 irParaAnimaisActivity();
             }
         });
+    }
+
+    /**
+     * Método responsável por adicionar uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
+     */
+    public void adicionaLinha(){
+        //Infla a linha para a tabela
+        linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
+        criarLinha(linha_tabela);
+        setListenersLinha(linha_tabela);
+
+        posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
+        numeroDeLinhas++;
+
+        //Adiciona elementos sem valor nas listas para garantir que tenham o mesmo tamanho que o número de linhas.
+        //Isso permite controlar o tamanho das listas no momento que as linhas são adicionadas ou removidas.
+        if (listaDeAreas.size() < numeroDeLinhas) {
+            listaDeAreas.add(0.0);
+        }
+
+        double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+        if(matrizMeses.size() < numeroDeLinhas){
+            matrizMeses.add(startArray);
+        }
+
+        if (listaPiquetes.size() < numeroDeLinhas) {
+            Piquete temp = new Piquete();
+            listaPiquetes.add(temp);
+        }
+    }
+
+    /**
+     * Método responsável por remover uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
+     */
+    public void removeLinha(){
+        table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
+
+        if(numeroDeLinhas > 0){
+            listaDeAreas.remove(numeroDeLinhas-1);
+            matrizMeses.remove(numeroDeLinhas-1);
+            listaPiquetes.remove(numeroDeLinhas-1);
+
+            posicaoLinhaTabela--;
+            numeroDeLinhas--;
+
+            if(numeroDeLinhas == 0){
+                for(int i=0; i<listaTotaisMes.size(); i++){
+                    listaTotaisMes.set(i, 0.0);
+                }
+
+                for(int i=0; i<listaTotaisEstacoes.size(); i++){
+                    listaTotaisEstacoes.set(i, 0.0);
+                }
+            }
+        }
     }
 
     /**
@@ -217,7 +231,7 @@ public class PiqueteActivity extends AppCompatActivity{
         // Define uma tag para cada linha da tabela.
         linha_tabela.setTag(posicaoLinhaTabela);
 
-        //Adicionando as Linhas da tabela no layout da tabela
+        //Adicionando as Linhas na tabela.
         table_layout.addView(linha_tabela);
     }
 

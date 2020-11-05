@@ -1,88 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-<HorizontalScrollView
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-
-            android:id="@+id/linearLayout1_piquete"
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <LinearLayout
 
-                android:id="@+id/linearLayout2_piquete"
+                android:id="@+id/linearLayout1_piquete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
 
-                <include layout="@layout/tabela_oferta_atual_1" />
+                    android:id="@+id/linearLayout2_piquete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <TableLayout
-                    android:id="@+id/tableLayout_tabelaPiquete"
+
+                    <include layout="@layout/tabela_oferta_atual_1" />
+
+                    <TableLayout
+                        android:id="@+id/tableLayout_tabelaAnimais"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="840dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="600dp"
+                    android:layout_marginLeft="600dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@android:color/background_dark" />
+
+                <include layout="@layout/linha_totais_somas_meses_oferta" />
+
+                <View
+                    android:layout_width="840dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="600dp"
+                    android:layout_marginLeft="600dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@android:color/background_dark" />
+
+                <include layout="@layout/linha_totais_somas_estacoes_oferta" />
+
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/bt_adicionarLinha"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:text="@string/txt_bt_adicionar" />
-
-                <Button
-                    android:id="@+id/bt_removerLinha"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:text="@string/txt_bt_remover" />
-
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="850dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="690dp"
-                android:layout_marginLeft="690dp"
-                android:layout_marginBottom="5dp"
-                android:background="@android:color/background_dark" />
+        </ScrollView>
+    </HorizontalScrollView>
 
-            <include layout="@layout/linha_totais_somas_meses_oferta" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <View
-                android:layout_width="850dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="690dp"
-                android:layout_marginLeft="690dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@android:color/background_dark" />
+        <Button
+            android:id="@+id/bt_adicionarLinha"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:gravity="center"
+            android:text="@string/txt_bt_adicionar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <include layout="@layout/linha_totais_somas_estacoes_oferta" />
+        <Button
+            android:id="@+id/bt_finalizarEnvio"
+            android:layout_width="200sp"
+            android:layout_height="40dp"
+            android:text="@string/txt_bt_proximo_passo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
+        <Button
+            android:id="@+id/bt_removerLinha"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:gravity="center"
+            android:text="@string/txt_bt_remover"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/bt_proximoPasso"
-                android:layout_width="200sp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50sp"
-                android:layout_marginLeft="50sp"
-                android:layout_marginTop="15sp"
-                android:layout_marginBottom="15sp"
-                android:text="@string/txt_bt_proximo_passo" />
-        </LinearLayout>
-
-    </ScrollView>
-</HorizontalScrollView>
-
-
+</androidx.constraintlayout.widget.ConstraintLayout>

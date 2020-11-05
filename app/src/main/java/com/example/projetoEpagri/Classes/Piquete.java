@@ -11,7 +11,9 @@ public class Piquete implements Parcelable {
     private double mesesProd [];
     private int  total;
 
-    public Piquete(){}
+    public Piquete(){
+        this.mesesProd = new double[12];
+    }
 
     public Piquete(String tipo, String condicao, double area, double prodEstimada, double mesesProd[], int total){
         this.mesesProd = new double[12];

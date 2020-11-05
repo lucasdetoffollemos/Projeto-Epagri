@@ -8,205 +8,169 @@
 
     <TextView
         android:id="@+id/tv_totalDemanda"
-        android:layout_width="310sp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_weight="1"
-        android:gravity="start"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
+        android:gravity="end"
         android:text="@string/txt_tv_total"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_totalAnimais"
-        android:layout_width="945sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:layout_weight="1"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:gravity="center"
         android:text="@string/txt_tv_zero"
-        android:textSize="14sp"
-        android:textColor="@android:color/holo_blue_dark"/>
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_uaHa"
-        android:layout_width="95sp"
+        android:layout_width="940dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_weight="1"
+        android:layout_marginStart="-7dp"
+        android:layout_marginLeft="-7dp"
+        android:gravity="end"
         android:text="@string/txt_tv_uaHa"
-        android:textSize="14sp"
-        android:textColor="@android:color/holo_blue_dark"/>
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="14sp" />
 
 
     <TextView
         android:id="@+id/tv_AreaUaMesJan"
-        android:layout_width="78sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_janeiro"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesFev"
-        android:layout_width="78sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_fevereiro"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
 
     <TextView
         android:id="@+id/tv_AreaUaMesMar"
-        android:layout_width="78sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
         android:text="@string/txt_tv_marco"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"/>
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesAbr"
-        android:layout_width="78sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_abril"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
 
     <TextView
         android:id="@+id/tv_AreaUaMesMai"
-        android:layout_width="78sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_maio"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesJun"
-        android:layout_width="78sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_junho"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesJul"
-        android:layout_width="80sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_julho"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesAgo"
-        android:layout_width="80sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_agosto"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesSet"
-        android:layout_width="80sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_setembro"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesOut"
-        android:layout_width="80sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_outubro"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesNov"
-        android:layout_width="78sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_novembro"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_AreaUaMesDez"
-        android:layout_width="75sp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:text="@string/txt_tv_dezembro"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        tools:ignore="RtlSymmetry"
-        />
-
-
+        android:textSize="14sp" />
 </TableRow>
