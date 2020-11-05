@@ -82,6 +82,10 @@
     <string name="txt_bt_remover">-</string>
     <string name="txt_bt_finalizar">Finalizar</string>
     <string name="txt_bt_cadastroPropriedade">Cadastrar Propriedade</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Content Description das Imagens -->
+    <string name="cd_logo_ufpr">Logo UFPR</string>
+    <string name="cd_logo_ifsc">Logo IFSC</string>
+    <string name="cd_logo_epagri">Logo EPAGRI</string>
+    <string name="img_inicial">Imagem Inicial</string>
 </resources>

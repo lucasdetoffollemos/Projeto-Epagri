@@ -398,6 +398,12 @@ public class PiqueteActivity extends AppCompatActivity{
         double total = 0.0;
         int i = 0, j = 0;
 
+        //Limpa os valores dos totais da estação antes de calcular.
+        this.listaTotaisEstacoes.set(0, 0.0);
+        this.listaTotaisEstacoes.set(1, 0.0);
+        this.listaTotaisEstacoes.set(2, 0.0);
+        this.listaTotaisEstacoes.set(3, 0.0);
+
         //Calcula o total para cada mês percorrendo a matriz de valores.
         //i = linha e j = coluna.
         while (i < this.matrizMeses.size()) {

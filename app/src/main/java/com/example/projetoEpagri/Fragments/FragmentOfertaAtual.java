@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Classes.Piquete;
@@ -30,6 +31,7 @@ public class FragmentOfertaAtual extends Fragment {
     private Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
     private TableLayout table_layout;
     private TableRow linha_tabela;
+    private View layout_incluido_piquete; //Essa view serve para guardar a referência do layout (piquete) incluído no layout do fragment.
     public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
 
     private double producaoEstimadaD, areaTotal;
@@ -43,18 +45,23 @@ public class FragmentOfertaAtual extends Fragment {
     private String nomePropriedade;
     private int idPropriedade;
     private DecimalFormat doisDecimais;
-    private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
 
     //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
     private String tipo, condicao, areaS;
     private double areaD;
+    private boolean flagLoadPiquete = false;  //Flag para setar os valores dos piquetes já existentes no momento de criação das linhas.
 
-    private View layout_incluido_piquete; //Essa view serve para guardar a referência do layout (piquete) incluído no layout do fragment.
+
 
     public FragmentOfertaAtual() {}
 
-    public static FragmentOfertaAtual newInstance() {
+    public static FragmentOfertaAtual newInstance(String nomePropriedade) {
         FragmentOfertaAtual fragment = new FragmentOfertaAtual();
+
+        Bundle args = new Bundle();
+        args.putString("nomePropriedade", nomePropriedade);
+        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -89,7 +96,7 @@ public class FragmentOfertaAtual extends Fragment {
         listaPiquetes = MainActivity.bancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade);
         listaTextViewTotaisMes = new ArrayList<>();
 
-        //Toast.makeText(getActivity(), String.valueOf(usuarioId), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "executei", Toast.LENGTH_SHORT).show();
 
         if(listaTotaisMes.isEmpty()){
             for(int i=0; i<12; i++){
@@ -143,41 +150,6 @@ public class FragmentOfertaAtual extends Fragment {
         for(int i=0; i<listaPiquetes.size(); i++){
             //Infla a linha para a tabela
             adicionaLinha();
-
-
-            /*final Spinner spinnerTipo = (Spinner) linha_tabela.getChildAt(0);
-            final Spinner spinnerCondicao = (Spinner) linha_tabela.getChildAt(1);
-            final EditText editTextArea = (EditText) linha_tabela.getChildAt(2);
-            final TextView prodEstimada = (TextView) linha_tabela.getChildAt(3);
-            final TextView prodJan = (TextView) linha_tabela.getChildAt(4);
-            final TextView prodFev = (TextView) linha_tabela.getChildAt(5);
-            final TextView prodMar = (TextView) linha_tabela.getChildAt(6);
-            final TextView prodAbr = (TextView) linha_tabela.getChildAt(7);
-            final TextView prodMai = (TextView) linha_tabela.getChildAt(8);
-            final TextView prodJun = (TextView) linha_tabela.getChildAt(9);
-            final TextView prodJul = (TextView) linha_tabela.getChildAt(10);
-            final TextView prodAgo = (TextView) linha_tabela.getChildAt(11);
-            final TextView prodSet = (TextView) linha_tabela.getChildAt(12);
-            final TextView prodOut = (TextView) linha_tabela.getChildAt(13);
-            final TextView prodNov = (TextView) linha_tabela.getChildAt(14);
-            final TextView prodDez = (TextView) linha_tabela.getChildAt(15);
-            final TextView total = (TextView) linha_tabela.getChildAt(16);
-
-            //editTextArea.setText(String.valueOf(listaPiquetes.get(i).getArea()));
-            prodEstimada.setText(String.valueOf(listaPiquetes.get(i).getProdEstimada()));
-            prodJan.setText(String.valueOf(listaPiquetes.get(i).getMeses(0)));
-            prodFev.setText(String.valueOf(listaPiquetes.get(i).getMeses(1)));
-            prodMar.setText(String.valueOf(listaPiquetes.get(i).getMeses(2)));
-            prodAbr.setText(String.valueOf(listaPiquetes.get(i).getMeses(3)));
-            prodMai.setText(String.valueOf(listaPiquetes.get(i).getMeses(4)));
-            prodJun.setText(String.valueOf(listaPiquetes.get(i).getMeses(5)));
-            prodJul.setText(String.valueOf(listaPiquetes.get(i).getMeses(6)));
-            prodAgo.setText(String.valueOf(listaPiquetes.get(i).getMeses(7)));
-            prodSet.setText(String.valueOf(listaPiquetes.get(i).getMeses(8)));
-            prodOut.setText(String.valueOf(listaPiquetes.get(i).getMeses(9)));
-            prodNov.setText(String.valueOf(listaPiquetes.get(i).getMeses(10)));
-            prodDez.setText(String.valueOf(listaPiquetes.get(i).getMeses(11)));
-            total.setText(String.valueOf(listaPiquetes.get(i).getTotal()));*/
         }
     }
 
@@ -217,6 +189,15 @@ public class FragmentOfertaAtual extends Fragment {
         //Infla a linha para a tabela
         linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_oferta_atual_linha, null);
         criarLinha(linha_tabela);
+
+        //Verifica se os piquetes já foram carregados. Se não foram, faz o loading.
+        if(flagLoadPiquete == false){
+            loadPiquetes(linha_tabela);
+
+            if(numeroDeLinhas+1 == listaPiquetes.size()){
+                flagLoadPiquete = true; //Carregou todos os piquetes.
+            }
+        }
         setListenersLinha(linha_tabela);
 
         posicaoLinhaTabela++; //O indica a posição da linha dentro do TableView (primeira posição = -1)
@@ -296,6 +277,61 @@ public class FragmentOfertaAtual extends Fragment {
 
         //Adicionando as Linhas na tabela.
         table_layout.addView(linha_tabela);
+    }
+
+
+    /**
+     * Método responsável por identificar a posição de um determinado valor dentro do spinner.
+     * @param spinner
+     * @param s
+     * @return
+     */
+    private int getSpinnerIndex(Spinner spinner, String s){
+        for (int i=0; i<spinner.getCount(); i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s)){
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    public void loadPiquetes(TableRow linha_tabela){
+        final Spinner spinnerTipo = (Spinner) linha_tabela.getChildAt(0);
+        final Spinner spinnerCondicao = (Spinner) linha_tabela.getChildAt(1);
+        final EditText editTextArea = (EditText) linha_tabela.getChildAt(2);
+        final TextView prodEstimada = (TextView) linha_tabela.getChildAt(3);
+        final TextView prodJan = (TextView) linha_tabela.getChildAt(4);
+        final TextView prodFev = (TextView) linha_tabela.getChildAt(5);
+        final TextView prodMar = (TextView) linha_tabela.getChildAt(6);
+        final TextView prodAbr = (TextView) linha_tabela.getChildAt(7);
+        final TextView prodMai = (TextView) linha_tabela.getChildAt(8);
+        final TextView prodJun = (TextView) linha_tabela.getChildAt(9);
+        final TextView prodJul = (TextView) linha_tabela.getChildAt(10);
+        final TextView prodAgo = (TextView) linha_tabela.getChildAt(11);
+        final TextView prodSet = (TextView) linha_tabela.getChildAt(12);
+        final TextView prodOut = (TextView) linha_tabela.getChildAt(13);
+        final TextView prodNov = (TextView) linha_tabela.getChildAt(14);
+        final TextView prodDez = (TextView) linha_tabela.getChildAt(15);
+        final TextView total = (TextView) linha_tabela.getChildAt(16);
+
+        spinnerTipo.setSelection(getSpinnerIndex(spinnerTipo, listaPiquetes.get(numeroDeLinhas).getTipo()));
+        spinnerCondicao.setSelection(getSpinnerIndex(spinnerCondicao, listaPiquetes.get(numeroDeLinhas).getCondicao()));
+        editTextArea.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getArea()));
+        prodEstimada.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getProdEstimada()));
+        prodJan.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(0)));
+        prodFev.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(1)));
+        prodMar.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(2)));
+        prodAbr.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(3)));
+        prodMai.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(4)));
+        prodJun.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(5)));
+        prodJul.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(6)));
+        prodAgo.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(7)));
+        prodSet.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(8)));
+        prodOut.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(9)));
+        prodNov.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(10)));
+        prodDez.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getMeses(11)));
+        total.setText(String.valueOf(listaPiquetes.get(numeroDeLinhas).getTotal()));
     }
 
      /* primeira linha = -1
@@ -460,6 +496,12 @@ public class FragmentOfertaAtual extends Fragment {
 
         double total = 0.0;
         int i = 0, j = 0;
+
+        //Limpa os valores dos totais da estação antes de calcular.
+        this.listaTotaisEstacoes.set(0, 0.0);
+        this.listaTotaisEstacoes.set(1, 0.0);
+        this.listaTotaisEstacoes.set(2, 0.0);
+        this.listaTotaisEstacoes.set(3, 0.0);
 
         //Calcula o total para cada mês percorrendo a matriz de valores.
         //i = linha e j = coluna.

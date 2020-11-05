@@ -20,7 +20,6 @@ public class TabsActivity extends AppCompatActivity {
     private Fragment fragment;
     private FragmentTransaction transaction;
     private String nomePropriedade;
-    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +39,8 @@ public class TabsActivity extends AppCompatActivity {
         Intent i = getIntent();
         nomePropriedade= i.getStringExtra("nomePropriedade");
 
-        bundle = new Bundle();
-        bundle.putString("nomePropriedade", nomePropriedade);
-
         //Mostra o fragment da primeira aba, que é a selecionada quando a tela é carregada.
-        fragment = FragmentOfertaAtual.newInstance();
-        fragment.setArguments(bundle);
+        fragment = FragmentOfertaAtual.newInstance(nomePropriedade);
 
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.ll_fragments, fragment);
@@ -64,7 +59,7 @@ public class TabsActivity extends AppCompatActivity {
 
                 switch (posicao){
                     case 0:
-                        fragment = new FragmentOfertaAtual();
+                        fragment = FragmentOfertaAtual.newInstance(nomePropriedade);
                         break;
                     case 1:
                         fragment = FragmentDemandaAtual.newInstance();
@@ -78,8 +73,6 @@ public class TabsActivity extends AppCompatActivity {
                     default:
                         fragment = null;
                 }
-
-                fragment.setArguments(bundle);
 
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.ll_fragments, fragment);
