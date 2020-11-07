@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Fragments.FragmentDemandaAtual;
@@ -19,7 +22,7 @@ public class TabsActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private Fragment fragment;
     private FragmentTransaction transaction;
-    private String nomePropriedade;
+    private String nomePropriedade, nomeUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,8 @@ public class TabsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
 
         Intent i = getIntent();
-        nomePropriedade= i.getStringExtra("nomePropriedade");
+        nomePropriedade = i.getStringExtra("nomePropriedade");
+        nomeUsuario = i.getStringExtra("nome_usuario");
 
         //Mostra o fragment da primeira aba, que é a selecionada quando a tela é carregada.
         fragment = FragmentOfertaAtual.newInstance(nomePropriedade);
@@ -62,13 +66,13 @@ public class TabsActivity extends AppCompatActivity {
                         fragment = FragmentOfertaAtual.newInstance(nomePropriedade);
                         break;
                     case 1:
-                        fragment = FragmentDemandaAtual.newInstance();
+                        fragment = FragmentDemandaAtual.newInstance(nomePropriedade);
                         break;
                     case 2:
-                        fragment = FragmentOfertaProposta.newInstance();
+                        fragment = FragmentOfertaProposta.newInstance(nomePropriedade);
                         break;
                     case 3:
-                        fragment = FragmentDemandaProposta.newInstance();
+                        fragment = FragmentDemandaProposta.newInstance(nomePropriedade);
                         break;
                     default:
                         fragment = null;
@@ -86,5 +90,26 @@ public class TabsActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                enviaResposta();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Método utilizado para enviar de volta para a IndexActivity o nome do usuário caso ele clique no botão voltar.
+     */
+    public void enviaResposta(){
+        Intent intent = new Intent();
+        intent.putExtra("nome_usuario", nomeUsuario);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }

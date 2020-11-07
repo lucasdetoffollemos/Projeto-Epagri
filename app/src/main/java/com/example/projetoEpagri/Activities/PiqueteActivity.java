@@ -152,7 +152,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_atual_linha, null);
+        linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_linha, null);
         criarLinha(linha_tabela);
         setListenersLinha(linha_tabela);
 

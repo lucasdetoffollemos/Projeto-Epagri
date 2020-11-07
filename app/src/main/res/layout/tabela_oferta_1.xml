@@ -54,6 +54,6 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
-        <include layout="@layout/tabela_oferta_atual_2"/>
+        <include layout="@layout/tabela_oferta_2"/>
 
 </LinearLayout>

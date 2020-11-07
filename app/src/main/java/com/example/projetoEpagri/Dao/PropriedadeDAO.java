@@ -22,7 +22,6 @@ public class PropriedadeDAO implements IPropriedadeSchema {
      * Método para inserir uma propriedade no banco de dados (tabela propriedades).
      * @param p Representa o objeto da propriedade.
      * @param idUsuario Representa o id do usuário logado.
-     * @return
      */
     public void inserirPropriedade(Propriedade p, int idUsuario){
         ContentValues values = new ContentValues();
@@ -44,13 +43,14 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         Propriedade p = new Propriedade();
-        if (cursor.getCount() > 0) {
+        if (cursor != null && cursor.moveToFirst()) {
             p.setNome(cursor.getString(1));
             p.setArea(cursor.getDouble(2));
             p.setQtdeAnimais(cursor.getInt(3));
             p.setListaPiqueteAtual(null); //Precisa consultar na outra tabela.
             p.setListaAnimaisAtual(null);
         }
+        cursor.close();
         return p;
     }
 
@@ -62,6 +62,7 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         if (cursor.moveToLast()) {
             id = cursor.getInt(0);
         }
+        cursor.close();
         return id;
     }
 
@@ -76,6 +77,20 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME,nome);
         values.put(COLUNA_AREA, area);
+        values.put(COLUNA_QTDE_ANIMAIS, qtdeAnimais);
+
+        this.bancoDeDados.update(TABELA_PROPRIEDADE, values, COLUNA_ID + " = " + id, null);
+    }
+
+    public void updatePropriedade(int id, double area){
+        ContentValues values = new ContentValues();
+        values.put(COLUNA_AREA, area);
+
+        this.bancoDeDados.update(TABELA_PROPRIEDADE, values, COLUNA_ID + " = " + id, null);
+    }
+
+    public void updatePropriedade(int id, int qtdeAnimais){
+        ContentValues values = new ContentValues();
         values.put(COLUNA_QTDE_ANIMAIS, qtdeAnimais);
 
         this.bancoDeDados.update(TABELA_PROPRIEDADE, values, COLUNA_ID + " = " + id, null);
@@ -98,6 +113,7 @@ public class PropriedadeDAO implements IPropriedadeSchema {
             p.setListaAnimaisAtual(null);
             listaPropriedades.add(p);
         }
+        cursor.close();
         return listaPropriedades;
     }
 
@@ -119,6 +135,7 @@ public class PropriedadeDAO implements IPropriedadeSchema {
             p.setListaAnimaisAtual(null);
             listaPropriedades.add(p);
         }
+        cursor.close();
         return listaPropriedades;
     }
 

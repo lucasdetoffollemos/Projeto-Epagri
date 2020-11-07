@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.FragmentDemandaAtual">
 
-    <include layout="@layout/activity_animais"/>
+    <include layout="@layout/activity_animais" android:id="@+id/included_layout_animais"/>
 
 </FrameLayout>

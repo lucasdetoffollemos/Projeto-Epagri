@@ -1,5 +1,7 @@
 package com.example.projetoEpagri.Fragments;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,6 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.MainActivity;
+import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.R;
 
@@ -28,7 +33,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class FragmentOfertaAtual extends Fragment {
-    private Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
+    private Button bt_adicionar_linha, bt_remover_linha, bt_atualizar;
     private TableLayout table_layout;
     private TableRow linha_tabela;
     private View layout_incluido_piquete; //Essa view serve para guardar a referência do layout (piquete) incluído no layout do fragment.
@@ -50,8 +55,7 @@ public class FragmentOfertaAtual extends Fragment {
     private String tipo, condicao, areaS;
     private double areaD;
     private boolean flagLoadPiquete = false;  //Flag para setar os valores dos piquetes já existentes no momento de criação das linhas.
-
-
+    private Drawable drawable;
 
     public FragmentOfertaAtual() {}
 
@@ -93,7 +97,7 @@ public class FragmentOfertaAtual extends Fragment {
         matrizMeses = new ArrayList<>();
         listaTotaisMes = new ArrayList<>();
         listaTotaisEstacoes = new ArrayList<>();
-        listaPiquetes = MainActivity.bancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade);
+        listaPiquetes = MainActivity.bancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
         listaTextViewTotaisMes = new ArrayList<>();
 
         //Toast.makeText(getActivity(), "executei", Toast.LENGTH_SHORT).show();
@@ -140,7 +144,9 @@ public class FragmentOfertaAtual extends Fragment {
         table_layout = layout_incluido_piquete.findViewById(R.id.tableLayout_tabelaAnimais);
         bt_adicionar_linha = layout_incluido_piquete.findViewById(R.id.bt_adicionarLinha);
         bt_remover_linha = layout_incluido_piquete.findViewById(R.id.bt_removerLinha);
-        bt_proximo_passo = layout_incluido_piquete.findViewById(R.id.bt_finalizarEnvio);
+        bt_atualizar = layout_incluido_piquete.findViewById(R.id.bt_finalizarEnvio);
+        bt_atualizar.setText("Atualizar Dados");
+        drawable = bt_atualizar.getBackground();
 
         doisDecimais = new DecimalFormat("#.##");
 
@@ -174,10 +180,10 @@ public class FragmentOfertaAtual extends Fragment {
             }
         });
 
-        bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
+        bt_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                salvarDados();
+                atualizarDados(listaPiquetes, idPropriedade);
             }
         });
     }
@@ -187,7 +193,7 @@ public class FragmentOfertaAtual extends Fragment {
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_oferta_atual_linha, null);
+        linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_oferta_linha, null);
         criarLinha(linha_tabela);
 
         //Verifica se os piquetes já foram carregados. Se não foram, faz o loading.
@@ -296,6 +302,10 @@ public class FragmentOfertaAtual extends Fragment {
         return 0;
     }
 
+    /**
+     * Método responsável por carregar todos os piquetes do banco de dados.
+     * @param linha_tabela representa a última linha adicionada.
+     */
     public void loadPiquetes(TableRow linha_tabela){
         final Spinner spinnerTipo = (Spinner) linha_tabela.getChildAt(0);
         final Spinner spinnerCondicao = (Spinner) linha_tabela.getChildAt(1);
@@ -403,6 +413,8 @@ public class FragmentOfertaAtual extends Fragment {
         this.areaS = editTextArea.getText().toString();
 
         int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
+
+        bt_atualizar.setBackground(drawable);
 
         //Adiciona as áreas digitadas na lista de áreas.
         if(this.areaS.length() > 0) {
@@ -580,7 +592,24 @@ public class FragmentOfertaAtual extends Fragment {
     /**
      * Método chamado toda vez que o botão Próximo Passo é clicado, e tem como objetivo levar o usário para outra activity e mandar um array de totais/mês. (Obs: método é acionado, no onclick do Botao Proximo Passo, que se encontra em activity_piquete.xml)
      */
-    public void salvarDados() {
+    public void atualizarDados(ArrayList<Piquete> listaPiquetes, int idPropriedade) {
+        //Deleta os valores antigos.
+        MainActivity.bancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+        MainActivity.bancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+        MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
 
+        //Salva os novos valores.
+        for(int i=0; i<listaPiquetes.size(); i++){
+            MainActivity.bancoDeDados.piqueteDAO.inserirPiquete(listaPiquetes.get(i), idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+        }
+
+        MainActivity.bancoDeDados.totalPiqueteMesDAO.inserirTotalMes(listaTotaisMes, idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+        MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(listaTotaisEstacoes, idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+
+        //Atualiza a área total na tabela de propriedades.
+        MainActivity.bancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, areaTotal);
+
+        bt_atualizar.setBackgroundColor(Color.GREEN);
+        Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
     }
 }

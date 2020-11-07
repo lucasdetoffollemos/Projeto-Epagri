@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.Classes.Animais;
-import com.example.projetoEpagri.Classes.Piquete;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ public class AnimaisDAO implements IAnimaisSchema {
      * @param a Representa o objeto do Animal.
      * @param idPropriedade Representa o id da propriedade a qual pertencem os animais.
      */
-    public void inserirAnimal(Animais a, int idPropriedade){
+    public void inserirAnimal(Animais a, int idPropriedade, String NOME_TABELA){
         ContentValues values = new ContentValues();
         values.put(COLUNA_CATEGORIA, a.getCategoria());
         values.put(COLUNA_CONSUMO, a.getConsumo());
@@ -48,7 +47,7 @@ public class AnimaisDAO implements IAnimaisSchema {
         values.put(COLUNA_PESO_DEZ, a.getMeses(11));
         values.put(COLUNA_ID_PROPRIEDADE, idPropriedade);
 
-        this.bancoDeDados.insert(TABELA_ANIMAIS_ATUAL, null, values);
+        this.bancoDeDados.insert(NOME_TABELA, null, values);
     }
 
     /**
@@ -56,8 +55,8 @@ public class AnimaisDAO implements IAnimaisSchema {
      * @param idPropriedade Id da propriedade.
      * @return Array com todos os piquetes da propriedade.
      */
-    public ArrayList<Animais> getAllAnimaisByPropId(int idPropriedade){
-        String sql_query = "SELECT * FROM " + TABELA_ANIMAIS_ATUAL + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
+    public ArrayList<Animais> getAllAnimaisByPropId(int idPropriedade, String NOME_TABELA){
+        String sql_query = "SELECT * FROM " + NOME_TABELA + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         ArrayList<Animais> listaAnimais = new ArrayList<>();
@@ -87,6 +86,7 @@ public class AnimaisDAO implements IAnimaisSchema {
             a.setMeses(cursor.getDouble(22), 11);
             listaAnimais.add(a);
         }
+        cursor.close();
         return listaAnimais;
     }
 
@@ -94,7 +94,7 @@ public class AnimaisDAO implements IAnimaisSchema {
      * Método para remover todos os piquetes de uma propriedade baseado no id.
      * @param idPropriedade Nome da propriedade a ser removida.
      */
-    public void deleteAnimalByPropId(int idPropriedade){
-        this.bancoDeDados.delete(TABELA_ANIMAIS_ATUAL,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
+    public void deleteAnimalByPropId(int idPropriedade, String NOME_TABELA){
+        this.bancoDeDados.delete(NOME_TABELA,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
     }
 }

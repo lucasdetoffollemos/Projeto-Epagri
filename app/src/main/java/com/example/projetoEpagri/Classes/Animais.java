@@ -8,7 +8,9 @@ public class Animais implements Parcelable {
     private double consumo, numAnimais, pesoInicial, pesoFinal, pesoGanhoVer, pesoGanhoOut, pesoGanhoInv, pesoGanhoPrim;
     private double [] meses;
 
-    public Animais(){}
+    public Animais(){
+        this.meses = new double[12];
+    }
 
     public  Animais(String categoria, double consumo, double numAnimais, String entradaMes, double pesoInicial, double pesoFinal, double pesoGanhoVer, double pesoGanhoOut, double pesoGanhoInv, double pesoGanhoPrim, double [] meses){
         this.meses = new double[12];

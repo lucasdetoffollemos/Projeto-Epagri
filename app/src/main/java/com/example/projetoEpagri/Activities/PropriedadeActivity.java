@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Classes.Propriedade;
@@ -87,7 +92,7 @@ public class PropriedadeActivity extends AppCompatActivity {
         regiaoPiquete.add("cfb");
 
         Spinner spinnerRegiaoPiquete = findViewById(R.id.sp_regiao);
-        ArrayAdapter<String> spinnerRegiaoAdapter = new ArrayAdapter<String>(PropriedadeActivity.this, android.R.layout.simple_spinner_item, regiaoPiquete);
+        ArrayAdapter<String> spinnerRegiaoAdapter = new ArrayAdapter<>(PropriedadeActivity.this, android.R.layout.simple_spinner_item, regiaoPiquete);
         spinnerRegiaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRegiaoPiquete.setAdapter(spinnerRegiaoAdapter);
     }
@@ -104,7 +109,7 @@ public class PropriedadeActivity extends AppCompatActivity {
 
     /**
      * Método que volta para activity anterior(Index), pela seta de voltar em cima da tela.
-     * @param item
+     * @param item Representa o botão do smartphone que foi clicado.
      * @return
      */
     @Override
@@ -118,7 +123,6 @@ public class PropriedadeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //REVISAR.
     /**
      * Método responsável por lidar com as respostas enviadas da activity Piquete.
      * @param requestCode
@@ -178,16 +182,16 @@ public class PropriedadeActivity extends AppCompatActivity {
                     int propriedadeId = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
                     if(propriedadeId != -1){
                         for(int i=0; i<listaPiquete.size(); i++){
-                            MainActivity.bancoDeDados.piqueteDAO.inserirPiquete(listaPiquete.get(i), propriedadeId);
+                            MainActivity.bancoDeDados.piqueteDAO.inserirPiquete(listaPiquete.get(i), propriedadeId, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
                         }
 
-                        MainActivity.bancoDeDados.totalPiqueteMesAtualDAO.inserirTotalMes(listaTotaisMes, propriedadeId);
-                        MainActivity.bancoDeDados.totalPiqueteEstacaoAtualDAO.inserirTotalEstacao(listaTotaisEstacoes, propriedadeId);
+                        MainActivity.bancoDeDados.totalPiqueteMesDAO.inserirTotalMes(listaTotaisMes, propriedadeId, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+                        MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(listaTotaisEstacoes, propriedadeId, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
 
                         for(int i=0; i<listaAnimais.size(); i++){
-                            MainActivity.bancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId);
+                            MainActivity.bancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
                         }
-                        MainActivity.bancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId);
+                        MainActivity.bancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
                     }
                 }
 

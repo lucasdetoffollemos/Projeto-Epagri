@@ -22,7 +22,7 @@ public class PiqueteDAO implements IPiqueteSchema{
      * @param p Representa o objeto do Piquete.
      * @param idPropriedade Representa o id da propriedade a qual pertencem os piquetes.
      */
-    public void inserirPiquete(Piquete p, int idPropriedade){
+    public void inserirPiquete(Piquete p, int idPropriedade, String NOME_TABELA){
         ContentValues values = new ContentValues();
         values.put(COLUNA_TIPO, p.getTipo());
         values.put(COLUNA_CONDICAO, p.getCondicao());
@@ -43,7 +43,7 @@ public class PiqueteDAO implements IPiqueteSchema{
         values.put(COLUNA_TOTAL, p.getTotal());
         values.put(COLUNA_ID_PROPRIEDADE, idPropriedade);
 
-        this.bancoDeDados.insert(TABELA_PIQUETE_ATUAL, null, values);
+        this.bancoDeDados.insert(NOME_TABELA, null, values);
     }
 
     /**
@@ -51,8 +51,8 @@ public class PiqueteDAO implements IPiqueteSchema{
      * @param idPropriedade Id da propriedade.
      * @return Array com todos os piquetes da propriedade.
      */
-    public ArrayList<Piquete> getAllPiquetesByPropId(int idPropriedade){
-        String sql_query = "SELECT * FROM " + TABELA_PIQUETE_ATUAL + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
+    public ArrayList<Piquete> getAllPiquetesByPropId(int idPropriedade, String NOME_TABELA){
+        String sql_query = "SELECT * FROM " + NOME_TABELA + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         ArrayList<Piquete> listaPiquetes = new ArrayList<>();
@@ -77,6 +77,7 @@ public class PiqueteDAO implements IPiqueteSchema{
             p.setTotal(cursor.getInt(17));
             listaPiquetes.add(p);
         }
+        cursor.close();
         return listaPiquetes;
     }
 
@@ -84,7 +85,7 @@ public class PiqueteDAO implements IPiqueteSchema{
      * Método para remover todos os piquetes de uma propriedade baseado no id.
      * @param idPropriedade Nome da propriedade a ser removida.
      */
-    public void deletePiqueteByPropId(int idPropriedade){
-        this.bancoDeDados.delete(TABELA_PIQUETE_ATUAL,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
+    public void deletePiqueteByPropId(int idPropriedade, String NOME_TABELA){
+        this.bancoDeDados.delete(NOME_TABELA,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
     }
 }

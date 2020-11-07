@@ -139,6 +139,6 @@
         android:textStyle="bold" />
 
 
-    <include layout="@layout/tabela_demanda_atual_2" />
+    <include layout="@layout/tabela_demanda_2" />
 
 </LinearLayout>

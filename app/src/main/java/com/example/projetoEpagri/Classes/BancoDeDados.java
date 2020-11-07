@@ -10,17 +10,17 @@ import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSulSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPropriedadeSchema;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimaisAtual;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacaoAtual;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMesAtual;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.BancoDeDadosSchema.IUsuarioSchema;
 import com.example.projetoEpagri.Dao.AnimaisDAO;
 import com.example.projetoEpagri.Dao.DadosSulDAO;
 import com.example.projetoEpagri.Dao.PiqueteDAO;
 import com.example.projetoEpagri.Dao.PropriedadeDAO;
 import com.example.projetoEpagri.Dao.TotalAnimaisDAO;
-import com.example.projetoEpagri.Dao.TotalPiqueteEstacaoAtualDAO;
-import com.example.projetoEpagri.Dao.TotalPiqueteMesAtualDAO;
+import com.example.projetoEpagri.Dao.TotalPiqueteEstacaoDAO;
+import com.example.projetoEpagri.Dao.TotalPiqueteMesDAO;
 import com.example.projetoEpagri.Dao.UsuarioDAO;
 
 public class BancoDeDados{
@@ -35,8 +35,8 @@ public class BancoDeDados{
     public static DadosSulDAO dadosSulDAO;
     public static PropriedadeDAO propriedadeDAO;
     public static PiqueteDAO piqueteDAO;
-    public static TotalPiqueteMesAtualDAO totalPiqueteMesAtualDAO;
-    public static TotalPiqueteEstacaoAtualDAO totalPiqueteEstacaoAtualDAO;
+    public static TotalPiqueteMesDAO totalPiqueteMesDAO;
+    public static TotalPiqueteEstacaoDAO totalPiqueteEstacaoDAO;
     public static AnimaisDAO animaisDAO;
     public static TotalAnimaisDAO totalAnimaisDAO;
 
@@ -47,7 +47,7 @@ public class BancoDeDados{
     /**
      * Método responsável por inicializar as interações com o banco de dados.
      * Cria-se de fato o objeto do banco de dados (SQLiteDatabase) e inicializa-se os DAOs.
-     * @return
+     * @return Retorna o contexto da classe.
      * @throws SQLException
      */
     public BancoDeDados abreConexao() throws SQLException {
@@ -58,8 +58,8 @@ public class BancoDeDados{
         dadosSulDAO = new DadosSulDAO(sqLiteDatabase);
         propriedadeDAO = new PropriedadeDAO(sqLiteDatabase);
         piqueteDAO = new PiqueteDAO(sqLiteDatabase);
-        totalPiqueteMesAtualDAO = new TotalPiqueteMesAtualDAO(sqLiteDatabase);
-        totalPiqueteEstacaoAtualDAO = new TotalPiqueteEstacaoAtualDAO(sqLiteDatabase);
+        totalPiqueteMesDAO = new TotalPiqueteMesDAO(sqLiteDatabase);
+        totalPiqueteEstacaoDAO = new TotalPiqueteEstacaoDAO(sqLiteDatabase);
         animaisDAO = new AnimaisDAO(sqLiteDatabase);
         totalAnimaisDAO = new TotalAnimaisDAO(sqLiteDatabase);
 
@@ -103,7 +103,7 @@ public class BancoDeDados{
         cursor.moveToFirst();
 
         if (cursor != null){
-            while(cursor.isAfterLast() == false){
+            while(!cursor.isAfterLast()){
                 cursor.moveToNext();
                 count++;
             }
@@ -113,6 +113,7 @@ public class BancoDeDados{
             vazia = false;
         }
 
+        cursor.close();
         return vazia;
     }
 
@@ -126,11 +127,18 @@ public class BancoDeDados{
             db.execSQL(IUsuarioSchema.CREATE_TABELA_USUARIO);
             db.execSQL(IDadosSulSchema.CREATE_TABELA_DADOS_SUL);
             db.execSQL(IPropriedadeSchema.CREATE_TABELA_PROPRIEDADE);
+            //Atual
             db.execSQL(IPiqueteSchema.CREATE_TABELA_PIQUETE_ATUAL);
-            db.execSQL(ITotalPiqueteMesAtual.CREATE_TABELA_TOTAL_PIQUETE_MES_ATUAL);
-            db.execSQL(ITotalPiqueteEstacaoAtual.CREATE_TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+            db.execSQL(ITotalPiqueteMes.CREATE_TABELA_TOTAL_PIQUETE_MES_ATUAL);
+            db.execSQL(ITotalPiqueteEstacao.CREATE_TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
             db.execSQL(IAnimaisSchema.CREATE_TABELA_ANIMAIS_ATUAL);
-            db.execSQL(ITotalAnimaisAtual.CREATE_TABELA_TOTAL_ANIMAIS_ATUAL);
+            db.execSQL(ITotalAnimais.CREATE_TABELA_TOTAL_ANIMAIS_ATUAL);
+            //Proposta
+            db.execSQL(IPiqueteSchema.CREATE_TABELA_PIQUETE_PROPOSTA);
+            db.execSQL(ITotalPiqueteMes.CREATE_TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
+            db.execSQL(ITotalPiqueteEstacao.CREATE_TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
+            db.execSQL(IAnimaisSchema.CREATE_TABELA_ANIMAIS_PROPOSTA);
+            db.execSQL(ITotalAnimais.CREATE_TABELA_TOTAL_ANIMAIS_PROPOSTA);
         }
 
         @Override

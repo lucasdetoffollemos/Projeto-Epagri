@@ -33,7 +33,7 @@
                     android:orientation="vertical">
 
 
-                    <include layout="@layout/tabela_oferta_atual_1" />
+                    <include layout="@layout/tabela_oferta_1" />
 
                     <TableLayout
                         android:id="@+id/tableLayout_tabelaAnimais"

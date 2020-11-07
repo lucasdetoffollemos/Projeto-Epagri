@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -62,7 +63,7 @@ public class IndexActivity extends AppCompatActivity {
             tv_bemVindo.setVisibility(View.INVISIBLE);
         }
 
-        listViewPropriedadesAdapter = new ListViewPropriedadesAdapter(this, listaPropriedade);
+        listViewPropriedadesAdapter = new ListViewPropriedadesAdapter(this, listaPropriedade, nomeUsuario);
         lv_propriedades.setAdapter(listViewPropriedadesAdapter);
     }
 
@@ -105,9 +106,9 @@ public class IndexActivity extends AppCompatActivity {
 
     /**
      * Método responsável por lidar com as respostas enviadas da activity Propriedade.
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode Representa o código da activity que fez a requisição.
+     * @param resultCode Representa o código do resultado enviado.
+     * @param data Representa a informação enviada como resposta.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -119,7 +120,8 @@ public class IndexActivity extends AppCompatActivity {
                 tv_bemVindo.setText("Seja bem vindo " + nomeUsuario);
 
                 atualizaListView();
-                Toast.makeText(this.getApplicationContext(), nomeUsuario, Toast.LENGTH_SHORT).show();
+                Log.i("testeindex", "entrei aqui");
+                Toast.makeText(IndexActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
                 /*for(int i=0; i<listaPropriedade.size(); i++){
                     Log.i("listaPropriedade", listaPropriedade.get(i).getNome() + " "
@@ -128,7 +130,7 @@ public class IndexActivity extends AppCompatActivity {
                 }*/
             }
 
-            if (resultCode == Activity.RESULT_CANCELED) {}
+            //if (resultCode == Activity.RESULT_CANCELED) {}
         }
     }
 }

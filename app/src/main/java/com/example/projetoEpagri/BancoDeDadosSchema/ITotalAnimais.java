@@ -1,7 +1,8 @@
 package com.example.projetoEpagri.BancoDeDadosSchema;
 
-public interface ITotalAnimaisAtual {
+public interface ITotalAnimais {
     String TABELA_TOTAL_ANIMAIS_ATUAL = "total_animais_atual";
+    String TABELA_TOTAL_ANIMAIS_PROPOSTA = "total_animais_proposta";
     String COLUNA_ID = "id";
     String COLUNA_TOTAL_JAN = "total_jan";
     String COLUNA_TOTAL_FEV = "total_fev";
@@ -36,20 +37,21 @@ public interface ITotalAnimaisAtual {
             + COLUNA_ID_PROPRIEDADE + " integer, "
             + "FOREIGN KEY ("+ COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
 
-    String[] TOTAL_ANIMAIS_ATUAL_COLUNAS = new String[] {
-            COLUNA_ID,
-            COLUNA_TOTAL_JAN,
-            COLUNA_TOTAL_FEV,
-            COLUNA_TOTAL_MAR,
-            COLUNA_TOTAL_ABR,
-            COLUNA_TOTAL_MAI,
-            COLUNA_TOTAL_JUN,
-            COLUNA_TOTAL_JUL,
-            COLUNA_TOTAL_AGO,
-            COLUNA_TOTAL_SET,
-            COLUNA_TOTAL_OUT,
-            COLUNA_TOTAL_NOV,
-            COLUNA_TOTAL_DEZ,
-            COLUNA_ID_PROPRIEDADE
-    };
+    String CREATE_TABELA_TOTAL_ANIMAIS_PROPOSTA = "CREATE TABLE IF NOT EXISTS "
+            + TABELA_TOTAL_ANIMAIS_PROPOSTA + "("
+            + COLUNA_ID + " integer PRIMARY KEY AUTOINCREMENT, "
+            + COLUNA_TOTAL_JAN + " real, "
+            + COLUNA_TOTAL_FEV + " real, "
+            + COLUNA_TOTAL_MAR + " real, "
+            + COLUNA_TOTAL_ABR + " real, "
+            + COLUNA_TOTAL_MAI + " real, "
+            + COLUNA_TOTAL_JUN + " real, "
+            + COLUNA_TOTAL_JUL + " real, "
+            + COLUNA_TOTAL_AGO + " real, "
+            + COLUNA_TOTAL_SET + " real, "
+            + COLUNA_TOTAL_OUT + " real, "
+            + COLUNA_TOTAL_NOV + " real, "
+            + COLUNA_TOTAL_DEZ + " real, "
+            + COLUNA_ID_PROPRIEDADE + " integer, "
+            + "FOREIGN KEY ("+ COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
 }

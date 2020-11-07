@@ -4,14 +4,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacaoAtual;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 
 import java.util.ArrayList;
 
-public class TotalPiqueteEstacaoAtualDAO implements ITotalPiqueteEstacaoAtual {
+public class TotalPiqueteEstacaoDAO implements ITotalPiqueteEstacao {
     SQLiteDatabase bancoDeDados;
 
-    public TotalPiqueteEstacaoAtualDAO(SQLiteDatabase bancoDeDados){
+    public TotalPiqueteEstacaoDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;
     }
 
@@ -20,7 +20,7 @@ public class TotalPiqueteEstacaoAtualDAO implements ITotalPiqueteEstacaoAtual {
      * @param listaTotaisEstacao ArrayList com os totais de cada estação.
      * @param idPropriedade Id da propriedade.
      */
-    public void inserirTotalEstacao(ArrayList<Double> listaTotaisEstacao, int idPropriedade){
+    public void inserirTotalEstacao(ArrayList<Double> listaTotaisEstacao, int idPropriedade, String NOME_TABELA){
         ContentValues values = new ContentValues();
         values.put(COLUNA_TOTAL_VER, listaTotaisEstacao.get(0));
         values.put(COLUNA_TOTAL_OUT, listaTotaisEstacao.get(1));
@@ -28,7 +28,7 @@ public class TotalPiqueteEstacaoAtualDAO implements ITotalPiqueteEstacaoAtual {
         values.put(COLUNA_TOTAL_PRIM, listaTotaisEstacao.get(3));
         values.put(COLUNA_ID_PROPRIEDADE, idPropriedade);
 
-        this.bancoDeDados.insert(TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL, null, values);
+        this.bancoDeDados.insert(NOME_TABELA, null, values);
     }
 
     /**
@@ -36,8 +36,8 @@ public class TotalPiqueteEstacaoAtualDAO implements ITotalPiqueteEstacaoAtual {
      * @param idPropriedade Id da propriedade.
      * @return Array com os totais de todas as estações da propriedade.
      */
-    public ArrayList<Double> getTotalEstacaoByPropId(int idPropriedade){
-        String sql_query = "SELECT * FROM " + TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
+    public ArrayList<Double> getTotalEstacaoByPropId(int idPropriedade, String NOME_TABELA){
+        String sql_query = "SELECT * FROM " + NOME_TABELA + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         ArrayList<Double> totais = new ArrayList<>();
@@ -47,6 +47,7 @@ public class TotalPiqueteEstacaoAtualDAO implements ITotalPiqueteEstacaoAtual {
             totais.add(cursor.getDouble(3));
             totais.add(cursor.getDouble(4));
         }
+        cursor.close();
         return totais;
     }
 
@@ -54,7 +55,7 @@ public class TotalPiqueteEstacaoAtualDAO implements ITotalPiqueteEstacaoAtual {
      * Método para remover todos os totais de uma propriedade baseado no id.
      * @param idPropriedade Id da propriedade a ser removida.
      */
-    public void deleteTotalEstacaoByPropId(int idPropriedade){
-        this.bancoDeDados.delete(TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
+    public void deleteTotalEstacaoByPropId(int idPropriedade, String NOME_TABELA){
+        this.bancoDeDados.delete(NOME_TABELA,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
     }
 }

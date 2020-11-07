@@ -135,7 +135,7 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_atual_linha, null);
+        linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_linha, null);
         criarLinha(linha_tabela);
         setListenersLinha(linha_tabela);
 

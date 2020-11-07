@@ -4,15 +4,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMesAtual;
-import com.example.projetoEpagri.Classes.Piquete;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 
 import java.util.ArrayList;
 
-public class TotalPiqueteMesAtualDAO implements ITotalPiqueteMesAtual {
+public class TotalPiqueteMesDAO implements ITotalPiqueteMes {
     SQLiteDatabase bancoDeDados;
 
-    public TotalPiqueteMesAtualDAO(SQLiteDatabase bancoDeDados){
+    public TotalPiqueteMesDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;
     }
 
@@ -21,7 +20,7 @@ public class TotalPiqueteMesAtualDAO implements ITotalPiqueteMesAtual {
      * @param listaTotaisMes ArrayList com os totais de cada mês.
      * @param idPropriedade Id da propriedade.
      */
-    public void inserirTotalMes(ArrayList<Double> listaTotaisMes, int idPropriedade){
+    public void inserirTotalMes(ArrayList<Double> listaTotaisMes, int idPropriedade, String NOME_TABELA){
         ContentValues values = new ContentValues();
         values.put(COLUNA_TOTAL_JAN, listaTotaisMes.get(0));
         values.put(COLUNA_TOTAL_FEV, listaTotaisMes.get(1));
@@ -37,7 +36,7 @@ public class TotalPiqueteMesAtualDAO implements ITotalPiqueteMesAtual {
         values.put(COLUNA_TOTAL_DEZ, listaTotaisMes.get(11));
         values.put(COLUNA_ID_PROPRIEDADE, idPropriedade);
 
-        this.bancoDeDados.insert(TABELA_TOTAL_PIQUETE_MES_ATUAL, null, values);
+        this.bancoDeDados.insert(NOME_TABELA, null, values);
     }
 
     /**
@@ -45,8 +44,8 @@ public class TotalPiqueteMesAtualDAO implements ITotalPiqueteMesAtual {
      * @param idPropriedade Id da propriedade.
      * @return Array com os totais de todos os meses da propriedade.
      */
-    public ArrayList<Double> getTotalMesByPropId(int idPropriedade){
-        String sql_query = "SELECT * FROM " + TABELA_TOTAL_PIQUETE_MES_ATUAL + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
+    public ArrayList<Double> getTotalMesByPropId(int idPropriedade, String NOME_TABELA){
+        String sql_query = "SELECT * FROM " + NOME_TABELA + " WHERE " + COLUNA_ID_PROPRIEDADE + "=\"" + idPropriedade + "\"";
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         ArrayList<Double> totais = new ArrayList<>();
@@ -64,6 +63,7 @@ public class TotalPiqueteMesAtualDAO implements ITotalPiqueteMesAtual {
             totais.add(cursor.getDouble(11));
             totais.add(cursor.getDouble(12));
         }
+        cursor.close();
         return totais;
     }
 
@@ -71,7 +71,7 @@ public class TotalPiqueteMesAtualDAO implements ITotalPiqueteMesAtual {
      * Método para remover todos os totais de uma propriedade baseado no id.
      * @param idPropriedade Id da propriedade a ser removida.
      */
-    public void deleteTotalMesByPropId(int idPropriedade){
-        this.bancoDeDados.delete(TABELA_TOTAL_PIQUETE_MES_ATUAL,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
+    public void deleteTotalMesByPropId(int idPropriedade, String NOME_TABELA){
+        this.bancoDeDados.delete(NOME_TABELA,COLUNA_ID_PROPRIEDADE + "=" + idPropriedade, null);
     }
 }

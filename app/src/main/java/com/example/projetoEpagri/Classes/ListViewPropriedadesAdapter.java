@@ -1,5 +1,6 @@
 package com.example.projetoEpagri.Classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,13 +20,16 @@ import java.util.ArrayList;
 public class ListViewPropriedadesAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<Propriedade> listaPropriedades;
+    String nomeUsuario;
     private TextView tv_nome, tv_area, tv_qtde;
     private Button bt_ver_dados, bt_excluir;
+    private int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
     //Atributo para animação no botão
 
-    public ListViewPropriedadesAdapter(Context context, ArrayList<Propriedade> lista){
+    public ListViewPropriedadesAdapter(Context context, ArrayList<Propriedade> lista, String nomeUsuario){
         this.context = context;
         this.listaPropriedades = lista;
+        this.nomeUsuario = nomeUsuario;
     }
 
     public ArrayList<Propriedade> getData() {
@@ -76,7 +80,8 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent i = new Intent(context, TabsActivity.class);
                 i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
-                context.startActivity(i);
+                i.putExtra("nome_usuario", nomeUsuario);
+                ((Activity) context).startActivityForResult(i, codigoRequisicao);
             }
         });
 
