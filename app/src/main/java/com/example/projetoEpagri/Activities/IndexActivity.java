@@ -121,7 +121,7 @@ public class IndexActivity extends AppCompatActivity {
 
                 atualizaListView();
                 Log.i("testeindex", "entrei aqui");
-                Toast.makeText(IndexActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(IndexActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
                 /*for(int i=0; i<listaPropriedade.size(); i++){
                     Log.i("listaPropriedade", listaPropriedade.get(i).getNome() + " "

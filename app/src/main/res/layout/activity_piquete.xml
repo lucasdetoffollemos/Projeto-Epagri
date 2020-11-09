@@ -78,14 +78,18 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/bt_adicionarLinha"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/txt_bt_adicionar"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -95,8 +99,8 @@
 
         <Button
             android:id="@+id/bt_finalizarEnvio"
-            android:layout_width="200sp"
-            android:layout_height="40dp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:text="@string/txt_bt_proximo_passo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,8 +108,8 @@
 
         <Button
             android:id="@+id/bt_removerLinha"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/txt_bt_remover"
             app:layout_constraintBottom_toBottomOf="parent"

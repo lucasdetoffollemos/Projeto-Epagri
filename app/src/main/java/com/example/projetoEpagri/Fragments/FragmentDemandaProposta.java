@@ -263,7 +263,7 @@ public class FragmentDemandaProposta extends Fragment {
 
     /**
      * Método responsável por identificar a posição de um determinado valor dentro do spinner.
-     * @param spinner
+     * @param spinner Representa o spinner.
      * @param s
      * @return
      */
@@ -837,7 +837,7 @@ public class FragmentDemandaProposta extends Fragment {
         //Atualiza a qtde de animais na tabela de propriedades.
         //MainActivity.bancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, somaAnimal);
 
-        bt_atualizar.setBackgroundColor(Color.GREEN);
+        //bt_atualizar.setBackgroundColor(Color.GREEN);
         Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
     }
 }

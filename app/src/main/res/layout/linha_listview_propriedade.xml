@@ -140,15 +140,14 @@
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        app:layout_constraintVertical_bias="0.0" />-->
-    <Button
+    <android.widget.Button
         android:id="@+id/lv_bt_excluir"
-        android:layout_width="50dp"
-        android:background="@null"
-        android:layout_height="45dp"
+        android:layout_width="25dp"
+        android:layout_height="35dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        app:icon="@drawable/icone_lixeira2"
+        android:background="@drawable/icone_lixeira"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

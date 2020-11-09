@@ -17,7 +17,7 @@ import java.util.TimerTask;
 
 public class PerfilActivity extends AppCompatActivity {
     private EditText et_nome, et_email, et_telefone, et_senha;
-    public Button bt_criar, bt_atualizar, bt_deletar, bt_listar;
+    public Button bt_criar;
 
     @Override
      protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,6 @@ public class PerfilActivity extends AppCompatActivity {
         this.et_telefone = findViewById(R.id.et_telefone);
         this.et_senha = findViewById(R.id.et_senha);
         this.bt_criar = findViewById(R.id.bt_criar);
-        this.bt_atualizar = findViewById(R.id.bt_atualizar);
-        this.bt_listar = findViewById(R.id.bt_listar);
-        this.bt_deletar = findViewById(R.id.bt_deletar);
     }
 
     /**
@@ -58,33 +55,6 @@ public class PerfilActivity extends AppCompatActivity {
                 criarPerfil(nome, email, telefone, senha);
             }
         });
-
-        this.bt_atualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String nome, email, telefone, senha;
-                nome = et_nome.getText().toString();
-                email = et_email.getText().toString();
-                telefone = et_telefone.getText().toString();
-                senha = et_senha.getText().toString();
-
-                MainActivity.bancoDeDados.usuarioDAO.updateUsuario(1, nome, email, telefone, senha);
-            }
-        });
-
-        this.bt_listar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listarUsuarios();
-            }
-        });
-
-        this.bt_deletar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deletarTodosUsuario();
-            }
-        });
     }
 
     /**
@@ -93,7 +63,7 @@ public class PerfilActivity extends AppCompatActivity {
     public void criarPerfil(String nome, String email, String telefone, String senha){
         Usuario u = new Usuario(nome, email, telefone, senha);
         long id = MainActivity.bancoDeDados.usuarioDAO.inserirUsuario(u);
-        Toast.makeText(this, "Usuario inserido com id " + id, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
 
         //O código abaixo da um tempo da 2 seg até voltar a outra página.
         new Timer().schedule(new TimerTask() {

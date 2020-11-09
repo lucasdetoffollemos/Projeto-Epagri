@@ -619,7 +619,7 @@ public class FragmentOfertaProposta extends Fragment {
         //Atualiza a área total na tabela de propriedades.
         //MainActivity.bancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, areaTotal);
 
-        bt_atualizar.setBackgroundColor(Color.GREEN);
+        //bt_atualizar.setBackgroundColor(Color.GREEN);
         Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
     }
 }

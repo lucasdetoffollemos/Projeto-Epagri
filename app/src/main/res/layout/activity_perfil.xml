@@ -143,26 +143,5 @@
             android:text="@string/txt_bt_criar"
             android:layout_marginTop="10dp"/>
 
-        <Button
-            android:id="@+id/bt_atualizar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Atualizar" />
-
-        <Button
-            android:id="@+id/bt_listar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/txt_bt_listarUsuarios" />
-
-        <Button
-            android:id="@+id/bt_deletar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/txt_bt_deletarUsuarios" />
-
     </LinearLayout>
 </ScrollView>

@@ -831,7 +831,7 @@ public class FragmentDemandaAtual extends Fragment {
         //Atualiza a qtde de animais na tabela de propriedades.
         MainActivity.bancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, somaAnimal);
 
-        bt_atualizar.setBackgroundColor(Color.GREEN);
+        //bt_atualizar.setBackgroundColor(Color.GREEN);
         Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
     }
 }

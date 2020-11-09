@@ -31,7 +31,7 @@
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
         android:autofillHints=""
-        android:background="#FAFAFA"
+        android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_area"
         android:inputType="textPersonName"

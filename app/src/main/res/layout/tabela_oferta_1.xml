@@ -31,7 +31,7 @@
     <TextView
         android:id="@+id/tv_area"
         android:layout_width="60dp"
-        android:layout_height="80sp"
+        android:layout_height="80dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
         android:background="@drawable/borda_preta_fundo_verde"
@@ -43,8 +43,8 @@
 
     <TextView
         android:id="@+id/tv_prodEstimadaAno"
-        android:layout_width="190sp"
-        android:layout_height="80sp"
+        android:layout_width="190dp"
+        android:layout_height="80dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
         android:background="@drawable/borda_preta_fundo_verde"
