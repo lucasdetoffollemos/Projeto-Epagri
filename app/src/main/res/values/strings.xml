@@ -19,8 +19,9 @@
 
     <!--Text's    -->
     <!--TextViews -->
+    <string name="txt_tv_tituloPerfil">Perfil</string>
     <string name="txt_tv_criarPerfil">Criar perfil</string>
-    <string name="txt_tv_login">Faça o Login</string>
+    <string name="txt_tv_login">Login</string>
     <string name="txt_tv_cadastraPropriedade">Cadastre sua Propriedade</string>
     <string name="txt_tv_regiao">Escolha a Região</string>
     <string name="txt_tv_total">Total</string>

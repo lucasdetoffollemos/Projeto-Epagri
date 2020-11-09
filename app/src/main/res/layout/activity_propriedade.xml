@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.PropriedadeActivity">
+    tools:context=".Activities.PropriedadeActivity"
+    android:background="@color/cinza"
+    >
 
     <TextView
         android:id="@+id/tv_tituloPropriedade"
@@ -21,21 +23,44 @@
         app:layout_constraintVertical_bias="0.3" />
 
 
-    <EditText
-        android:id="@+id/et_nomePropriedade"
-        android:layout_width="wrap_content"
+
+
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldPropriedade"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:gravity="center"
         android:hint="@string/hint_et_nomeProrpriedade"
+        android:layout_marginTop="15dp"
+        android:ems="10"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
+        android:padding="10dp"
+        app:startIconDrawable="@drawable/ic_propriedade"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tituloPropriedade"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
+
+        <EditText
+            android:id="@+id/et_nomePropriedade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            tools:ignore="LabelFor"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tv_regiao"
@@ -47,8 +72,9 @@
         app:layout_constraintBottom_toTopOf="@+id/bt_levaPiquete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_nomePropriedade"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintTop_toBottomOf="@+id/textFieldPropriedade"
+        app:layout_constraintVertical_bias="0.19999999"
+        />
 
     <Spinner
         android:id="@+id/sp_regiao"

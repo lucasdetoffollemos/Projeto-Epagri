@@ -23,7 +23,10 @@
         </activity>
 
         <!-- Activity Principal -->
-        <activity android:name=".Activities.MainActivity"></activity> <!-- Activity Perfil -->
+        <activity android:name=".Activities.MainActivity"
+            android:theme="@style/Activity_Sem_Action_Bar"></activity>
+
+        <!-- Activity Perfil -->
         <activity
             android:name=".Activities.PerfilActivity"
             android:label=" Criar Perfil"

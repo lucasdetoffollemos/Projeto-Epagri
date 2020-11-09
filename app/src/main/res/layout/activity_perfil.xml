@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/cinza">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,59 +21,127 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="25dp"
-            android:text="@string/txt_tv_criarPerfil"
+            android:text="@string/txt_tv_tituloPerfil"
             android:gravity="center_horizontal"
-            android:textColor="#0B0B0A"
+            android:textColor="@color/verde"
             android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/et_nome"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:ems="10"
             android:hint="@string/hint_et_nome"
-            android:inputType="textPersonName"
+            android:layout_marginTop="50dp"
+            android:ems="10"
             android:importantForAutofill="no"
-            android:textSize="18sp" />
+            android:inputType="textPassword"
+            android:padding="10dp"
+            app:startIconDrawable="@drawable/ic_nome"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            >
 
-        <EditText
-            android:id="@+id/et_email"
+            <EditText
+                android:background="@null"
+                android:id="@+id/et_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
             android:hint="@string/hint_et_email"
+            android:layout_marginTop="15dp"
+            android:ems="10"
             android:importantForAutofill="no"
-            android:inputType="textEmailAddress" />
+            android:inputType="textPassword"
+            android:padding="10dp"
+            app:startIconDrawable="@drawable/ic_email"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            >
 
-        <EditText
-            android:id="@+id/et_telefone"
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
             android:hint="@string/hint_et_telefone"
+            android:layout_marginTop="15dp"
+            android:ems="10"
             android:importantForAutofill="no"
-            android:inputType="phone" />
+            android:inputType="textPassword"
+            android:padding="10dp"
+            app:startIconDrawable="@drawable/ic_telefone"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            >
 
-        <EditText
-            android:id="@+id/et_senha"
+            <EditText
+                android:id="@+id/et_telefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:ems="10"
             android:hint="@string/hint_et_senha"
+            android:layout_marginTop="15dp"
+            android:ems="10"
             android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="10dp"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_senha"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            >
+            <EditText
+                android:id="@+id/et_senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/bt_criar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/txt_bt_criar" />
+            android:text="@string/txt_bt_criar"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/bt_atualizar"
