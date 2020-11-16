@@ -7,6 +7,37 @@
     tools:context="com.example.projetoEpagri.Activities.IndexActivity"
     android:background="@color/cinza">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/cinza"
+        tools:ignore="MissingConstraints"
+        android:layout_marginTop="10dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clicarVoltarIndex"
+        android:src="@drawable/ic_voltar"
+        android:tint="@color/preto"
+        android:contentDescription="@string/todo"
+         />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Página Inicial"
+            android:textColor="@color/preto"
+            android:textSize="18sp"
+            android:textStyle="bold"
+           android:layout_marginLeft="90dp"
+           />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/lv_propriedades"
         android:layout_width="340dp"

@@ -3,6 +3,8 @@ package com.example.projetoEpagri.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -133,4 +135,36 @@ public class IndexActivity extends AppCompatActivity {
             //if (resultCode == Activity.RESULT_CANCELED) {}
         }
     }
+
+    //Funçao que tem como objetivo, ver se o usuário quer sair mesmo, chamada quando clicado no botão de voltar do celular.
+    public  void onBackPressed(){
+        //Criando a caixa de pergunta, se o usuário quer ou não sair do app
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Sair");
+
+        builder.setMessage( "Tem certeza que deseja deslogar? " );
+        builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finish();
+            }
+        });
+        builder.setNegativeButton(" NÃO ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+    }
+
+    //Chamado no arquivo de layout, no icone de voltar, no canto superior a esquerda
+    public void clicarVoltarIndex(View view) {
+          onBackPressed();
+    }
+
+
 }

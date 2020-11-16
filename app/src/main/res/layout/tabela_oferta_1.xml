@@ -11,7 +11,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_piquete"
-        android:textColor="@android:color/black"
+        android:textColor="@color/branco"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_condicaoPastagem"
-        android:textColor="@android:color/black"
+        android:textColor="@color/branco"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_areaHa"
-        android:textColor="@android:color/black"
+        android:textColor="@color/branco"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_producaoEstimadaAno"
-        android:textColor="@android:color/black"
+        android:textColor="@color/branco"
         android:textSize="16sp"
         android:textStyle="bold" />
 

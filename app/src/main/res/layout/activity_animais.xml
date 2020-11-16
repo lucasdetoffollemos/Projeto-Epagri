@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/cinza">
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -32,6 +34,36 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:id="@+id/ln_toolBar_animais"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/cinza"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="MissingConstraints">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/todo"
+                            android:onClick="clicarVoltarAnimais"
+                            android:src="@drawable/ic_voltar"
+                            android:tint="@color/preto" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cadastre os Animais"
+                            android:textColor="@color/preto"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="40dp" />
+
+
+                    </LinearLayout>
 
                     <include layout="@layout/tabela_demanda_1" />
 
@@ -77,34 +109,51 @@
 
         <Button
             android:id="@+id/bt_adicionarLinha"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
             android:gravity="center"
             android:text="@string/txt_bt_adicionar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:cornerRadius="50dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/preto"
+            android:textColor="@color/branco"
+            android:backgroundTint="@color/verde"
+            tools:targetApi="lollipop" />
 
         <Button
             android:id="@+id/bt_finalizarEnvio"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:text="@string/txt_bt_proximo_passo"
+            android:text="@string/txt_bt_finalizar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/preto"
+            android:textColor="@color/branco"
+            android:backgroundTint="@color/verde"
+            tools:targetApi="lollipop"/>
 
         <Button
             android:id="@+id/bt_removerLinha"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
             android:gravity="center"
             android:text="@string/txt_bt_remover"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:cornerRadius="50dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/preto"
+            android:textColor="@color/branco"
+            android:backgroundTint="@color/verde"
+            tools:targetApi="lollipop" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

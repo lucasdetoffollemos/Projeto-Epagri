@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -56,6 +57,9 @@ public class FragmentOfertaAtual extends Fragment {
     private double areaD;
     private boolean flagLoadPiquete = false;  //Flag para setar os valores dos piquetes já existentes no momento de criação das linhas.
     private Drawable drawable;
+
+    //LinearLayout que será removido
+    private LinearLayout linearLayoutToolBar;
 
     public FragmentOfertaAtual() {}
 
@@ -147,6 +151,8 @@ public class FragmentOfertaAtual extends Fragment {
         bt_atualizar = layout_incluido_piquete.findViewById(R.id.bt_finalizarEnvio);
         bt_atualizar.setText("Atualizar Dados");
         drawable = bt_atualizar.getBackground();
+        linearLayoutToolBar = layout_incluido_piquete.findViewById(R.id.ln_toolBar_piquete);
+        linearLayoutToolBar.setVisibility(View.GONE);
 
         doisDecimais = new DecimalFormat("#.##");
 

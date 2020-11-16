@@ -519,4 +519,8 @@ public class PiqueteActivity extends AppCompatActivity{
             }
         }
     }
+
+    public void clicarVoltarPiquete(View view) {
+        finish();
+    }
 }

@@ -101,4 +101,9 @@ public class PerfilActivity extends AppCompatActivity {
         this.et_telefone.setText("");
         this.et_senha.setText("");
     }
+
+    //Chamado no arquivo de layout
+    public void clicarVoltarPerfil(View view) {
+        finish();
+    }
 }

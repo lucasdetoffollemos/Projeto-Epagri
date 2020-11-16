@@ -203,5 +203,10 @@ public class PropriedadeActivity extends AppCompatActivity {
             }
         }
     }
+
+    //Chamado no arquivo de layout
+    public void clicarVoltarPropriedade(View view) {
+        finish();
+    }
 }
 

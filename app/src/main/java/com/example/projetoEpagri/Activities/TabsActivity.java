@@ -1,15 +1,14 @@
 package com.example.projetoEpagri.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetoEpagri.Fragments.FragmentDemandaAtual;
 import com.example.projetoEpagri.Fragments.FragmentDemandaProposta;
@@ -110,6 +109,10 @@ public class TabsActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("nome_usuario", nomeUsuario);
         setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    public void clicarVoltarTabs(View view){
         finish();
     }
 }

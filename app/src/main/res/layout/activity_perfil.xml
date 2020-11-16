@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,9 +9,45 @@
     android:orientation="vertical"
     android:background="@color/cinza">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/cinza"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="clicarVoltarPerfil"
+            android:src="@drawable/ic_voltar"
+            android:tint="@color/preto"
+            android:contentDescription="@string/todo" />
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="Epagri"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/preto"-->
+<!--            android:gravity="center_horizontal" />-->
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginRight="10sp"
         android:layout_marginLeft="10sp"
@@ -75,7 +112,9 @@
                 android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"/>
+                android:background="@null"
+                android:autofillHints=""
+                tools:ignore="LabelFor,TextFields" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +141,9 @@
                 android:id="@+id/et_telefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"/>
+                android:background="@null"
+                android:autofillHints=""
+                tools:ignore="LabelFor,TextFields" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -143,5 +184,6 @@
             android:text="@string/txt_bt_criar"
             android:layout_marginTop="10dp"/>
 
+    </LinearLayout>
     </LinearLayout>
 </ScrollView>

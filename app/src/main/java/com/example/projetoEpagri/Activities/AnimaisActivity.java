@@ -701,4 +701,8 @@ public class AnimaisActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    public void clicarVoltarAnimais(View view) {
+        finish();
+    }
 }

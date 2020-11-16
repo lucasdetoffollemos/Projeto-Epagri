@@ -9,12 +9,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icone_3"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup">
 
         <!-- Splash Screen -->
         <activity
             android:name=".Activities.SplashScreenActivity"
-            android:theme="@style/Activity_Sem_Action_Bar">
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +25,7 @@
 
         <!-- Activity Principal -->
         <activity android:name=".Activities.MainActivity"
-            android:theme="@style/Activity_Sem_Action_Bar"></activity>
+           />
 
         <!-- Activity Perfil -->
         <activity
@@ -74,7 +75,8 @@
         <activity
             android:name=".Activities.PropriedadeActivity"
             android:label="Propriedade"
-            android:parentActivityName=".Activities.IndexActivity">
+            android:parentActivityName=".Activities.IndexActivity"
+         >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.IndexActivity" />

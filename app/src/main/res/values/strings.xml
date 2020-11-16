@@ -65,6 +65,8 @@
     <string name="txt_tv_producaoEstimadaMes">Produção Estimada (Ton. MS/mês)</string>
     <string name="txt_tv_producaoEstimada">Produção estimada</string>
     <string name="txt_tv_bemVindo">Bem vindo.</string>
+    <string name="txt_tv_nomeProp">Nome da propriedade</string>
+    <string name="txt_tv_areaProp">Área Prop</string>
 
     <!-- List View -->
     <string name="txt_lv_propriedade_nome">Nome: </string>
@@ -91,4 +93,13 @@
     <string name="img_inicial">Imagem Inicial</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Tab Items-->
+    <string name="txt_tab_oferta_atual">Oferta Atual</string>
+    <string name="txt_tab_demanda_atual">Demanda Atual</string>
+    <string name="txt_tab_oferta_proposta">Oferta Proposta</string>
+    <string name="txt_tab_demanda_proposta">Demanda Proposta</string>
+    <string name="txt_tv_qnt">Qtde</string>
+    <string name="todo">TODO</string>
+
 </resources>

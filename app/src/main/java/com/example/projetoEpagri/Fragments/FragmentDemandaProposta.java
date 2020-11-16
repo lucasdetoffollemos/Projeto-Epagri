@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -57,6 +58,9 @@ public class FragmentDemandaProposta extends Fragment {
     private DecimalFormat doisDecimais;
     private boolean flagLoadAnimais = false;
     private Drawable drawable;
+
+    //LinearLayout que será removido
+    private LinearLayout linearLayoutToolBar;
 
     public FragmentDemandaProposta() {}
 
@@ -137,6 +141,9 @@ public class FragmentDemandaProposta extends Fragment {
         bt_atualizar = layout_incluido_animais.findViewById(R.id.bt_finalizarEnvio);
         bt_atualizar.setText("Atualizar Dados");
         drawable = bt_atualizar.getBackground();
+
+       linearLayoutToolBar = layout_incluido_animais.findViewById(R.id.ln_toolBar_animais);
+       linearLayoutToolBar.setVisibility(View.GONE);
 
         doisDecimais = new DecimalFormat("#.##");
         //Toast.makeText(AnimaisActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();

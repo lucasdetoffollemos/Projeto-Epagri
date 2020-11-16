@@ -1,17 +1,18 @@
 <resources>
 
   <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+  <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/verde</item>
     <item name="colorPrimaryDark">@color/preto</item>
     <item name="colorAccent">@color/cinza</item>
   </style>
 
-  <style name="Activity_Sem_Action_Bar" parent="Theme.MaterialComponents.Light.NoActionBar">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/verde</item>
-    <item name="colorPrimaryDark">@color/preto</item>
-    <item name="colorAccent">@color/cinza</item>
+
+<!--  Ajustando tamanho da fonte do tab items-->
+  <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+    <item name="android:textSize">13sp</item>
   </style>
+
+
 </resources>

@@ -4,7 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.TabsActivity">
+    tools:context=".Activities.TabsActivity"
+    android:background="@color/cinza"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/cinza"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/todo"
+            android:onClick="clicarVoltarTabs"
+            android:src="@drawable/ic_voltar"
+            android:tint="@color/preto" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dados da Propriedade"
+            android:textColor="@color/preto"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="30dp"
+            />
+    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
@@ -12,42 +49,48 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabTextAppearance="@style/MineCustomTabText"
+        android:background="@color/cinza">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_oferta_atual"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Oferta Atual" />
+            android:text="@string/txt_tab_oferta_atual" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_demanda_atual"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Demanda Atual" />
+            android:text="@string/txt_tab_demanda_atual"
+            />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_oferta_proposta"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Oferta Proposta" />
+            android:text="@string/txt_tab_oferta_proposta" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_demanda_proposta"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Demanda Proposta" />
+            android:text="@string/txt_tab_demanda_proposta" />
     </com.google.android.material.tabs.TabLayout>
+
+
 
     <ScrollView
         android:id="@+id/sv_fragments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout">
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+        tools:ignore="NotSibling">
 
         <LinearLayout
             android:id="@+id/ll_fragments"
@@ -55,5 +98,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
