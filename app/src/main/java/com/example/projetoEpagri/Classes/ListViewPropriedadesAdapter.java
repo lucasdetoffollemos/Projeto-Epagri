@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Activities.GraficoActivity;
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Activities.TabsActivity;
 import com.example.projetoEpagri.R;
@@ -22,7 +23,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
     public ArrayList<Propriedade> listaPropriedades;
     String nomeUsuario;
     private TextView tv_nome, tv_area, tv_qtde;
-    private Button bt_ver_dados, bt_excluir;
+    private Button bt_ver_dados, bt_grafico_atual, bt_grafico_proposta, bt_excluir;
     private int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
     //Atributo para animação no botão
 
@@ -64,6 +65,8 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         tv_area = row.findViewById(R.id.lv_tv_area_propriedade);
         tv_qtde = row.findViewById(R.id.lv_tv_total_animais_propriedade);
         bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
+        bt_grafico_atual = row.findViewById(R.id.lv_bt_grafico_atual);
+        bt_grafico_proposta = row.findViewById(R.id.lv_bt_grafico_proposta);
         bt_excluir = row.findViewById(R.id.lv_bt_excluir);
 
         //Cria um objeto para cada item da lista.
@@ -74,6 +77,8 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         tv_area.setText(String.valueOf(propriedade.getArea()));
         tv_qtde.setText(String.valueOf(propriedade.getQtdeAnimais()));
 
+        bt_grafico_proposta.setEnabled(false);
+
         //Listener do botão "ver dados"
         bt_ver_dados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +87,23 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
                 i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
                 i.putExtra("nome_usuario", nomeUsuario);
                 ((Activity) context).startActivityForResult(i, codigoRequisicao);
+            }
+        });
+
+        bt_grafico_atual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, GraficoActivity.class);
+                i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
+                i.putExtra("nome_usuario", nomeUsuario);
+                context.startActivity(i);
+            }
+        });
+
+        bt_grafico_proposta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TO-DO.
             }
         });
 

@@ -11,23 +11,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-
+        <activity android:name=".Activities.GraficoActivity"
+            android:screenOrientation="landscape"
+            android:largeHeap="true"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
         <!-- Splash Screen -->
-        <activity
-            android:name=".Activities.SplashScreenActivity"
-           >
+        <activity android:name=".Activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Activity Principal -->
-        <activity android:name=".Activities.MainActivity"
-           />
-
-        <!-- Activity Perfil -->
+        </activity> <!-- Activity Principal -->
+        <activity android:name=".Activities.MainActivity" /> <!-- Activity Perfil -->
         <activity
             android:name=".Activities.PerfilActivity"
             android:label=" Criar Perfil"
@@ -37,9 +34,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.SplashScreenActivity" />
-        </activity>
-
-        <!-- Activity De lista de usuarios -->
+        </activity> <!-- Activity De lista de usuarios -->
         <activity
             android:name=".Activities.ListaUsuariosActivity"
             android:label="Lista de Usuarios"
@@ -47,9 +42,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.PerfilActivity" />
-        </activity>
-
-        <!-- Activity index -->
+        </activity> <!-- Activity index -->
         <activity
             android:name=".Activities.IndexActivity"
             android:label="Bem vindo"
@@ -59,24 +52,19 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.MainActivity" />
-        </activity>
-
-        <!-- Acitivity Tabs -->
-        <activity android:name=".Activities.TabsActivity"
+        </activity> <!-- Acitivity Tabs -->
+        <activity
+            android:name=".Activities.TabsActivity"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.IndexActivity" />
-        </activity>
-
-        <!-- Acitivity Propriedade -->
+        </activity> <!-- Acitivity Propriedade -->
         <activity
             android:name=".Activities.PropriedadeActivity"
             android:label="Propriedade"
-            android:parentActivityName=".Activities.IndexActivity"
-         >
+            android:parentActivityName=".Activities.IndexActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.IndexActivity" />
@@ -106,4 +94,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

@@ -49,7 +49,7 @@ public class TotalAnimaisDAO implements ITotalAnimais {
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         ArrayList<Double> totais = new ArrayList<>();
-        while(cursor.moveToLast()){
+        if(cursor != null && cursor.moveToFirst()){
             totais.add(cursor.getDouble(1));
             totais.add(cursor.getDouble(2));
             totais.add(cursor.getDouble(3));

@@ -73,6 +73,8 @@
     <string name="txt_lv_propriedade_area">Área: </string>
     <string name="txt_lv_propriedade_qtde_animais">Qtde de Animais: </string>
     <string name="bt_lv_ver_dados">Ver Dados </string>
+    <string name="bt_lv_ver_grafico_atual">Ver Gráfico Atual </string>
+    <string name="bt_lv_ver_grafico_proposta">Ver Gráfico Proposta </string>
     <string name="bt_lv_excluir">Excluir </string>
 
     <!--Buttons   -->

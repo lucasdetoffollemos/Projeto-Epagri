@@ -418,32 +418,32 @@ public class PiqueteActivity extends AppCompatActivity{
                 if (j + 1 < 12) {
                     //Verao
                     if ((j == 0 || j == 1)) {
-                        this.listaTotaisEstacoes.set(0, this.listaTotaisEstacoes.get(0) + total);
+                        this.listaTotaisEstacoes.set(0, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(0) + total).replace(",", ".")));
                     }
 
                     //Outono
                     if (j == 2 || j == 3 || j == 4) {
-                        this.listaTotaisEstacoes.set(1, this.listaTotaisEstacoes.get(1) + total);
+                        this.listaTotaisEstacoes.set(1, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(1) + total).replace(",", ".")));
                     }
 
                     //Inverno
                     if (j == 5 || j == 6 || j == 7) {
-                        this.listaTotaisEstacoes.set(2, this.listaTotaisEstacoes.get(2) + total);
+                        this.listaTotaisEstacoes.set(2, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(2) + total).replace(",", ".")));
                     }
 
                     //Primavera
                     if (j == 8 || j == 9 || j == 10) {
-                        this.listaTotaisEstacoes.set(3, this.listaTotaisEstacoes.get(3) + total);
+                        this.listaTotaisEstacoes.set(3, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(3) + total).replace(",", ".")));
                     }
 
-                    this.listaTotaisMes.set(j, total);
+                    this.listaTotaisMes.set(j, Double.parseDouble(doisDecimais.format(total).replace(",", ".")));
                     j++;
                     total = 0.0;
                 } else {
                     //Esse cálculo fica aqui pois quando o j=11 ele não entra no if (acima).
                     if (j == 11) {
-                        this.listaTotaisMes.set(j, total);
-                        this.listaTotaisEstacoes.set(0, this.listaTotaisEstacoes.get(0) + total);
+                        this.listaTotaisMes.set(j, Double.parseDouble(doisDecimais.format(total).replace(",", ".")));
+                        this.listaTotaisEstacoes.set(0, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(0) + total).replace(",", ".")));
                     }
                     break;
                 }

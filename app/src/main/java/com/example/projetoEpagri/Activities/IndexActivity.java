@@ -142,7 +142,6 @@ public class IndexActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Sair");
-
         builder.setMessage( "Tem certeza que deseja deslogar? " );
         builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
             @Override
@@ -151,6 +150,7 @@ public class IndexActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         builder.setNegativeButton(" NÃO ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

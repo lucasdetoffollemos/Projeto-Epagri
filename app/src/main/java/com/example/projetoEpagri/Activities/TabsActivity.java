@@ -113,6 +113,6 @@ public class TabsActivity extends AppCompatActivity {
     }
 
     public void clicarVoltarTabs(View view){
-        finish();
+        enviaResposta();
     }
 }
