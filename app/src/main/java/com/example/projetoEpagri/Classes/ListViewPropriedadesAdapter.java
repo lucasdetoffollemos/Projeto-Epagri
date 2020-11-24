@@ -14,6 +14,11 @@ import android.widget.Toast;
 import com.example.projetoEpagri.Activities.GraficoActivity;
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Activities.TabsActivity;
+import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.R;
 
 import java.util.ArrayList;
@@ -21,7 +26,8 @@ import java.util.ArrayList;
 public class ListViewPropriedadesAdapter extends BaseAdapter {
     private Context context;
     public ArrayList<Propriedade> listaPropriedades;
-    String nomeUsuario;
+    private String nomeUsuario;
+    private int idPropriedade;
     private TextView tv_nome, tv_area, tv_qtde;
     private Button bt_ver_dados, bt_grafico_atual, bt_grafico_proposta, bt_excluir;
     private int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
@@ -77,14 +83,23 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         tv_area.setText(String.valueOf(propriedade.getArea()));
         tv_qtde.setText(String.valueOf(propriedade.getQtdeAnimais()));
 
-        bt_grafico_proposta.setEnabled(false);
+
+        idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
+        final ArrayList<Piquete> listaPiqueteProposta = MainActivity.bancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
+        final ArrayList<Animais> listaAnimaisProposta = MainActivity.bancoDeDados.animaisDAO.getAllAnimaisByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
+
+        if(listaPiqueteProposta.size() > 0 && listaAnimaisProposta.size() > 0){
+            bt_grafico_proposta.setEnabled(true);
+        }else{
+            bt_grafico_proposta.setEnabled(false);
+        }
 
         //Listener do botão "ver dados"
         bt_ver_dados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, TabsActivity.class);
-                i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
+                i.putExtra("nomePropriedade", propriedade.getNome());
                 i.putExtra("nome_usuario", nomeUsuario);
                 ((Activity) context).startActivityForResult(i, codigoRequisicao);
             }
@@ -93,17 +108,31 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_grafico_atual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
+                ArrayList<Double> totaisPiqueteMes = MainActivity.bancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+                ArrayList<Double> totaisAnimalMes = MainActivity.bancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+
                 Intent i = new Intent(context, GraficoActivity.class);
-                i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
-                i.putExtra("nome_usuario", nomeUsuario);
+                i.putExtra("totaisPiqueteMes", totaisPiqueteMes);
+                i.putExtra("totaisAnimalMes", totaisAnimalMes);
                 context.startActivity(i);
+                //i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
+
             }
         });
 
         bt_grafico_proposta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TO-DO.
+                idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
+                ArrayList<Double> totaisPiqueteMes = MainActivity.bancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
+                ArrayList<Double> totaisAnimalMes = MainActivity.bancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
+
+                Intent i = new Intent(context, GraficoActivity.class);
+                i.putExtra("totaisPiqueteMes", totaisPiqueteMes);
+                i.putExtra("totaisAnimalMes", totaisAnimalMes);
+                //i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
+                context.startActivity(i);
             }
         });
 
@@ -111,17 +140,31 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
                 MainActivity.bancoDeDados.propriedadeDAO.deletePropriedade(propriedade.getNome());
+                MainActivity.bancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+                MainActivity.bancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+                MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+                MainActivity.bancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+                MainActivity.bancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+
+                if(listaPiqueteProposta.size() > 0){
+                    MainActivity.bancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
+                    MainActivity.bancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
+                    MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
+                }
+
+                if(listaAnimaisProposta.size() > 0){
+                    MainActivity.bancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
+                    MainActivity.bancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
+                }
+
                 listaPropriedades.remove(position);
                 notifyDataSetChanged();
                 notifyDataSetInvalidated();
             }
         });
 
-        
         return row;
-
     }
 
 }

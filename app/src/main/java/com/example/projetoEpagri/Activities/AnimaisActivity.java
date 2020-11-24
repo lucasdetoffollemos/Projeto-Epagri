@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -116,18 +117,43 @@ public class AnimaisActivity extends AppCompatActivity {
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeLinha();
-                calculaTotalAnimais();
-                calculoUaHa(matrizUA);
+                if(numeroDeLinhas > 1){
+                    removeLinha();
+                    calculaTotalAnimais();
+                    calculoUaHa(matrizUA);
+                }
+                else{
+                    Toast.makeText(AnimaisActivity.this, "Operação Inválida! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         bt_finalizar_envio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalizaEnvio();
+                if(checkAnimais(listaAnimais)){
+                    finalizaEnvio();
+                }
+                else{
+                    Toast.makeText(AnimaisActivity.this, "Você deve preencher todos os campos antes de finalizar!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    /**
+     * Método para verificar se todos os animais contidos na lista são animais completos (dados preenchidos) ou não.
+     * Utiliza como base para a verificação somente a categoria.
+     * @param lista lista de animais.
+     * @return verdadeiro caso todos os animais estejam com os campos preenchidos e false caso contrário.
+     */
+    public boolean checkAnimais(ArrayList<Animais> lista){
+        for(int i=0; i<lista.size(); i++){
+            if(lista.get(i).getCategoria() == null || lista.get(i).getCategoria().length() == 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

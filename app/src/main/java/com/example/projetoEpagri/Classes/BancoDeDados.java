@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
-import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSulSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPropriedadeSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
@@ -15,7 +15,7 @@ import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.BancoDeDadosSchema.IUsuarioSchema;
 import com.example.projetoEpagri.Dao.AnimaisDAO;
-import com.example.projetoEpagri.Dao.DadosSulDAO;
+import com.example.projetoEpagri.Dao.DadosDAO;
 import com.example.projetoEpagri.Dao.PiqueteDAO;
 import com.example.projetoEpagri.Dao.PropriedadeDAO;
 import com.example.projetoEpagri.Dao.TotalAnimaisDAO;
@@ -32,7 +32,7 @@ public class BancoDeDados{
     private SQLiteDatabase sqLiteDatabase;
 
     public static UsuarioDAO usuarioDAO;
-    public static DadosSulDAO dadosSulDAO;
+    public static DadosDAO dadosDAO;
     public static PropriedadeDAO propriedadeDAO;
     public static PiqueteDAO piqueteDAO;
     public static TotalPiqueteMesDAO totalPiqueteMesDAO;
@@ -55,7 +55,7 @@ public class BancoDeDados{
         sqLiteDatabase = bancoHelper.getWritableDatabase();
 
         usuarioDAO = new UsuarioDAO(sqLiteDatabase);
-        dadosSulDAO = new DadosSulDAO(sqLiteDatabase);
+        dadosDAO = new DadosDAO(sqLiteDatabase);
         propriedadeDAO = new PropriedadeDAO(sqLiteDatabase);
         piqueteDAO = new PiqueteDAO(sqLiteDatabase);
         totalPiqueteMesDAO = new TotalPiqueteMesDAO(sqLiteDatabase);
@@ -125,7 +125,8 @@ public class BancoDeDados{
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(IUsuarioSchema.CREATE_TABELA_USUARIO);
-            db.execSQL(IDadosSulSchema.CREATE_TABELA_DADOS_SUL);
+            db.execSQL(IDadosSchema.CREATE_TABELA_DADOS_NORTE);
+            db.execSQL(IDadosSchema.CREATE_TABELA_DADOS_SUL);
             db.execSQL(IPropriedadeSchema.CREATE_TABELA_PROPRIEDADE);
             //Atual
             db.execSQL(IPiqueteSchema.CREATE_TABELA_PIQUETE_ATUAL);

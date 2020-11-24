@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722">
-        <schema name="main" object-types="table, view" />
+        <schema name="main" object-types="constraint, dataset trigger, column, table, index, view" />
       </connection>
     </loaded-nodes>
   </component>
@@ -41,16 +41,21 @@
     <connection id="07e80b0d-12f7-4185-86a9-ed53f59ac722" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_piquete_estacao_proposta" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_animais_atual" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_piquete_mes_proposta" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_piquete_mes_atual" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.piquetes_atual" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.piquetes_proposta" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_animais_proposta" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.animais_atual" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.usuarios" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.dados_sul" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_animais_atual" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_piquete_mes_atual" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.sqlite_sequence" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.dados_norte" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.total_piquete_estacao_atual" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.piquetes_atual" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.propriedades" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.android_metadata" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="07e80b0d-12f7-4185-86a9-ed53f59ac722" dataset="main.animais_atual" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

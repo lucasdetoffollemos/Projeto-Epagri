@@ -16,7 +16,9 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.R;
@@ -134,15 +136,25 @@ public class PiqueteActivity extends AppCompatActivity{
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeLinha();
-                calculaTotais();
+                if(numeroDeLinhas > 1){
+                    removeLinha();
+                    calculaTotais();
+                }
+                else{
+                    Toast.makeText(PiqueteActivity.this, "Operação Inválida!! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                irParaAnimaisActivity();
+                if(!listaDeAreas.contains(0.0)){
+                    irParaAnimaisActivity();
+                }
+                else{
+                    Toast.makeText(PiqueteActivity.this, "Você deve preencher todos os campos \"Área\" antes de prosseguir!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -206,8 +218,8 @@ public class PiqueteActivity extends AppCompatActivity{
      * Método responsável por adicionar uma linha na tabela oferta atual e configurar o adapter dos spinners.
      */
     private void criarLinha(TableRow linha_tabela){
-        // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
-        ArrayList<String> tipoPiquete = MainActivity.bancoDeDados.dadosSulDAO.getTiposPastagem();
+        // Array que armazena os tipos de piquetes, vindos do arquivo DadosDAO.java.
+        ArrayList<String> tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
@@ -350,7 +362,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
-        this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
+        this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
         String producaoEstimada = this.doisDecimais.format(this.producaoEstimadaD);
         tv_prod.setText(producaoEstimada);
     }
@@ -369,8 +381,8 @@ public class PiqueteActivity extends AppCompatActivity{
         //Janeiro está na posição 4, por isso mes+3.
         TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
-        double valor = (float) MainActivity.bancoDeDados.dadosSulDAO.getMeses(mes, tipoPastagem)/100;
-        valor = ((MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
+        double valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
+        valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
         String resultado = this.doisDecimais.format(valor);
 
         if(valor != 0){

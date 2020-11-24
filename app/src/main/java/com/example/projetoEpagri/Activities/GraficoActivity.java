@@ -5,27 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.R;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-
 import java.util.ArrayList;
 
 public class GraficoActivity extends AppCompatActivity {
     private LineGraphSeries<DataPoint> oferta;
     private LineGraphSeries<DataPoint> demanda;
-
-    private String nomePropriedade, nomeUsuario;
-    private int idPropriedade;
+    private ArrayList<Double> totaisPiqueteMes, totaisAnimalMes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +28,12 @@ public class GraficoActivity extends AppCompatActivity {
     }
 
     public void inicializa(){
+        totaisPiqueteMes = new ArrayList<>();
+        totaisAnimalMes = new ArrayList<>();
+
         Intent i = getIntent();
-        nomePropriedade = i.getStringExtra("nomePropriedade");
-        nomeUsuario = i.getStringExtra("nome_usuario");
-        idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
-        Toast.makeText(this, String.valueOf(idPropriedade), Toast.LENGTH_SHORT).show();
+        totaisPiqueteMes = (ArrayList<Double>) i.getSerializableExtra("totaisPiqueteMes");
+        totaisAnimalMes = (ArrayList<Double>) i.getSerializableExtra("totaisAnimalMes");
     }
 
     public void criaGrafico(){
@@ -49,11 +41,8 @@ public class GraficoActivity extends AppCompatActivity {
         oferta = new LineGraphSeries<>();
         demanda = new LineGraphSeries<>();
 
-        ArrayList<Double> totaisPiqueteMes = MainActivity.bancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
-        ArrayList<Double> totaisAnimalMes = MainActivity.bancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
-
-        Log.i("vetor", String.valueOf(totaisPiqueteMes));
-        Log.i("vetor", String.valueOf(totaisAnimalMes));
+        //Log.i("vetor", String.valueOf(totaisPiqueteMes));
+        //Log.i("vetor", String.valueOf(totaisAnimalMes));
 
         //Cria as séries baseados nos valores retornados do banco de dados.
         for(int i=1; i<=12; i++){

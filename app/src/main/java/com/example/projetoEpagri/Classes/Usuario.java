@@ -1,6 +1,5 @@
 package com.example.projetoEpagri.Classes;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 //Classe usuario, criada inicialmente para inserir dados do usuario no banco.

@@ -23,6 +23,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Activities.AnimaisActivity;
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
@@ -172,18 +173,43 @@ public class FragmentDemandaAtual extends Fragment {
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeLinha();
-                calculaTotalAnimais();
-                calculoUaHa(matrizUA);
+                if(numeroDeLinhas > 1){
+                    removeLinha();
+                    calculaTotalAnimais();
+                    calculoUaHa(matrizUA);
+                }
+                else{
+                    Toast.makeText(getActivity(), "Operação Inválida!! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         bt_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                atualizarDados();
+                if(checkAnimais(listaAnimais)){
+                    atualizarDados();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Você deve preencher todos os campos antes de atualizar os dados!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    /**
+     * Método para verificar se todos os animais contidos na lista são animais completos (dados preenchidos) ou não.
+     * Utiliza como base para a verificação somente a categoria.
+     * @param lista lista de animais.
+     * @return verdadeiro caso todos os animais estejam com os campos preenchidos e false caso contrário.
+     */
+    public boolean checkAnimais(ArrayList<Animais> lista){
+        for(int i=0; i<lista.size(); i++){
+            if(lista.get(i).getCategoria() == null || lista.get(i).getCategoria().length() == 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

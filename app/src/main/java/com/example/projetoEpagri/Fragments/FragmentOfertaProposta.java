@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.MainActivity;
+import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
@@ -192,15 +193,25 @@ public class FragmentOfertaProposta extends Fragment {
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeLinha();
-                calculaTotais();
+                if(numeroDeLinhas > 1){
+                    removeLinha();
+                    calculaTotais();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Operação Inválida!! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         bt_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                atualizarDados(listaPiquetes, idPropriedade);
+                if(!listaDeAreas.contains(0.0)){
+                    atualizarDados(listaPiquetes, idPropriedade);
+                }
+                else{
+                    Toast.makeText(getActivity(), "Você deve preencher todos os campos \"Área\" antes atualizar os dados!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -273,8 +284,8 @@ public class FragmentOfertaProposta extends Fragment {
      * Método responsável por adicionar uma linha na tabela oferta atual e configurar o adapter dos spinners.
      */
     private void criarLinha(TableRow linha_tabela){
-        // Array que armazena os tipos de piquetes, vindos do arquivo DadosSulDAO.java.
-        ArrayList<String> tipoPiquete = MainActivity.bancoDeDados.dadosSulDAO.getTiposPastagem();
+        // Array que armazena os tipos de piquetes, vindos do arquivo DadosDAO.java.
+        ArrayList<String> tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
@@ -478,7 +489,7 @@ public class FragmentOfertaProposta extends Fragment {
      */
     public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
-        this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * area;
+        this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
         String producaoEstimada = this.doisDecimais.format(this.producaoEstimadaD);
         tv_prod.setText(producaoEstimada);
     }
@@ -497,8 +508,8 @@ public class FragmentOfertaProposta extends Fragment {
         //Janeiro está na posição 4, por isso mes+3.
         TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
-        double valor = (float) MainActivity.bancoDeDados.dadosSulDAO.getMeses(mes, tipoPastagem)/100;
-        valor = ((MainActivity.bancoDeDados.dadosSulDAO.getCondicao(tipoPastagem, condicao)) * aproveitamento * valor * area);
+        double valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
+        valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
         String resultado = this.doisDecimais.format(valor);
 
         if(valor != 0){
@@ -546,32 +557,32 @@ public class FragmentOfertaProposta extends Fragment {
                 if (j + 1 < 12) {
                     //Verao
                     if ((j == 0 || j == 1)) {
-                        this.listaTotaisEstacoes.set(0, this.listaTotaisEstacoes.get(0) + total);
+                        this.listaTotaisEstacoes.set(0, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(0) + total).replace(",", ".")));
                     }
 
                     //Outono
                     if (j == 2 || j == 3 || j == 4) {
-                        this.listaTotaisEstacoes.set(1, this.listaTotaisEstacoes.get(1) + total);
+                        this.listaTotaisEstacoes.set(1, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(1) + total).replace(",", ".")));
                     }
 
                     //Inverno
                     if (j == 5 || j == 6 || j == 7) {
-                        this.listaTotaisEstacoes.set(2, this.listaTotaisEstacoes.get(2) + total);
+                        this.listaTotaisEstacoes.set(2, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(2) + total).replace(",", ".")));
                     }
 
                     //Primavera
                     if (j == 8 || j == 9 || j == 10) {
-                        this.listaTotaisEstacoes.set(3, this.listaTotaisEstacoes.get(3) + total);
+                        this.listaTotaisEstacoes.set(3, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(3) + total).replace(",", ".")));
                     }
 
-                    this.listaTotaisMes.set(j, total);
+                    this.listaTotaisMes.set(j, Double.parseDouble(doisDecimais.format(total).replace(",", ".")));
                     j++;
                     total = 0.0;
                 } else {
                     //Esse cálculo fica aqui pois quando o j=11 ele não entra no if (acima).
                     if (j == 11) {
-                        this.listaTotaisMes.set(j, total);
-                        this.listaTotaisEstacoes.set(0, this.listaTotaisEstacoes.get(0) + total);
+                        this.listaTotaisMes.set(j, Double.parseDouble(doisDecimais.format(total).replace(",", ".")));
+                        this.listaTotaisEstacoes.set(0, Double.parseDouble(doisDecimais.format(this.listaTotaisEstacoes.get(0) + total).replace(",", ".")));
                     }
                     break;
                 }

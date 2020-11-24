@@ -3,23 +3,22 @@ package com.example.projetoEpagri.Dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSulSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 
 import java.util.ArrayList;
 
-public class DadosSulDAO implements IDadosSulSchema {
+public class DadosDAO implements IDadosSchema {
     private SQLiteDatabase bancoDeDados;
 
-    public DadosSulDAO(SQLiteDatabase bancoDeDados){
+    public DadosDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;
     }
 
     /**
      * Método para inserir uma pastagem no banco de dados (tabela dados_sul).
      */
-    public void inserirPastagem(String pastagem, double condicaoDegradada, double condicaoMedia, double condicaoOtima, int [] meses, int total){
+    public void inserirPastagem(String pastagem, double condicaoDegradada, double condicaoMedia, double condicaoOtima, int [] meses, int total, String nomeTabela){
         ContentValues values = new ContentValues();
         values.put(COLUNA_TIPO, pastagem);
         values.put(COLUNA_CONDICAO_DEGRADADA, condicaoDegradada);
@@ -39,17 +38,17 @@ public class DadosSulDAO implements IDadosSulSchema {
         values.put(COLUNA_DEZ, meses[11]);
         values.put(COLUNA_TOTAL_PASTAGEM, total);
 
-        this.bancoDeDados.insert(TABELA_DADOS_SUL, null, values);
+        this.bancoDeDados.insert(nomeTabela, null, values);
     }
 
     /**
      * Método para recuperar todos os tipos de pastagem.
      * @return ArrayList de String com os tipos de pastagem.
      */
-    public ArrayList<String> getTiposPastagem() {
+    public ArrayList<String> getTiposPastagem(String nomeTabela) {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        String sql_query = "SELECT * FROM " + TABELA_DADOS_SUL;
+        String sql_query = "SELECT * FROM " + nomeTabela;
         Cursor cursor =  this.bancoDeDados.rawQuery(sql_query , null );
         cursor.moveToFirst();
 
@@ -67,11 +66,11 @@ public class DadosSulDAO implements IDadosSulSchema {
      * @param condicao Condição da pastagem (degradada, média ou ótima).
      * @return Valor númerico da condição.
      */
-    public Double getCondicao(String tipo, String condicao) {
+    public Double getCondicao(String tipo, String condicao, String nomeTabela) {
         Double valorCondicao = 1.0;
         int posicaoColuna = 1;
 
-        String sql_query = "SELECT * FROM " + TABELA_DADOS_SUL + " WHERE " + COLUNA_TIPO + " = '" + tipo +"'";
+        String sql_query = "SELECT * FROM " + nomeTabela + " WHERE " + COLUNA_TIPO + " = '" + tipo +"'";
         Cursor c = this.bancoDeDados.rawQuery(sql_query, null);
 
         switch (condicao) {
@@ -99,11 +98,11 @@ public class DadosSulDAO implements IDadosSulSchema {
      * @param tipo Tipo da pastagem.
      * @return Valor númerico do mês.
      */
-    public int getMeses(int mes, String tipo){
+    public int getMeses(int mes, String tipo, String nomeTabela){
         int posicaoColuna;
         int valorDoMes = 1;
 
-        String sql_query = "SELECT * FROM " + TABELA_DADOS_SUL + " WHERE "+ COLUNA_TIPO + " = '"+ tipo +"'";
+        String sql_query = "SELECT * FROM " + nomeTabela + " WHERE "+ COLUNA_TIPO + " = '"+ tipo +"'";
         Cursor c = this.bancoDeDados.rawQuery(sql_query, null);
 
         switch (mes){
