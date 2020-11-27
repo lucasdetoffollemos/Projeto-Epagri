@@ -3,7 +3,7 @@ package com.example.projetoEpagri.Classes;
 import java.util.ArrayList;
 
 public class Propriedade {
-    private String nome;
+    private String nome, regiao;
     private double area;
     private int qtdeAnimais;
     //Número de piquetes?
@@ -13,8 +13,9 @@ public class Propriedade {
 
     public Propriedade(){}
 
-    public Propriedade(String nome, double area, int qtdeAnimais, ArrayList<Piquete> listaPiqueteAtual, ArrayList<Animais> listaAnimaisAtual) {
+    public Propriedade(String nome, String regiao, double area, int qtdeAnimais, ArrayList<Piquete> listaPiqueteAtual, ArrayList<Animais> listaAnimaisAtual) {
         this.nome = nome;
+        this.regiao = regiao;
         this.area = area;
         this.qtdeAnimais = qtdeAnimais;
         this.listaPiqueteAtual = listaPiqueteAtual;
@@ -27,6 +28,14 @@ public class Propriedade {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getRegiao() {
+        return regiao;
+    }
+
+    public void setRegiao(String regiao) {
+        this.regiao = regiao;
     }
 
     public double getArea() {

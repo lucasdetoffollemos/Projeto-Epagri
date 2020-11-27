@@ -40,7 +40,7 @@ public class PiqueteActivity extends AppCompatActivity{
     private ArrayList<Piquete> listaPiquetes;
     private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
 
-    private String nomeUsuario;
+    private String nomeUsuario, regiao;
     private DecimalFormat doisDecimais;
     private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
 
@@ -114,6 +114,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
+        regiao = intent.getStringExtra("regiao");
         //Toast.makeText(PiqueteActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
         doisDecimais = new DecimalFormat("#.##");
 
@@ -219,7 +220,15 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     private void criarLinha(TableRow linha_tabela){
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosDAO.java.
-        ArrayList<String> tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
+        ArrayList<String> tipoPiquete = new ArrayList<>();
+
+        if(regiao.equals("cfa")){
+            tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_NORTE);
+        }
+        else if(regiao.equals("cfb")){
+           tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
+        }
+
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
@@ -362,7 +371,13 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
-        this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
+
+        if(regiao.equals("cfa")){
+            this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * area;
+        }else if(regiao.equals("cfb")){
+            this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
+        }
+
         String producaoEstimada = this.doisDecimais.format(this.producaoEstimadaD);
         tv_prod.setText(producaoEstimada);
     }
@@ -381,8 +396,16 @@ public class PiqueteActivity extends AppCompatActivity{
         //Janeiro está na posição 4, por isso mes+3.
         TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
-        double valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
-        valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
+        double valor = 0.0;
+        if(regiao.equals("cfa")){
+           valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/100;
+            valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * aproveitamento * valor * area).replace(",", "."));
+        }
+        else if(regiao.equals("cfb")){
+            valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
+            valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
+        }
+
         String resultado = this.doisDecimais.format(valor);
 
         if(valor != 0){
@@ -519,6 +542,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
                 Intent intent = new Intent();
                 intent.putExtra("nome_usuario", nomeUsuario);
+                intent.putExtra("regiao", regiao);
                 intent.putExtra("listaAnimais", listaAnimais);
                 intent.putExtra("listaTotaisUAHA", listaTotalUAHA);
                 intent.putExtra("qtdeAnimal", qtdeAnimais);

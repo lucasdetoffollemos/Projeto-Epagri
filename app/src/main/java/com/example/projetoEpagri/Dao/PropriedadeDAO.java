@@ -26,6 +26,7 @@ public class PropriedadeDAO implements IPropriedadeSchema {
     public void inserirPropriedade(Propriedade p, int idUsuario){
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME, p.getNome());
+        values.put(COLUNA_REGIAO, p.getRegiao());
         values.put(COLUNA_AREA, p.getArea());
         values.put(COLUNA_QTDE_ANIMAIS, p.getQtdeAnimais());
         values.put(COLUNA_ID_USUARIO, idUsuario);
@@ -45,8 +46,9 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         Propriedade p = new Propriedade();
         if (cursor != null && cursor.moveToFirst()) {
             p.setNome(cursor.getString(1));
-            p.setArea(cursor.getDouble(2));
-            p.setQtdeAnimais(cursor.getInt(3));
+            p.setRegiao(cursor.getString(2));
+            p.setArea(cursor.getDouble(3));
+            p.setQtdeAnimais(cursor.getInt(4));
             p.setListaPiqueteAtual(null); //Precisa consultar na outra tabela.
             p.setListaAnimaisAtual(null);
         }
@@ -66,6 +68,18 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         return id;
     }
 
+    public String getPropriedadeRegiao(String nome){
+        String sql_query = "SELECT * FROM " + TABELA_PROPRIEDADE + " WHERE " + COLUNA_NOME + "=" + "\"" + nome + "\"";
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
+
+        String regiao = "";
+        if (cursor.moveToLast()) {
+            regiao = cursor.getString(2);
+        }
+        cursor.close();
+        return regiao;
+    }
+
     /**
      * Método para atualizar uma propriedade no banco de dados (tabela propriedades) baseado no id.
      * @param id Id da propriedade que deseja-se atualizar.
@@ -73,9 +87,10 @@ public class PropriedadeDAO implements IPropriedadeSchema {
      * @param area Nova área da propriedade.
      * @param qtdeAnimais Nova qtde de animais da propriedade.
      */
-    public void updatePropriedade(int id, String nome, double area, int qtdeAnimais){
+    public void updatePropriedade(int id, String nome, String regiao, double area, int qtdeAnimais){
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME,nome);
+        values.put(COLUNA_REGIAO, regiao);
         values.put(COLUNA_AREA, area);
         values.put(COLUNA_QTDE_ANIMAIS, qtdeAnimais);
 
@@ -107,8 +122,9 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         while(cursor.moveToNext()){
             Propriedade p = new Propriedade();
             p.setNome(cursor.getString(1));
-            p.setArea(cursor.getDouble(2));
-            p.setQtdeAnimais(cursor.getInt(3));
+            p.setRegiao(cursor.getString(2));
+            p.setArea(cursor.getDouble(3));
+            p.setQtdeAnimais(cursor.getInt(4));
             p.setListaPiqueteAtual(null); //Precisa consultar na outra tabela.
             p.setListaAnimaisAtual(null);
             listaPropriedades.add(p);
@@ -129,8 +145,9 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         while(cursor.moveToNext()){
             Propriedade p = new Propriedade();
             p.setNome(cursor.getString(1));
-            p.setArea(cursor.getDouble(2));
-            p.setQtdeAnimais(cursor.getInt(3));
+            p.setRegiao(cursor.getString(2));
+            p.setArea(cursor.getDouble(3));
+            p.setQtdeAnimais(cursor.getInt(4));
             p.setListaPiqueteAtual(null); //Precisa consultar na outra tabela.
             p.setListaAnimaisAtual(null);
             listaPropriedades.add(p);

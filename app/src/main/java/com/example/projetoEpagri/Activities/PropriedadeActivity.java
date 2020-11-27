@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,9 +27,10 @@ import com.example.projetoEpagri.R;
 import java.util.ArrayList;
 
 public class PropriedadeActivity extends AppCompatActivity {
-    private String nomePropriedade;
+    private String nomePropriedade, regiao;
     private EditText et_nomePropriedade;
     private Button bt_proximo;
+    private Spinner sp_regiao;
 
     private String nomeUsuario;
     private int  CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY = 0;
@@ -51,6 +53,7 @@ public class PropriedadeActivity extends AppCompatActivity {
         //Toast.makeText(PropriedadeActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
+        sp_regiao = findViewById(R.id.sp_regiao);
         bt_proximo = findViewById(R.id.bt_levaPiquete);
 
         //Método para inicializar o Spinner com as regiões.
@@ -61,6 +64,21 @@ public class PropriedadeActivity extends AppCompatActivity {
      * Método utilizado para setar os listener dos botões e tudo mais que for clicável na tela login.
      */
     public void setListener(){
+        sp_regiao.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){ //cfa
+                    regiao = "cfa";
+                }
+                else if(position == 1){ //cfb
+                    regiao = "cfb";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
         bt_proximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +98,7 @@ public class PropriedadeActivity extends AppCompatActivity {
         Intent i = new Intent(PropriedadeActivity.this, PiqueteActivity.class);
         i.putExtra("nome_usuario", nomeUsuario);
         i.putExtra("nome_propriedade", nomePropriedade);
+        i.putExtra("regiao", regiao);
         startActivityForResult(i, CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY);
     }
 
@@ -176,7 +195,7 @@ public class PropriedadeActivity extends AppCompatActivity {
                 //Valor para representar que não encontrou o usuário com o nome recebido por parâmetro (-1).
                 int usuarioId = MainActivity.bancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
                 if(usuarioId != -1){
-                    Propriedade p = new Propriedade(nomePropriedade, area, qtdeAnimais, listaPiquete, listaAnimais);
+                    Propriedade p = new Propriedade(nomePropriedade, regiao, area, qtdeAnimais, listaPiquete, listaAnimais);
                     MainActivity.bancoDeDados.propriedadeDAO.inserirPropriedade(p, usuarioId);
 
                     int propriedadeId = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
