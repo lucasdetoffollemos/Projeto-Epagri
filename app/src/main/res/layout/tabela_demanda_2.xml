@@ -11,7 +11,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_pesoMedioAnimaisMes"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
             android:background="@drawable/borda_preta_fundo_laranja"
             android:gravity="center"
             android:text="@string/txt_tv_janeiro"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
             android:background="@drawable/borda_preta_fundo_laranja"
             android:gravity="center"
             android:text="@string/txt_tv_fevereiro"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
             android:background="@drawable/borda_preta_fundo_verde_fraco"
             android:gravity="center"
             android:text="@string/txt_tv_marco"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -72,7 +72,7 @@
             android:background="@drawable/borda_preta_fundo_verde_fraco"
             android:gravity="center"
             android:text="@string/txt_tv_abril"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -86,7 +86,7 @@
             android:background="@drawable/borda_preta_fundo_verde_fraco"
             android:gravity="center"
             android:text="@string/txt_tv_maio"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
             android:background="@drawable/borda_preta_fundo_azul"
             android:gravity="center"
             android:text="@string/txt_tv_junho"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textStyle="bold" />
 
         <TextView
@@ -113,7 +113,7 @@
             android:background="@drawable/borda_preta_fundo_azul"
             android:gravity="center"
             android:text="@string/txt_tv_julho"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -127,7 +127,7 @@
             android:background="@drawable/borda_preta_fundo_azul"
             android:gravity="center"
             android:text="@string/txt_tv_agosto"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
             android:background="@drawable/borda_preta_fundo_amarelo"
             android:gravity="center"
             android:text="@string/txt_tv_setembro"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -155,7 +155,7 @@
             android:background="@drawable/borda_preta_fundo_amarelo"
             android:gravity="center"
             android:text="@string/txt_tv_outubro"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -169,7 +169,7 @@
             android:background="@drawable/borda_preta_fundo_amarelo"
             android:gravity="center"
             android:text="@string/txt_tv_novembro"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -183,7 +183,7 @@
             android:background="@drawable/borda_preta_fundo_laranja"
             android:gravity="center"
             android:text="@string/txt_tv_dezembro"
-            android:textColor="@color/branco"
+            android:textColor="@color/preto"
             android:textSize="14sp"
             android:textStyle="bold" />
 

@@ -12,7 +12,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_categoriaLote"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -25,7 +25,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_Consumo"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_numeroAnimais"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_entrada"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -64,8 +64,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_pesoInicial"
-        android:textColor="@color/branco"
-
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -78,7 +77,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_pesoFinal"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -91,7 +90,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaVerao"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
 
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -106,7 +105,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaOutono"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
 
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -120,7 +119,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaInverno"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -133,7 +132,7 @@
         android:background="@drawable/borda_preta_fundo_verde"
         android:gravity="center"
         android:text="@string/txt_tv_ganhoPesoDiaPrimavera"
-        android:textColor="@color/branco"
+        android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
 
