@@ -90,6 +90,13 @@
                 android:value="com.example.projetoEpagri.Activities.PiqueteActivity" />
         </activity>
 
+        <activity android:name=".Activities.DadosPerfilActivity"/>
+
+        <activity android:name=".Activities.SobreActivity" />
+
+        <activity android:name=".Activities.ConfiguracoesActivity" />
+
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

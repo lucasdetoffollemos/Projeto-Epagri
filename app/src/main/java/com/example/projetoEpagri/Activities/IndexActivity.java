@@ -1,6 +1,8 @@
 package com.example.projetoEpagri.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,6 +31,10 @@ public class IndexActivity extends AppCompatActivity {
     private String nomeUsuario;
     private int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
     private int usuarioId;
+
+    //Menu Drawer
+    private DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,9 @@ public class IndexActivity extends AppCompatActivity {
 
         listViewPropriedadesAdapter = new ListViewPropriedadesAdapter(this, listaPropriedade, nomeUsuario);
         lv_propriedades.setAdapter(listViewPropriedadesAdapter);
+
+        //Drawer menu
+        drawerLayout = findViewById(R.id.drawerLayout);
     }
 
     /**
@@ -166,5 +175,52 @@ public class IndexActivity extends AppCompatActivity {
           onBackPressed();
     }
 
+
+    //Códido relacionados ao menu navigation Drawer
+    public void clicarMenu(View v){
+        abrirMenu(drawerLayout);
+    }
+
+    public static void abrirMenu(DrawerLayout drawerLayout) {
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public void clicarLogo(View v){
+        fecharMenu(drawerLayout);
+    }
+
+    public static void fecharMenu(DrawerLayout drawerLayout){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void clicarInicio(View v){
+        fecharMenu(drawerLayout);
+    }
+
+    public void clicarPerfil(View v){
+        redirecionaParaActivity(this, DadosPerfilActivity.class);
+    }
+
+    public void clicarSobre(View v){
+        redirecionaParaActivity(this, SobreActivity.class);
+    }
+
+    public void clicarConfig(View v){
+        redirecionaParaActivity(this, ConfiguracoesActivity.class);
+    }
+
+    public static void redirecionaParaActivity(Activity essa, Class aquela){
+        Intent i = new Intent(essa, aquela);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        essa.startActivity(i);
+
+    }
+
+    protected void  onPause() {
+        fecharMenu(drawerLayout);
+        super.onPause();
+    }
 
 }

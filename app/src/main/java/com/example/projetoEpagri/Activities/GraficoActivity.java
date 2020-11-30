@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+
 import com.example.projetoEpagri.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
@@ -91,5 +93,9 @@ public class GraficoActivity extends AppCompatActivity {
                 }
             }
         });*/
+    }
+
+    public void clicarVoltarGrafico(View v){
+        finish();
     }
 }
