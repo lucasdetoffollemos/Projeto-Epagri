@@ -9,8 +9,8 @@
         android:id="@+id/spinner_categoria"
         android:layout_width="180dp"
         android:layout_height="30dp"
-        android:background="@null"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:dropDownWidth="180dp"/>
 
 
     <EditText
@@ -24,7 +24,8 @@
         android:gravity="center"
         android:hint="@string/txt_tv_zero"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/et_numeroAnimais"
@@ -37,7 +38,8 @@
         android:gravity="center"
         android:hint="@string/hint_numero_animais"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
 
     <Spinner
@@ -46,7 +48,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:background="@null"
+        android:dropDownWidth="120dp"
         android:gravity="center"
         android:spinnerMode="dropdown" />
 
@@ -62,7 +64,8 @@
         android:gravity="center"
         android:hint="@string/hint_et_pesoInicial"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/et_pesoFinal"
@@ -75,7 +78,8 @@
         android:gravity="center"
         android:hint="@string/hint_et_pesoFinal"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/et_pesoVerao"
@@ -88,7 +92,8 @@
         android:gravity="center"
         android:hint="@string/hint_et_pesoVerao"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/et_pesoOutono"
@@ -101,7 +106,8 @@
         android:gravity="center"
         android:hint="@string/hint_et_pesoOutono"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/et_pesoInverno"
@@ -114,7 +120,8 @@
         android:gravity="center"
         android:hint="@string/hint_et_pesoInverno"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
     <EditText
         android:id="@+id/et_pesoPrimavera"
@@ -127,7 +134,8 @@
         android:gravity="center"
         android:hint="@string/hint_et_pesoPrimavera"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
 
     <TextView

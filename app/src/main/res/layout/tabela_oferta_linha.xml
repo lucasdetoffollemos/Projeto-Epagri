@@ -10,8 +10,9 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:background="@null"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:dropDownWidth="200dp"
+        />
 
     <Spinner
         android:id="@+id/spinner_condPiquete"
@@ -19,9 +20,9 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:background="@null"
         android:gravity="start"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:dropDownWidth="150dp"/>
 
     <EditText
         android:id="@+id/et_area"
@@ -34,7 +35,8 @@
         android:gravity="center"
         android:hint="@string/hint_et_area"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textCursorDrawable="@null"/>
 
 
     <TextView
