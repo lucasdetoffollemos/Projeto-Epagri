@@ -67,6 +67,24 @@
     <string name="txt_tv_bemVindo">Bem vindo.</string>
     <string name="txt_tv_nomeProp">Nome da propriedade</string>
     <string name="txt_tv_areaProp">Área Prop</string>
+    <string name="txt_tv_qnt">Qtde</string>
+    <string name="txt_tv_cadastreAnimais">Cadastre os Animais</string>
+    <string name="txt_tv_config">Configurações</string>
+    <string name="txt_tv_seusDados">Seu Dados</string>
+    <string name="txt_tv_dadosPerfil">Dados Perfil</string>
+    <string name="txt_tv_nome">Nome</string>
+    <string name="txt_tv_email">email</string>
+    <string name="txt_tv_telefone">telefone</string>
+    <string name="text_tv_senha">senha</string>
+    <string name="txt_tv_pagIni">Página Inicial</string>
+    <string name="txt_tv_cadastroPique">Cadastre os Piquetes</string>
+    <string name="txt_tv_cadastreProp">Cadastre a Propriedade</string>
+    <string name="txt_tv_sobre">Sobre</string>
+    <string name="txt_tv_sobreNos">Sobre Nós</string>
+    <string name="txt_tv_textoSobre">Lorem ipsum duis nec pretium ultrices laoreet aptent, sociosqu eu consequat convallis lobortis dui a mauris, cras phasellus id interdum congue nec. euismod aptent arcu luctus neque varius mauris quisque ante pulvinar dictum lorem ligula eu at, cubilia in euismod posuere fringilla metus habitant turpis nisl porttitor nisl dictumst. ut in netus eros suscipit velit ut faucibus elementum, viverra libero pretium aliquam mollis convallis imperdiet quis, eget ultrices inceptos etiam tincidunt quisque metusa.</string>
+    <string name="txt_tv_dadosProp">Dados da Propriedade</string>
+    <string name="txt_tv_projEpagri">Projeto Epagri</string>
+    <string name="txt_tv_inicio">Início</string>
 
     <!-- List View -->
     <string name="txt_lv_propriedade_nome">Nome: </string>
@@ -87,6 +105,8 @@
     <string name="txt_bt_remover">-</string>
     <string name="txt_bt_finalizar">Finalizar</string>
     <string name="txt_bt_cadastroPropriedade">Cadastrar Propriedade</string>
+    <string name="txt_bt_cancelar">Cancelar</string>
+    <string name="txt_bt_atualizar">Atualizar</string>
 
     <!-- Content Description das Imagens -->
     <string name="cd_logo_ufpr">Logo UFPR</string>
@@ -101,7 +121,13 @@
     <string name="txt_tab_demanda_atual">Demanda Atual</string>
     <string name="txt_tab_oferta_proposta">Oferta Proposta</string>
     <string name="txt_tab_demanda_proposta">Demanda Proposta</string>
-    <string name="txt_tv_qnt">Qtde</string>
     <string name="todo">TODO</string>
+
+    <!-- Image views   -->
+    <string name="txt_img_logoIni">Logo de inicio</string>
+    <string name="txt_img_logoPerfil">Logo perfil</string>
+    <string name="txt_img_logoSobre">Logo sobre</string>
+    <string name="txt_img_logoConfig">Logo configurações</string>
+
 
 </resources>

@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -27,7 +28,7 @@
             android:textStyle="bold"
             android:textColor="@color/branco"
             android:gravity="center"
-            android:text="Projeto Epagri"/>
+            android:text="@string/txt_tv_projEpagri"/>
     </LinearLayout>
 
 
@@ -42,7 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:onClick="clicarInicio"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
@@ -53,7 +55,7 @@
             android:layout_marginLeft="16dp"
             android:layout_weight="1"
             android:padding="12dp"
-            android:text="Início" />
+            android:text="@string/txt_tv_inicio" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -63,7 +65,7 @@
             android:padding="12dp"
             app:tint="@color/preto"
             android:src="@drawable/ic_inicio"
-            />
+            android:contentDescription="@string/txt_img_logoIni" />
 
     </LinearLayout>
 
@@ -72,7 +74,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:onClick="clicarPerfil">
+        android:onClick="clicarPerfil"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
@@ -80,7 +83,7 @@
             android:textColor="@color/preto"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Perfil"
+            android:text="@string/txt_tv_tituloPerfil"
             android:padding="12dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
@@ -92,7 +95,8 @@
             android:layout_marginEnd="48dp"
             android:padding="12dp"
             app:tint="@color/preto"
-            android:src="@drawable/ic_perfil"/>
+            android:src="@drawable/ic_perfil"
+            android:contentDescription="@string/txt_img_logoPerfil" />
 
     </LinearLayout>
 
@@ -102,7 +106,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:onClick="clicarSobre">
+        android:onClick="clicarSobre"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
@@ -110,7 +115,7 @@
             android:textColor="@color/preto"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sobre"
+            android:text="@string/txt_tv_sobre"
             android:padding="12dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
@@ -123,7 +128,8 @@
             android:layout_marginEnd="48dp"
             app:tint="@color/preto"
             android:padding="12dp"
-            android:src="@drawable/ic_sobre"/>
+            android:src="@drawable/ic_sobre"
+            android:contentDescription="@string/txt_img_logoSobre" />
 
 
 
@@ -135,7 +141,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:onClick="clicarConfig">
+        android:onClick="clicarConfig"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
@@ -143,7 +150,7 @@
             android:textColor="@color/preto"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Configurações"
+            android:text="@string/txt_tv_config"
             android:padding="12dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
@@ -155,7 +162,8 @@
             android:layout_marginEnd="48dp"
             android:padding="12dp"
             app:tint="@color/preto"
-            android:src="@drawable/ic_configuracoes"/>
+            android:src="@drawable/ic_configuracoes"
+            android:contentDescription="@string/txt_img_logoConfig" />
 
     </LinearLayout>
 

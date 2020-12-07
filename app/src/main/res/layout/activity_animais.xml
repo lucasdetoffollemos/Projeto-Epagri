@@ -56,11 +56,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Cadastre os Animais"
+                            android:text="@string/txt_tv_cadastreAnimais"
                             android:textColor="@color/preto"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="40dp" />
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginStart="40dp" />
 
 
                     </LinearLayout>

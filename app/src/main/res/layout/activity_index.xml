@@ -35,12 +35,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Página Inicial"
+                android:text="@string/txt_tv_pagIni"
                 android:textColor="@color/preto"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="90dp"
-                />
+                android:layout_marginStart="90dp" />
 
         </LinearLayout>
 
