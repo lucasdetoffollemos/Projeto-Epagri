@@ -6,8 +6,6 @@ public class Propriedade {
     private String nome, regiao;
     private double area;
     private int qtdeAnimais;
-    //Número de piquetes?
-    //Número de animais?
     private ArrayList<Piquete> listaPiqueteAtual;
     private ArrayList<Animais> listaAnimaisAtual;
 
@@ -54,16 +52,8 @@ public class Propriedade {
         this.qtdeAnimais = qtdeAnimais;
     }
 
-    public ArrayList<Piquete> getListaPiqueteAtual() {
-        return listaPiqueteAtual;
-    }
-
     public void setListaPiqueteAtual(ArrayList<Piquete> listaPiqueteAtual) {
         this.listaPiqueteAtual = listaPiqueteAtual;
-    }
-
-    public ArrayList<Animais> getListaAnimaisAtual() {
-        return listaAnimaisAtual;
     }
 
     public void setListaAnimaisAtual(ArrayList<Animais> listaAnimaisAtual) {

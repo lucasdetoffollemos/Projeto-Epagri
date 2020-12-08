@@ -1,10 +1,7 @@
 package com.example.projetoEpagri.Fragments;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -23,11 +20,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetoEpagri.Activities.AnimaisActivity;
-import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
 import com.example.projetoEpagri.Classes.Animais;
+import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
 
@@ -39,7 +35,6 @@ public class FragmentDemandaAtual extends Fragment {
     private Button bt_adicionar_linha, bt_remover_linha, bt_atualizar;
 
     private TableLayout table_layout;
-    private TableRow linha_tabela;
     private ArrayList<String> categoriaAnimal; //Array utilizado para setar os valores das categorias de animais no spinner categoria.
     private ArrayList<String> arrayMeses; //Array utilizado para setar os valores mostrados no spinner entrada
     private double resultadoConsumo; //Variável utilizada para setar o consumo de acordo com a categoria do animal escolhido.
@@ -55,15 +50,9 @@ public class FragmentDemandaAtual extends Fragment {
     private int somaAnimal;
     private double areaTotal = 1.0;
 
-    private String nomePropriedade;
     private int idPropriedade;
     private DecimalFormat doisDecimais;
     private boolean flagLoadAnimais = false;
-    private Drawable drawable;
-
-    //LinearLayout que será removido
-    private LinearLayout linearLayoutToolBar;
-
 
 
     public FragmentDemandaAtual() {}
@@ -87,7 +76,7 @@ public class FragmentDemandaAtual extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_demanda_atual, container, false);
 
-        layout_incluido_animais = (ConstraintLayout) rootView.findViewById(R.id.included_layout_animais);
+        layout_incluido_animais = rootView.findViewById(R.id.included_layout_animais);
 
         inicializa();
         setListeners();
@@ -99,9 +88,12 @@ public class FragmentDemandaAtual extends Fragment {
      * Método utilizado para inicializar os componentes da interface e os objetos da classe.
      */
     public void inicializa(){
-        nomePropriedade = getArguments().getString("nomePropriedade");
-        idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
-        Propriedade p = MainActivity.bancoDeDados.propriedadeDAO.getPropriedade(nomePropriedade);
+        String nomePropriedade = "";
+        if(getArguments() != null){
+            nomePropriedade = getArguments().getString("nomePropriedade");
+        }
+        idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
+        Propriedade p = BancoDeDados.propriedadeDAO.getPropriedade(nomePropriedade);
         areaTotal = p.getArea();
 
         //Criando um array de String para as categorias de animais.
@@ -132,7 +124,7 @@ public class FragmentDemandaAtual extends Fragment {
 
         qtdeAnimais = new ArrayList<>();
         matrizUA = new ArrayList<>();
-        listaAnimais = MainActivity.bancoDeDados.animaisDAO.getAllAnimaisByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+        listaAnimais = BancoDeDados.animaisDAO.getAllAnimaisByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
         listaTotalUAHA = new ArrayList<>();
         for(int i=0; i<12; i++){
             listaTotalUAHA.add(0.0);
@@ -143,10 +135,10 @@ public class FragmentDemandaAtual extends Fragment {
         bt_adicionar_linha = layout_incluido_animais.findViewById(R.id.bt_adicionarLinha);
         bt_remover_linha = layout_incluido_animais.findViewById(R.id.bt_removerLinha);
         bt_atualizar = layout_incluido_animais.findViewById(R.id.bt_finalizarEnvio);
-        bt_atualizar.setText("Atualizar Dados");
-        drawable = bt_atualizar.getBackground();
+        bt_atualizar.setText(R.string.txt_bt_atualizar);
 
-        linearLayoutToolBar = layout_incluido_animais.findViewById(R.id.ln_toolBar_animais);
+        //LinearLayout que será removido
+        LinearLayout linearLayoutToolBar = layout_incluido_animais.findViewById(R.id.ln_toolBar_animais);
         linearLayoutToolBar.setVisibility(View.GONE);
 
 
@@ -217,11 +209,11 @@ public class FragmentDemandaAtual extends Fragment {
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_demanda_linha, null);
+        TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_demanda_linha, null);
         criarLinha(linha_tabela);
 
         //Verifica se os animais já foram carregados. Se não foram, faz o loading.
-        if(flagLoadAnimais == false){
+        if(!flagLoadAnimais){
             loadAnimais(linha_tabela);
             calculaTotalAnimais();
 
@@ -273,14 +265,14 @@ public class FragmentDemandaAtual extends Fragment {
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinner_categoria);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categoriaAnimal);
+        final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, categoriaAnimal);
         spinnerCategoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(spinnerCategoriaAdapter);
 
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         Spinner spinnerMeses = linha_tabela.findViewById(R.id.spinner_meses);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMeses);
+        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrayMeses);
         spinnerMesesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMeses.setAdapter(spinnerMesesAdapter);
 
@@ -293,9 +285,9 @@ public class FragmentDemandaAtual extends Fragment {
 
     /**
      * Método responsável por identificar a posição de um determinado valor dentro do spinner.
-     * @param spinner
-     * @param s
-     * @return
+     * @param spinner Representa o spinner que contém os valores.
+     * @param s Representa o valor buscado dentro do spinner
+     * @return A posição desse valor na lista de valores do spinner.
      */
     private int getSpinnerIndex(Spinner spinner, String s){
         for (int i=0; i<spinner.getCount(); i++){
@@ -365,7 +357,7 @@ public class FragmentDemandaAtual extends Fragment {
 
     /**
      * Identifica os elementos da linha, dinamicamente, pelo seu index, e guarda os itens que foram selecionado, no spinner, ou armazenados no editText, para uso posterior
-     * @param linha_tabela
+     * @param linha_tabela Representa a linha que foi adicionada na tabela.
      */
     public void setListenersLinha(final TableRow linha_tabela){
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
@@ -388,15 +380,15 @@ public class FragmentDemandaAtual extends Fragment {
                 resultadoConsumo = 0;
                 //Define o consumo baseado na categoria de animal escolhido.
                 switch (categoria){
-                    case "BEZERROS":         { resultadoConsumo = 2;    break;}
-                    case "NOVILHOS JOVENS":  { resultadoConsumo = 2.5;  break;}
-                    case "NOVILHOS ADULTOS": { resultadoConsumo = 3;    break;}
-                    case "BEZERRAS":         { resultadoConsumo = 2;    break;}
-                    case "NOVILHAS JOVENS":  { resultadoConsumo = 2.5;  break;}
-                    case "NOVILHAS ADULTOS": { resultadoConsumo = 3;    break;}
+                    case "NOVILHOS JOVENS":
+                    case "NOVILHAS JOVENS":
+                    case "TOUROS": { resultadoConsumo = 2.5;  break;}
+                    case "NOVILHOS ADULTOS":
+                    case "NOVILHAS ADULTOS":
                     case "VACAS (MATRIZES)": { resultadoConsumo = 3;    break;}
-                    case "TOUROS":           { resultadoConsumo = 2.5;  break;}
-                    default:                 { resultadoConsumo = 2;    break;}
+                    case "BEZERROS":
+                    case "BEZERRAS":
+                    default: { resultadoConsumo = 2;    break;}
                 }
 
                 tv_consumo.setText(String.valueOf(resultadoConsumo));
@@ -417,7 +409,7 @@ public class FragmentDemandaAtual extends Fragment {
                 double numeroAnimais = 0.0;
                 int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
 
-                if(!verificaVazioET(etNumAnimais)){
+                if(verificaVazioET(etNumAnimais)){
                     numeroAnimais = converteTextoEmDouble(etNumAnimais);
                 }
                 //Salva no array a quantidade de animais digitada para determinada linha.
@@ -545,30 +537,30 @@ public class FragmentDemandaAtual extends Fragment {
 
     /**
      * Método responsável por ler os valores do spinner e das caixas de texto e realizar os cálculos.
-     * @param linha_tabela
-     * @param spinnerCategoria
-     * @param etNumAnimais
-     * @param spinnerMeses
-     * @param etPesoInicial
-     * @param etPesoFinal
-     * @param etPesoVer
-     * @param etPesoOut
-     * @param etPesoInv
-     * @param etPesoPrim
+     * @param linha_tabela Representa a linha sob a qual será realizado os calculos.
+     * @param spinnerCategoria Representa o spinner da categoria animal.
+     * @param etNumAnimais Representa a caixa de texto com a quantidade de animais.
+     * @param spinnerMeses Representa o spinner com o mês de entrada do animal na pastagem.
+     * @param etPesoInicial Representa a caixa de texto com o peso inicial do animal.
+     * @param etPesoFinal Representa a caixa de texto com o peso final do animal.
+     * @param etPesoVer Representa a caixa de texto com o ganho de peso do animal no verão.
+     * @param etPesoOut Representa a caixa de texto com o ganho de peso do animal no outono.
+     * @param etPesoInv Representa a caixa de texto com o ganho de peso do animal no inverno.
+     * @param etPesoPrim Representa a caixa de texto com o ganho de peso do animal na primavera.
      */
     public void calcular(TableRow linha_tabela, Spinner spinnerCategoria, TextView textViewConsumo, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim){
         String categoria;
         double consumo, numeroAnimais, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim;
 
-        if(!verificaVazioSP(spinnerCategoria) &&
-                !verificaVazioET(etNumAnimais) &&
-                !verificaVazioSP(spinnerMeses) &&
-                !verificaVazioET(etPesoInicial) &&
-                !verificaVazioET(etPesoFinal) &&
-                !verificaVazioET(etPesoVer) &&
-                !verificaVazioET(etPesoOut) &&
-                !verificaVazioET(etPesoInv) &&
-                !verificaVazioET(etPesoPrim)){
+        if(verificaVazioSP(spinnerCategoria) &&
+                verificaVazioET(etNumAnimais) &&
+                verificaVazioSP(spinnerMeses) &&
+                verificaVazioET(etPesoInicial) &&
+                verificaVazioET(etPesoFinal) &&
+                verificaVazioET(etPesoVer) &&
+                verificaVazioET(etPesoOut) &&
+                verificaVazioET(etPesoInv) &&
+                verificaVazioET(etPesoPrim)){
 
             categoria = spinnerCategoria.getSelectedItem().toString();
             consumo = Double.parseDouble(textViewConsumo.getText().toString());
@@ -586,7 +578,7 @@ public class FragmentDemandaAtual extends Fragment {
 
             String meses = spinnerMeses.getSelectedItem().toString();
 
-            double ganho = 0.0;
+            double ganho;
             //Array que mapeia os pesos de acordo com as estações. Cada posição faz referência a um mês.
             double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
             int posicao = 0;  //posicão utilizada para inserir o animal em determinado mês de acordo com a entrada.
@@ -771,7 +763,7 @@ public class FragmentDemandaAtual extends Fragment {
 
     /**
      * Método responsável por percorrer a matriz e somar os valores coluna por coluna.
-     * @param matriz
+     * @param matriz Representa a matriz a com os valores calculados para todos os meses de todas as linhas.
      * @return array com os valores totais por coluna.
      */
     public ArrayList<Double> percorreMatrizESoma(ArrayList<double[]> matriz){
@@ -779,7 +771,7 @@ public class FragmentDemandaAtual extends Fragment {
         int i=0, j=0;
         double soma = 0.0;
 
-        ArrayList<Double> resultado = new ArrayList<Double>();
+        ArrayList<Double> resultado = new ArrayList<>();
         //Inicializa o array com os totais de cada mês com zero.
         for(int k=0; k<12; k++){
             resultado.add(k, 0.0);
@@ -812,12 +804,12 @@ public class FragmentDemandaAtual extends Fragment {
 
     /**
      * Método para converter um texto digitado num campo de texto para double.
-     * @param et
-     * @return
+     * @param et Representa a caixa de texto que contém o texto que será convertido.
+     * @return Retorna o texto digitado convertido em double.
      */
     public double converteTextoEmDouble(EditText et){
         String texto = et.getText().toString();
-        double textoEmDouble = 0.0;
+        double textoEmDouble;
 
         textoEmDouble = Double.parseDouble(texto);
 
@@ -826,46 +818,37 @@ public class FragmentDemandaAtual extends Fragment {
 
     /**
      * Método para verificar se um Edit Text é vazio.
-     * @param et
-     * @return
+     * @param et Representa a caixa de texto que será verificada.
+     * @return true caso a caixa de texto esteja vazia e false caso contrário.
      */
     public boolean verificaVazioET(EditText et){
-        if(et.getText().toString().length() > 0){
-            return false;
-        }
-        else{
-            return true;
-        }
+        boolean empty = et.getText().toString().isEmpty();
+        return !empty;
     }
 
     /**
      * Método para verificar se um Spinner é vazio.
-     * @param p
-     * @return
+     * @param p Representa o spinner que será verificado.
+     * @return Retorna true caso o spinner esteja vazio (sem opção selecionada) e false caso contrário.
      */
     public boolean verificaVazioSP(Spinner p){
-        if(p.getSelectedItem().toString().length() > 0){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return !p.getSelectedItem().toString().isEmpty();
     }
 
     public void atualizarDados() {
         //Deleta os valores antigos.
-        MainActivity.bancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
-        MainActivity.bancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+        BancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+        BancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
 
         //Salva os novos valores.
         for(int i=0; i<listaAnimais.size(); i++){
-            MainActivity.bancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+            BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
         }
 
-        MainActivity.bancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+        BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
 
         //Atualiza a qtde de animais na tabela de propriedades.
-        MainActivity.bancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, somaAnimal);
+        BancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, somaAnimal);
 
         //bt_atualizar.setBackgroundColor(Color.GREEN);
         Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();

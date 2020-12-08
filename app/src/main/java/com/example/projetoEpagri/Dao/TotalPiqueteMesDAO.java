@@ -9,7 +9,7 @@ import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import java.util.ArrayList;
 
 public class TotalPiqueteMesDAO implements ITotalPiqueteMes {
-    SQLiteDatabase bancoDeDados;
+    private final SQLiteDatabase bancoDeDados;
 
     public TotalPiqueteMesDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;
@@ -62,8 +62,9 @@ public class TotalPiqueteMesDAO implements ITotalPiqueteMes {
             totais.add(cursor.getDouble(10));
             totais.add(cursor.getDouble(11));
             totais.add(cursor.getDouble(12));
+            cursor.close();
         }
-        cursor.close();
+
         return totais;
     }
 

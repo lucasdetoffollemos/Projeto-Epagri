@@ -24,10 +24,10 @@ import com.example.projetoEpagri.Dao.TotalPiqueteMesDAO;
 import com.example.projetoEpagri.Dao.UsuarioDAO;
 
 public class BancoDeDados{
-    private final Context context;
     private static final String BANCO_DE_DADOS_NOME = "bancoDeDadosProjetoEpagri.db";
     private static final int BANCO_DE_DADOS_VERSAO = 1;
 
+    private final Context context;
     private BancoHelper bancoHelper;
     private SQLiteDatabase sqLiteDatabase;
 
@@ -47,11 +47,10 @@ public class BancoDeDados{
     /**
      * Método responsável por inicializar as interações com o banco de dados.
      * Cria-se de fato o objeto do banco de dados (SQLiteDatabase) e inicializa-se os DAOs.
-     * @return Retorna o contexto da classe.
-     * @throws SQLException
+     * @throws SQLException representa qualquer exceção que possa ocorrer com o banco de dados.
      */
-    public BancoDeDados abreConexao() throws SQLException {
-        bancoHelper = new BancoHelper(this.context);
+    public void abreConexao() throws SQLException {
+        this.bancoHelper = new BancoHelper(this.context);
         sqLiteDatabase = bancoHelper.getWritableDatabase();
 
         usuarioDAO = new UsuarioDAO(sqLiteDatabase);
@@ -62,14 +61,14 @@ public class BancoDeDados{
         totalPiqueteEstacaoDAO = new TotalPiqueteEstacaoDAO(sqLiteDatabase);
         animaisDAO = new AnimaisDAO(sqLiteDatabase);
         totalAnimaisDAO = new TotalAnimaisDAO(sqLiteDatabase);
-
-        return this;
     }
 
     /**
      * Método responsável por encerrar as interações com o banco de dados.
      */
+    @SuppressWarnings("unused")
     public void fechaConexao(){
+        sqLiteDatabase.close();
         bancoHelper.close();
     }
 
@@ -102,12 +101,11 @@ public class BancoDeDados{
         Cursor cursor = this.sqLiteDatabase.rawQuery("select * from '" + nomeTabela + "'", null);
         cursor.moveToFirst();
 
-        if (cursor != null){
-            while(!cursor.isAfterLast()){
-                cursor.moveToNext();
-                count++;
-            }
+        while(!cursor.isAfterLast()){
+            cursor.moveToNext();
+            count++;
         }
+
 
         if(count > 0){
             vazia = false;

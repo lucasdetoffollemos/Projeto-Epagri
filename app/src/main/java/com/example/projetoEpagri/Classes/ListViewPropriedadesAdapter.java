@@ -1,5 +1,6 @@
 package com.example.projetoEpagri.Classes;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.GraficoActivity;
-import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Activities.TabsActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
@@ -24,13 +23,11 @@ import com.example.projetoEpagri.R;
 import java.util.ArrayList;
 
 public class ListViewPropriedadesAdapter extends BaseAdapter {
-    private Context context;
+    private final Context context;
     public ArrayList<Propriedade> listaPropriedades;
-    private String nomeUsuario;
+    private final String nomeUsuario;
     private int idPropriedade;
-    private TextView tv_nome, tv_area, tv_qtde;
-    private Button bt_ver_dados, bt_grafico_atual, bt_grafico_proposta, bt_excluir;
-    private int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
+    private final int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
     //Atributo para animação no botão
 
     public ListViewPropriedadesAdapter(Context context, ArrayList<Propriedade> lista, String nomeUsuario){
@@ -63,17 +60,17 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
     public View getView(final int position, final View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //Infla o layout definido em linha_listview_propriedade.xml.
-        View row = layoutInflater.inflate(R.layout.linha_listview_propriedade, parent, false);
+        @SuppressLint("ViewHolder") View row = layoutInflater.inflate(R.layout.linha_listview_propriedade, parent, false);
         row.setTag(this.getCount());
 
         //Identifica os elementos da linha.
-        tv_nome = row.findViewById(R.id.lv_tv_nome_propriedade);
-        tv_area = row.findViewById(R.id.lv_tv_area_propriedade);
-        tv_qtde = row.findViewById(R.id.lv_tv_total_animais_propriedade);
-        bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
-        bt_grafico_atual = row.findViewById(R.id.lv_bt_grafico_atual);
-        bt_grafico_proposta = row.findViewById(R.id.lv_bt_grafico_proposta);
-        bt_excluir = row.findViewById(R.id.lv_bt_excluir);
+        TextView tv_nome = row.findViewById(R.id.lv_tv_nome_propriedade);
+        TextView tv_area = row.findViewById(R.id.lv_tv_area_propriedade);
+        TextView tv_qtde = row.findViewById(R.id.lv_tv_total_animais_propriedade);
+        Button bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
+        Button bt_grafico_atual = row.findViewById(R.id.lv_bt_grafico_atual);
+        Button bt_grafico_proposta = row.findViewById(R.id.lv_bt_grafico_proposta);
+        Button bt_excluir = row.findViewById(R.id.lv_bt_excluir);
 
         //Cria um objeto para cada item da lista.
         final Propriedade propriedade = (Propriedade) this.getItem(position);
@@ -84,15 +81,11 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         tv_qtde.setText(String.valueOf(propriedade.getQtdeAnimais()));
 
 
-        idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
-        final ArrayList<Piquete> listaPiqueteProposta = MainActivity.bancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
-        final ArrayList<Animais> listaAnimaisProposta = MainActivity.bancoDeDados.animaisDAO.getAllAnimaisByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
+        idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
+        final ArrayList<Piquete> listaPiqueteProposta = BancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
+        final ArrayList<Animais> listaAnimaisProposta = BancoDeDados.animaisDAO.getAllAnimaisByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
 
-        if(listaPiqueteProposta.size() > 0 && listaAnimaisProposta.size() > 0){
-            bt_grafico_proposta.setEnabled(true);
-        }else{
-            bt_grafico_proposta.setEnabled(false);
-        }
+        bt_grafico_proposta.setEnabled(listaPiqueteProposta.size() > 0 && listaAnimaisProposta.size() > 0);
 
         //Listener do botão "ver dados"
         bt_ver_dados.setOnClickListener(new View.OnClickListener() {
@@ -108,9 +101,9 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_grafico_atual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
-                ArrayList<Double> totaisPiqueteMes = MainActivity.bancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
-                ArrayList<Double> totaisAnimalMes = MainActivity.bancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+                idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
+                ArrayList<Double> totaisPiqueteMes = BancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+                ArrayList<Double> totaisAnimalMes = BancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
 
                 Intent i = new Intent(context, GraficoActivity.class);
                 i.putExtra("totaisPiqueteMes", totaisPiqueteMes);
@@ -124,9 +117,9 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_grafico_proposta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
-                ArrayList<Double> totaisPiqueteMes = MainActivity.bancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
-                ArrayList<Double> totaisAnimalMes = MainActivity.bancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
+                idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
+                ArrayList<Double> totaisPiqueteMes = BancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
+                ArrayList<Double> totaisAnimalMes = BancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
 
                 Intent i = new Intent(context, GraficoActivity.class);
                 i.putExtra("totaisPiqueteMes", totaisPiqueteMes);
@@ -140,22 +133,22 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         bt_excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.bancoDeDados.propriedadeDAO.deletePropriedade(propriedade.getNome());
-                MainActivity.bancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
-                MainActivity.bancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
-                MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
-                MainActivity.bancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
-                MainActivity.bancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+                BancoDeDados.propriedadeDAO.deletePropriedade(propriedade.getNome());
+                BancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+                BancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+                BancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+                BancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+                BancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
 
                 if(listaPiqueteProposta.size() > 0){
-                    MainActivity.bancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
-                    MainActivity.bancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
-                    MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
+                    BancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
+                    BancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
+                    BancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
                 }
 
                 if(listaAnimaisProposta.size() > 0){
-                    MainActivity.bancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
-                    MainActivity.bancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
+                    BancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
+                    BancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
                 }
 
                 listaPropriedades.remove(position);
@@ -166,5 +159,4 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
 
         return row;
     }
-
 }

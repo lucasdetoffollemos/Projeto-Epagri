@@ -30,7 +30,7 @@ public class DadosPerfilActivity extends AppCompatActivity {
         IndexActivity.abrirMenu(drawerLayout);
     }
 
-
+    @SuppressWarnings("unused")
     public void clicarLogo(View v){
         IndexActivity.fecharMenu(drawerLayout);
     }

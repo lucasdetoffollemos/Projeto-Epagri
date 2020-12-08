@@ -10,7 +10,7 @@ import com.example.projetoEpagri.Classes.Animais;
 import java.util.ArrayList;
 
 public class AnimaisDAO implements IAnimaisSchema {
-    SQLiteDatabase bancoDeDados;
+    private final SQLiteDatabase bancoDeDados;
 
     public AnimaisDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;

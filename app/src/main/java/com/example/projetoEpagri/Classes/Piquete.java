@@ -8,14 +8,14 @@ public class Piquete implements Parcelable {
     private String condicao;
     private double area;
     private double prodEstimada;
-    private double mesesProd [];
+    private double[] mesesProd;
     private int  total;
 
     public Piquete(){
         this.mesesProd = new double[12];
     }
 
-    public Piquete(String tipo, String condicao, double area, double prodEstimada, double mesesProd[], int total){
+    public Piquete(String tipo, String condicao, double area, double prodEstimada, double[] mesesProd, int total){
         this.mesesProd = new double[12];
 
         this.tipo = tipo;
@@ -26,14 +26,14 @@ public class Piquete implements Parcelable {
         this.total = total;
     }
 
-   private Piquete(Parcel p){
+    private Piquete(Parcel p){
         tipo = p.readString();
         condicao = p.readString();
         area = p.readDouble();
         prodEstimada = p.readDouble();
         mesesProd = p.createDoubleArray();
         total = p.readInt();
-   }
+    }
 
     public static final Creator<Piquete> CREATOR = new Creator<Piquete>() {
         @Override

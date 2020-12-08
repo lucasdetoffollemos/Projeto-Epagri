@@ -16,8 +16,6 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 
 public class GraficoActivity extends AppCompatActivity {
-    private LineGraphSeries<DataPoint> oferta;
-    private LineGraphSeries<DataPoint> demanda;
     private ArrayList<Double> totaisPiqueteMes, totaisAnimalMes;
 
     @Override
@@ -29,19 +27,21 @@ public class GraficoActivity extends AppCompatActivity {
         criaGrafico();
     }
 
+    @SuppressWarnings("unchecked")
     public void inicializa(){
         totaisPiqueteMes = new ArrayList<>();
         totaisAnimalMes = new ArrayList<>();
 
         Intent i = getIntent();
+
         totaisPiqueteMes = (ArrayList<Double>) i.getSerializableExtra("totaisPiqueteMes");
         totaisAnimalMes = (ArrayList<Double>) i.getSerializableExtra("totaisAnimalMes");
     }
 
     public void criaGrafico(){
         GraphView grafico = findViewById(R.id.gv_grafico);
-        oferta = new LineGraphSeries<>();
-        demanda = new LineGraphSeries<>();
+        LineGraphSeries<DataPoint> oferta = new LineGraphSeries<>();
+        LineGraphSeries<DataPoint> demanda = new LineGraphSeries<>();
 
         //Log.i("vetor", String.valueOf(totaisPiqueteMes));
         //Log.i("vetor", String.valueOf(totaisAnimalMes));

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.Classes.Animais;
+import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.R;
 
@@ -29,7 +30,6 @@ import java.util.ArrayList;
 public class PiqueteActivity extends AppCompatActivity{
     private Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
     private TableLayout table_layout;
-    private TableRow linha_tabela;
     public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
 
     private double producaoEstimadaD, areaTotal;
@@ -43,10 +43,6 @@ public class PiqueteActivity extends AppCompatActivity{
     private String nomeUsuario, regiao;
     private DecimalFormat doisDecimais;
     private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
-
-    //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
-    private String tipo, condicao, areaS;
-    private double areaD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +161,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_linha, null);
+        TableRow linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_linha, null);
         criarLinha(linha_tabela);
         setListenersLinha(linha_tabela);
 
@@ -223,16 +219,16 @@ public class PiqueteActivity extends AppCompatActivity{
         ArrayList<String> tipoPiquete = new ArrayList<>();
 
         if(regiao.equals("cfa")){
-            tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_NORTE);
+            tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_NORTE);
         }
         else if(regiao.equals("cfb")){
-           tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
+            tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
         }
 
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
-        ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, tipoPiquete);
+        ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<>(PiqueteActivity.this, android.R.layout.simple_spinner_item, tipoPiquete);
         spinnerTipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoPiquete.setAdapter(spinnerTipoAdapter);
 
@@ -245,7 +241,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Localiza o spinner condicao no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerCondicaoPiquete = linha_tabela.findViewById(R.id.spinner_condPiquete);
         //Cria um ArrayAdpter usando o array de string com condicoes "degradada", "média" e "ótima". //Cria um ArrayAdapter que pega o Array de string "condicaoPiquete" e transforma em um spinner.
-        ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<String>(PiqueteActivity.this, android.R.layout.simple_spinner_item, condicaoPiquete);
+        ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<>(PiqueteActivity.this, android.R.layout.simple_spinner_item, condicaoPiquete);
         spinnerCondicaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCondicaoPiquete.setAdapter(spinnerCondicaoAdapter);
 
@@ -267,7 +263,7 @@ public class PiqueteActivity extends AppCompatActivity{
     /**
      * Identifica os elementos dentro da TableRow que foi inflada e chama o método de calcular quando algum valor
      * é escolhido nos spinners ou texto digitado no campo área.
-     * @param linha_tabela
+     * @param linha_tabela Representa a linha adicionada na tabela.
      */
     private void setListenersLinha(final TableRow linha_tabela) {
         final Spinner spinnerTipo = (Spinner) linha_tabela.getChildAt(0);
@@ -314,35 +310,37 @@ public class PiqueteActivity extends AppCompatActivity{
     /**
      * Método utilizado para ler os valores preenchidos pelo usuário (spinners e área) e fazer os cálculos de produção
      * estimada, meses e total.
-     * @param linha_tabela
-     * @param spinnerTipo
-     * @param spinnerCondicao
-     * @param editTextArea
+     * @param linha_tabela Representa a linha preenchida com os dados.
+     * @param spinnerTipo Representa o spinner com o tipo da pastagem.
+     * @param spinnerCondicao Representa o spinner com a condição da pastagem.
+     * @param editTextArea Representa o campo de texto com a área da pastagem.
      */
     public void calcular(final TableRow linha_tabela, Spinner spinnerTipo, Spinner spinnerCondicao, EditText editTextArea){
-        this.tipo = spinnerTipo.getSelectedItem().toString();
-        this.condicao = spinnerCondicao.getSelectedItem().toString();
-        this.areaS = editTextArea.getText().toString();
+        //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
+        String tipo = spinnerTipo.getSelectedItem().toString();
+        String condicao = spinnerCondicao.getSelectedItem().toString();
+        String areaS = editTextArea.getText().toString();
 
         int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
 
         //Adiciona as áreas digitadas na lista de áreas.
-        if(this.areaS.length() > 0) {
-            this.areaD = Double.parseDouble(this.areaS);
+        double areaD;
+        if(areaS.length() > 0) {
+            areaD = Double.parseDouble(areaS);
         }
         else{
-            this.areaD = 0;
+            areaD = 0;
         }
-        this.listaDeAreas.set(posicao, this.areaD);
+        this.listaDeAreas.set(posicao, areaD);
 
         //Cálcula a producão estimada.
-        calculaProducaoEstimada(linha_tabela, this.tipo, this.condicao, this.areaD);
+        calculaProducaoEstimada(linha_tabela, tipo, condicao, areaD);
 
         //Cálcula a produção para cada mês. E faz a soma de todos os meses
         double [] arrayMesesProd = new double[12];
         double totalToneladaAnual = 0;
         for(int i=1; i<=12; i++){
-            arrayMesesProd[i-1] = calculaMes(linha_tabela, this.tipo, this.condicao, this.areaD, i);
+            arrayMesesProd[i-1] = calculaMes(linha_tabela, tipo, condicao, areaD, i);
             totalToneladaAnual = totalToneladaAnual + arrayMesesProd[i-1];
         }
 
@@ -355,7 +353,7 @@ public class PiqueteActivity extends AppCompatActivity{
 
         //Mostra o Total (direita).
         TextView total = (TextView) linha_tabela.getChildAt(16);
-        int intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
+        int intTotalTonelada = (int) totalToneladaAnual;
         total.setText(String.valueOf(intTotalTonelada));
 
         calculaTotais();
@@ -373,9 +371,9 @@ public class PiqueteActivity extends AppCompatActivity{
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
 
         if(regiao.equals("cfa")){
-            this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * area;
+            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * area;
         }else if(regiao.equals("cfb")){
-            this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
+            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
         }
 
         String producaoEstimada = this.doisDecimais.format(this.producaoEstimadaD);
@@ -384,11 +382,11 @@ public class PiqueteActivity extends AppCompatActivity{
 
     /**
      * Método para calcular a produção em cada um dos meses.
-     * @param linha_tabela
-     * @param tipoPastagem
-     * @param condicao
-     * @param area
-     * @param mes
+     * @param linha_tabela Representa a linha da tabela da qual os valores serão calculados.
+     * @param tipoPastagem Representa o tipo da pastagem.
+     * @param condicao Representa a condição da pastagem.
+     * @param area Representa a área da pastagem.
+     * @param mes Representa o valor númerico do mês (1 a 12).
      */
     public double calculaMes(final TableRow linha_tabela, String tipoPastagem, String condicao, double area, int mes){
         Double aproveitamento = 0.60;
@@ -398,12 +396,12 @@ public class PiqueteActivity extends AppCompatActivity{
 
         double valor = 0.0;
         if(regiao.equals("cfa")){
-           valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/100;
-            valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * aproveitamento * valor * area).replace(",", "."));
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/100;
+            valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * aproveitamento * valor * area).replace(",", "."));
         }
         else if(regiao.equals("cfb")){
-            valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
-            valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
+            valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
         }
 
         String resultado = this.doisDecimais.format(valor);
@@ -520,7 +518,7 @@ public class PiqueteActivity extends AppCompatActivity{
         Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
         i.putExtra("nome_usuario", this.nomeUsuario);
         i.putExtra("areaTotal", this.areaTotal);
-        startActivityForResult(i, this.CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
+        startActivityForResult(i, PiqueteActivity.CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
     }
 
     @Override
@@ -531,14 +529,10 @@ public class PiqueteActivity extends AppCompatActivity{
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 nomeUsuario = data.getStringExtra("nome_usuario");
                 ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
+                @SuppressWarnings("unchecked")
                 ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("listaTotaisUAHA");
                 int qtdeAnimais = data.getIntExtra("qtdeAnimal", 0);
                 double area = data.getDoubleExtra("area", 1.0);
-
-                /*for(int i=0; i<listaAnimal.size(); i++){
-                    Log.i("Animais", listaAnimal.get(i).getCategoria() + " " + listaAnimal.get(i).getConsumo() + " " + listaAnimal.get(i).getNumAnimais() + " " + listaAnimal.get(i).getEntradaMes() + " " + listaAnimal.get(i).getPesoInicial()+ " " + listaAnimal.get(i).getPesoFinal() + " " + listaAnimal.get(i).getPesoGanhoVer() + " " + listaAnimal.get(i).getPesoGanhoOut() + " " + listaAnimal.get(i).getPesoGanhoInv() + " " + listaAnimal.get(i).getPesoGanhoPrim() + " " + Arrays.toString(listaAnimal.get(i).getMeses()));
-                }
-                Log.i("Totais", String.valueOf(totais));*/
 
                 Intent intent = new Intent();
                 intent.putExtra("nome_usuario", nomeUsuario);

@@ -3,16 +3,13 @@ package com.example.projetoEpagri.Dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.example.projetoEpagri.BancoDeDadosSchema.IPropriedadeSchema;
-import com.example.projetoEpagri.Classes.Animais;
-import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Classes.Propriedade;
 
 import java.util.ArrayList;
 
 public class PropriedadeDAO implements IPropriedadeSchema {
-    SQLiteDatabase bancoDeDados;
+    private final SQLiteDatabase bancoDeDados;
 
     public PropriedadeDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;
@@ -51,8 +48,9 @@ public class PropriedadeDAO implements IPropriedadeSchema {
             p.setQtdeAnimais(cursor.getInt(4));
             p.setListaPiqueteAtual(null); //Precisa consultar na outra tabela.
             p.setListaAnimaisAtual(null);
+            cursor.close();
         }
-        cursor.close();
+
         return p;
     }
 

@@ -19,23 +19,22 @@ public class UsuarioDAO implements IUsuarioSchema {
 
     /**
      * Método para inserir um usuário no banco de dados (tabela usuarios).
-     * @param usuario
-     * @return
+     * @param usuario Representa o objeto usuário que será salvo no banco de dados.
      */
-    public long inserirUsuario(Usuario usuario){
+    public void inserirUsuario(Usuario usuario){
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME, usuario.getNome());
         values.put(COLUNA_EMAIL, usuario.getEmail());
         values.put(COLUNA_TELEFONE, usuario.getTelefone());
         values.put(COLUNA_SENHA, usuario.getSenha());
 
-        return this.bancoDeDados.insert(TABELA_USUARIO, null, values);
+        this.bancoDeDados.insert(TABELA_USUARIO, null, values);
     }
 
     /**
      * Método para recuperar um usuário baseado no id;
-     * @param id
-     * @return
+     * @param id Representa o id do usuário que deseja-se recuperar.
+     * @return Retorna o usuário recuperado.
      */
     public Usuario getUsuario(int id){
         String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_ID + "=" + id;
@@ -48,6 +47,7 @@ public class UsuarioDAO implements IUsuarioSchema {
             usuario.setEmail(cursor.getString(2));
             usuario.setTelefone(cursor.getString(3));
             usuario.setSenha(cursor.getString(4));
+            cursor.close();
         }
         return usuario;
     }
@@ -64,17 +64,18 @@ public class UsuarioDAO implements IUsuarioSchema {
         int id = -1;
         if (cursor.moveToLast()) {
             id = cursor.getInt(0);
+            cursor.close();
         }
         return id;
     }
 
     /**
      * Método para atualizar um usuário.
-     * @param id
-     * @param nome
-     * @param email
-     * @param telefone
-     * @param senha
+     * @param id Representa o id do usuário que deseja-se atualizar os dados.
+     * @param nome Representa o novo nome do usuário.
+     * @param email Representa o novo email do usuário.
+     * @param telefone Representa o novo telefone do usuário.
+     * @param senha Representa a nova senha do usuário.
      */
     public void updateUsuario(int id, String nome, String email, String telefone, String senha){
         ContentValues values = new ContentValues();
@@ -103,13 +104,14 @@ public class UsuarioDAO implements IUsuarioSchema {
             usuario.setSenha(cursor.getString(4));
             listaUsuarios.add(usuario);
         }
+        cursor.close();
         return listaUsuarios;
     }
 
     /**
      * Método para remover um único usuário baseado no nome e na senha.
-     * @param nome
-     * @param senha
+     * @param nome Representa o nome do usuário.
+     * @param senha Representa a senha do usuário.
      */
     public void deleteUsuario(String nome, String senha){
         this.bancoDeDados.delete(TABELA_USUARIO,COLUNA_NOME + "=? and "+ COLUNA_SENHA +"=?", new String[]{nome, senha});
@@ -125,15 +127,16 @@ public class UsuarioDAO implements IUsuarioSchema {
 
     /**
      * Método para validar os dados informados no login.
-     * @param nome
-     * @param senha
-     * @return
+     * @param nome Representa o nome digitado no campo "nome" do login.
+     * @param senha Representa a senha digitada no campo "senha" do login.
+     * @return Retorna true caso o login seja válido e falso caso contrário.
      */
     public boolean login(String nome, String senha){
         String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=? and "+ COLUNA_SENHA + "=?";
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, new String[]{nome, senha});
 
         if(cursor.getCount()>0){
+            cursor.close();
             return true;
         }
         else {

@@ -27,7 +27,6 @@ public class AnimaisActivity extends AppCompatActivity {
     private Button bt_adicionar_linha, bt_remover_linha, bt_finalizar_envio;
 
     private TableLayout table_layout;
-    private TableRow linha_tabela;
     private ArrayList<String> categoriaAnimal; //Array utilizado para setar os valores das categorias de animais no spinner categoria.
     private ArrayList<String> arrayMeses; //Array utilizado para setar os valores mostrados no spinner entrada
     private double resultadoConsumo; //Variável utilizada para setar o consumo de acordo com a categoria do animal escolhido.
@@ -110,7 +109,7 @@ public class AnimaisActivity extends AppCompatActivity {
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               adicionaLinha();
+                adicionaLinha();
             }
         });
 
@@ -161,7 +160,7 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_linha, null);
+        TableRow linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_linha, null);
         criarLinha(linha_tabela);
         setListenersLinha(linha_tabela);
 
@@ -206,14 +205,14 @@ public class AnimaisActivity extends AppCompatActivity {
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinner_categoria);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, categoriaAnimal);
+        final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<>(AnimaisActivity.this, android.R.layout.simple_spinner_item, categoriaAnimal);
         spinnerCategoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(spinnerCategoriaAdapter);
 
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         Spinner spinnerMeses = linha_tabela.findViewById(R.id.spinner_meses);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<String>(AnimaisActivity.this, android.R.layout.simple_spinner_item, arrayMeses);
+        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<>(AnimaisActivity.this, android.R.layout.simple_spinner_item, arrayMeses);
         spinnerMesesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMeses.setAdapter(spinnerMesesAdapter);
 
@@ -226,7 +225,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
     /**
      * Identifica os elementos da linha, dinamicamente, pelo seu index, e guarda os itens que foram selecionado, no spinner, ou armazenados no editText, para uso posterior
-     * @param linha_tabela
+     * @param linha_tabela Representa a linha que foi adicionada na tabela.
      */
     public void setListenersLinha(final TableRow linha_tabela){
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
@@ -249,15 +248,15 @@ public class AnimaisActivity extends AppCompatActivity {
                 resultadoConsumo = 0;
                 //Define o consumo baseado na categoria de animal escolhido.
                 switch (categoria){
-                    case "BEZERROS":         { resultadoConsumo = 2;    break;}
-                    case "NOVILHOS JOVENS":  { resultadoConsumo = 2.5;  break;}
-                    case "NOVILHOS ADULTOS": { resultadoConsumo = 3;    break;}
-                    case "BEZERRAS":         { resultadoConsumo = 2;    break;}
-                    case "NOVILHAS JOVENS":  { resultadoConsumo = 2.5;  break;}
-                    case "NOVILHAS ADULTOS": { resultadoConsumo = 3;    break;}
+                    case "NOVILHOS JOVENS":
+                    case "NOVILHAS JOVENS":
+                    case "TOUROS": { resultadoConsumo = 2.5;  break;}
+                    case "NOVILHOS ADULTOS":
+                    case "NOVILHAS ADULTOS":
                     case "VACAS (MATRIZES)": { resultadoConsumo = 3;    break;}
-                    case "TOUROS":           { resultadoConsumo = 2.5;  break;}
-                    default:                 { resultadoConsumo = 2;    break;}
+                    case "BEZERROS":
+                    case "BEZERRAS":
+                    default: { resultadoConsumo = 2;    break;}
                 }
 
                 tv_consumo.setText(String.valueOf(resultadoConsumo));
@@ -278,7 +277,7 @@ public class AnimaisActivity extends AppCompatActivity {
                 double numeroAnimais = 0.0;
                 int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
 
-                if(!verificaVazioET(etNumAnimais)){
+                if(verificaVazioET(etNumAnimais)){
                     numeroAnimais = converteTextoEmDouble(etNumAnimais);
                 }
                 //Salva no array a quantidade de animais digitada para determinada linha.
@@ -407,30 +406,30 @@ public class AnimaisActivity extends AppCompatActivity {
 
     /**
      * Método responsável por ler os valores do spinner e das caixas de texto e realizar os cálculos.
-     * @param linha_tabela
-     * @param spinnerCategoria
-     * @param etNumAnimais
-     * @param spinnerMeses
-     * @param etPesoInicial
-     * @param etPesoFinal
-     * @param etPesoVer
-     * @param etPesoOut
-     * @param etPesoInv
-     * @param etPesoPrim
+     * @param linha_tabela Representa a linha sob a qual será realizado os calculos.
+     * @param spinnerCategoria Representa o spinner da categoria animal.
+     * @param etNumAnimais Representa a caixa de texto com a quantidade de animais.
+     * @param spinnerMeses Representa o spinner com o mês de entrada do animal na pastagem.
+     * @param etPesoInicial Representa a caixa de texto com o peso inicial do animal.
+     * @param etPesoFinal Representa a caixa de texto com o peso final do animal.
+     * @param etPesoVer Representa a caixa de texto com o ganho de peso do animal no verão.
+     * @param etPesoOut Representa a caixa de texto com o ganho de peso do animal no outono.
+     * @param etPesoInv Representa a caixa de texto com o ganho de peso do animal no inverno.
+     * @param etPesoPrim Representa a caixa de texto com o ganho de peso do animal na primavera.
      */
     public void calcular(TableRow linha_tabela, Spinner spinnerCategoria, TextView textViewConsumo, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim){
         String categoria;
         double consumo, numeroAnimais, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim;
 
-        if(!verificaVazioSP(spinnerCategoria) &&
-           !verificaVazioET(etNumAnimais) &&
-           !verificaVazioSP(spinnerMeses) &&
-           !verificaVazioET(etPesoInicial) &&
-           !verificaVazioET(etPesoFinal) &&
-           !verificaVazioET(etPesoVer) &&
-           !verificaVazioET(etPesoOut) &&
-           !verificaVazioET(etPesoInv) &&
-           !verificaVazioET(etPesoPrim)){
+        if(verificaVazioSP(spinnerCategoria) &&
+                verificaVazioET(etNumAnimais) &&
+                verificaVazioSP(spinnerMeses) &&
+                verificaVazioET(etPesoInicial) &&
+                verificaVazioET(etPesoFinal) &&
+                verificaVazioET(etPesoVer) &&
+                verificaVazioET(etPesoOut) &&
+                verificaVazioET(etPesoInv) &&
+                verificaVazioET(etPesoPrim)){
 
             categoria = spinnerCategoria.getSelectedItem().toString();
             consumo = Double.parseDouble(textViewConsumo.getText().toString());
@@ -448,7 +447,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
             String meses = spinnerMeses.getSelectedItem().toString();
 
-            double ganho = 0.0;
+            double ganho;
             //Array que mapeia os pesos de acordo com as estações. Cada posição faz referência a um mês.
             double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
             int posicao = 0;  //posicão utilizada para inserir o animal em determinado mês de acordo com a entrada.
@@ -636,7 +635,7 @@ public class AnimaisActivity extends AppCompatActivity {
 
     /**
      * Método responsável por percorrer a matriz e somar os valores coluna por coluna.
-     * @param matriz
+     * @param matriz Representa a matriz com os valores calculados de todos os meses para todas as linhas.
      * @return array com os valores totais por coluna.
      */
     public ArrayList<Double> percorreMatrizESoma(ArrayList<double[]> matriz){
@@ -644,7 +643,7 @@ public class AnimaisActivity extends AppCompatActivity {
         int i=0, j=0;
         double soma = 0.0;
 
-        ArrayList<Double> resultado = new ArrayList<Double>();
+        ArrayList<Double> resultado = new ArrayList<>();
         //Inicializa o array com os totais de cada mês com zero.
         for(int k=0; k<12; k++){
             resultado.add(k, 0.0);
@@ -677,12 +676,12 @@ public class AnimaisActivity extends AppCompatActivity {
 
     /**
      * Método para converter um texto digitado num campo de texto para double.
-     * @param et
-     * @return
+     * @param et Representa a caixa de texto que contém o texto que será convertido.
+     * @return Retorna o texto digitado convertido em double.
      */
     public double converteTextoEmDouble(EditText et){
         String texto = et.getText().toString();
-        double textoEmDouble = 0.0;
+        double textoEmDouble;
 
         textoEmDouble = Double.parseDouble(texto);
 
@@ -691,30 +690,21 @@ public class AnimaisActivity extends AppCompatActivity {
 
     /**
      * Método para verificar se um Edit Text é vazio.
-     * @param et
-     * @return
+     * @param et Representa a caixa de texto que será verificada.
+     * @return true caso a caixa de texto esteja vazia e false caso contrário.
      */
     public boolean verificaVazioET(EditText et){
-        if(et.getText().toString().length() > 0){
-            return false;
-        }
-        else{
-            return true;
-        }
+        boolean empty = et.getText().toString().isEmpty();
+        return !empty;
     }
 
     /**
      * Método para verificar se um Spinner é vazio.
-     * @param p
-     * @return
+     * @param p Representa o spinner que será verificado.
+     * @return Retorna true caso o spinner esteja vazio (sem opção selecionada) e false caso contrário.
      */
     public boolean verificaVazioSP(Spinner p){
-        if(p.getSelectedItem().toString().length() > 0){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return !p.getSelectedItem().toString().isEmpty();
     }
 
     public void finalizaEnvio() {

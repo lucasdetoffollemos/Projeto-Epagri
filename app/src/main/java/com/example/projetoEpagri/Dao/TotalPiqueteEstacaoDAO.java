@@ -9,7 +9,7 @@ import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import java.util.ArrayList;
 
 public class TotalPiqueteEstacaoDAO implements ITotalPiqueteEstacao {
-    SQLiteDatabase bancoDeDados;
+    private final SQLiteDatabase bancoDeDados;
 
     public TotalPiqueteEstacaoDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;

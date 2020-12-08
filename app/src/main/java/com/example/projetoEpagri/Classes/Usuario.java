@@ -59,7 +59,7 @@ public class Usuario {
 
     /**
      * Mostrando na lista apenas o campo do nome.
-     * @return
+     * @return Retorna todos os dados do usuário no formato de String.
      */
     @Override
     public  String toString(){
@@ -68,9 +68,7 @@ public class Usuario {
 
         //Retornando varios elementos com um array
         String [] arrayUsers = new String[]{" Nome: "+getNome(), " Email: "+getEmail(), " Telefone: "+getTelefone(), " Senha: "+getSenha()};
-        //return Arrays.toString(array);
-        String tirandoColchetes = Arrays.toString(arrayUsers).replaceAll("(^\\[|\\]$)", "");
 
-        return tirandoColchetes;
+        return Arrays.toString(arrayUsers).replaceAll("(^\\[|$)", "");
     }
 }

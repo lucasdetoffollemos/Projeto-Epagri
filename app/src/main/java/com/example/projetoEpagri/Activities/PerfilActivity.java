@@ -1,6 +1,5 @@
 package com.example.projetoEpagri.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.R;
 import com.example.projetoEpagri.Classes.Usuario;
 
@@ -20,7 +20,7 @@ public class PerfilActivity extends AppCompatActivity {
     public Button bt_criar;
 
     @Override
-     protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
@@ -62,7 +62,7 @@ public class PerfilActivity extends AppCompatActivity {
      */
     public void criarPerfil(String nome, String email, String telefone, String senha){
         Usuario u = new Usuario(nome, email, telefone, senha);
-        long id = MainActivity.bancoDeDados.usuarioDAO.inserirUsuario(u);
+        BancoDeDados.usuarioDAO.inserirUsuario(u);
         Toast.makeText(this, "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
 
         //O código abaixo da um tempo da 2 seg até voltar a outra página.
@@ -74,22 +74,6 @@ public class PerfilActivity extends AppCompatActivity {
         }, 2000);
 
         limparDados();
-    }
-
-    /**
-     * Método responsável por mostrar a tela de listagem dos usuários.
-     */
-    private void listarUsuarios() {
-        Intent i = new Intent(PerfilActivity.this, ListaUsuariosActivity.class);
-        startActivity(i);
-    }
-
-    /**
-     * Método responsável por deletar todos os usuário da lista.
-     */
-    public void deletarTodosUsuario(){
-        MainActivity.bancoDeDados.usuarioDAO.deleteAllUsuarios();
-        Toast.makeText(this, "Usuários deletados", Toast.LENGTH_SHORT).show();
     }
 
     /**

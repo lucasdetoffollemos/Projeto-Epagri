@@ -31,6 +31,7 @@ public class SobreActivity extends AppCompatActivity {
     }
 
 
+    @SuppressWarnings("unused")
     public void clicarLogo(View v){
         IndexActivity.fecharMenu(drawerLayout);
     }

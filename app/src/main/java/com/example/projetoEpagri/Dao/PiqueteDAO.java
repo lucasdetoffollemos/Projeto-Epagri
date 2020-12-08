@@ -6,12 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.Classes.Piquete;
-import com.example.projetoEpagri.Classes.Propriedade;
 
 import java.util.ArrayList;
 
 public class PiqueteDAO implements IPiqueteSchema{
-    SQLiteDatabase bancoDeDados;
+    private final SQLiteDatabase bancoDeDados;
 
     public PiqueteDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;

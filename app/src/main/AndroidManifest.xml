@@ -35,14 +35,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.SplashScreenActivity" />
         </activity> <!-- Activity De lista de usuarios -->
-        <activity
-            android:name=".Activities.ListaUsuariosActivity"
-            android:label="Lista de Usuarios"
-            android:parentActivityName=".Activities.PerfilActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.PerfilActivity" />
-        </activity> <!-- Activity index -->
+        <!-- Activity index -->
         <activity
             android:name=".Activities.IndexActivity"
             android:label="Bem vindo"

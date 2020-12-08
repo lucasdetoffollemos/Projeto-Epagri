@@ -1,10 +1,8 @@
 package com.example.projetoEpagri.Fragments;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -24,11 +22,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
+import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.R;
 
@@ -38,11 +36,10 @@ import java.util.ArrayList;
 public class FragmentOfertaProposta extends Fragment {
     private Button bt_adicionar_linha, bt_remover_linha, bt_atualizar;
     private TableLayout table_layout;
-    private TableRow linha_tabela;
     private View layout_incluido_piquete; //Essa view serve para guardar a referência do layout (piquete) incluído no layout do fragment.
     public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
 
-    private double producaoEstimadaD, areaTotal;
+    private double producaoEstimadaD;
     private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
     private ArrayList<double[]> matrizMeses;            //matriz que armazena os valores calculados de todas as linhas para todos os meses.
     private ArrayList<Double> listaTotaisMes;
@@ -50,18 +47,12 @@ public class FragmentOfertaProposta extends Fragment {
     private ArrayList<Piquete> listaPiquetes;
     private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
 
-    private String nomePropriedade, regiao;
+    private String regiao;
     private int idPropriedade;
     private DecimalFormat doisDecimais;
 
-    //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
-    private String tipo, condicao, areaS;
-    private double areaD;
     private boolean flagLoadPiquete = false;  //Flag para setar os valores dos piquetes já existentes no momento de criação das linhas.
     private Drawable drawable;
-
-    //LinearLayout que será removido
-    private LinearLayout linearLayoutToolBar;
 
     public FragmentOfertaProposta() {}
 
@@ -84,7 +75,7 @@ public class FragmentOfertaProposta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_oferta_proposta, container, false);
 
-        layout_incluido_piquete = (ConstraintLayout) rootView.findViewById(R.id.included_layout_piquete_proposta);
+        layout_incluido_piquete = rootView.findViewById(R.id.included_layout_piquete_proposta);
 
         inicializa();
         setListeners();
@@ -96,15 +87,19 @@ public class FragmentOfertaProposta extends Fragment {
      * Método utilizado para inicializar os componentes da interface e os objetos da classe.
      */
     public void inicializa(){
-        nomePropriedade = getArguments().getString("nomePropriedade");
-        idPropriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
-        regiao = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeRegiao(nomePropriedade);
+        String nomePropriedade = "";
+        if(getArguments() != null){
+            nomePropriedade = getArguments().getString("nomePropriedade");
+        }
+
+        idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
+        regiao = BancoDeDados.propriedadeDAO.getPropriedadeRegiao(nomePropriedade);
 
         listaDeAreas = new ArrayList<>();
         matrizMeses = new ArrayList<>();
         listaTotaisMes = new ArrayList<>();
         listaTotaisEstacoes = new ArrayList<>();
-        listaPiquetes = MainActivity.bancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
+        listaPiquetes = BancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
         listaTextViewTotaisMes = new ArrayList<>();
 
         //Toast.makeText(getActivity(), "executei", Toast.LENGTH_SHORT).show();
@@ -152,10 +147,11 @@ public class FragmentOfertaProposta extends Fragment {
         bt_adicionar_linha = layout_incluido_piquete.findViewById(R.id.bt_adicionarLinha);
         bt_remover_linha = layout_incluido_piquete.findViewById(R.id.bt_removerLinha);
         bt_atualizar = layout_incluido_piquete.findViewById(R.id.bt_finalizarEnvio);
-        bt_atualizar.setText("Atualizar Dados");
+        bt_atualizar.setText(R.string.txt_bt_atualizar);
         drawable = bt_atualizar.getBackground();
 
-        linearLayoutToolBar = layout_incluido_piquete.findViewById(R.id.ln_toolBar_piquete);
+        //LinearLayout que será removido
+        LinearLayout linearLayoutToolBar = layout_incluido_piquete.findViewById(R.id.ln_toolBar_piquete);
         linearLayoutToolBar.setVisibility(View.GONE);
 
         doisDecimais = new DecimalFormat("#.##");
@@ -222,11 +218,11 @@ public class FragmentOfertaProposta extends Fragment {
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_oferta_linha, null);
+        TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_oferta_linha, null);
         criarLinha(linha_tabela);
 
         //Verifica se os piquetes já foram carregados. Se não foram, faz o loading.
-        if(flagLoadPiquete == false){
+        if(!flagLoadPiquete){
             loadPiquetes(linha_tabela);
 
             if(numeroDeLinhas+1 == listaPiquetes.size()){
@@ -289,16 +285,16 @@ public class FragmentOfertaProposta extends Fragment {
         ArrayList<String> tipoPiquete = new ArrayList<>();
 
         if(regiao.equals("cfa")){
-            tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_NORTE);
+            tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_NORTE);
         }
         else if(regiao.equals("cfb")){
-            tipoPiquete = MainActivity.bancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
+            tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
         }
 
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
-        ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, tipoPiquete);
+        ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, tipoPiquete);
         spinnerTipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoPiquete.setAdapter(spinnerTipoAdapter);
 
@@ -311,7 +307,7 @@ public class FragmentOfertaProposta extends Fragment {
         //Localiza o spinner condicao no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerCondicaoPiquete = linha_tabela.findViewById(R.id.spinner_condPiquete);
         //Cria um ArrayAdpter usando o array de string com condicoes "degradada", "média" e "ótima". //Cria um ArrayAdapter que pega o Array de string "condicaoPiquete" e transforma em um spinner.
-        ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, condicaoPiquete);
+        ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, condicaoPiquete);
         spinnerCondicaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCondicaoPiquete.setAdapter(spinnerCondicaoAdapter);
 
@@ -325,9 +321,9 @@ public class FragmentOfertaProposta extends Fragment {
 
     /**
      * Método responsável por identificar a posição de um determinado valor dentro do spinner.
-     * @param spinner
-     * @param s
-     * @return
+     * @param spinner Representa o spinner que contém os valores.
+     * @param s Representa o valor que deseja-se encontrar.
+     * @return Retorna a posição do valor dentro da lista de valores do spinner.
      */
     private int getSpinnerIndex(Spinner spinner, String s){
         for (int i=0; i<spinner.getCount(); i++){
@@ -392,7 +388,7 @@ public class FragmentOfertaProposta extends Fragment {
     /**
      * Identifica os elementos dentro da TableRow que foi inflada e chama o método de calcular quando algum valor
      * é escolhido nos spinners ou texto digitado no campo área.
-     * @param linha_tabela
+     * @param linha_tabela Representa a linha que foi adicionada na tabela.
      */
     private void setListenersLinha(final TableRow linha_tabela) {
         final Spinner spinnerTipo = (Spinner) linha_tabela.getChildAt(0);
@@ -439,37 +435,39 @@ public class FragmentOfertaProposta extends Fragment {
     /**
      * Método utilizado para ler os valores preenchidos pelo usuário (spinners e área) e fazer os cálculos de produção
      * estimada, meses e total.
-     * @param linha_tabela
-     * @param spinnerTipo
-     * @param spinnerCondicao
-     * @param editTextArea
+     * @param linha_tabela Representa a linha preenchida com os dados.
+     * @param spinnerTipo Representa o spinner com o tipo da pastagem.
+     * @param spinnerCondicao Representa o spinner com a condição da pastagem.
+     * @param editTextArea Representa o campo de texto com a área da pastagem.
      */
     public void calcular(final TableRow linha_tabela, Spinner spinnerTipo, Spinner spinnerCondicao, EditText editTextArea){
-        this.tipo = spinnerTipo.getSelectedItem().toString();
-        this.condicao = spinnerCondicao.getSelectedItem().toString();
-        this.areaS = editTextArea.getText().toString();
+        //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
+        String tipo = spinnerTipo.getSelectedItem().toString();
+        String condicao = spinnerCondicao.getSelectedItem().toString();
+        String areaS = editTextArea.getText().toString();
 
         int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
 
         bt_atualizar.setBackground(drawable);
 
         //Adiciona as áreas digitadas na lista de áreas.
-        if(this.areaS.length() > 0) {
-            this.areaD = Double.parseDouble(this.areaS);
+        double areaD;
+        if(areaS.length() > 0) {
+            areaD = Double.parseDouble(areaS);
         }
         else{
-            this.areaD = 0;
+            areaD = 0;
         }
-        this.listaDeAreas.set(posicao, this.areaD);
+        this.listaDeAreas.set(posicao, areaD);
 
         //Cálcula a producão estimada.
-        calculaProducaoEstimada(linha_tabela, this.tipo, this.condicao, this.areaD);
+        calculaProducaoEstimada(linha_tabela, tipo, condicao, areaD);
 
         //Cálcula a produção para cada mês. E faz a soma de todos os meses
         double [] arrayMesesProd = new double[12];
         double totalToneladaAnual = 0;
         for(int i=1; i<=12; i++){
-            arrayMesesProd[i-1] = calculaMes(linha_tabela, this.tipo, this.condicao, this.areaD, i);
+            arrayMesesProd[i-1] = calculaMes(linha_tabela, tipo, condicao, areaD, i);
             totalToneladaAnual = totalToneladaAnual + arrayMesesProd[i-1];
         }
 
@@ -482,7 +480,7 @@ public class FragmentOfertaProposta extends Fragment {
 
         //Mostra o Total (direita).
         TextView total = (TextView) linha_tabela.getChildAt(16);
-        int intTotalTonelada = Integer.valueOf((int) totalToneladaAnual);
+        int intTotalTonelada = (int) totalToneladaAnual;
         total.setText(String.valueOf(intTotalTonelada));
 
         calculaTotais();
@@ -500,9 +498,9 @@ public class FragmentOfertaProposta extends Fragment {
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
 
         if(regiao.equals("cfa")){
-            this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * area;
+            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * area;
         }else if(regiao.equals("cfb")){
-            this.producaoEstimadaD = (MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
+            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
         }
 
         String producaoEstimada = this.doisDecimais.format(this.producaoEstimadaD);
@@ -511,11 +509,11 @@ public class FragmentOfertaProposta extends Fragment {
 
     /**
      * Método para calcular a produção em cada um dos meses.
-     * @param linha_tabela
-     * @param tipoPastagem
-     * @param condicao
-     * @param area
-     * @param mes
+     * @param linha_tabela Representa a linha da tabela da qual os valores serão calculados.
+     * @param tipoPastagem Representa o tipo da pastagem.
+     * @param condicao Representa a condição da pastagem.
+     * @param area Representa a área da pastagem.
+     * @param mes Representa o valor númerico do mês (1 a 12).
      */
     public double calculaMes(final TableRow linha_tabela, String tipoPastagem, String condicao, double area, int mes){
         Double aproveitamento = 0.60;
@@ -525,12 +523,12 @@ public class FragmentOfertaProposta extends Fragment {
 
         double valor = 0.0;
         if(regiao.equals("cfa")){
-            valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/100;
-            valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * aproveitamento * valor * area).replace(",", "."));
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/100;
+            valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * aproveitamento * valor * area).replace(",", "."));
         }
         else if(regiao.equals("cfb")){
-            valor = (float) MainActivity.bancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
-            valor = Double.parseDouble(this.doisDecimais.format((MainActivity.bancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
+            valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
         }
 
         String resultado = this.doisDecimais.format(valor);
@@ -550,12 +548,15 @@ public class FragmentOfertaProposta extends Fragment {
      */
     public void calculaTotais(){
         //Calcula a área total.
-        this.areaTotal = 0.0;
+        double areaTotal = 0.0;
         for (int i = 0; i < this.listaDeAreas.size(); i++) {
-            this.areaTotal = this.areaTotal + this.listaDeAreas.get(i);
+            areaTotal = areaTotal + this.listaDeAreas.get(i);
         }
-        TextView area = getView().findViewById(R.id.tv_AreaTotalNumHa);
-        area.setText(this.doisDecimais.format(this.areaTotal));
+        TextView area;
+        if(getView() != null){
+            area = getView().findViewById(R.id.tv_AreaTotalNumHa);
+            area.setText(this.doisDecimais.format(areaTotal));
+        }
 
         double total = 0.0;
         int i = 0, j = 0;
@@ -620,6 +621,7 @@ public class FragmentOfertaProposta extends Fragment {
     /**
      * Método responsável por alterar o texto dos textviews dos totais dos meses e das estaçoes.
      */
+    @SuppressWarnings("ConstantConditions")
     public void setTextViewsTotais(ArrayList<Double> listaTotaisMes, ArrayList<Double> listaTotaisEstacoes){
         if(listaTotaisMes.size() > 0){
             for(int j=0; j<listaTotaisMes.size(); j++){
@@ -627,10 +629,14 @@ public class FragmentOfertaProposta extends Fragment {
             }
         }
 
-        TextView totalVer = getView().findViewById(R.id.tv_AreaTotalVer);
-        TextView totalOut = getView().findViewById(R.id.tv_AreaTotalOut);
-        TextView totalInv = getView().findViewById(R.id.tv_AreaTotalInve);
-        TextView totalPrim = getView().findViewById(R.id.tv_AreaTotalPrim);
+        TextView totalVer = null, totalOut = null, totalInv = null, totalPrim = null;
+
+        if(getView() != null){
+            totalVer = getView().findViewById(R.id.tv_AreaTotalVer);
+            totalOut = getView().findViewById(R.id.tv_AreaTotalOut);
+            totalInv = getView().findViewById(R.id.tv_AreaTotalInve);
+            totalPrim = getView().findViewById(R.id.tv_AreaTotalPrim);
+        }
 
         if(listaTotaisEstacoes.size() > 0){
             totalVer.setText(this.doisDecimais.format(listaTotaisEstacoes.get(0)));
@@ -645,17 +651,17 @@ public class FragmentOfertaProposta extends Fragment {
      */
     public void atualizarDados(ArrayList<Piquete> listaPiquetes, int idPropriedade) {
         //Deleta os valores antigos.
-        MainActivity.bancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
-        MainActivity.bancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
-        MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
+        BancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
+        BancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
+        BancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
 
         //Salva os novos valores.
         for(int i=0; i<listaPiquetes.size(); i++){
-            MainActivity.bancoDeDados.piqueteDAO.inserirPiquete(listaPiquetes.get(i), idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
+            BancoDeDados.piqueteDAO.inserirPiquete(listaPiquetes.get(i), idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
         }
 
-        MainActivity.bancoDeDados.totalPiqueteMesDAO.inserirTotalMes(listaTotaisMes, idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
-        MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(listaTotaisEstacoes, idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
+        BancoDeDados.totalPiqueteMesDAO.inserirTotalMes(listaTotaisMes, idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
+        BancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(listaTotaisEstacoes, idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
 
         //Atualiza a área total na tabela de propriedades.
         //MainActivity.bancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, areaTotal);

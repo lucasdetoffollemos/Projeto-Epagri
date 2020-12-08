@@ -9,7 +9,7 @@ import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import java.util.ArrayList;
 
 public class DadosDAO implements IDadosSchema {
-    private SQLiteDatabase bancoDeDados;
+    private final SQLiteDatabase bancoDeDados;
 
     public DadosDAO(SQLiteDatabase bancoDeDados){
         this.bancoDeDados = bancoDeDados;
@@ -49,14 +49,14 @@ public class DadosDAO implements IDadosSchema {
         ArrayList<String> arrayList = new ArrayList<>();
 
         String sql_query = "SELECT * FROM " + nomeTabela;
-        Cursor cursor =  this.bancoDeDados.rawQuery(sql_query , null );
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
         cursor.moveToFirst();
 
-        if (cursor != null){
-            while(!cursor.isAfterLast()){
-                arrayList.add(cursor.getString(cursor.getColumnIndex(COLUNA_TIPO)));
-                cursor.moveToNext();
-            }}
+        while(!cursor.isAfterLast()){
+            arrayList.add(cursor.getString(cursor.getColumnIndex(COLUNA_TIPO)));
+            cursor.moveToNext();
+        }
+        cursor.close();
         return arrayList;
     }
 
@@ -67,11 +67,11 @@ public class DadosDAO implements IDadosSchema {
      * @return Valor númerico da condição.
      */
     public Double getCondicao(String tipo, String condicao, String nomeTabela) {
-        Double valorCondicao = 1.0;
+        double valorCondicao = 1.0;
         int posicaoColuna = 1;
 
         String sql_query = "SELECT * FROM " + nomeTabela + " WHERE " + COLUNA_TIPO + " = '" + tipo +"'";
-        Cursor c = this.bancoDeDados.rawQuery(sql_query, null);
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         switch (condicao) {
             case "Degradada":
@@ -85,10 +85,10 @@ public class DadosDAO implements IDadosSchema {
                 break;
         }
 
-        while (c.moveToNext()) {
-            valorCondicao = (c.getDouble(posicaoColuna));
+        while (cursor.moveToNext()) {
+            valorCondicao = (cursor.getDouble(posicaoColuna));
         }
-
+        cursor.close();
         return valorCondicao;
     }
 
@@ -103,7 +103,7 @@ public class DadosDAO implements IDadosSchema {
         int valorDoMes = 1;
 
         String sql_query = "SELECT * FROM " + nomeTabela + " WHERE "+ COLUNA_TIPO + " = '"+ tipo +"'";
-        Cursor c = this.bancoDeDados.rawQuery(sql_query, null);
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         switch (mes){
             case 1: posicaoColuna = 4; break;
@@ -121,10 +121,10 @@ public class DadosDAO implements IDadosSchema {
             default: posicaoColuna = 1; break;
         }
 
-        while (c.moveToNext()){
-            valorDoMes = (c.getInt(posicaoColuna));
+        while (cursor.moveToNext()){
+            valorDoMes = (cursor.getInt(posicaoColuna));
         }
-
+        cursor.close();
         return  valorDoMes;
     }
 }

@@ -20,6 +20,7 @@ import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.Animais;
+import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
@@ -31,9 +32,8 @@ public class PropriedadeActivity extends AppCompatActivity {
     private EditText et_nomePropriedade;
     private Button bt_proximo;
     private Spinner sp_regiao;
-
     private String nomeUsuario;
-    private int  CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY = 0;
+    private final int CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,6 @@ public class PropriedadeActivity extends AppCompatActivity {
     public void inicializa(){
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
-        //Toast.makeText(PropriedadeActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
         sp_regiao = findViewById(R.id.sp_regiao);
@@ -129,14 +128,13 @@ public class PropriedadeActivity extends AppCompatActivity {
     /**
      * Método que volta para activity anterior(Index), pela seta de voltar em cima da tela.
      * @param item Representa o botão do smartphone que foi clicado.
-     * @return
+     * @return true quando algum botão foi clicado.
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                enviaResposta();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            enviaResposta();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -144,9 +142,9 @@ public class PropriedadeActivity extends AppCompatActivity {
 
     /**
      * Método responsável por lidar com as respostas enviadas da activity Piquete.
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode Representa o código da activity que está esperando a resposta.
+     * @param resultCode Representa o código da activity que enviou a resposta.
+     * @param data Representa a informação enviada como resposta.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -154,63 +152,54 @@ public class PropriedadeActivity extends AppCompatActivity {
 
         if (requestCode == CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                //Informações Animais.
-                ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
-                ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("listaTotaisUAHA");
                 nomeUsuario = data.getStringExtra("nome_usuario");
                 int qtdeAnimais = data.getIntExtra("qtdeAnimal", 0);
                 double area = data.getDoubleExtra("area", 1.0);
 
                 //Informações Piquetes
+                @SuppressWarnings("unchecked")
                 ArrayList<Piquete> listaPiquete = (ArrayList<Piquete>) data.getSerializableExtra("listaPiquetes");
+                @SuppressWarnings("unchecked")
                 ArrayList<Double> listaTotaisMes = (ArrayList<Double>) data.getSerializableExtra("listaTotaisMes");
+                @SuppressWarnings("unchecked")
                 ArrayList<Double> listaTotaisEstacoes = (ArrayList<Double>) data.getSerializableExtra("listaTotaisEstacoes");
 
-                /*for(int i=0; i<listaAnimais.size(); i++){
-                    Log.i("listaAnimais", listaAnimais.get(i).getCategoria() + " "
-                            + listaAnimais.get(i).getConsumo() + " "
-                            + listaAnimais.get(i).getNumAnimais() + " "
-                            + listaAnimais.get(i).getEntradaMes() + " "
-                            + listaAnimais.get(i).getPesoInicial() + " "
-                            + listaAnimais.get(i).getPesoFinal() + " "
-                            + listaAnimais.get(i).getPesoGanhoVer() + " "
-                            + listaAnimais.get(i).getPesoGanhoOut() + " "
-                            + listaAnimais.get(i).getPesoGanhoInv() + " "
-                            + listaAnimais.get(i).getPesoGanhoPrim() + " "
-                            + Arrays.toString(listaAnimais.get(i).getMeses()));
-                }
-                Log.i("listaTotalUAHA", String.valueOf(listaTotalUAHA));
-
-                for(int i=0; i<listaPiquete.size(); i++){
-                    Log.i("listaPiquetes", listaPiquete.get(i).getTipo() + " "
-                            + listaPiquete.get(i).getCondicao() + " "
-                            + listaPiquete.get(i).getArea() + " "
-                            + listaPiquete.get(i).getProdEstimada() + " "
-                            + Arrays.toString(listaPiquete.get(i).getMeses()) + " "
-                            + listaPiquete.get(i).getTotal());
-                }
-                Log.i("listaTotaisMes", String.valueOf(listaTotaisMes));
-                Log.i("listaTotaisEstacoes", String.valueOf(listaTotaisEstacoes));*/
+                //Informações Animais.
+                ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
+                @SuppressWarnings("unchecked")
+                ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("listaTotaisUAHA");
 
                 //Valor para representar que não encontrou o usuário com o nome recebido por parâmetro (-1).
-                int usuarioId = MainActivity.bancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
+                int usuarioId = BancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
                 if(usuarioId != -1){
                     Propriedade p = new Propriedade(nomePropriedade, regiao, area, qtdeAnimais, listaPiquete, listaAnimais);
-                    MainActivity.bancoDeDados.propriedadeDAO.inserirPropriedade(p, usuarioId);
+                    BancoDeDados.propriedadeDAO.inserirPropriedade(p, usuarioId);
 
-                    int propriedadeId = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
+                    int propriedadeId = BancoDeDados.propriedadeDAO.getPropriedadeId(nomePropriedade);
                     if(propriedadeId != -1){
-                        for(int i=0; i<listaPiquete.size(); i++){
-                            MainActivity.bancoDeDados.piqueteDAO.inserirPiquete(listaPiquete.get(i), propriedadeId, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+                        if(listaPiquete != null){
+                            for(int i=0; i<listaPiquete.size(); i++){
+                                BancoDeDados.piqueteDAO.inserirPiquete(listaPiquete.get(i), propriedadeId, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+                            }
                         }
 
-                        MainActivity.bancoDeDados.totalPiqueteMesDAO.inserirTotalMes(listaTotaisMes, propriedadeId, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
-                        MainActivity.bancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(listaTotaisEstacoes, propriedadeId, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
-
-                        for(int i=0; i<listaAnimais.size(); i++){
-                            MainActivity.bancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+                        if(listaTotaisMes != null){
+                            BancoDeDados.totalPiqueteMesDAO.inserirTotalMes(listaTotaisMes, propriedadeId, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
                         }
-                        MainActivity.bancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+
+                        if(listaTotaisEstacoes != null){
+                            BancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(listaTotaisEstacoes, propriedadeId, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+                        }
+
+                        if(listaAnimais != null){
+                            for(int i=0; i<listaAnimais.size(); i++){
+                                BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+                            }
+                        }
+
+                        if(listaTotalUAHA != null){
+                            BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+                        }
                     }
                 }
 
