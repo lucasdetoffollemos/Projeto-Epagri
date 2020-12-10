@@ -16,7 +16,7 @@ import com.example.projetoEpagri.R;
 
 /*
     COISAS A FAZER:
-    - Implementar a não perda de layout ao voltar de Animais para Piquete.
+    - Implementar a não perda de layout ao voltar de Animais para Piquete. check!
     - Abrir e fechar conexões com o banco de dados no momento correto.
     - Implementar tratamento de exceção em todas as interações com o banco.
  */

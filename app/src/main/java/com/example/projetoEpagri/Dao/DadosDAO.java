@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
+import com.example.projetoEpagri.Classes.Dados;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,41 @@ public class DadosDAO implements IDadosSchema {
         values.put(COLUNA_TOTAL_PASTAGEM, total);
 
         this.bancoDeDados.insert(nomeTabela, null, values);
+    }
+
+    /**
+     * Método para recuperar todas as pastagens.
+     * @return ArrayList de String com as pastagens.
+     */
+    public ArrayList<Dados> getPastagem(String nomeTabela) {
+        ArrayList<Dados> arrayList = new ArrayList<>();
+
+        String sql_query = "SELECT * FROM " + nomeTabela;
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
+
+        while(cursor.moveToNext()){
+            Dados dado = new Dados();
+            dado.setPastagem(cursor.getString(0));
+            dado.setCondicao(cursor.getDouble(1), 0);
+            dado.setCondicao(cursor.getDouble(2), 1);
+            dado.setCondicao(cursor.getDouble(3), 2);
+            dado.setMeses(cursor.getInt(4), 0);
+            dado.setMeses(cursor.getInt(5), 1);
+            dado.setMeses(cursor.getInt(6), 2);
+            dado.setMeses(cursor.getInt(7), 3);
+            dado.setMeses(cursor.getInt(8), 4);
+            dado.setMeses(cursor.getInt(9), 5);
+            dado.setMeses(cursor.getInt(10), 6);
+            dado.setMeses(cursor.getInt(11), 7);
+            dado.setMeses(cursor.getInt(12), 8);
+            dado.setMeses(cursor.getInt(13), 9);
+            dado.setMeses(cursor.getInt(14), 10);
+            dado.setMeses(cursor.getInt(15), 11);
+            dado.setTotal(cursor.getInt(16));
+            arrayList.add(dado);
+        }
+        cursor.close();
+        return arrayList;
     }
 
     /**
@@ -126,5 +162,9 @@ public class DadosDAO implements IDadosSchema {
         }
         cursor.close();
         return  valorDoMes;
+    }
+
+    public void deleteAllDados(String nomeTabela){
+        this.bancoDeDados.execSQL("DELETE from " + nomeTabela);
     }
 }

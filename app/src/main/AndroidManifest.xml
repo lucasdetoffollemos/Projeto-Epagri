@@ -11,12 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".Activities.GraficoActivity"
-            android:screenOrientation="landscape"
+        <activity android:name=".Activities.EditarDadosActivity" />
+        <activity
+            android:name=".Activities.GraficoActivity"
             android:largeHeap="true"
-            tools:ignore="LockedOrientationActivity">
-        </activity>
-        <!-- Splash Screen -->
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" /> <!-- Splash Screen -->
         <activity android:name=".Activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,13 +82,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.PiqueteActivity" />
         </activity>
-
-        <activity android:name=".Activities.DadosPerfilActivity"/>
-
+        <activity android:name=".Activities.DadosPerfilActivity" />
         <activity android:name=".Activities.SobreActivity" />
-
         <activity android:name=".Activities.ConfiguracoesActivity" />
-
 
         <meta-data
             android:name="preloaded_fonts"

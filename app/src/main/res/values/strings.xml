@@ -85,6 +85,11 @@
     <string name="txt_tv_dadosProp">Dados da Propriedade</string>
     <string name="txt_tv_projEpagri">Projeto Epagri</string>
     <string name="txt_tv_inicio">Início</string>
+    <string name="txt_tv_config_msg">Que dados você deseja editar?</string>
+    <string name="txt_tv_titulo_tabela_edit">Estimativas da Produção Total e Distribuição das Principais Forrageiras</string>
+    <string name="txt_tv_condicao_degrada">Condição\nDegradada</string>
+    <string name="txt_tv_condicao_media">Condição\nMédia</string>
+    <string name="txt_tv_condicao_otima">Condição\nÓtima</string>
 
     <!-- List View -->
     <string name="txt_lv_propriedade_nome">Nome: </string>
@@ -107,6 +112,8 @@
     <string name="txt_bt_cadastroPropriedade">Cadastrar Propriedade</string>
     <string name="txt_bt_cancelar">Cancelar</string>
     <string name="txt_bt_atualizar">Atualizar</string>
+    <string name="txt_bt_cfa">cfa</string>
+    <string name="txt_bt_cfb">cfb</string>
 
     <!-- Content Description das Imagens -->
     <string name="cd_logo_ufpr">Logo UFPR</string>
