@@ -22,13 +22,82 @@
         <!--            android:src="@drawable/bull"/>-->
 
         <TextView
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/branco"
             android:gravity="center"
             android:text="@string/txt_tv_projEpagri"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/tv_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/branco"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/txt_tv_nomeInicio"
+                />
+
+            <TextView
+                android:id="@+id/tv_nomeDinamico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/branco"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/txt_tv_nome"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+           >
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/branco"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/txt_tv_emailInicio"/>
+
+            <TextView
+                android:id="@+id/tv_emailDinamico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/branco"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/txt_tv_email"/>
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
@@ -164,6 +233,37 @@
             app:tint="@color/preto"
             android:src="@drawable/ic_configuracoes"
             android:contentDescription="@string/txt_img_logoConfig" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:onClick="clicarSair"
+        tools:ignore="UseCompoundDrawables">
+
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="20sp"
+            android:textColor="@color/preto"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/txt_tv_sair"
+            android:padding="12dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="48dp"
+            android:layout_marginEnd="48dp"
+            android:padding="12dp"
+            app:tint="@color/preto"
+            android:src="@drawable/ic_sair"
+            android:contentDescription="@string/txt_img_logoSair" />
 
     </LinearLayout>
 

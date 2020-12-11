@@ -81,9 +81,15 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         IndexActivity.fecharMenu(drawerLayout);
     }
 
+    public void clicarSair(View v){
+        IndexActivity.sairApp(this);
+    }
+
     protected void  onPause() {
         IndexActivity.fecharMenu(drawerLayout);
         super.onPause();
     }
+
+
 
 }

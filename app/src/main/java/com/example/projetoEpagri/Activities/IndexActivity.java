@@ -137,16 +137,16 @@ public class IndexActivity extends AppCompatActivity {
     /**
      * Método que tem como objetivo, ver se o usuário quer sair mesmo, chamada quando clicado no botão de voltar do celular.
      */
-    public  void onBackPressed(){
+    public static void sairApp(final Activity a){
         //Criando a caixa de pergunta, se o usuário quer ou não sair do app
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(a);
 
         builder.setTitle("Sair");
         builder.setMessage( "Tem certeza que deseja deslogar? " );
         builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                a.finish();
             }
         });
 
@@ -157,15 +157,11 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
-    }
+        builder.show();}
 
-    //Chamado no arquivo de layout, no icone de voltar, no canto superior a esquerda
-    @SuppressWarnings("unused")
-    public void clicarVoltarIndex(View view) {
-        onBackPressed();
+    public  void onBackPressed(){
+        sairApp(this);
     }
-
 
     //Códido relacionados ao menu navigation Drawer
     public void clicarMenu(View v){
@@ -203,12 +199,16 @@ public class IndexActivity extends AppCompatActivity {
         redirecionaParaActivity(this, ConfiguracoesActivity.class);
     }
 
+    public void clicarSair(View v){
+        sairApp(this);
+    }
+
     public static void redirecionaParaActivity(Activity essa, Class aquela){
         Intent i = new Intent(essa, aquela);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         essa.startActivity(i);
-
     }
+
 
     protected void  onPause() {
         fecharMenu(drawerLayout);

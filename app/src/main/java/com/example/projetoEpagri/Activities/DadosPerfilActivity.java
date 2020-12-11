@@ -54,9 +54,15 @@ public class DadosPerfilActivity extends AppCompatActivity {
         finish();
     }
 
+    public void clicarSair(View v){
+        IndexActivity.sairApp(this);
+    }
+
     protected void  onPause() {
         IndexActivity.fecharMenu(drawerLayout);
         super.onPause();
     }
+
+
 
 }

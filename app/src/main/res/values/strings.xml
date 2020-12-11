@@ -73,9 +73,9 @@
     <string name="txt_tv_seusDados">Seu Dados</string>
     <string name="txt_tv_dadosPerfil">Dados Perfil</string>
     <string name="txt_tv_nome">Nome</string>
-    <string name="txt_tv_email">email</string>
-    <string name="txt_tv_telefone">telefone</string>
-    <string name="text_tv_senha">senha</string>
+    <string name="txt_tv_email">Email</string>
+    <string name="txt_tv_telefone">Telefone</string>
+    <string name="text_tv_senha">Senha</string>
     <string name="txt_tv_pagIni">Página Inicial</string>
     <string name="txt_tv_cadastroPique">Cadastre os Piquetes</string>
     <string name="txt_tv_cadastreProp">Cadastre a Propriedade</string>
@@ -90,6 +90,7 @@
     <string name="txt_tv_condicao_degrada">Condição\nDegradada</string>
     <string name="txt_tv_condicao_media">Condição\nMédia</string>
     <string name="txt_tv_condicao_otima">Condição\nÓtima</string>
+    <string name="txt_tv_recuperarSenha">Esqueceu sua senha?</string>
 
     <!-- List View -->
     <string name="txt_lv_propriedade_nome">Nome: </string>
@@ -135,6 +136,10 @@
     <string name="txt_img_logoPerfil">Logo perfil</string>
     <string name="txt_img_logoSobre">Logo sobre</string>
     <string name="txt_img_logoConfig">Logo configurações</string>
+    <string name="txt_tv_sair">Sair</string>
+    <string name="txt_img_logoSair">Logo sair</string>
+    <string name="txt_tv_nomeInicio">Nome:</string>
+    <string name="txt_tv_emailInicio">Email:</string>
 
 
 </resources>
