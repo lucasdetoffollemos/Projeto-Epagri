@@ -5,7 +5,7 @@
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/verde</item>
     <item name="colorPrimaryDark">@color/preto</item>
-    <item name="colorAccent">@color/cinza</item>
+    <item name="colorAccent">@color/cursor</item>
   </style>
 
 

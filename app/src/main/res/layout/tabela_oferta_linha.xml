@@ -36,7 +36,8 @@
         android:hint="@string/hint_et_area"
         android:inputType="textPersonName"
         android:textSize="14sp"
-        android:textCursorDrawable="@null"/>
+
+        />
 
 
     <TextView
