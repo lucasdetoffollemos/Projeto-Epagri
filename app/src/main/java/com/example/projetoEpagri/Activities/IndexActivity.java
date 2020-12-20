@@ -138,7 +138,7 @@ public class IndexActivity extends AppCompatActivity {
     /**
      * Método que tem como objetivo, ver se o usuário quer sair mesmo, chamada quando clicado no botão de voltar do celular.
      */
-    public static void sairApp(final Activity a, final Class c){
+    public static void sairApp(final Activity a, final Class class){
         //Criando a caixa de pergunta, se o usuário quer ou não sair do app
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
 
@@ -147,7 +147,7 @@ public class IndexActivity extends AppCompatActivity {
         builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(a, c);
+                Intent i = new Intent(a, class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 a.startActivity(i);
                 a.finish();
