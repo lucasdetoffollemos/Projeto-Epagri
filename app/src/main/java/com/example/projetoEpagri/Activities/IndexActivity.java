@@ -33,6 +33,7 @@ public class IndexActivity extends AppCompatActivity {
 
     //Menu Drawer
     private DrawerLayout drawerLayout;
+    private Object ConfiguracoesActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +138,7 @@ public class IndexActivity extends AppCompatActivity {
     /**
      * Método que tem como objetivo, ver se o usuário quer sair mesmo, chamada quando clicado no botão de voltar do celular.
      */
-    public static void sairApp(final Activity a){
+    public static void sairApp(final Activity a, final Class c){
         //Criando a caixa de pergunta, se o usuário quer ou não sair do app
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
 
@@ -146,7 +147,11 @@ public class IndexActivity extends AppCompatActivity {
         builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(a, c);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                a.startActivity(i);
                 a.finish();
+
             }
         });
 
@@ -160,7 +165,7 @@ public class IndexActivity extends AppCompatActivity {
         builder.show();}
 
     public  void onBackPressed(){
-        sairApp(this);
+        sairApp(this, MainActivity.class);
     }
 
     //Códido relacionados ao menu navigation Drawer
@@ -189,18 +194,21 @@ public class IndexActivity extends AppCompatActivity {
 
     public void clicarPerfil(View v){
         redirecionaParaActivity(this, DadosPerfilActivity.class);
+
     }
 
     public void clicarSobre(View v){
         redirecionaParaActivity(this, SobreActivity.class);
+
     }
 
     public void clicarConfig(View v){
         redirecionaParaActivity(this, ConfiguracoesActivity.class);
+
     }
 
     public void clicarSair(View v){
-        sairApp(this);
+        sairApp(this, MainActivity.class);
     }
 
     public static void redirecionaParaActivity(Activity essa, Class aquela){

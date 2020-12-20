@@ -64,6 +64,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
 
     public void clicarInicio(View v){
+        IndexActivity.redirecionaParaActivity(this, IndexActivity.class);
         finish();
     }
 
@@ -82,13 +83,15 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     }
 
     public void clicarSair(View v){
-        IndexActivity.sairApp(this);
+        IndexActivity.sairApp(this, MainActivity.class);
     }
 
     protected void  onPause() {
         IndexActivity.fecharMenu(drawerLayout);
         super.onPause();
     }
+
+//
 
 
 
