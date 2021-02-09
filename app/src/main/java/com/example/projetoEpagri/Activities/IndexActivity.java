@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.ListViewPropriedadesAdapter;
 import com.example.projetoEpagri.Classes.Propriedade;
+import com.example.projetoEpagri.Classes.Usuario;
 import com.example.projetoEpagri.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -33,6 +36,7 @@ public class IndexActivity extends AppCompatActivity {
 
     //Menu Drawer
     private DrawerLayout drawerLayout;
+    private View layout_incluido;
     private Object ConfiguracoesActivity;
 
     @Override
@@ -75,6 +79,15 @@ public class IndexActivity extends AppCompatActivity {
 
         //Drawer menu
         drawerLayout = findViewById(R.id.drawerLayout);
+        layout_incluido = findViewById(R.id.included_nav_drawer);
+
+        Usuario usuario = BancoDeDados.usuarioDAO.getUsuario(usuarioId);
+
+        TextView nome, email;
+        nome = layout_incluido.findViewById(R.id.tv_nomeDinamico);
+        email = layout_incluido.findViewById(R.id.tv_emailDinamico);
+        nome.setText(usuario.getNome());
+        email.setText(usuario.getEmail());
     }
 
     /**
@@ -143,7 +156,7 @@ public class IndexActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(a);
 
         builder.setTitle("Sair");
-        builder.setMessage( "Tem certeza que deseja deslogar? " );
+        builder.setMessage( "Tem certeza que deseja sair?" );
         builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -193,17 +206,17 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     public void clicarPerfil(View v){
-        redirecionaParaActivity(this, DadosPerfilActivity.class);
+        redirecionaParaActivity(this, DadosPerfilActivity.class, this.nomeUsuario);
 
     }
 
     public void clicarSobre(View v){
-        redirecionaParaActivity(this, SobreActivity.class);
+        redirecionaParaActivity(this, SobreActivity.class, this.nomeUsuario);
 
     }
 
     public void clicarConfig(View v){
-        redirecionaParaActivity(this, ConfiguracoesActivity.class);
+        redirecionaParaActivity(this, ConfiguracoesActivity.class, this.nomeUsuario);
 
     }
 
@@ -211,9 +224,10 @@ public class IndexActivity extends AppCompatActivity {
         sairApp(this, MainActivity.class);
     }
 
-    public static void redirecionaParaActivity(Activity essa, Class aquela){
+    public static void redirecionaParaActivity(Activity essa, Class aquela, String nomeUsuario){
         Intent i = new Intent(essa, aquela);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("nome_usuario", nomeUsuario);
         essa.startActivity(i);
     }
 

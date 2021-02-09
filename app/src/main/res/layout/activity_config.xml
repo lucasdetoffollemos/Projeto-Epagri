@@ -83,6 +83,6 @@
         android:layout_gravity="start"
         android:background="@color/cinza">
 
-        <include layout="@layout/main_nav_drawer" />
+        <include layout="@layout/main_nav_drawer" android:id="@+id/included_nav_drawer"/>
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

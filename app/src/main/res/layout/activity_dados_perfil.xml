@@ -192,23 +192,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_marginTop="25dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp">
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
                     <Button
                         android:id="@+id/bt_cancelar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="@string/txt_bt_cancelar"
-                        android:layout_marginRight="70dp"
-                        tools:ignore="ButtonStyle"
-                        android:layout_marginEnd="70dp" />
+                        tools:ignore="ButtonStyle" />
 
                     <Button
                         android:id="@+id/bt_atualizar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
                         android:text="@string/txt_bt_atualizar"
                         tools:ignore="ButtonStyle" />
                 </LinearLayout>
@@ -224,7 +228,7 @@
         android:background="@color/cinza">
 
         <include
-            layout="@layout/main_nav_drawer"
+            layout="@layout/main_nav_drawer" android:id="@+id/included_nav_drawer"
             />
 
     </RelativeLayout>

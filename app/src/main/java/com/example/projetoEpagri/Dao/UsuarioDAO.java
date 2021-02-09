@@ -41,7 +41,7 @@ public class UsuarioDAO implements IUsuarioSchema {
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         Usuario usuario = new Usuario();
-        if (cursor.getCount() > 0) {
+        if (cursor != null && cursor.moveToFirst()) {
             usuario.setId(cursor.getInt(0));
             usuario.setNome(cursor.getString(1));
             usuario.setEmail(cursor.getString(2));

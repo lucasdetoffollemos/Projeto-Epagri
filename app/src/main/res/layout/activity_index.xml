@@ -111,7 +111,7 @@
         android:background="@color/cinza">
 
         <include
-            layout="@layout/main_nav_drawer"
+            layout="@layout/main_nav_drawer" android:id="@+id/included_nav_drawer"
             />
 
     </RelativeLayout>

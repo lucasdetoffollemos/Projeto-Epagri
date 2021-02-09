@@ -7,12 +7,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
+import com.example.projetoEpagri.Classes.BancoDeDados;
+import com.example.projetoEpagri.Classes.Usuario;
 import com.example.projetoEpagri.R;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
+    private String nomeUsuario;
+    private int idUsuario;
     private DrawerLayout drawerLayout;
+    private View layout_incluido;
     private Button bt_edit_cfa, bt_edit_cfb;
 
     @Override
@@ -25,9 +31,21 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     }
 
     public void inicializa(){
+        Intent intent = getIntent();
+        nomeUsuario = intent.getStringExtra("nome_usuario");
+        idUsuario = BancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
+        Usuario usuario = BancoDeDados.usuarioDAO.getUsuario(idUsuario);
+
         drawerLayout = findViewById(R.id.drawerLayout);
+        layout_incluido = findViewById(R.id.included_nav_drawer);
         bt_edit_cfa = findViewById(R.id.bt_edit_cfa);
         bt_edit_cfb = findViewById(R.id.bt_edit_cfb);
+
+        TextView nome, email;
+        nome = layout_incluido.findViewById(R.id.tv_nomeDinamico);
+        email = layout_incluido.findViewById(R.id.tv_emailDinamico);
+        nome.setText(usuario.getNome());
+        email.setText(usuario.getEmail());
     }
 
     public void setListeners(){
@@ -64,17 +82,17 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
 
     public void clicarInicio(View v){
-        IndexActivity.redirecionaParaActivity(this, IndexActivity.class);
+        IndexActivity.redirecionaParaActivity(this, IndexActivity.class, nomeUsuario);
         finish();
     }
 
     public void clicarPerfil(View v){
-        IndexActivity.redirecionaParaActivity(this, DadosPerfilActivity.class);
+        IndexActivity.redirecionaParaActivity(this, DadosPerfilActivity.class, nomeUsuario);
         finish();
     }
 
     public void clicarSobre(View v){
-        IndexActivity.redirecionaParaActivity(this, SobreActivity.class);
+        IndexActivity.redirecionaParaActivity(this, SobreActivity.class, nomeUsuario);
         finish();
     }
 
