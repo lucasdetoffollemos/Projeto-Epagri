@@ -3,6 +3,7 @@ package com.example.projetoEpagri.Dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IUsuarioSchema;
 import com.example.projetoEpagri.Classes.Usuario;
@@ -142,5 +143,17 @@ public class UsuarioDAO implements IUsuarioSchema {
         else {
             return false;
         }
+    }
+
+    public boolean verificaNomeTelefoneUusario(String nome, String telefone){
+        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=? and "+ COLUNA_TELEFONE + "=?";
+        Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{nome, telefone});
+        if(c.getCount()>0)
+        {
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }

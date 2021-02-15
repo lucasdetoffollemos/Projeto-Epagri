@@ -25,20 +25,20 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="clicarVoltarPerfil"
+                android:onClick="clicarVoltarRecuperaSenha"
                 android:src="@drawable/ic_voltar"
                 android:tint="@color/preto"
                 android:contentDescription="@string/todo" />
-    <!--        <TextView-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:text="Epagri"-->
-    <!--            android:textSize="20sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            android:textAlignment="center"-->
-    <!--            android:textColor="@color/preto"-->
-    <!--            android:gravity="center_horizontal" />-->
+            <!--        <TextView-->
+            <!--            android:layout_width="0dp"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_weight="1"-->
+            <!--            android:text="Epagri"-->
+            <!--            android:textSize="20sp"-->
+            <!--            android:textStyle="bold"-->
+            <!--            android:textAlignment="center"-->
+            <!--            android:textColor="@color/preto"-->
+            <!--            android:gravity="center_horizontal" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -50,15 +50,26 @@
             tools:context=".Activities.PerfilActivity">
 
             <TextView
-                android:id="@+id/tv_tituloPerfil"
+                android:id="@+id/tv_tituloRecuperaSEnha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="@string/txt_tv_tituloPerfil"
+                android:layout_marginTop="50dp"
+                android:text="@string/txt_tv_tituloRecuperaSenha"
                 android:gravity="center_horizontal"
                 android:textStyle="bold"
                 android:textColor="@color/verde"
                 android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_subTituloRecuperaSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/txt_tv_subTituloRecuperaSenha"
+                android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textColor="@color/verde"
+                android:textSize="15sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldNome"
@@ -86,37 +97,10 @@
                     android:autofillHints=""
                     tools:ignore="LabelFor"
                     android:inputType="textPersonName"
-                />
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFieldEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_et_email"
-                android:layout_marginTop="15dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                app:startIconDrawable="@drawable/ic_email"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                >
 
-                <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:autofillHints=""
-                    tools:ignore="LabelFor,TextFields" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldTelefone"
@@ -147,42 +131,12 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFieldSenha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_et_senha"
-                android:layout_marginTop="15dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                app:endIconMode="password_toggle"
-                app:startIconDrawable="@drawable/ic_senha"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                >
-                <EditText
-                    android:id="@+id/et_senha"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:importantForAutofill="no"
-                    android:inputType="textPassword"
-                    tools:ignore="LabelFor" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
-                android:id="@+id/bt_criar"
+                android:id="@+id/bt_modificar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/txt_bt_criar"
-                android:layout_marginTop="10dp"/>
+                android:text="@string/txt_bt_modicar"
+                android:layout_marginTop="30dp"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -91,6 +91,10 @@
     <string name="txt_tv_condicao_media">Condição\nMédia</string>
     <string name="txt_tv_condicao_otima">Condição\nÓtima</string>
     <string name="txt_tv_recuperarSenha">Esqueceu sua senha?</string>
+    <string name="txt_tv_nomeInicio">Nome:</string>
+    <string name="txt_tv_emailInicio">Email:</string>
+    <string name="txt_tv_tituloRecuperaSenha">Recuperar senha:</string>
+    <string name="txt_tv_subTituloRecuperaSenha">(Digite o nome e o telefone cadastrados, para modificar sua senha.)</string>
 
     <!-- List View -->
     <string name="txt_lv_propriedade_nome">Nome: </string>
@@ -115,6 +119,7 @@
     <string name="txt_bt_atualizar">Atualizar</string>
     <string name="txt_bt_cfa">cfa</string>
     <string name="txt_bt_cfb">cfb</string>
+    <string name="txt_bt_modicar">Modificar senha</string>
 
     <!-- Content Description das Imagens -->
     <string name="cd_logo_ufpr">Logo UFPR</string>
@@ -138,8 +143,7 @@
     <string name="txt_img_logoConfig">Logo configurações</string>
     <string name="txt_tv_sair">Sair</string>
     <string name="txt_img_logoSair">Logo sair</string>
-    <string name="txt_tv_nomeInicio">Nome:</string>
-    <string name="txt_tv_emailInicio">Email:</string>
+
 
 
 </resources>

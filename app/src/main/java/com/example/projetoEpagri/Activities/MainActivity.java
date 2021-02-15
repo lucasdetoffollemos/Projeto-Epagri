@@ -22,7 +22,7 @@ import com.example.projetoEpagri.R;
  */
 
 public class MainActivity extends AppCompatActivity {
-    private TextView tv_criaPerfil;
+    private TextView tv_criaPerfil, tv_recuperaSenha;
     private EditText et_nome, et_senha;
     private Button bt_login;
     public static BancoDeDados bancoDeDados;
@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         this.et_senha = findViewById(R.id.et_senha);
         this.bt_login = findViewById(R.id.bt_login);
         this.tv_criaPerfil = findViewById(R.id.tv_criarPerfil);
+        this.tv_recuperaSenha = findViewById(R.id.tv_recuperarSenha);
+
 
         bancoDeDados = new BancoDeDados(this);
         bancoDeDados.abreConexao();
@@ -75,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vaiParaActivityPerfil();
+            }
+        });
+
+        this.tv_recuperaSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vaiParaActivityRecuperaSenha();
             }
         });
     }
@@ -106,6 +115,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public void vaiParaActivityPerfil() {
         Intent i = new Intent(MainActivity.this, PerfilActivity.class);
+        startActivity(i);
+    }
+
+    /**
+     * Método responsável por iniciar a Activity DE recuperação de senha.
+     */
+    public void vaiParaActivityRecuperaSenha() {
+        Intent i = new Intent(MainActivity.this, RecuperaSenhaActivity.class);
         startActivity(i);
     }
 
