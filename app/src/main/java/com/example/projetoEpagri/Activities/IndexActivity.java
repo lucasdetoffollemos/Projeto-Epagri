@@ -175,7 +175,8 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();}
+        builder.show();
+    }
 
     public  void onBackPressed(){
         sairApp(this, MainActivity.class);

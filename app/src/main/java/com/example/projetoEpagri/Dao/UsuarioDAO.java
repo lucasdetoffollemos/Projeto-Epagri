@@ -145,6 +145,12 @@ public class UsuarioDAO implements IUsuarioSchema {
         }
     }
 
+    /**
+     * Verifica se existe o nome e telefone são de algum usuário existente se for, retorna true.
+     * @param nome
+     * @param telefone
+     * @return
+     */
     public boolean verificaNomeTelefoneUusario(String nome, String telefone){
         String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=? and "+ COLUNA_TELEFONE + "=?";
         Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{nome, telefone});
@@ -155,5 +161,16 @@ public class UsuarioDAO implements IUsuarioSchema {
             return false;
         }
 
+    }
+
+    /**
+     * Fazendo a alteração da senha pelo id do usuário
+     * @param id
+     * @param senha
+     */
+    public void updateUsuarioId(int id, String senha){
+        ContentValues values = new ContentValues();
+        values.put(COLUNA_SENHA, senha);
+        this.bancoDeDados.update(TABELA_USUARIO, values, COLUNA_ID + " = " + id, null );
     }
 }

@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".Activities.RecuperaSenhaActivity"></activity>
+        <activity android:name=".Activities.ModificaSenhaActivity"></activity>
+        <activity android:name=".Activities.RecuperaSenhaActivity" />
         <activity android:name=".Activities.EditarDadosActivity" />
         <activity
             android:name=".Activities.GraficoActivity"
