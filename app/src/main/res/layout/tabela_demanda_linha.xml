@@ -23,7 +23,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/txt_tv_zero"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
        />
 
@@ -37,7 +37,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_numero_animais"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textSize="14sp"
         />
 
@@ -63,7 +63,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoInicial"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
         />
 
@@ -77,7 +77,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoFinal"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
        />
 
@@ -91,7 +91,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoVerao"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
         />
 
@@ -105,7 +105,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoOutono"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
         />
 
@@ -119,7 +119,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoInverno"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
         />
 
@@ -133,7 +133,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoPrimavera"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
         />
 

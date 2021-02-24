@@ -38,7 +38,6 @@ public class IndexActivity extends AppCompatActivity {
     //Menu Drawer
     private DrawerLayout drawerLayout;
     private View layout_incluido;
-    private Object ConfiguracoesActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,7 +234,7 @@ public class IndexActivity extends AppCompatActivity {
                 nomeUsuario = data.getStringExtra("nome_usuario");
                 String msgBoasVindas = R.string.txt_tv_bemVindo + nomeUsuario;
                 tv_bemVindo.setText(msgBoasVindas);
-                atualizaListView();Toast.makeText(IndexActivity.this, "Propriedades", Toast.LENGTH_SHORT).show();
+                atualizaListView();
        }
     }
 

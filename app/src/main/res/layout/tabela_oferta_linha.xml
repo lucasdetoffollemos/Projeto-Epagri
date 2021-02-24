@@ -34,9 +34,8 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_area"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
-
         />
 
 
