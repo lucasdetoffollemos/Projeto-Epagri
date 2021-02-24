@@ -145,7 +145,7 @@
     <string name="txt_img_logoConfig">Logo configurações</string>
     <string name="txt_tv_sair">Sair</string>
     <string name="txt_img_logoSair">Logo sair</string>
-
+    <string name="txt_bt_excluirConta">Excluir conta</string>
 
 
 </resources>

@@ -197,6 +197,25 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/bt_atualizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="@string/txt_bt_atualizar"
+                        tools:ignore="ButtonStyle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
                         android:id="@+id/bt_cancelar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -207,14 +226,15 @@
                         tools:ignore="ButtonStyle" />
 
                     <Button
-                        android:id="@+id/bt_atualizar"
+                        android:id="@+id/bt_excluir"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="@string/txt_bt_atualizar"
+                        android:text="@string/txt_bt_excluirConta"
                         tools:ignore="ButtonStyle" />
+
                 </LinearLayout>
 
             </LinearLayout>

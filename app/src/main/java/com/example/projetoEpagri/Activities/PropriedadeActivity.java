@@ -206,7 +206,6 @@ public class PropriedadeActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("nome_usuario", nomeUsuario);
                 setResult(RESULT_OK, intent);
-
                 finish();
             }
         }

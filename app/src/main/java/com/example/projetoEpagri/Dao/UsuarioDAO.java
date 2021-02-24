@@ -109,6 +109,16 @@ public class UsuarioDAO implements IUsuarioSchema {
         return listaUsuarios;
     }
 
+
+
+    /**
+     * Método para remover um único usuário baseado no seu id.
+     * @param id Representa o id do usuário.
+     */
+    public void deleteUsuarioById(int id){
+        this.bancoDeDados.delete(TABELA_USUARIO, COLUNA_ID + "=?", new String[]{Integer.toString(id)});
+    }
+
     /**
      * Método para remover um único usuário baseado no nome e na senha.
      * @param nome Representa o nome do usuário.

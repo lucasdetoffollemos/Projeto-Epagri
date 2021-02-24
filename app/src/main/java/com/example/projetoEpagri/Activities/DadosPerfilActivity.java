@@ -3,6 +3,7 @@ package com.example.projetoEpagri.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,9 +18,12 @@ import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Usuario;
 import com.example.projetoEpagri.R;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class DadosPerfilActivity extends AppCompatActivity {
     private EditText et_nome, et_email, et_telefone, et_senha;
-    private Button bt_cancelar, bt_atualizar;
+    private Button bt_cancelar, bt_atualizar, bt_excluir;
     private String nomeUsuario;
     private int idUsuario;
 
@@ -55,6 +59,7 @@ public class DadosPerfilActivity extends AppCompatActivity {
 
         bt_cancelar = findViewById(R.id.bt_cancelar);
         bt_atualizar = findViewById(R.id.bt_atualizar);
+        bt_excluir = findViewById(R.id.bt_excluir);
 
         layout_incluido = findViewById(R.id.included_nav_drawer);
 
@@ -76,36 +81,77 @@ public class DadosPerfilActivity extends AppCompatActivity {
         bt_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DadosPerfilActivity.this);
-
-                builder.setTitle("ATENÇÃO");
-                builder.setMessage( "Tem certeza que deseja continuar?" );
-                builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String nome = et_nome.getText().toString();
-                        String email = et_email.getText().toString();
-                        String telefone = et_telefone.getText().toString();
-                        String senha = et_senha.getText().toString();
-
-                        BancoDeDados.usuarioDAO.updateUsuario(idUsuario, nome, email, telefone, senha);
-                        Toast.makeText(DadosPerfilActivity.this, "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
-
-                        nomeUsuario = nome;
-                        clicarInicio(v);
-                    }
-                });
-
-                builder.setNegativeButton(" NÃO ", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.show();
+                atualizarDados(v);
             }
         });
+
+        bt_excluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                excluirUsuario();
+            }
+        });
+    }
+
+    private void atualizarDados(final View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DadosPerfilActivity.this);
+
+        builder.setTitle("ATENÇÃO");
+        builder.setMessage( "Tem certeza que deseja continuar?" );
+        builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String nome = et_nome.getText().toString();
+                String email = et_email.getText().toString();
+                String telefone = et_telefone.getText().toString();
+                String senha = et_senha.getText().toString();
+
+                BancoDeDados.usuarioDAO.updateUsuario(idUsuario, nome, email, telefone, senha);
+                Toast.makeText(DadosPerfilActivity.this, "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
+
+                nomeUsuario = nome;
+                clicarInicio(v);
+            }
+        });
+
+        builder.setNegativeButton(" NÃO ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void excluirUsuario() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DadosPerfilActivity.this);
+
+        builder.setTitle("ATENÇÃO");
+        builder.setMessage( "Tem certeza que deseja excluir sua conta?" );
+        builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BancoDeDados.usuarioDAO.deleteUsuarioById(idUsuario);
+                Toast.makeText(DadosPerfilActivity.this, "Usuário deletado", Toast.LENGTH_SHORT).show();
+                //O código abaixo da um tempo da 1 seg até voltar a outra página.
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        IndexActivity.sairUsuarioExcluido(DadosPerfilActivity.this, MainActivity.class);
+                    }
+                }, 1000);
+            }
+        });
+        builder.setNegativeButton(" NÃO ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+
     }
 
     //menu Drawer

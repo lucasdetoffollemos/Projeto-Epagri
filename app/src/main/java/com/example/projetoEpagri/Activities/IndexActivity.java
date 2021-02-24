@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.ListViewPropriedadesAdapter;
@@ -31,8 +32,8 @@ public class IndexActivity extends AppCompatActivity {
     private ListViewPropriedadesAdapter listViewPropriedadesAdapter;
     private Button bt_cadastrarPropriedade;
     private String nomeUsuario;
-    private final int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
     private int usuarioId;
+    private static final int REQUEST_CODE = 1;//Código para identificar a activity no método onActivityResult().
 
     //Menu Drawer
     private DrawerLayout drawerLayout;
@@ -109,7 +110,7 @@ public class IndexActivity extends AppCompatActivity {
     public void vaiParaActivityPropiedade(String nomeUsuario) {
         Intent i = new Intent(IndexActivity.this, PropriedadeActivity.class);
         i.putExtra("nome_usuario", nomeUsuario);
-        startActivityForResult(i, this.codigoRequisicao);
+        startActivityForResult(i, REQUEST_CODE);
     }
 
     public void atualizaListView(){
@@ -124,27 +125,6 @@ public class IndexActivity extends AppCompatActivity {
         }
         else{
             tv_bemVindo.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * Método responsável por lidar com as respostas enviadas da activity Propriedade.
-     * @param requestCode Representa o código da activity que fez a requisição.
-     * @param resultCode Representa o código do resultado enviado.
-     * @param data Representa a informação enviada como resposta.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == this.codigoRequisicao) {
-            if(resultCode == Activity.RESULT_OK){
-                nomeUsuario = data.getStringExtra("nome_usuario");
-                String msgBoasVindas = R.string.txt_tv_bemVindo + nomeUsuario;
-                tv_bemVindo.setText(msgBoasVindas);
-
-                atualizaListView();
-            }
         }
     }
 
@@ -164,7 +144,6 @@ public class IndexActivity extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 a.startActivity(i);
                 a.finish();
-
             }
         });
 
@@ -176,6 +155,17 @@ public class IndexActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    /**
+     * Funçao chamada na activity dadosperfil, que tem como responsabilidade quando o usuario excluir sua conta, direciona-lo para main activity
+     * @param a
+     * @param clas
+     */
+    public static void sairUsuarioExcluido(final Activity a, final Class clas){
+                Intent i = new Intent(a, clas);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                a.startActivity(i);
     }
 
     public  void onBackPressed(){
@@ -208,7 +198,6 @@ public class IndexActivity extends AppCompatActivity {
 
     public void clicarPerfil(View v){
         redirecionaParaActivity(this, DadosPerfilActivity.class, this.nomeUsuario);
-
     }
 
     public void clicarSobre(View v){
@@ -232,6 +221,23 @@ public class IndexActivity extends AppCompatActivity {
         essa.startActivity(i);
     }
 
+
+    /**
+     * Método responsável por lidar com as respostas enviadas da activity Propriedade.
+     * @param requestCode Representa o código da activity que fez a requisição.
+     * @param resultCode Representa o código do resultado enviado.
+     * @param data Representa a informação enviada como resposta.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+       if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+                nomeUsuario = data.getStringExtra("nome_usuario");
+                String msgBoasVindas = R.string.txt_tv_bemVindo + nomeUsuario;
+                tv_bemVindo.setText(msgBoasVindas);
+                atualizaListView();Toast.makeText(IndexActivity.this, "Propriedades", Toast.LENGTH_SHORT).show();
+       }
+    }
 
     protected void  onPause() {
         fecharMenu(drawerLayout);
