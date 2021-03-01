@@ -1,6 +1,8 @@
 package com.example.projetoEpagri.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,28 +67,24 @@ public class PerfilActivity extends AppCompatActivity {
         BancoDeDados.usuarioDAO.inserirUsuario(u);
         Toast.makeText(this, "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
 
+
         //O código abaixo da um tempo da 2 seg até voltar a outra página.
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                finish();
+                String  nomeUsuario = et_nome.getText().toString();
+                Intent i = new Intent(PerfilActivity.this, IndexActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("nome_usuario", nomeUsuario);
+                startActivity(i);
             }
-        }, 2000);
-
-        limparDados();
+        }, 1000);
     }
+
 
     /**
-     * Método responsável por limpar os dados do formulário de login.
+     * Chamado no arquivo de layout
      */
-    private void limparDados() {
-        this.et_nome.setText("");
-        this.et_email.setText("");
-        this.et_telefone.setText("");
-        this.et_senha.setText("");
-    }
-
-    //Chamado no arquivo de layout
     public void clicarVoltarPerfil(View view) {
         finish();
     }

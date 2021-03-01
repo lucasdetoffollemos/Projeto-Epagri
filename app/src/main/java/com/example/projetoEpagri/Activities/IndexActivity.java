@@ -230,7 +230,7 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
                 nomeUsuario = data.getStringExtra("nome_usuario");
                 String msgBoasVindas = R.string.txt_tv_bemVindo + nomeUsuario;
                 tv_bemVindo.setText(msgBoasVindas);
