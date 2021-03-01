@@ -163,6 +163,14 @@ public class PropriedadeDAO implements IPropriedadeSchema {
     }
 
     /**
+     * Método para remover uma única propriedade baseado no id.
+     * @param id
+     */
+    public void deletePropriedadeById(int id){
+        this.bancoDeDados.delete(TABELA_PROPRIEDADE,COLUNA_ID_USUARIO + "=?", new String[]{Integer.toString(id)});
+    }
+
+    /**
      * Método para remover todas as propriedades.
      */
     public void deleteAllPropriedades(){

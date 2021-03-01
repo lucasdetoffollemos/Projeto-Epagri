@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import com.example.projetoEpagri.R;
 
 public class RecuperaSenhaActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1 ;
-    private EditText et_nome, et_telefone;
+    private EditText et_nome, et_email;
     private Button bt_modifica;
 
     @Override
@@ -29,8 +30,11 @@ public class RecuperaSenhaActivity extends AppCompatActivity {
     }
 
     private void inicializa() {
+        //Esta linha de código faz com que o teclado nao seja habilitado quando o usuário entra nesta activity
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         et_nome = findViewById(R.id.et_nome);
-        et_telefone = findViewById(R.id.et_telefone);
+        et_email = findViewById(R.id.et_email);
         bt_modifica = findViewById(R.id.bt_modificar);
     }
 
@@ -38,7 +42,7 @@ public class RecuperaSenhaActivity extends AppCompatActivity {
         bt_modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                verificaNomeETelefone();
+                verificaNomeEmail();
             }
         });
     }
@@ -49,10 +53,10 @@ public class RecuperaSenhaActivity extends AppCompatActivity {
     }
 
     //Verifica se o nome e o usuário existem, se existir leva para outra página com o nome, se não existir apenas apresenta um toast
-    private void verificaNomeETelefone() {
+    private void verificaNomeEmail() {
         String nome = et_nome.getText().toString();
-        String telefone = et_telefone.getText().toString();
-        Boolean usuarioCheck = BancoDeDados.usuarioDAO.verificaNomeTelefoneUusario(nome, telefone);
+        String email = et_email.getText().toString();
+        Boolean usuarioCheck = BancoDeDados.usuarioDAO.verificaNomeEmailUsuario(nome, email);
         if(usuarioCheck){
             vaiParaActivityModificaSenha(nome);
         }

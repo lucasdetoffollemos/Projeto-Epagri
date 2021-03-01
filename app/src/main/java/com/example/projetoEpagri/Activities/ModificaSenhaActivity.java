@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,6 +34,9 @@ public class ModificaSenhaActivity extends AppCompatActivity {
 
     }
     private void inicializa() {
+        //Esta linha de código faz com que o teclado nao seja habilitado quando o usuário entra nesta activity
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         Intent intent = getIntent();
         this.nomeUsuario = intent.getStringExtra("nome_usuario");
         this.idUsuario = BancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);

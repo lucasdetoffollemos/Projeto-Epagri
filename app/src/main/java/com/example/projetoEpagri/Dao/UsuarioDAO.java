@@ -158,12 +158,12 @@ public class UsuarioDAO implements IUsuarioSchema {
     /**
      * Verifica se existe o nome e telefone são de algum usuário existente se for, retorna true.
      * @param nome
-     * @param telefone
+     * @param email
      * @return
      */
-    public boolean verificaNomeTelefoneUusario(String nome, String telefone){
-        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=? and "+ COLUNA_TELEFONE + "=?";
-        Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{nome, telefone});
+    public boolean verificaNomeEmailUsuario(String nome, String email){
+        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=? and "+ COLUNA_EMAIL + "=?";
+        Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{nome, email});
         if(c.getCount()>0)
         {
             return true;

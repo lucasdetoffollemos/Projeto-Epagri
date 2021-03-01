@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,6 +56,9 @@ public class AnimaisActivity extends AppCompatActivity {
      * Método utilizado para inicializar os componentes da interface e os objetos da classe.
      */
     public void inicializa(){
+        //Esta linha de código faz com que o teclado nao seja habilitado quando o usuário entra nesta activity
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         //Criando um array de String para as categorias de animais.
         categoriaAnimal = new ArrayList<>();
         categoriaAnimal.add("BEZERROS");
