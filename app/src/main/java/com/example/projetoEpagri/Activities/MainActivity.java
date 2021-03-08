@@ -21,6 +21,10 @@ import com.example.projetoEpagri.R;
     - Implementar tratamento de exceção em todas as interações com o banco.
  */
 
+/*
+    COMENTÁRIO TEST PARA O GIT HUB.
+ */
+
 public class MainActivity extends AppCompatActivity {
     private TextView tv_criaPerfil, tv_recuperaSenha;
     private EditText et_nome, et_senha;
