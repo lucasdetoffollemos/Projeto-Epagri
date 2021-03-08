@@ -10,19 +10,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.ListViewPropriedadesAdapter;
 import com.example.projetoEpagri.Classes.Propriedade;
@@ -36,7 +29,6 @@ import java.util.ArrayList;
 public class IndexActivity extends AppCompatActivity {
     private TextView tv_bemVindo;
     private ArrayList<Propriedade> listaPropriedade;
-    private ListView lv_propriedades;
     private ListViewPropriedadesAdapter listViewPropriedadesAdapter;
     private Button bt_cadastrarPropriedade;
     private String nomeUsuario;
@@ -69,7 +61,7 @@ public class IndexActivity extends AppCompatActivity {
         String msgBoasVindas = getString(R.string.txt_tv_bemVindo) + " " + nomeUsuario + "!";
         tv_bemVindo.setText(msgBoasVindas);
 
-        lv_propriedades = findViewById(R.id.lv_propriedades);
+        ListView lv_propriedades = findViewById(R.id.lv_propriedades);
         bt_cadastrarPropriedade = findViewById(R.id.bt_levaPropriedade);
 
         //Recupera o ID do usuário baseado no nome recebido da activity Main.
@@ -84,7 +76,6 @@ public class IndexActivity extends AppCompatActivity {
 
         listViewPropriedadesAdapter = new ListViewPropriedadesAdapter(this, listaPropriedade, nomeUsuario);
         lv_propriedades.setAdapter(listViewPropriedadesAdapter);
-        registerForContextMenu(lv_propriedades);
 
         //Drawer menu
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -109,77 +100,6 @@ public class IndexActivity extends AppCompatActivity {
                 vaiParaActivityPropiedade(nomeUsuario);
             }
         });
-
-        lv_propriedades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TO-DO.
-            }
-        });
-    }
-
-    /**
-     * Método responsável por criar o menu ao clicar em uma propriedade da lista.
-     * @param menu
-     * @param v
-     * @param menuInfo
-     */
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_propriedade, menu);
-        menu.setHeaderTitle("Selecione uma opção");
-    }
-
-    /**
-     * Método responsável pelo clique em uma das opções do menu.
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onContextItemSelected(MenuItem item){
-        //Recebe as informações para qual item da lista o menu está sendo exibido.
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Propriedade propriedade = (Propriedade) listViewPropriedadesAdapter.getItem(info.position);
-        int idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
-
-        if(item.getItemId() == R.id.mi_ver_dados){
-            Intent i = new Intent(IndexActivity.this, TabsActivity.class);
-            i.putExtra("nomePropriedade", propriedade.getNome());
-            i.putExtra("nome_usuario", nomeUsuario);
-            IndexActivity.this.startActivity(i);
-        }
-        else if(item.getItemId() == R.id.mi_fazer_proposta) {
-            Toast.makeText(getApplicationContext(), "fazer proposta", Toast.LENGTH_LONG).show();
-        }
-        else if(item.getItemId() == R.id.mi_ver_grafico_atual){
-            ArrayList<Double> totaisPiqueteMes = BancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
-            ArrayList<Double> totaisAnimalMes = BancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
-
-            Intent i = new Intent(IndexActivity.this, GraficoActivity.class);
-            i.putExtra("totaisPiqueteMes", totaisPiqueteMes);
-            i.putExtra("totaisAnimalMes", totaisAnimalMes);
-            IndexActivity.this.startActivity(i);
-        }
-        else if(item.getItemId() == R.id.mi_ver_grafico_proposta){
-            ArrayList<Double> totaisPiqueteMes = BancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
-            ArrayList<Double> totaisAnimalMes = BancoDeDados.totalAnimaisDAO.getTotalMesByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
-
-            if(!totaisPiqueteMes.isEmpty() && !totaisAnimalMes.isEmpty()){
-                Intent i = new Intent(IndexActivity.this, GraficoActivity.class);
-                i.putExtra("totaisPiqueteMes", totaisPiqueteMes);
-                i.putExtra("totaisAnimalMes", totaisAnimalMes);
-                IndexActivity.this.startActivity(i);
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "Faça a proposta para poder visualizar o gráfico!", Toast.LENGTH_LONG).show();
-            }
-        }
-        else{
-            return false;
-        }
-        return true;
     }
 
     /**
