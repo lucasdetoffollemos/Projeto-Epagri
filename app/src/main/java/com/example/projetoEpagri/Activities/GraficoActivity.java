@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.projetoEpagri.R;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
@@ -40,7 +39,7 @@ public class GraficoActivity extends AppCompatActivity {
     }
 
     public void criaGrafico(){
-        final GraphView grafico = findViewById(R.id.gv_grafico);
+        GraphView grafico = findViewById(R.id.gv_grafico);
         LineGraphSeries<DataPoint> oferta = new LineGraphSeries<>();
         LineGraphSeries<DataPoint> demanda = new LineGraphSeries<>();
 
@@ -77,48 +76,23 @@ public class GraficoActivity extends AppCompatActivity {
         grafico.getViewport().setScalableY(true);
 
         //Altera as label do eixo X (estático - meses).
-        final StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(grafico);
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(grafico);
         staticLabelsFormatter.setHorizontalLabels(new String[] {"Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"});
         grafico.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
         //Altera as label do eixo Y (dinâmico).
-        grafico.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+        /*grafico.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if (isValueX) {
-                    if(value == 0){
-                        return "Jan";
-                    } else if(value == 1){
-                        return "Fev";
-                    } else if(value == 2){
-                        return "Mar";
-                    } else if(value == 3){
-                        return "Abr";
-                    } else if(value == 4){
-                        return "Mai";
-                    } else if(value == 5){
-                        return "Jun";
-                    } else if(value == 6){
-                        return "Jul";
-                    } else if(value == 7){
-                        return "Ago";
-                    } else if(value == 8){
-                        return "Set";
-                    } else if(value == 9){
-                        return "Out";
-                    } else if(value == 10){
-                        return "Nov";
-                    } else if(value == 11){
-                        return "Dez";
-                    } else{
-                        return super.formatLabel(value, true);
-                    }
+                    //Eixo x
+                    return super.formatLabel(value, isValueX);
                 } else {
                     //Eixo y
-                    return super.formatLabel(value, isValueX) + " kg";
+                    return super.formatLabel(value, isValueX) + " UA";
                 }
             }
-        });
+        });*/
     }
 
     public void clicarVoltarGrafico(View v){
