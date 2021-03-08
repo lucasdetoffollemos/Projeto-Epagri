@@ -54,6 +54,27 @@ public class UsuarioDAO implements IUsuarioSchema {
     }
 
     /**
+     * Método para recuperar um usuário baseado no email;
+     * @param email Representa o email do usuário que deseja-se recuperar.
+     * @return Retorna o usuário recuperado.
+     */
+    public Usuario getUsuario(String email){
+        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_EMAIL + "=\"" + email + "\"";
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
+
+        Usuario usuario = new Usuario();
+        if (cursor != null && cursor.moveToFirst()) {
+            usuario.setId(cursor.getInt(0));
+            usuario.setNome(cursor.getString(1));
+            usuario.setEmail(cursor.getString(2));
+            usuario.setTelefone(cursor.getString(3));
+            usuario.setSenha(cursor.getString(4));
+            cursor.close();
+        }
+        return usuario;
+    }
+
+    /**
      * Método para recuperar o id de um usuário baseado no nome.
      * @param nome Nome do usuário que deseja-se saber o id.
      * @return id do usuário.
@@ -156,21 +177,19 @@ public class UsuarioDAO implements IUsuarioSchema {
     }
 
     /**
-     * Verifica se existe o nome e telefone são de algum usuário existente se for, retorna true.
-     * @param nome
-     * @param email
-     * @return
+     * Verifica se existe o email recebido por parâmetro e retorna true, caso contrário retorna false.
+     * @param email email do usuário
+     * @return true caso exista, false caso não exista.
      */
-    public boolean verificaNomeEmailUsuario(String nome, String email){
-        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=? and "+ COLUNA_EMAIL + "=?";
-        Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{nome, email});
-        if(c.getCount()>0)
-        {
+    public boolean verificaEmailUsuario(String email){
+        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_EMAIL + "=?";
+        Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{email});
+
+        if(c.getCount()>0){
             return true;
         }else{
             return false;
         }
-
     }
 
     /**

@@ -13,4 +13,6 @@
         android:bottomLeftRadius="8dp"
         android:bottomRightRadius="8dp"/>
 
+    <stroke android:width="1dip" android:color="@color/preto"/>
+
 </shape>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,7 +33,7 @@ public class PropriedadeActivity extends AppCompatActivity {
     private String nomePropriedade, regiao;
     private EditText et_nomePropriedade;
     private Button bt_proximo;
-    private Spinner sp_regiao;
+    private ImageView iv_mapa;
     private String nomeUsuario;
     private final int CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY = 0;
 
@@ -52,30 +54,36 @@ public class PropriedadeActivity extends AppCompatActivity {
         nomeUsuario = intent.getStringExtra("nome_usuario");
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
-        sp_regiao = findViewById(R.id.sp_regiao);
+        iv_mapa = findViewById(R.id.iv_map);
+        iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
         bt_proximo = findViewById(R.id.bt_levaPiquete);
-
-        //Método para inicializar o Spinner com as regiões.
-        escolherRegiao();
     }
 
     /**
      * Método utilizado para setar os listener dos botões e tudo mais que for clicável na tela login.
      */
     public void setListener(){
-        sp_regiao.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        iv_mapa.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0){ //cfa
-                    regiao = "cfa";
-                }
-                else if(position == 1){ //cfb
-                    regiao = "cfb";
-                }
-            }
+            public void onClick(View v) {
+                Integer id = (Integer) iv_mapa.getTag();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+                switch(id) {
+                    case R.drawable.img_mapa_sul_branco:
+                        iv_mapa.setImageResource(R.drawable.img_mapa_sul_cfa);
+                        iv_mapa.setTag(R.drawable.img_mapa_sul_cfa);
+                        break;
+                    case R.drawable.img_mapa_sul_cfa:
+                        iv_mapa.setImageResource(R.drawable.img_mapa_sul_branco);
+                        iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
+                        regiao = "cfa";
+                        break;
+                    //TODO mapa sul cfb.
+                    default:
+                        break;
+                }
+
+            }
         });
 
         bt_proximo.setOnClickListener(new View.OnClickListener() {
@@ -99,20 +107,6 @@ public class PropriedadeActivity extends AppCompatActivity {
         i.putExtra("nome_propriedade", nomePropriedade);
         i.putExtra("regiao", regiao);
         startActivityForResult(i, CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY);
-    }
-
-    /**
-     * Método responsável por retornar valores de cálculo do banco dependendo da escolha do usuário (região norte ou sul).
-     */
-    private void escolherRegiao() {
-        ArrayList<String> regiaoPiquete = new ArrayList<>();
-        regiaoPiquete.add("cfa");
-        regiaoPiquete.add("cfb");
-
-        Spinner spinnerRegiaoPiquete = findViewById(R.id.sp_regiao);
-        ArrayAdapter<String> spinnerRegiaoAdapter = new ArrayAdapter<>(PropriedadeActivity.this, android.R.layout.simple_spinner_item, regiaoPiquete);
-        spinnerRegiaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRegiaoPiquete.setAdapter(spinnerRegiaoAdapter);
     }
 
     /**

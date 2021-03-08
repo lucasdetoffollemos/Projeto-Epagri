@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
      * Método responsável por iniciar a Activity DE recuperação de senha.
      */
     public void vaiParaActivityRecuperaSenha() {
-        Intent i = new Intent(MainActivity.this, RecuperaSenhaActivity.class);
+        Intent i = new Intent(MainActivity.this, EsqueceuSenhaActivity.class);
         startActivity(i);
     }
 

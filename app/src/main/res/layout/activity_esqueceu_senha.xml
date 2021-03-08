@@ -60,47 +60,6 @@
                 android:textColor="@color/verde"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/tv_subTituloRecuperaSenha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/txt_tv_subTituloRecuperaSenha"
-                android:gravity="center_horizontal"
-                android:textStyle="bold"
-                android:textColor="@color/verde"
-                android:textSize="15sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFieldNome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_et_nome"
-                android:layout_marginTop="50dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                app:startIconDrawable="@drawable/ic_nome"
-                app:boxCornerRadiusBottomEnd="8dp"
-                app:boxCornerRadiusBottomStart="8dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                >
-                <EditText
-                    android:background="@null"
-                    android:id="@+id/et_nome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    tools:ignore="LabelFor"
-                    android:inputType="textPersonName"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldEmail"

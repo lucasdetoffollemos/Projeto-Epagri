@@ -23,7 +23,7 @@
     <string name="txt_tv_criarPerfil">Criar perfil</string>
     <string name="txt_tv_login">Login</string>
     <string name="txt_tv_cadastraPropriedade">Cadastre sua Propriedade</string>
-    <string name="txt_tv_regiao">Escolha a Região</string>
+    <string name="txt_tv_regiao">Local da Propriedade</string>
     <string name="txt_tv_total">Total</string>
     <string name="txt_tv_zero">0</string>
     <string name="txt_tv_uaHa">UA/HA</string>
@@ -93,9 +93,12 @@
     <string name="txt_tv_recuperarSenha">Esqueceu sua senha?</string>
     <string name="txt_tv_nomeInicio">Nome:</string>
     <string name="txt_tv_emailInicio">Email:</string>
-    <string name="txt_tv_tituloRecuperaSenha">Recuperar senha:</string>
-    <string name="txt_tv_subTituloRecuperaSenha">(Digite o nome e o telefone cadastrados, para modificar sua senha.)</string>
+    <string name="txt_tv_tituloRecuperaSenha">Recuperar Senha</string>
+    <string name="txt_tv_subTituloRecuperaSenha">(Digite o email cadastrado para modificar sua senha.)</string>
     <string name="txt_tv_tituloModificaSenha">Digite aqui sua nova senha:</string>
+    <string name="txt_tv_opcoes_propriedade">Opções</string>
+    <string name="txt_tv_opcoes_propriedade_texto">Para poder visualizar o gráfico da proposta é necessário editar os dados e realizar uma proposta.</string>
+
 
     <!-- List View -->
     <string name="txt_lv_propriedade_nome">Nome: </string>
@@ -122,6 +125,7 @@
     <string name="txt_bt_cfb">cfb</string>
     <string name="txt_bt_modicar">Modificar senha</string>
     <string name="txt_bt_alterarSenha">Alterar Senha</string>
+    <string name="txt_bt_editar_dados">Editar Dados</string>
 
     <!-- Content Description das Imagens -->
     <string name="cd_logo_ufpr">Logo UFPR</string>

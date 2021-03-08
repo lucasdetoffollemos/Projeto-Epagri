@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 public class ModificaSenhaActivity extends AppCompatActivity {
     private Integer idUsuario;
-    private String nomeUsuario, senhaEt;
+    private String nomeUsuario, senhaUsuario, senhaEt;
     private EditText et_senha;
     private Button bt_alterar;
 
@@ -33,17 +33,25 @@ public class ModificaSenhaActivity extends AppCompatActivity {
         setListeners();
 
     }
+
+    /**
+     * Método utilizado para inicializar os componentes da interface e os objetos da classe.
+     */
     private void inicializa() {
         //Esta linha de código faz com que o teclado nao seja habilitado quando o usuário entra nesta activity
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Intent intent = getIntent();
         this.nomeUsuario = intent.getStringExtra("nome_usuario");
+        this.senhaUsuario = intent.getStringExtra("senha_usuario");
         this.idUsuario = BancoDeDados.usuarioDAO.getUSuarioId(nomeUsuario);
         et_senha = findViewById(R.id.et_senha);
         bt_alterar = findViewById(R.id.bt_alterar);
     }
 
+    /**
+     * Método utilizado para setar os listener dos botões.
+     */
     private void setListeners() {
         bt_alterar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,12 +61,13 @@ public class ModificaSenhaActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para alterar a senha do usuário.
+     */
     private void mudaSenha() {
-        Usuario usuario = BancoDeDados.usuarioDAO.getUsuario(idUsuario);
-        String senhaBanco = usuario.getSenha();
         senhaEt = et_senha.getText().toString();
         //se a senha ja existe mandar um toas, senao, alterar a senha.
-        if(senhaBanco.equals(senhaEt)) {
+        if(senhaUsuario.equals(senhaEt)) {
             Toast.makeText(ModificaSenhaActivity.this, "Senha já existente", Toast.LENGTH_SHORT).show();
         }else{
             //Criando a caixa de pergunta, se o usuário quer ou não alterar sua senha
@@ -70,7 +79,7 @@ public class ModificaSenhaActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     BancoDeDados.usuarioDAO.updateUsuarioId(idUsuario, senhaEt);
-                    Toast.makeText(ModificaSenhaActivity.this, "Senha alterada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModificaSenhaActivity.this, "Senha alterada com sucesso!", Toast.LENGTH_SHORT).show();
 
                     //O código abaixo da um tempo da 2 seg até voltar a outra página.
                     new Timer().schedule(new TimerTask() {

@@ -2,120 +2,94 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.projetoEpagri.Activities.IndexActivity"
     android:background="@color/cinza"
-    android:id="@+id/drawerLayout">
+    tools:context="com.example.projetoEpagri.Activities.IndexActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <LinearLayout
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/todo"
+            android:onClick="clicarMenu"
+            android:src="@drawable/ic_menu"
+            android:tint="@color/preto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/txt_tv_pagIni"
+            android:textColor="@color/preto"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_tituloIndex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:layout_gravity="center_vertical"
-            android:background="@color/cinza"
-            tools:ignore="MissingConstraints"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:text="@string/txt_tv_bemVindo"
+            android:textColor="@color/preto"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="clicarMenu"
-                android:src="@drawable/ic_menu"
-                android:tint="@color/preto"
-                android:contentDescription="@string/todo"
-                />
+        <ListView
+            android:id="@+id/lv_propriedades"
+            android:layout_width="340dp"
+            android:layout_height="370dp"
+            android:divider="@null"
+            android:dividerHeight="10.0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bt_levaPropriedade"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.25" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_tv_pagIni"
-                android:textColor="@color/preto"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="90dp"
-                android:layout_marginStart="90dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <Button
+            android:id="@+id/bt_levaPropriedade"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/txt_bt_cadastroPropriedade"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_tituloIndex"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/txt_tv_bemVindo"
-                android:textSize="22sp"
-                android:gravity="center"
-                android:textColor="@color/preto"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.147" />
-
-            <ListView
-                android:id="@+id/lv_propriedades"
-                android:layout_width="340dp"
-                android:layout_height="370dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="15dp"
-                app:layout_constraintBottom_toTopOf="@+id/bt_levaPropriedade"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:dividerHeight="10.0dp"
-                android:divider="@null"/>
-
-
-
-            <Button
-                android:id="@+id/bt_levaPropriedade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/txt_bt_cadastroPropriedade"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lv_propriedades" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity = "start"
+        android:layout_gravity="start"
         android:background="@color/cinza">
 
         <include
-            layout="@layout/main_nav_drawer" android:id="@+id/included_nav_drawer"
-            />
+            android:id="@+id/included_nav_drawer"
+            layout="@layout/main_nav_drawer" />
 
     </RelativeLayout>
-
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

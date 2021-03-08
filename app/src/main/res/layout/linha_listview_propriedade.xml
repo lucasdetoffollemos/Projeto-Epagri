@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/customshape">
 
     <TextView
@@ -47,6 +47,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/txt_lv_propriedade_area"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -55,8 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome" />
 
     <TextView
         android:id="@+id/lv_tv_area_propriedade"
@@ -65,6 +65,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/txt_tv_areaProp"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -72,8 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/lv_tv_area"
-        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome_propriedade"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome_propriedade" />
 
     <TextView
         android:id="@+id/lv_tv_total_animais"
@@ -82,6 +82,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/txt_lv_propriedade_qtde_animais"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -90,8 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/lv_tv_area_propriedade"
-        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome_propriedade"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome_propriedade" />
 
     <TextView
         android:id="@+id/lv_tv_total_animais_propriedade"
@@ -100,6 +100,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/txt_tv_qnt"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -107,9 +108,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/lv_tv_total_animais"
-        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome_propriedade"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome_propriedade" />
 
+    <!--
     <Button
         android:id="@+id/lv_bt_ver_dados"
         android:layout_width="0dp"
@@ -127,17 +128,6 @@
         app:layout_constraintTop_toBottomOf="@+id/lv_tv_area_propriedade"
         app:layout_constraintVertical_bias="0.0" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/lv_bt_excluir"-->
-    <!--        android:layout_width="50dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:layout_marginEnd="10dp"-->
-    <!--        android:layout_marginRight="10dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintVertical_bias="0.0" />-->
     <Button
         android:id="@+id/lv_bt_grafico_atual"
         android:layout_width="0dp"
@@ -171,7 +161,7 @@
         app:layout_constraintStart_toEndOf="@+id/lv_bt_grafico_atual"
         app:layout_constraintTop_toBottomOf="@+id/lv_bt_ver_dados"
         app:layout_constraintVertical_bias="0.0" />
-
+-->
     <android.widget.Button
         android:id="@+id/lv_bt_excluir"
         android:layout_width="25dp"
@@ -179,6 +169,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
+        android:focusable="false"
         android:background="@drawable/icone_lixeira"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

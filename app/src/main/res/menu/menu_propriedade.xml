@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/mi_ver_dados"
+        android:title="Ver Dados" />
+    <item android:id="@+id/mi_fazer_proposta"
+        android:title="Fazer Proposta" />
+    <item android:id="@+id/mi_ver_grafico_atual"
+        android:title="Ver Gráfico Atual" />\
+    <item android:id="@+id/mi_ver_grafico_proposta"
+        android:title="Ver Gráfico Proposta" />
+</menu>

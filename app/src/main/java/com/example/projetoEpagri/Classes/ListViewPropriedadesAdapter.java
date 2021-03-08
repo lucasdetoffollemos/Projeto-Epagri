@@ -70,9 +70,9 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         TextView tv_nome = row.findViewById(R.id.lv_tv_nome_propriedade);
         TextView tv_area = row.findViewById(R.id.lv_tv_area_propriedade);
         TextView tv_qtde = row.findViewById(R.id.lv_tv_total_animais_propriedade);
-        Button bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
-        Button bt_grafico_atual = row.findViewById(R.id.lv_bt_grafico_atual);
-        Button bt_grafico_proposta = row.findViewById(R.id.lv_bt_grafico_proposta);
+        //Button bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
+        //Button bt_grafico_atual = row.findViewById(R.id.lv_bt_grafico_atual);
+        //Button bt_grafico_proposta = row.findViewById(R.id.lv_bt_grafico_proposta);
         Button bt_excluir = row.findViewById(R.id.lv_bt_excluir);
 
         //Cria um objeto para cada item da lista.
@@ -88,10 +88,10 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         final ArrayList<Piquete> listaPiqueteProposta = BancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
         final ArrayList<Animais> listaAnimaisProposta = BancoDeDados.animaisDAO.getAllAnimaisByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
 
-        bt_grafico_proposta.setEnabled(listaPiqueteProposta.size() > 0 && listaAnimaisProposta.size() > 0);
+       // bt_grafico_proposta.setEnabled(listaPiqueteProposta.size() > 0 && listaAnimaisProposta.size() > 0);
 
         //Listener do botão "ver dados"
-        bt_ver_dados.setOnClickListener(new View.OnClickListener() {
+        /*bt_ver_dados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, TabsActivity.class);
@@ -130,7 +130,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
                 //i.putExtra("nomePropriedade", listaPropriedades.get(position).getNome());
                 context.startActivity(i);
             }
-        });
+        });*/
 
         //Listener do botão "excluir"
         bt_excluir.setOnClickListener(new View.OnClickListener() {
