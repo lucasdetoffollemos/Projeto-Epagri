@@ -43,7 +43,9 @@
                         android:orientation="horizontal"
                         android:padding="12dp"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="MissingConstraints">
+                        tools:ignore="MissingConstraints"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -78,8 +80,8 @@
                 <View
                     android:layout_width="948dp"
                     android:layout_height="1dp"
-                    android:layout_marginStart="1275dp"
-                    android:layout_marginLeft="1275dp"
+                    android:layout_marginStart="895dp"
+                    android:layout_marginLeft="895dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:background="@android:color/background_dark" />
@@ -107,52 +109,53 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
         <Button
             android:id="@+id/bt_adicionarLinha"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="50dp"
             android:layout_height="60dp"
+            android:backgroundTint="@color/verde"
             android:gravity="center"
             android:text="@string/txt_bt_adicionar"
+            android:textColor="@color/branco"
+            app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:cornerRadius="8dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/bt_finalizarEnvio"
             app:strokeColor="@color/preto"
-            android:textColor="@color/branco"
-            android:backgroundTint="@color/verde"
             tools:targetApi="lollipop" />
 
         <Button
             android:id="@+id/bt_finalizarEnvio"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/verde"
             android:text="@string/txt_bt_finalizar"
+            android:textColor="@color/branco"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:strokeColor="@color/preto"
-            android:textColor="@color/branco"
-            android:backgroundTint="@color/verde"
-            tools:targetApi="lollipop"/>
+            tools:targetApi="lollipop" />
 
         <Button
             android:id="@+id/bt_removerLinha"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="50dp"
             android:layout_height="60dp"
+            android:backgroundTint="@color/verde"
             android:gravity="center"
             android:text="@string/txt_bt_remover"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:cornerRadius="8dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:strokeColor="@color/preto"
             android:textColor="@color/branco"
-            android:backgroundTint="@color/verde"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bt_finalizarEnvio"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/preto"
             tools:targetApi="lollipop" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

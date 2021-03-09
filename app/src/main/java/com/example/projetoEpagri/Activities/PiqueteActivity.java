@@ -334,7 +334,7 @@ public class PiqueteActivity extends AppCompatActivity{
         this.listaDeAreas.set(posicao, areaD);
 
         //Cálcula a producão estimada.
-        calculaProducaoEstimada(linha_tabela, tipo, condicao, areaD);
+        calculaProducaoEstimada(linha_tabela, tipo, condicao);
 
         //Cálcula a produção para cada mês. E faz a soma de todos os meses
         double [] arrayMesesProd = new double[12];
@@ -367,13 +367,13 @@ public class PiqueteActivity extends AppCompatActivity{
     /**
      * Método para calcula a produção estimada.
      */
-    public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao, double area){
+    public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao){
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
 
         if(regiao.equals("cfa")){
-            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * area;
+            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * 1000; //kg
         }else if(regiao.equals("cfb")){
-            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * area;
+            this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * 1000;
         }
 
         String producaoEstimada = this.doisDecimais.format(this.producaoEstimadaD);

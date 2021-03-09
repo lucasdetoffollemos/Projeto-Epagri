@@ -18,7 +18,9 @@
         android:textColor="@color/verde"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:fontFamily="@font/roboto"/>
+        android:fontFamily="@font/roboto"
+        android:focusableInTouchMode="true"
+        android:focusable="true"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="330dp"
@@ -53,7 +55,6 @@
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 tools:ignore="LabelFor"
-
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

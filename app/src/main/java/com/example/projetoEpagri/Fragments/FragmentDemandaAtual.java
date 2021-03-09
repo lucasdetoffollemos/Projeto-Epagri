@@ -109,18 +109,18 @@ public class FragmentDemandaAtual extends Fragment {
 
         //Criando um array de String para os meses.
         arrayMeses = new ArrayList<>();
-        arrayMeses.add("Janeiro");
-        arrayMeses.add("Fevereiro");
-        arrayMeses.add("Março");
-        arrayMeses.add("Abril");
-        arrayMeses.add("Maio");
-        arrayMeses.add("Junho");
-        arrayMeses.add("Julho");
-        arrayMeses.add("Agosto");
-        arrayMeses.add("Setembro");
-        arrayMeses.add("Outubro");
-        arrayMeses.add("Novembro");
-        arrayMeses.add("Dezembro");
+        arrayMeses.add("Jan");
+        arrayMeses.add("Fev");
+        arrayMeses.add("Mar");
+        arrayMeses.add("Abr");
+        arrayMeses.add("Mai");
+        arrayMeses.add("Jun");
+        arrayMeses.add("Jul");
+        arrayMeses.add("Ago");
+        arrayMeses.add("Set");
+        arrayMeses.add("Out");
+        arrayMeses.add("Nov");
+        arrayMeses.add("Dez");
 
         qtdeAnimais = new ArrayList<>();
         matrizUA = new ArrayList<>();
@@ -305,30 +305,30 @@ public class FragmentDemandaAtual extends Fragment {
      */
     public void loadAnimais(TableRow linha_tabela){
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
-        final EditText tv_consumo = (EditText) linha_tabela.getChildAt(1);
-        final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(2);
-        final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(3);
-        final EditText etPesoInicial = (EditText) linha_tabela.getChildAt(4);
-        final EditText etPesoFinal = (EditText) linha_tabela.getChildAt(5);
-        final EditText etPesoVer = (EditText) linha_tabela.getChildAt(6);
-        final EditText etPesoOut = (EditText) linha_tabela.getChildAt(7);
-        final EditText etPesoInv = (EditText) linha_tabela.getChildAt(8);
-        final EditText etPesoPrim = (EditText) linha_tabela.getChildAt(9);
-        final TextView consumoJan = (TextView) linha_tabela.getChildAt(10);
-        final TextView consumoFev = (TextView) linha_tabela.getChildAt(11);
-        final TextView consumoMar = (TextView) linha_tabela.getChildAt(12);
-        final TextView consumoAbr = (TextView) linha_tabela.getChildAt(13);
-        final TextView consumoMai = (TextView) linha_tabela.getChildAt(14);
-        final TextView consumoJun = (TextView) linha_tabela.getChildAt(15);
-        final TextView consumoJul = (TextView) linha_tabela.getChildAt(16);
-        final TextView consumoAgo = (TextView) linha_tabela.getChildAt(17);
-        final TextView consumoSet = (TextView) linha_tabela.getChildAt(18);
-        final TextView consumoOut = (TextView) linha_tabela.getChildAt(19);
-        final TextView consumoNov = (TextView) linha_tabela.getChildAt(20);
-        final TextView consumoDez = (TextView) linha_tabela.getChildAt(21);
+        //final EditText tv_consumo = (EditText) linha_tabela.getChildAt(1);
+        final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(1);
+        final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(2);
+        final EditText etPesoInicial = (EditText) linha_tabela.getChildAt(3);
+        final EditText etPesoFinal = (EditText) linha_tabela.getChildAt(4);
+        final EditText etPesoVer = (EditText) linha_tabela.getChildAt(5);
+        final EditText etPesoOut = (EditText) linha_tabela.getChildAt(6);
+        final EditText etPesoInv = (EditText) linha_tabela.getChildAt(7);
+        final EditText etPesoPrim = (EditText) linha_tabela.getChildAt(8);
+        final TextView consumoJan = (TextView) linha_tabela.getChildAt(9);
+        final TextView consumoFev = (TextView) linha_tabela.getChildAt(10);
+        final TextView consumoMar = (TextView) linha_tabela.getChildAt(11);
+        final TextView consumoAbr = (TextView) linha_tabela.getChildAt(12);
+        final TextView consumoMai = (TextView) linha_tabela.getChildAt(13);
+        final TextView consumoJun = (TextView) linha_tabela.getChildAt(14);
+        final TextView consumoJul = (TextView) linha_tabela.getChildAt(15);
+        final TextView consumoAgo = (TextView) linha_tabela.getChildAt(16);
+        final TextView consumoSet = (TextView) linha_tabela.getChildAt(17);
+        final TextView consumoOut = (TextView) linha_tabela.getChildAt(18);
+        final TextView consumoNov = (TextView) linha_tabela.getChildAt(19);
+        final TextView consumoDez = (TextView) linha_tabela.getChildAt(20);
 
         spinnerCategoria.setSelection(getSpinnerIndex(spinnerCategoria, listaAnimais.get(numeroDeLinhas).getCategoria()));
-        tv_consumo.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getConsumo()));
+        //tv_consumo.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getConsumo()));
         etNumAnimais.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getNumAnimais()));
         spinnerMeses.setSelection(getSpinnerIndex(spinnerMeses, listaAnimais.get(numeroDeLinhas).getEntradaMes()));
         etPesoInicial.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getPesoInicial()));
@@ -361,15 +361,15 @@ public class FragmentDemandaAtual extends Fragment {
      */
     public void setListenersLinha(final TableRow linha_tabela){
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
-        final EditText tv_consumo = (EditText) linha_tabela.getChildAt(1);
-        final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(2);
-        final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(3);
-        final EditText etPesoInicial = (EditText) linha_tabela.getChildAt(4);
-        final EditText etPesoFinal = (EditText) linha_tabela.getChildAt(5);
-        final EditText etPesoVer = (EditText) linha_tabela.getChildAt(6);
-        final EditText etPesoOut = (EditText) linha_tabela.getChildAt(7);
-        final EditText etPesoInv = (EditText) linha_tabela.getChildAt(8);
-        final EditText etPesoPrim = (EditText) linha_tabela.getChildAt(9);
+        //final EditText tv_consumo = (EditText) linha_tabela.getChildAt(1);
+        final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(1);
+        final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(2);
+        final EditText etPesoInicial = (EditText) linha_tabela.getChildAt(3);
+        final EditText etPesoFinal = (EditText) linha_tabela.getChildAt(4);
+        final EditText etPesoVer = (EditText) linha_tabela.getChildAt(5);
+        final EditText etPesoOut = (EditText) linha_tabela.getChildAt(6);
+        final EditText etPesoInv = (EditText) linha_tabela.getChildAt(7);
+        final EditText etPesoPrim = (EditText) linha_tabela.getChildAt(8);
 
         //Spinner categoria de animal.
         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -391,8 +391,8 @@ public class FragmentDemandaAtual extends Fragment {
                     default: { resultadoConsumo = 2;    break;}
                 }
 
-                tv_consumo.setText(String.valueOf(resultadoConsumo));
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                //tv_consumo.setText(String.valueOf(resultadoConsumo));
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -416,7 +416,7 @@ public class FragmentDemandaAtual extends Fragment {
                 qtdeAnimais.set(posicao, numeroAnimais);
 
                 calculaTotalAnimais();
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -427,7 +427,7 @@ public class FragmentDemandaAtual extends Fragment {
         spinnerMeses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -441,7 +441,7 @@ public class FragmentDemandaAtual extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -455,7 +455,7 @@ public class FragmentDemandaAtual extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -469,7 +469,7 @@ public class FragmentDemandaAtual extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -483,7 +483,7 @@ public class FragmentDemandaAtual extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -497,7 +497,7 @@ public class FragmentDemandaAtual extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -511,7 +511,7 @@ public class FragmentDemandaAtual extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                calcular(linha_tabela, spinnerCategoria, tv_consumo, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
             }
 
             @Override
@@ -548,7 +548,7 @@ public class FragmentDemandaAtual extends Fragment {
      * @param etPesoInv Representa a caixa de texto com o ganho de peso do animal no inverno.
      * @param etPesoPrim Representa a caixa de texto com o ganho de peso do animal na primavera.
      */
-    public void calcular(TableRow linha_tabela, Spinner spinnerCategoria, TextView textViewConsumo, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim){
+    public void calcular(TableRow linha_tabela, Spinner spinnerCategoria, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim){
         String categoria;
         double consumo, numeroAnimais, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim;
 
@@ -563,7 +563,8 @@ public class FragmentDemandaAtual extends Fragment {
                 verificaVazioET(etPesoPrim)){
 
             categoria = spinnerCategoria.getSelectedItem().toString();
-            consumo = Double.parseDouble(textViewConsumo.getText().toString());
+            //consumo = Double.parseDouble(textViewConsumo.getText().toString());
+            consumo = resultadoConsumo;
             numeroAnimais = converteTextoEmDouble(etNumAnimais);
             pesoInicial = converteTextoEmDouble(etPesoInicial);
             pesoFinal = converteTextoEmDouble(etPesoFinal);
@@ -586,22 +587,22 @@ public class FragmentDemandaAtual extends Fragment {
 
             //Define qual a posição que será utilizada no array ganhoEstacao e acordo com o mês de entrada do animal.
             switch (meses){
-                case "Janeiro":   posicao = 0;  break;
-                case "Fevereiro": posicao = 1;  break;
-                case "Março":     posicao = 2;  break;
-                case "Abril":     posicao = 3;  break;
-                case "Maio":      posicao = 4;  break;
-                case "Junho":     posicao = 5;  break;
-                case "Julho":     posicao = 6;  break;
-                case "Agosto":    posicao = 7;  break;
-                case "Setembro":  posicao = 8;  break;
-                case "Outubro":   posicao = 9;  break;
-                case "Novembro":  posicao = 10; break;
-                case "Dezembro":  posicao = 11; break;
+                case "Jan": posicao = 0;  break;
+                case "Fev": posicao = 1;  break;
+                case "Mar": posicao = 2;  break;
+                case "Abr": posicao = 3;  break;
+                case "Mai": posicao = 4;  break;
+                case "Jun": posicao = 5;  break;
+                case "Jul": posicao = 6;  break;
+                case "Ago": posicao = 7;  break;
+                case "Set": posicao = 8;  break;
+                case "Out": posicao = 9;  break;
+                case "Nov": posicao = 10; break;
+                case "Dez": posicao = 11; break;
             }
 
             //Estrutura de repetiçao feita para cada vez que o usuário trocar, o valor de entrada, os campos de textView de meses, limparem.
-            for(int i = 10; i< 22; i++){
+            for(int i = 9; i< 21; i++){
                 TextView v = (TextView) linha_tabela.getChildAt(i);
                 v.setText(String.valueOf(0));
             }
@@ -704,7 +705,7 @@ public class FragmentDemandaAtual extends Fragment {
         }
         else{
             //Estrutura de repetiçao feita para cada vez que o usuário trocar, o valor de entrada, os campos de textView de meses, limparem.
-            for(int i = 10; i< 22; i++){
+            for(int i = 9; i< 21; i++){
                 TextView v = (TextView) linha_tabela.getChildAt(i);
                 v.setText(String.valueOf(0));
             }

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
@@ -35,6 +36,7 @@ public class PropriedadeActivity extends AppCompatActivity {
     private Button bt_proximo;
     private ImageView iv_mapa;
     private String nomeUsuario;
+    private TextView tv_texto_clima, tv_clima;
     private final int CODIGO_REQUISICAO_PROPRIEDADE_ACTIVITY = 0;
 
     @Override
@@ -52,11 +54,16 @@ public class PropriedadeActivity extends AppCompatActivity {
     public void inicializa(){
         Intent intent = getIntent();
         nomeUsuario = intent.getStringExtra("nome_usuario");
+        regiao = "cfb";
 
         et_nomePropriedade = findViewById(R.id.et_nomePropriedade);
         iv_mapa = findViewById(R.id.iv_map);
         iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
+        tv_texto_clima = findViewById(R.id.tv_texto_clima);
+        tv_clima = findViewById(R.id.tv_clima);
+        tv_clima.setText("Clima Quente - cfa");
         bt_proximo = findViewById(R.id.bt_levaPiquete);
+
     }
 
     /**
@@ -70,13 +77,17 @@ public class PropriedadeActivity extends AppCompatActivity {
 
                 switch(id) {
                     case R.drawable.img_mapa_sul_branco:
-                        iv_mapa.setImageResource(R.drawable.img_mapa_sul_cfa);
-                        iv_mapa.setTag(R.drawable.img_mapa_sul_cfa);
+                        iv_mapa.setImageResource(R.drawable.img_mapa_sul_cfb);
+                        iv_mapa.setTag(R.drawable.img_mapa_sul_cfb);
+                        regiao = "cfb";
+                        tv_clima.setText("Clima Frio - cfb");
                         break;
-                    case R.drawable.img_mapa_sul_cfa:
+                    case R.drawable.img_mapa_sul_cfb:
                         iv_mapa.setImageResource(R.drawable.img_mapa_sul_branco);
                         iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
                         regiao = "cfa";
+                        tv_clima.setText("Clima Quente - cfa");
+
                         break;
                     //TODO mapa sul cfb.
                     default:

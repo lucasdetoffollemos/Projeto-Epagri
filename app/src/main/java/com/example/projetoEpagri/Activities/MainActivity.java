@@ -21,11 +21,6 @@ import com.example.projetoEpagri.R;
     - Implementar tratamento de exceção em todas as interações com o banco.
  */
 
-/*
-    COMENTÁRIO TEST PARA O GIT HUB.
-    mais un comentario.
- */
-
 public class MainActivity extends AppCompatActivity {
     private TextView tv_criaPerfil, tv_recuperaSenha;
     private EditText et_nome, et_senha;
@@ -47,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         if(bancoDeDados.verificaExistenciaTabela("dados_sul") && bancoDeDados.verificaTabelaVazia("dados_sul")){
             inseriDadosTabelaPastagemSul();
         }
-
-
     }
 
     /**

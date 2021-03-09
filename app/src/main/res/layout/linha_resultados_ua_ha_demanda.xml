@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tv_totalDemanda"
-        android:layout_width="260dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-2dp"
         android:layout_marginLeft="-2dp"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/tv_uaHa"
-        android:layout_width="940dp"
+        android:layout_width="600dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-7dp"
         android:layout_marginLeft="-7dp"

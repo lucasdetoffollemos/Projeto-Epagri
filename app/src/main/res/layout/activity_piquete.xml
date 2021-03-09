@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/cinza">
 
 
@@ -34,36 +34,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/ln_toolBar_piquete"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
                         android:layout_gravity="center_vertical"
                         android:background="@color/cinza"
-                        tools:ignore="MissingConstraints">
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        tools:ignore="MissingConstraints"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:contentDescription="@string/todo"
                             android:onClick="clicarVoltarPiquete"
                             android:src="@drawable/ic_voltar"
-                            android:tint="@color/preto"
-                            android:contentDescription="@string/todo"/>
+                            android:tint="@color/preto" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginLeft="40dp"
                             android:text="@string/txt_tv_cadastroPique"
                             android:textColor="@color/preto"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginStart="40dp" />
+                            android:textStyle="bold" />
 
                     </LinearLayout>
-
 
 
                     <include layout="@layout/tabela_oferta_1" />
@@ -78,8 +80,8 @@
                 <View
                     android:layout_width="840dp"
                     android:layout_height="1dp"
-                    android:layout_marginStart="600dp"
-                    android:layout_marginLeft="600dp"
+                    android:layout_marginStart="638dp"
+                    android:layout_marginLeft="638dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:background="@android:color/background_dark" />
@@ -89,8 +91,8 @@
                 <View
                     android:layout_width="840dp"
                     android:layout_height="1dp"
-                    android:layout_marginStart="600dp"
-                    android:layout_marginLeft="600dp"
+                    android:layout_marginStart="638dp"
+                    android:layout_marginLeft="638dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@android:color/background_dark" />
@@ -122,51 +124,50 @@
 
         <Button
             android:id="@+id/bt_adicionarLinha"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="50dp"
             android:layout_height="60dp"
+            android:backgroundTint="@color/verde"
             android:gravity="center"
             android:text="@string/txt_bt_adicionar"
+            android:textColor="@color/branco"
+            app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:cornerRadius="8dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/bt_finalizarEnvio"
             app:strokeColor="@color/preto"
-            android:textColor="@color/branco"
-            android:backgroundTint="@color/verde"
             tools:targetApi="lollipop" />
 
         <Button
             android:id="@+id/bt_finalizarEnvio"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/verde"
             android:text="@string/txt_bt_proximo_passo"
+            android:textColor="@color/branco"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:strokeColor="@color/preto"
-            android:textColor="@color/branco"
-            android:backgroundTint="@color/verde"
-            tools:targetApi="lollipop"
-            />
+            tools:targetApi="lollipop" />
 
         <Button
             android:id="@+id/bt_removerLinha"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="50dp"
             android:layout_height="60dp"
+            android:backgroundTint="@color/verde"
             android:gravity="center"
             android:text="@string/txt_bt_remover"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:cornerRadius="8dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:strokeColor="@color/preto"
             android:textColor="@color/branco"
-            android:backgroundTint="@color/verde"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bt_finalizarEnvio"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/preto"
             tools:targetApi="lollipop" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

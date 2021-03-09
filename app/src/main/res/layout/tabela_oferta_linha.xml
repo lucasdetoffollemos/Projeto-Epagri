@@ -6,13 +6,12 @@
 
     <Spinner
         android:id="@+id/spinner_tipoPiquete"
-        android:layout_width="200dp"
+        android:layout_width="240dp"
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:spinnerMode="dropdown"
-        android:dropDownWidth="200dp"
-        />
+        android:dropDownWidth="240dp"
+        android:spinnerMode="dropdown" />
 
     <Spinner
         android:id="@+id/spinner_condPiquete"

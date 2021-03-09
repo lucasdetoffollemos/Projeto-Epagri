@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/tv_AreaTotalEsta"
-        android:layout_width="600dp"
+        android:layout_width="640dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="-4dp"
         android:layout_marginLeft="-4dp"
