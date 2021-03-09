@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +18,15 @@ import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.R;
 import com.example.projetoEpagri.Classes.Usuario;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class PerfilActivity extends AppCompatActivity {
     private EditText et_nome, et_email, et_telefone, et_senha;
     public Button bt_criar;
+    private Spinner spinnerTipoPerfil, spinnerEstado, spinnerCidade;
+    private ArrayList<String> tipoPerfilArray, estadosArray, cidadesArray, cidadesScArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,20 @@ public class PerfilActivity extends AppCompatActivity {
         this.et_telefone = findViewById(R.id.et_telefone);
         this.et_senha = findViewById(R.id.et_senha);
         this.bt_criar = findViewById(R.id.bt_criar);
+
+        //arraylists
+        tipoPerfilArray = new ArrayList();
+        estadosArray = new ArrayList();
+        cidadesArray = new ArrayList();
+        cidadesScArray = new ArrayList();
+
+        //Spinners
+        spinnerTipoPerfil = (Spinner) findViewById(R.id.spinner_tipoPerfil);
+        spinnerEstado = findViewById(R.id.spinner_estado);
+        spinnerCidade = findViewById(R.id.spinner_cidade);
+
+
+        setandoSpinners();
     }
 
     /**
@@ -61,6 +81,48 @@ public class PerfilActivity extends AppCompatActivity {
                 criarPerfil(nome, email, telefone, senha);
             }
         });
+
+
+
+        //Spinners.
+        spinnerTipoPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position > 0){
+                    Toast.makeText(PerfilActivity.this, "Tipo " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        //Spinners.
+        spinnerEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position > 0){
+                    Toast.makeText(PerfilActivity.this, "Estado " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+//        //Spinners.
+//        spinnerCidade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if(position > 0){
+//                    Toast.makeText(PerfilActivity.this, "Cidades " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {}
+//        });
+
+
+
     }
 
     /**
@@ -69,6 +131,7 @@ public class PerfilActivity extends AppCompatActivity {
     public void criarPerfil(String nome, String email, String telefone, String senha){
         Usuario u = new Usuario(nome, email, telefone, senha);
         BancoDeDados.usuarioDAO.inserirUsuario(u);
+
         Toast.makeText(this, "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
 
 
@@ -84,6 +147,52 @@ public class PerfilActivity extends AppCompatActivity {
             }
         }, 1000);
     }
+
+    //Arrumando os spinners na activity perfil
+
+    public void setandoSpinners(){
+
+        //Spinner do tipo de perfil
+        tipoPerfilArray.add("Tipo do perfil: ");
+        tipoPerfilArray.add("Produtor");
+        tipoPerfilArray.add("Técnico");
+        tipoPerfilArray.add("Estudante");
+
+        ArrayAdapter<String> tipoPerfilAdapter = new ArrayAdapter<>(PerfilActivity.this, android.R.layout.simple_spinner_item, tipoPerfilArray);
+        tipoPerfilAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTipoPerfil.setAdapter(tipoPerfilAdapter);
+
+        //Spinner dos estados
+        estadosArray.add("Selecione o Estado: ");
+        estadosArray.add("Paraná");
+        estadosArray.add("Santa Catarina");
+        estadosArray.add("Rio Grande do Sul");
+
+        ArrayAdapter<String> estadosAdapter = new ArrayAdapter<>(PerfilActivity.this, android.R.layout.simple_spinner_item, estadosArray);
+        estadosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEstado.setAdapter(estadosAdapter);
+
+
+        //Spinner das cidades
+        cidadesArray.add("Selecione a Cidade: ");
+
+        //Array de cidades de santa catarina
+        cidadesScArray.add("Lages");
+        cidadesScArray.add("Opa");
+        cidadesScArray.add("sdsi");
+        cidadesScArray.add("dgdfgd");
+
+        for(int i =0; i<cidadesScArray.size(); i++){
+            String a = cidadesScArray.get(i);
+            cidadesArray.add(a);
+        }
+
+
+        ArrayAdapter<String> cidadesAdapter = new ArrayAdapter<>(PerfilActivity.this, android.R.layout.simple_spinner_item, cidadesArray);
+        cidadesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCidade.setAdapter(cidadesAdapter);
+    }
+
 
 
     /**
