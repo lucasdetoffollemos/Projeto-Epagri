@@ -26,7 +26,7 @@ public class PerfilActivity extends AppCompatActivity {
     private EditText et_nome, et_email, et_telefone, et_senha;
     public Button bt_criar;
     private Spinner spinnerTipoPerfil, spinnerEstado, spinnerCidade;
-    private ArrayList<String> tipoPerfilArray, estadosArray, cidadesArray, cidadesScArray;
+    private ArrayList<String> tipoPerfilArray, estadosArray, cidadesArray, cidadesPrArray, cidadesScArray, cidadesRsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,10 @@ public class PerfilActivity extends AppCompatActivity {
         tipoPerfilArray = new ArrayList();
         estadosArray = new ArrayList();
         cidadesArray = new ArrayList();
+        //Arrays da cidades de cada estado
+        cidadesPrArray = new ArrayList();
         cidadesScArray = new ArrayList();
+        cidadesRsArray = new ArrayList();
 
         //Spinners
         spinnerTipoPerfil = (Spinner) findViewById(R.id.spinner_tipoPerfil);
@@ -104,22 +107,49 @@ public class PerfilActivity extends AppCompatActivity {
                 if(position > 0){
                     Toast.makeText(PerfilActivity.this, "Estado " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
                 }
+
+                //Lógica feita, para que quando o usuário clicar no estado x, o algoritimo irá adcionar no arrayList de cidades as cidades deste respectivo estado, e irá remover os arrayLists das cidades dos outros estados.
+                if(position == 1){
+                    for(int i =0; i<cidadesPrArray.size(); i++){
+                        String cidade = cidadesPrArray.get(i);
+                        cidadesArray.add(cidade);
+                    }
+                    cidadesArray.removeAll(cidadesScArray);
+                    cidadesArray.removeAll(cidadesRsArray);
+
+                }
+                else if(position  == 2){
+                    for(int i =0; i<cidadesScArray.size(); i++){
+                        String cidade = cidadesScArray.get(i);
+                        cidadesArray.add(cidade);
+                    }
+                    cidadesArray.removeAll(cidadesPrArray);
+                    cidadesArray.removeAll(cidadesRsArray);
+                }
+                else if(position  == 3){
+                    for(int i =0; i<cidadesRsArray.size(); i++){
+                        String cidade = cidadesRsArray.get(i);
+                        cidadesArray.add(cidade);
+                    }
+                    cidadesArray.removeAll(cidadesPrArray);
+                    cidadesArray.removeAll(cidadesScArray);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-//        //Spinners.
-//        spinnerCidade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if(position > 0){
-//                    Toast.makeText(PerfilActivity.this, "Cidades " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {}
-//        });
+        //Spinners.
+        spinnerCidade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position > 0){
+                    Toast.makeText(PerfilActivity.this, "Cidades " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
 
 
@@ -150,8 +180,10 @@ public class PerfilActivity extends AppCompatActivity {
 
     //Arrumando os spinners na activity perfil
 
+    /**
+     * Método responsável por adicionar cada arrayList no seu respectivo Spinner
+     */
     public void setandoSpinners(){
-
         //Spinner do tipo de perfil
         tipoPerfilArray.add("Tipo do perfil: ");
         tipoPerfilArray.add("Produtor");
@@ -176,24 +208,30 @@ public class PerfilActivity extends AppCompatActivity {
         //Spinner das cidades
         cidadesArray.add("Selecione a Cidade: ");
 
+        //Array de cidades do parana
+        cidadesPrArray.add("parana1");
+        cidadesPrArray.add("parana2");
+        cidadesPrArray.add("parana3");
+        cidadesPrArray.add("parana4");
+
         //Array de cidades de santa catarina
         cidadesScArray.add("Lages");
         cidadesScArray.add("Opa");
         cidadesScArray.add("sdsi");
         cidadesScArray.add("dgdfgd");
 
-        for(int i =0; i<cidadesScArray.size(); i++){
-            String a = cidadesScArray.get(i);
-            cidadesArray.add(a);
-        }
 
+        //Array de cidades do rio grande do sul
+        cidadesRsArray.add("rio1");
+        cidadesRsArray.add("rio2");
+        cidadesRsArray.add("rio3");
+        cidadesRsArray.add("rio4");
 
+        //Adionando o array de cidades dentro do spinner cidade (Obs: O array cidade é determinado no método setListener, dentro do onItemSelect dos estados, onde para cada estado, será adicionado uma lista de cidades diferentes.)
         ArrayAdapter<String> cidadesAdapter = new ArrayAdapter<>(PerfilActivity.this, android.R.layout.simple_spinner_item, cidadesArray);
         cidadesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCidade.setAdapter(cidadesAdapter);
     }
-
-
 
     /**
      * Chamado no arquivo de layout
