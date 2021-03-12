@@ -75,7 +75,7 @@ public class FragmentOfertaProposta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_oferta_proposta, container, false);
 
-        layout_incluido_piquete = rootView.findViewById(R.id.included_layout_piquete_proposta);
+        //layout_incluido_piquete = rootView.findViewById(R.id.included_layout_piquete_proposta);
 
         inicializa();
         setListeners();

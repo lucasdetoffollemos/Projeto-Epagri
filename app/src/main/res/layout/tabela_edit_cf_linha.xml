@@ -9,15 +9,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="text"
         android:autofillHints=""
-        android:hint="@null" />
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_cond_degr"
@@ -25,15 +26,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
+        android:autofillHints=""
         android:background="@null"
         android:gravity="center"
-        android:inputType="numberDecimal"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textCursorDrawable="@null"
-        android:textSize="14sp"
-        android:autofillHints=""
-        android:hint="@null"/>
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_cond_med"
@@ -41,15 +43,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
+        android:autofillHints=""
         android:background="@null"
         android:gravity="center"
-        android:inputType="numberDecimal"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textCursorDrawable="@null"
-        android:textSize="14sp"
-        android:autofillHints=""
-        android:hint="@null"/>
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_cond_oti"
@@ -57,15 +60,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
+        android:autofillHints=""
         android:background="@null"
         android:gravity="center"
-        android:inputType="numberDecimal"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
         android:text="@string/txt_tv_zero"
         android:textColor="@android:color/black"
         android:textCursorDrawable="@null"
-        android:textSize="14sp"
-        android:autofillHints=""
-        android:hint="@null"/>
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_jan"
@@ -73,15 +77,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
 
     <EditText
@@ -90,15 +95,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_mar"
@@ -106,15 +112,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_abr"
@@ -122,15 +129,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_mai"
@@ -138,15 +146,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_jun"
@@ -154,15 +163,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_jul"
@@ -170,15 +180,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_ago"
@@ -186,15 +197,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_set"
@@ -202,15 +214,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_out"
@@ -218,15 +231,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_nov"
@@ -234,15 +248,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_dez"
@@ -250,15 +265,16 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_edit_total"
@@ -266,13 +282,14 @@
         android:layout_height="30dp"
         android:layout_marginStart="-1dp"
         android:layout_marginLeft="-1dp"
-        android:gravity="center"
-        android:text="@string/txt_tv_zero"
-        android:background="@null"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textCursorDrawable="@null"
-        android:inputType="numberDecimal"
         android:autofillHints=""
-        android:hint="@null"/>
+        android:background="@null"
+        android:gravity="center"
+        android:hint="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:text="@string/txt_tv_zero"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="14sp" />
 </TableRow>

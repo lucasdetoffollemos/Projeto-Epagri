@@ -1,30 +1,26 @@
 package com.example.projetoEpagri.Activities;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.Classes.BancoDeDados;
+import com.example.projetoEpagri.Fragments.LoginFragment;
+import com.example.projetoEpagri.Fragments.SplashScreenFragment;
 import com.example.projetoEpagri.R;
 
-/*
-    COISAS A FAZER:
-    - Implementar a não perda de layout ao voltar de Animais para Piquete.
-    - Abrir e fechar conexões com o banco de dados no momento correto.
-    - Implementar tratamento de exceção em todas as interações com o banco.
- */
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private TextView tv_criaPerfil, tv_recuperaSenha;
-    private EditText et_nome, et_senha;
-    private Button bt_login;
+public class MainActivity extends AppCompatActivity{
     public static BancoDeDados bancoDeDados;
 
     @Override
@@ -32,114 +28,48 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        inicializa();
-        setListeners();
-
-        if(bancoDeDados.verificaExistenciaTabela("dados_norte") && bancoDeDados.verificaTabelaVazia("dados_norte")){
-            inseriDadosTabelaPastagemNorte();
-        }
-
-        if(bancoDeDados.verificaExistenciaTabela("dados_sul") && bancoDeDados.verificaTabelaVazia("dados_sul")){
-            inseriDadosTabelaPastagemSul();
-        }
-    }
-
-    /**
-     * Método responsável por inicializar os componentes da interface e os objetos da classe.
-     */
-    public void inicializa(){
-        this.et_nome = findViewById(R.id.et_nome);
-        this.et_senha = findViewById(R.id.et_senha);
-        this.bt_login = findViewById(R.id.bt_login);
-        this.tv_criaPerfil = findViewById(R.id.tv_criarPerfil);
-        this.tv_recuperaSenha = findViewById(R.id.tv_recuperarSenha);
-
-
         bancoDeDados = new BancoDeDados(this);
         bancoDeDados.abreConexao();
-    }
 
-    /**
-     * Método responsável por setar os listener dos botões e tudo mais que for clicável na tela login.
-     */
-    public void setListeners(){
-        this.bt_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
-
-
-        this.tv_criaPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vaiParaActivityPerfil();
-            }
-        });
-
-        this.tv_recuperaSenha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vaiParaActivityRecuperaSenha();
-            }
-        });
-    }
-
-    /**
-     * Método resposável por realizar o login.
-     */
-    public void login() {
-         String nome =  this.et_nome.getText().toString();
-         String senha =  this.et_senha.getText().toString();
-         Boolean checkEmailSenha =  bancoDeDados.usuarioDAO.login(nome, senha);
-
-        if(checkEmailSenha){
-            Toast.makeText(getApplicationContext(), "Usuário logado", Toast.LENGTH_SHORT).show();
-            vaiParaActivityIndex(nome);
+        //Verifica a existência das tabelas de dados e faz a criação caso necessário.
+        if(bancoDeDados.verificaExistenciaTabela(IDadosSchema.TABELA_DADOS_NORTE) && bancoDeDados.verificaTabelaVazia(IDadosSchema.TABELA_DADOS_NORTE)){
+            inseriDadosTabelaPastagemNorte();
         }
-        else if(nome.equals("") && senha.equals("")){
-            Toast.makeText(getApplicationContext(), "Preencha os campos", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Nome de usuário ou senha incorretos", Toast.LENGTH_SHORT).show();
+        if(bancoDeDados.verificaExistenciaTabela(IDadosSchema.TABELA_DADOS_SUL) && bancoDeDados.verificaTabelaVazia(IDadosSchema.TABELA_DADOS_SUL)){
+            inseriDadosTabelaPastagemSul();
         }
 
-         limparDados();
+        Fragment fragment = SplashScreenFragment.newInstance();
+        startFragment(fragment, "splash_screen_fragment", R.id.ll_main, false, false, this);
     }
 
     /**
-     * Método responsável por iniciar a Activity Perfil.
+     * Método responsável por iniciar um fragment.
+     * @param fragment Fragment.
+     * @param tag Tag do fragment.
+     * @param id Id do elemento de layout onde o fragment aparecerá.
+     * @param backStack Indica se o fragment deve aparecer na pilha ou não.
+     * @param animations Indica se o fragment terá animação de entrada e saída.
+     * @param activity Representa a activity onde o fragment será exibido.
      */
-    public void vaiParaActivityPerfil() {
-        Intent i = new Intent(MainActivity.this, PerfilActivity.class);
-        startActivity(i);
-    }
+    public static void startFragment(Fragment fragment, String tag, int id, boolean backStack, boolean animations, Activity activity) {
+        FragmentTransaction transaction = ((FragmentActivity)activity).getSupportFragmentManager().beginTransaction();
 
-    /**
-     * Método responsável por iniciar a Activity DE recuperação de senha.
-     */
-    public void vaiParaActivityRecuperaSenha() {
-        Intent i = new Intent(MainActivity.this, EsqueceuSenhaActivity.class);
-        startActivity(i);
-    }
+        if(animations){
+            transaction.setCustomAnimations(
+                    R.anim.slide_in,  // enter
+                    R.anim.fade_out,  // exit
+                    R.anim.fade_in,   // popEnter
+                    R.anim.slide_out  // popExit
+            );
+        }
 
-    /**
-     * Método responsável por iniciar a Activity Index.
-     * @param nomeUsuario
-     */
-    public void vaiParaActivityIndex(String nomeUsuario){
-        Intent i = new Intent(MainActivity.this, IndexActivity.class);
-        i.putExtra("nome_usuario", nomeUsuario);
-        startActivity(i);
-    }
+        transaction.replace(id, fragment, tag);
 
-    /**
-     * Método responsável por limpar os dados do formulário de login.
-     */
-    private void limparDados(){
-        this.et_nome.setText("");
-        this.et_senha.setText("");
+        if(backStack){
+            transaction.addToBackStack(null);
+        }
+        transaction.commit();
     }
 
     /**
@@ -178,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
         bancoDeDados.dadosDAO.inserirPastagem("Pastagem Naturalizada", 2.0, 5.0, 11.0, new int[]{15, 14, 10, 7, 2, 0, 0, 5, 8, 10, 14, 15}, 100, IDadosSchema.TABELA_DADOS_NORTE);
         bancoDeDados.dadosDAO.inserirPastagem("Perene de inverno", 3.0, 6.0, 12.0, new int[]{10, 9, 8, 7, 7, 6, 6, 7, 9, 11, 10, 10}, 100, IDadosSchema.TABELA_DADOS_NORTE);
         bancoDeDados.dadosDAO.inserirPastagem("Outra", 3.0, 5.2, 20.0, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100, IDadosSchema.TABELA_DADOS_NORTE);
-
-        //Toast.makeText(this, "Pastagem inserida", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -218,7 +146,5 @@ public class MainActivity extends AppCompatActivity {
         bancoDeDados.dadosDAO.inserirPastagem("Perene de inverno", 3.0, 6.0, 12.0, new int[]{10, 9, 8, 7, 7, 6, 6, 7, 9, 11, 10, 10}, 100, IDadosSchema.TABELA_DADOS_SUL);
         bancoDeDados.dadosDAO.inserirPastagem("Sudão", 5.0, 8.0, 18.0, new int[]{30, 30, 15, 5, 0, 0, 0, 0, 0, 0, 5, 15}, 100, IDadosSchema.TABELA_DADOS_SUL);
         bancoDeDados.dadosDAO.inserirPastagem("Outra", 3.0, 5.2, 20.0, new int[]{20, 15, 7, 3, 0, 0, 0, 0, 2, 10, 21, 22}, 100, IDadosSchema.TABELA_DADOS_SUL);
-
-        //Toast.makeText(this, "Pastagem inserida", Toast.LENGTH_SHORT).show();
     }
 }

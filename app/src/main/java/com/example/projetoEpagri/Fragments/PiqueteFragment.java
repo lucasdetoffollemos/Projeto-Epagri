@@ -1,36 +1,42 @@
-package com.example.projetoEpagri.Activities;
+package com.example.projetoEpagri.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Activities.IndexActivity;
+import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
-import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Piquete;
+import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class PiqueteActivity extends AppCompatActivity{
-    private Button bt_adicionar_linha, bt_remover_linha, bt_proximo_passo;
-    private TableLayout table_layout;
+public class PiqueteFragment extends Fragment {
     public int posicaoLinhaTabela=-1, numeroDeLinhas=0;
+    private TableLayout table_layout;
 
     private double producaoEstimadaD, areaTotal;
     private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
@@ -39,24 +45,26 @@ public class PiqueteActivity extends AppCompatActivity{
     private ArrayList<Double> listaTotaisEstacoes;      //lista de 4 posiçõe para guardar os valores das estações.
     private ArrayList<Piquete> listaPiquetes;
     private ArrayList<TextView> listaTextViewTotaisMes; //lista com os textviews dos totais dos 12 meses.
-
-    private String nomeUsuario, regiao;
+    private Propriedade propriedade;
     private DecimalFormat doisDecimais;
-    private static final int CODIGO_REQUISICAO_ANIMAIS_ACTIVITY = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_piquete);
+    public PiqueteFragment() {}
 
-        inicializa();
-        setListeners();
+    public static PiqueteFragment newInstance() {
+        PiqueteFragment fragment = new PiqueteFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    /**
-     * Método utilizado para inicializar os componentes da interface e os objetos da classe.
-     */
-    public void inicializa(){
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(IndexFragment.propriedade != null){
+            this.propriedade = IndexFragment.propriedade;
+        }
+
         listaDeAreas = new ArrayList<>();
         matrizMeses = new ArrayList<>();
         listaTotaisMes = new ArrayList<>();
@@ -77,18 +85,36 @@ public class PiqueteActivity extends AppCompatActivity{
             listaTotaisEstacoes.add(0.0); //Primavera
         }
 
-        TextView jan = findViewById(R.id.tv_AreaTotalMesJan);
-        TextView fev = findViewById(R.id.tv_AreaTotalMesFev);
-        TextView mar = findViewById(R.id.tv_AreaTotalMesMar);
-        TextView abr = findViewById(R.id.tv_AreaTotalMesAbr);
-        TextView mai = findViewById(R.id.tv_AreaTotalMesMai);
-        TextView jun = findViewById(R.id.tv_AreaTotalMesJun);
-        TextView jul = findViewById(R.id.tv_AreaTotalMesJul);
-        TextView ago = findViewById(R.id.tv_AreaTotalMesAgo);
-        TextView set = findViewById(R.id.tv_AreaTotalMesSet);
-        TextView out = findViewById(R.id.tv_AreaTotalMesOut);
-        TextView nov = findViewById(R.id.tv_AreaTotalMesNov);
-        TextView dez = findViewById(R.id.tv_AreaTotalMesDez);
+        doisDecimais = new DecimalFormat("#.##");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        return inflater.inflate(R.layout.fragment_piquete, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
+        final Button bt_adicionar_linha = getView().findViewById(R.id.bt_adicionarLinha);
+        final Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
+        final Button bt_proximo_passo = getView().findViewById(R.id.bt_finalizarEnvio);
+
+        final TextView jan = getView().findViewById(R.id.tv_AreaTotalMesJan);
+        final TextView fev = getView().findViewById(R.id.tv_AreaTotalMesFev);
+        final TextView mar = getView().findViewById(R.id.tv_AreaTotalMesMar);
+        final TextView abr = getView().findViewById(R.id.tv_AreaTotalMesAbr);
+        final TextView mai = getView().findViewById(R.id.tv_AreaTotalMesMai);
+        final TextView jun = getView().findViewById(R.id.tv_AreaTotalMesJun);
+        final TextView jul = getView().findViewById(R.id.tv_AreaTotalMesJul);
+        final TextView ago = getView().findViewById(R.id.tv_AreaTotalMesAgo);
+        final TextView set = getView().findViewById(R.id.tv_AreaTotalMesSet);
+        final TextView out = getView().findViewById(R.id.tv_AreaTotalMesOut);
+        final TextView nov = getView().findViewById(R.id.tv_AreaTotalMesNov);
+        final TextView dez = getView().findViewById(R.id.tv_AreaTotalMesDez);
 
         listaTextViewTotaisMes.add(jan);
         listaTextViewTotaisMes.add(fev);
@@ -103,25 +129,21 @@ public class PiqueteActivity extends AppCompatActivity{
         listaTextViewTotaisMes.add(nov);
         listaTextViewTotaisMes.add(dez);
 
-        table_layout = findViewById(R.id.tableLayout_tabelaAnimais);
-        bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
-        bt_remover_linha = findViewById(R.id.bt_removerLinha);
-        bt_proximo_passo = findViewById(R.id.bt_finalizarEnvio);
-
-        Intent intent = getIntent();
-        nomeUsuario = intent.getStringExtra("nome_usuario");
-        regiao = intent.getStringExtra("regiao");
-        //Toast.makeText(PiqueteActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
-        doisDecimais = new DecimalFormat("#.##");
+        table_layout = getView().findViewById(R.id.tableLayout_tabelaAnimais);
 
         adicionaLinha();
-    }
 
-    /**
-     * Método utilizado para setar os listener dos botões.
-     */
-    public void setListeners(){
-        //Quando clicado no botao de mais, é acionado está funçao.
+        //Clique no ícone "voltar".
+        iv_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                getFragmentManager().popBackStack();
+            }
+        });
+
+        //Clique no botão "+".
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +151,7 @@ public class PiqueteActivity extends AppCompatActivity{
             }
         });
 
-        //Quando clicado no botao de menos, é acionado está funçao, que tem como objetivo excluir cada linha da tabela.
+        //Clique no botão "-".
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,19 +160,26 @@ public class PiqueteActivity extends AppCompatActivity{
                     calculaTotais();
                 }
                 else{
-                    Toast.makeText(PiqueteActivity.this, "Operação Inválida!! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Operação Inválida!! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        //Clique no botão "Próximo passo".
         bt_proximo_passo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!listaDeAreas.contains(0.0)){
-                    irParaAnimaisActivity();
+                    IndexFragment.propriedade.setArea(areaTotal);
+                    IndexFragment.propriedade.setListaPiqueteAtual(listaPiquetes);
+                    IndexFragment.listaTotaisMes = new ArrayList<>(listaTotaisMes);
+                    IndexFragment.listaTotaisEstacoes = new ArrayList<>(listaTotaisEstacoes);
+
+                    Fragment animais_fragment = AnimaisFragment.newInstance();
+                    MainActivity.startFragment(animais_fragment, "animais_fragment", R.id.ll_index, true, true, getActivity());
                 }
                 else{
-                    Toast.makeText(PiqueteActivity.this, "Você deve preencher todos os campos \"Área\" antes de prosseguir!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Você deve preencher todos os campos \"Área\" antes de prosseguir!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -161,7 +190,7 @@ public class PiqueteActivity extends AppCompatActivity{
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        TableRow linha_tabela = (TableRow) View.inflate(PiqueteActivity.this, R.layout.tabela_oferta_linha, null);
+        TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_oferta_linha, null);
         criarLinha(linha_tabela);
         setListenersLinha(linha_tabela);
 
@@ -218,17 +247,17 @@ public class PiqueteActivity extends AppCompatActivity{
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosDAO.java.
         ArrayList<String> tipoPiquete = new ArrayList<>();
 
-        if(regiao.equals("cfa")){
+        if(this.propriedade.getRegiao().equals("cfa")){
             tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_NORTE);
         }
-        else if(regiao.equals("cfb")){
+        else if(this.propriedade.getRegiao().equals("cfb")){
             tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
         }
 
         //Localiza o spinner tipo no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerTipoPiquete = linha_tabela.findViewById(R.id.spinner_tipoPiquete);
         //Cria um ArrayAdpter usando o array de string com os tipos armazenados no banco de dados.
-        ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<>(PiqueteActivity.this, android.R.layout.simple_spinner_item, tipoPiquete);
+        ArrayAdapter<String> spinnerTipoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, tipoPiquete);
         spinnerTipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoPiquete.setAdapter(spinnerTipoAdapter);
 
@@ -241,7 +270,7 @@ public class PiqueteActivity extends AppCompatActivity{
         //Localiza o spinner condicao no arquivo xml tabela_oferta_atual_linha.
         Spinner spinnerCondicaoPiquete = linha_tabela.findViewById(R.id.spinner_condPiquete);
         //Cria um ArrayAdpter usando o array de string com condicoes "degradada", "média" e "ótima". //Cria um ArrayAdapter que pega o Array de string "condicaoPiquete" e transforma em um spinner.
-        ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<>(PiqueteActivity.this, android.R.layout.simple_spinner_item, condicaoPiquete);
+        ArrayAdapter<String> spinnerCondicaoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, condicaoPiquete);
         spinnerCondicaoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCondicaoPiquete.setAdapter(spinnerCondicaoAdapter);
 
@@ -252,7 +281,7 @@ public class PiqueteActivity extends AppCompatActivity{
         table_layout.addView(linha_tabela);
     }
 
-     /* primeira linha = -1
+    /* primeira linha = -1
         segunda linha = 0
         terceira linha = 1
         Dentro da linha
@@ -370,9 +399,9 @@ public class PiqueteActivity extends AppCompatActivity{
     public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao){
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
 
-        if(regiao.equals("cfa")){
+        if(this.propriedade.getRegiao().equals("cfa")){
             this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * 1000; //kg
-        }else if(regiao.equals("cfb")){
+        }else if(this.propriedade.getRegiao().equals("cfb")){
             this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * 1000;
         }
 
@@ -395,11 +424,11 @@ public class PiqueteActivity extends AppCompatActivity{
         TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
         double valor = 0.0;
-        if(regiao.equals("cfa")){
+        if(this.propriedade.getRegiao().equals("cfa")){
             valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/100;
             valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * aproveitamento * valor * area).replace(",", "."));
         }
-        else if(regiao.equals("cfb")){
+        else if(this.propriedade.getRegiao().equals("cfb")){
             valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/100;
             valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * aproveitamento * valor * area).replace(",", "."));
         }
@@ -425,7 +454,7 @@ public class PiqueteActivity extends AppCompatActivity{
         for (int i = 0; i < this.listaDeAreas.size(); i++) {
             this.areaTotal = this.areaTotal + this.listaDeAreas.get(i);
         }
-        TextView area = findViewById(R.id.tv_AreaTotalNumHa);
+        TextView area = getActivity().findViewById(R.id.tv_AreaTotalNumHa);
         area.setText(this.doisDecimais.format(this.areaTotal));
 
         double total = 0.0;
@@ -498,10 +527,10 @@ public class PiqueteActivity extends AppCompatActivity{
             }
         }
 
-        TextView totalVer = findViewById(R.id.tv_AreaTotalVer);
-        TextView totalOut = findViewById(R.id.tv_AreaTotalOut);
-        TextView totalInv = findViewById(R.id.tv_AreaTotalInve);
-        TextView totalPrim = findViewById(R.id.tv_AreaTotalPrim);
+        TextView totalVer = getView().findViewById(R.id.tv_AreaTotalVer);
+        TextView totalOut = getView().findViewById(R.id.tv_AreaTotalOut);
+        TextView totalInv = getView().findViewById(R.id.tv_AreaTotalInve);
+        TextView totalPrim = getView().findViewById(R.id.tv_AreaTotalPrim);
 
         if(listaTotaisEstacoes.size() > 0){
             totalVer.setText(this.doisDecimais.format(listaTotaisEstacoes.get(0)));
@@ -509,48 +538,5 @@ public class PiqueteActivity extends AppCompatActivity{
             totalInv.setText(this.doisDecimais.format(listaTotaisEstacoes.get(2)));
             totalPrim.setText(this.doisDecimais.format(listaTotaisEstacoes.get(3)));
         }
-    }
-
-    /**
-     * Método chamado toda vez que o botão Próximo Passo é clicado, e tem como objetivo levar o usário para outra activity e mandar um array de totais/mês. (Obs: método é acionado, no onclick do Botao Proximo Passo, que se encontra em activity_piquete.xml)
-     */
-    public void irParaAnimaisActivity() {
-        Intent i=new Intent(getApplicationContext(), AnimaisActivity.class);
-        i.putExtra("nome_usuario", this.nomeUsuario);
-        i.putExtra("areaTotal", this.areaTotal);
-        startActivityForResult(i, PiqueteActivity.CODIGO_REQUISICAO_ANIMAIS_ACTIVITY);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CODIGO_REQUISICAO_ANIMAIS_ACTIVITY) {
-            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                nomeUsuario = data.getStringExtra("nome_usuario");
-                ArrayList<Animais> listaAnimais = data.getParcelableArrayListExtra("listaAnimais");
-                @SuppressWarnings("unchecked")
-                ArrayList<Double> listaTotalUAHA = (ArrayList<Double>) data.getSerializableExtra("listaTotaisUAHA");
-                int qtdeAnimais = data.getIntExtra("qtdeAnimal", 0);
-                double area = data.getDoubleExtra("area", 1.0);
-
-                Intent intent = new Intent();
-                intent.putExtra("nome_usuario", nomeUsuario);
-                intent.putExtra("regiao", regiao);
-                intent.putExtra("listaAnimais", listaAnimais);
-                intent.putExtra("listaTotaisUAHA", listaTotalUAHA);
-                intent.putExtra("qtdeAnimal", qtdeAnimais);
-                intent.putExtra("area", area);
-                intent.putExtra("listaPiquetes", listaPiquetes);
-                intent.putExtra("listaTotaisMes", listaTotaisMes);
-                intent.putExtra("listaTotaisEstacoes", listaTotaisEstacoes);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        }
-    }
-
-    public void clicarVoltarPiquete(View view) {
-        finish();
     }
 }

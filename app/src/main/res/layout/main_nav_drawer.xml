@@ -14,12 +14,6 @@
         android:orientation="vertical"
         android:background="@color/verde"
         android:paddingBottom="16dp">
-        <!--        <ImageView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="120dp"-->
-        <!--            android:layout_margin="16dp"-->
-        <!--            android:onClick="clicarLogo"/>-->
-        <!--            android:src="@drawable/bull"/>-->
 
         <TextView
             android:layout_marginTop="30dp"
@@ -108,165 +102,163 @@
         android:background="@color/preto"/>
 
     <LinearLayout
+        android:id="@+id/ll_menu_inicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:onClick="clicarInicio"
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
-            android:textSize="20sp"
-            android:textColor="@color/preto"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_weight="1"
             android:padding="12dp"
-            android:text="@string/txt_tv_inicio" />
+            android:text="@string/txt_tv_inicio"
+            android:textColor="@color/preto"
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="48dp"
             android:layout_marginRight="48dp"
+            android:contentDescription="@string/txt_img_logoIni"
             android:padding="12dp"
-            app:tint="@color/preto"
             android:src="@drawable/ic_inicio"
-            android:contentDescription="@string/txt_img_logoIni" />
+            app:tint="@color/preto" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_menu_perfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:onClick="clicarPerfil"
+        android:onClick="clickMenuItemPerfil"
+        android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
-            android:textSize="20sp"
-            android:textColor="@color/preto"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_weight="1"
+            android:padding="12dp"
             android:text="@string/txt_tv_tituloPerfil"
-            android:padding="12dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
+            android:textColor="@color/preto"
+            android:textSize="20sp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="48dp"
             android:layout_marginEnd="48dp"
+            android:layout_marginRight="48dp"
+            android:contentDescription="@string/txt_img_logoPerfil"
             android:padding="12dp"
-            app:tint="@color/preto"
             android:src="@drawable/ic_perfil"
-            android:contentDescription="@string/txt_img_logoPerfil" />
+            app:tint="@color/preto" />
 
     </LinearLayout>
 
 
     <LinearLayout
+        android:id="@+id/ll_menu_sobre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:onClick="clicarSobre"
+        android:onClick="clickMenuItemSobre"
+        android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
-            android:textSize="20sp"
-            android:textColor="@color/preto"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/txt_tv_sobre"
-            android:padding="12dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            />
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:padding="12dp"
+            android:text="@string/txt_tv_sobre"
+            android:textColor="@color/preto"
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="48dp"
             android:layout_marginEnd="48dp"
-            app:tint="@color/preto"
+            android:layout_marginRight="48dp"
+            android:contentDescription="@string/txt_img_logoSobre"
             android:padding="12dp"
             android:src="@drawable/ic_sobre"
-            android:contentDescription="@string/txt_img_logoSobre" />
-
+            app:tint="@color/preto" />
 
 
     </LinearLayout>
 
 
-    <LinearLayout
+        <LinearLayout
+            android:id="@+id/ll_menu_configuracoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:onClick="clickMenuItemConfiguracoes"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:padding="12dp"
+                android:text="@string/txt_tv_config"
+                android:textColor="@color/preto"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:layout_marginRight="48dp"
+                android:contentDescription="@string/txt_img_logoConfig"
+                android:padding="12dp"
+                android:src="@drawable/ic_configuracoes"
+                app:tint="@color/preto" />
+        </LinearLayout>
+
+        <LinearLayout
+        android:id="@+id/ll_menu_sair"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:onClick="clicarConfig"
+        android:onClick="clickMenuItemSair"
+        android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="0dp"
-            android:textSize="20sp"
-            android:textColor="@color/preto"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/txt_tv_config"
-            android:padding="12dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="48dp"
-            android:layout_marginEnd="48dp"
-            android:padding="12dp"
-            app:tint="@color/preto"
-            android:src="@drawable/ic_configuracoes"
-            android:contentDescription="@string/txt_img_logoConfig" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_vertical"
-        android:onClick="clicarSair"
-        tools:ignore="UseCompoundDrawables">
-
-        <TextView
-            android:layout_width="0dp"
-            android:textSize="20sp"
-            android:textColor="@color/preto"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
             android:layout_weight="1"
+            android:padding="12dp"
             android:text="@string/txt_tv_sair"
-            android:padding="12dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            />
+            android:textColor="@color/preto"
+            android:textSize="20sp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="48dp"
             android:layout_marginEnd="48dp"
+            android:layout_marginRight="48dp"
+            android:contentDescription="@string/txt_img_logoSair"
             android:padding="12dp"
-            app:tint="@color/preto"
             android:src="@drawable/ic_sair"
-            android:contentDescription="@string/txt_img_logoSair" />
+            app:tint="@color/preto" />
 
     </LinearLayout>
-
-
-
 </LinearLayout>

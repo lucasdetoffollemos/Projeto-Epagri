@@ -11,86 +11,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".Activities.ModificaSenhaActivity"></activity>
-        <activity android:name=".Activities.EsqueceuSenhaActivity" />
-        <activity android:name=".Activities.EditarDadosActivity" />
-        <activity
-            android:name=".Activities.GraficoActivity"
-            android:largeHeap="true"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity" /> <!-- Splash Screen -->
-        <activity android:name=".Activities.SplashScreenActivity">
+
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- Activity Principal -->
-        <activity android:name=".Activities.MainActivity" /> <!-- Activity Perfil -->
-        <activity
-            android:name=".Activities.PerfilActivity"
-            android:label=" Criar Perfil"
-            android:parentActivityName=".Activities.MainActivity">
-
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.SplashScreenActivity" />
-        </activity> <!-- Activity De lista de usuarios -->
-        <!-- Activity index -->
+        </intent-filter>
+        </activity>
         <activity
             android:name=".Activities.IndexActivity"
-            android:label="Bem vindo"
-            android:parentActivityName=".Activities.MainActivity">
-
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.MainActivity" />
-        </activity> <!-- Acitivity Tabs -->
-        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <!--<activity
             android:name=".Activities.TabsActivity"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projetoEpagri.Activities.IndexActivity" />
-        </activity> <!-- Acitivity Propriedade -->
-        <activity
-            android:name=".Activities.PropriedadeActivity"
-            android:label="Propriedade"
-            android:parentActivityName=".Activities.IndexActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.IndexActivity" />
-        </activity> <!-- Activity piquete -->
-        <activity
-            android:name=".Activities.PiqueteActivity"
-            android:label="Piquete"
-            android:parentActivityName=".Activities.PropriedadeActivity"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.PropriedadeActivity" />
-        </activity> <!-- Activity Animais -->
-        <activity
-            android:name=".Activities.AnimaisActivity"
-            android:label="Animais"
-            android:parentActivityName=".Activities.PiqueteActivity"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.PiqueteActivity" />
-        </activity>
-        <activity android:name=".Activities.DadosPerfilActivity" />
-        <activity android:name=".Activities.SobreActivity" />
-        <activity android:name=".Activities.ConfiguracoesActivity" />
+        </activity>-->
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>

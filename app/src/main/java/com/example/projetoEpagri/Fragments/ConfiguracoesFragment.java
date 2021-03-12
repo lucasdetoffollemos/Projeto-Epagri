@@ -1,10 +1,12 @@
 package com.example.projetoEpagri.Fragments;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -27,60 +30,52 @@ import com.example.projetoEpagri.R;
 
 import java.util.ArrayList;
 
-public class FragmentEditarDados extends Fragment {
-    private ScrollView scrollView;
-    private TableLayout table_layout;
-    private Button bt_atualizar;
-    private View layout_incluido_tabela_oferta_2;
-    private ArrayList<Dados> lista_dados;
+public class ConfiguracoesFragment extends Fragment {
+
+    private static final String ARG_PARAM1 = "dados";
 
     private String dados;
+    private ArrayList<Dados> lista_dados;
+    private TableLayout table_layout;
+    private int posicaoLinhaTabela=-1, numeroDeLinhas = 0;
 
-    public int posicaoLinhaTabela=-1, numeroDeLinhas = 0;
+    public ConfiguracoesFragment() {}
 
-    public FragmentEditarDados() {}
-
-    public static FragmentEditarDados newInstance(String dados) {
-        FragmentEditarDados fragment = new FragmentEditarDados();
-
+    public static ConfiguracoesFragment newInstance(String dados) {
+        ConfiguracoesFragment fragment = new ConfiguracoesFragment();
         Bundle args = new Bundle();
-        args.putString("dados", dados);
+        args.putString(ARG_PARAM1, dados);
         fragment.setArguments(args);
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            dados = getArguments().getString(ARG_PARAM1);
+            lista_dados = BancoDeDados.dadosDAO.getPastagem(dados);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_editar_dados, container, false);
-
-        layout_incluido_tabela_oferta_2 = rootView.findViewById(R.id.included_layout_tabela_oferta_2);
-        scrollView = rootView.findViewById(R.id.sv_edit);
-        table_layout = rootView.findViewById(R.id.tl_edit_cf);
-        bt_atualizar = rootView.findViewById(R.id.bt_edit_atualizar);
-
-        inicializa();
-        setListeners();
-
-        return rootView;
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        return inflater.inflate(R.layout.fragment_configuracoes, container, false);
     }
 
-    public void inicializa(){
-        TextView titulo_tabela = layout_incluido_tabela_oferta_2.findViewById(R.id.tv_prodEstimadaMes);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
+        final View layout_incluido_tabela_oferta_2 = getView().findViewById(R.id.included_layout_tabela_oferta_2);
+        final ScrollView scrollView = getView().findViewById(R.id.sv_edit);
+        final Button bt_atualizar = getView().findViewById(R.id.bt_edit_atualizar);
+        final TextView titulo_tabela = layout_incluido_tabela_oferta_2.findViewById(R.id.tv_prodEstimadaMes);
+        table_layout = getView().findViewById(R.id.tl_edit_cf);
         titulo_tabela.setText(getResources().getString(R.string.txt_tv_titulo_tabela_edit));
-
-        dados = "";
-        if(getArguments() != null){
-            dados = getArguments().getString("dados");
-        }
-
-        lista_dados = BancoDeDados.dadosDAO.getPastagem(dados);
-
 
         for(int i=0; i<lista_dados.size(); i++){
             //Infla a linha para a tabela
@@ -90,10 +85,14 @@ public class FragmentEditarDados extends Fragment {
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         scrollView.setFocusable(true);
         scrollView.setFocusableInTouchMode(true);
-    }
 
-    @SuppressLint("ClickableViewAccessibility")
-    public void setListeners(){
+        iv_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+
         //Previne que o scroll faça a rolagem automática para o edittext que possui o foco.
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -142,6 +141,9 @@ public class FragmentEditarDados extends Fragment {
         });
     }
 
+    /**
+     * Método responsável por adicionar uma linha na tabela.
+     */
     public void adicionaLinha(){
         //Infla a linha para a tabela
         TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_edit_cf_linha, null);
@@ -301,7 +303,6 @@ public class FragmentEditarDados extends Fragment {
             @Override public void afterTextChanged(Editable s) {}
         });
     }
-
 
     /**
      * Método utilizado para alterar o valor na lista de dados conforme o usuário digita novos valores nos edittexts.

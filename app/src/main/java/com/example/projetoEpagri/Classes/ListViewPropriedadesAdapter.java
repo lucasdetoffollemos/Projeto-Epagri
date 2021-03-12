@@ -1,11 +1,9 @@
 package com.example.projetoEpagri.Classes;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetoEpagri.Activities.GraficoActivity;
-import com.example.projetoEpagri.Activities.TabsActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
@@ -28,15 +24,15 @@ import java.util.ArrayList;
 public class ListViewPropriedadesAdapter extends BaseAdapter {
     private final Context context;
     public ArrayList<Propriedade> listaPropriedades;
-    private final String nomeUsuario;
     private int idPropriedade;
-    private final int codigoRequisicao = 1; //Código para identificar a activity no método onActivityResult.
+    private static LayoutInflater inflater=null;
+
     //Atributo para animação no botão
 
-    public ListViewPropriedadesAdapter(Context context, ArrayList<Propriedade> lista, String nomeUsuario){
+    public ListViewPropriedadesAdapter(Context context, ArrayList<Propriedade> lista){
         this.context = context;
         this.listaPropriedades = lista;
-        this.nomeUsuario = nomeUsuario;
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public ArrayList<Propriedade> getData() {
@@ -59,30 +55,31 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         return 0;
     }
 
+    public class Holder{
+        TextView tv_nome, tv_area, tv_qtde;
+        Button bt_excluir;
+    }
+
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
-        LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Holder holder = new Holder();
         //Infla o layout definido em linha_listview_propriedade.xml.
-        @SuppressLint("ViewHolder") View row = layoutInflater.inflate(R.layout.linha_listview_propriedade, parent, false);
+        View row = inflater.inflate(R.layout.linha_listview_propriedade,null);
         row.setTag(this.getCount());
 
         //Identifica os elementos da linha.
-        TextView tv_nome = row.findViewById(R.id.lv_tv_nome_propriedade);
-        TextView tv_area = row.findViewById(R.id.lv_tv_area_propriedade);
-        TextView tv_qtde = row.findViewById(R.id.lv_tv_total_animais_propriedade);
-        //Button bt_ver_dados = row.findViewById(R.id.lv_bt_ver_dados);
-        //Button bt_grafico_atual = row.findViewById(R.id.lv_bt_grafico_atual);
-        //Button bt_grafico_proposta = row.findViewById(R.id.lv_bt_grafico_proposta);
-        Button bt_excluir = row.findViewById(R.id.lv_bt_excluir);
+        holder.tv_nome = row.findViewById(R.id.lv_tv_nome_propriedade);
+        holder.tv_area = row.findViewById(R.id.lv_tv_area_propriedade);
+        holder.tv_qtde = row.findViewById(R.id.lv_tv_total_animais_propriedade);
+        holder.bt_excluir = row.findViewById(R.id.lv_bt_excluir);
 
         //Cria um objeto para cada item da lista.
         final Propriedade propriedade = (Propriedade) this.getItem(position);
 
         //Define os valores dos textviews.
-        tv_nome.setText(propriedade.getNome());
-        tv_area.setText(String.valueOf(propriedade.getArea()));
-        tv_qtde.setText(String.valueOf(propriedade.getQtdeAnimais()));
-
+        holder.tv_nome.setText(propriedade.getNome());
+        holder.tv_area.setText(String.valueOf(propriedade.getArea()));
+        holder.tv_qtde.setText(String.valueOf(propriedade.getQtdeAnimais()));
 
         idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
         final ArrayList<Piquete> listaPiqueteProposta = BancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
@@ -133,7 +130,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         });*/
 
         //Listener do botão "excluir"
-        bt_excluir.setOnClickListener(new View.OnClickListener() {
+        holder.bt_excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

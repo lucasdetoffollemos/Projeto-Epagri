@@ -1,63 +1,71 @@
-package com.example.projetoEpagri.Activities;
+package com.example.projetoEpagri.Fragments;
 
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.projetoEpagri.Activities.IndexActivity;
+import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.Animais;
+import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class AnimaisActivity extends AppCompatActivity {
-    private Button bt_adicionar_linha, bt_remover_linha, bt_finalizar_envio;
-
-    private TableLayout table_layout;
+public class AnimaisFragment extends Fragment {
     private ArrayList<String> categoriaAnimal; //Array utilizado para setar os valores das categorias de animais no spinner categoria.
     private ArrayList<String> arrayMeses; //Array utilizado para setar os valores mostrados no spinner entrada
-    private double resultadoConsumo; //Variável utilizada para setar o consumo de acordo com a categoria do animal escolhido.
-    private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
 
     private ArrayList<Double> qtdeAnimais; //Array para armazenar os valores de qtde digitados para cada animal.
     private ArrayList<double[]> matrizUA; //Matriz para mapear a UA de cada mês/linha.
     private ArrayList<Animais> listaAnimais;
     private ArrayList<Double> listaTotalUAHA;
 
+    private double resultadoConsumo; //Variável utilizada para setar o consumo de acordo com a categoria do animal escolhido.
+    private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
+
     private int somaAnimal;
     private double areaTotal;
-    private String nomeUsuario;
     private DecimalFormat doisDecimais;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_animais);
+    private TableLayout table_layout;
 
-        inicializa();
-        setListeners();
+    public AnimaisFragment() {}
+
+    public static AnimaisFragment newInstance() {
+        AnimaisFragment fragment = new AnimaisFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    /**
-     * Método utilizado para inicializar os componentes da interface e os objetos da classe.
-     */
-    public void inicializa(){
-        //Esta linha de código faz com que o teclado nao seja habilitado quando o usuário entra nesta activity
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         //Criando um array de String para as categorias de animais.
         categoriaAnimal = new ArrayList<>();
@@ -93,23 +101,41 @@ public class AnimaisActivity extends AppCompatActivity {
             listaTotalUAHA.add(0.0);
         }
 
-        table_layout = findViewById(R.id.tableLayout_tabelaAnimais);
-
-        bt_adicionar_linha = findViewById(R.id.bt_adicionarLinha);
-        bt_remover_linha = findViewById(R.id.bt_removerLinha);
-        bt_finalizar_envio = findViewById(R.id.bt_finalizarEnvio);
-
-        Intent intent = getIntent();
-        nomeUsuario = intent.getStringExtra("nome_usuario");
         doisDecimais = new DecimalFormat("#.##");
-        //Toast.makeText(AnimaisActivity.this, nomeUsuario, Toast.LENGTH_SHORT).show();
-        adicionaLinha();
     }
 
-    /**
-     * Método utilizado para setar os listener dos botões.
-     */
-    public void setListeners(){
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        return inflater.inflate(R.layout.fragment_animais, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        table_layout = getView().findViewById(R.id.tableLayout_tabelaAnimais);
+
+        final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
+        final Button bt_adicionar_linha = getView().findViewById(R.id.bt_adicionarLinha);
+        final Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
+        final Button bt_finalizar_envio = getView().findViewById(R.id.bt_finalizarEnvio);
+
+        adicionaLinha();
+
+        //Clique no botão voltar. Desfaz as operações realizadas no PiqueteFragment.
+        iv_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IndexFragment.propriedade.setArea(0.0);
+                IndexFragment.propriedade.setListaPiqueteAtual(null);
+                IndexFragment.listaTotaisMes = null;
+                IndexFragment.listaTotaisEstacoes = null;
+
+                getFragmentManager().popBackStack();
+            }
+        });
+
         bt_adicionar_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +152,7 @@ public class AnimaisActivity extends AppCompatActivity {
                     calculoUaHa(matrizUA);
                 }
                 else{
-                    Toast.makeText(AnimaisActivity.this, "Operação Inválida! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Operação Inválida! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -135,10 +161,51 @@ public class AnimaisActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkAnimais(listaAnimais)){
-                    finalizaEnvio();
+                    IndexFragment.propriedade.setListaAnimaisAtual(listaAnimais);
+                    IndexFragment.propriedade.setQtdeAnimais(somaAnimal);
+                    IndexFragment.listaTotalUAHA = new ArrayList<>(listaTotalUAHA);
+
+                    int id_usuario = BancoDeDados.usuarioDAO.getUSuarioId(IndexActivity.nome_usuario);
+
+                    if(id_usuario != -1){
+                        BancoDeDados.propriedadeDAO.inserirPropriedade(IndexFragment.propriedade, id_usuario);
+
+                        int propriedadeId = BancoDeDados.propriedadeDAO.getPropriedadeId(IndexFragment.propriedade.getNome());
+
+                        if(propriedadeId != -1){
+                            if(IndexFragment.propriedade.getListaPiqueteAtual() != null){
+                                for(int i=0; i<IndexFragment.propriedade.getListaPiqueteAtual().size(); i++){
+                                    BancoDeDados.piqueteDAO.inserirPiquete(IndexFragment.propriedade.getListaPiqueteAtual().get(i), propriedadeId, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+                                }
+                            }
+
+                            if(IndexFragment.listaTotaisMes != null){
+                                BancoDeDados.totalPiqueteMesDAO.inserirTotalMes(IndexFragment.listaTotaisMes, propriedadeId, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+                            }
+
+                            if(IndexFragment.listaTotaisEstacoes != null){
+                                BancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(IndexFragment.listaTotaisEstacoes, propriedadeId, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+                            }
+
+                            if(listaAnimais != null){
+                                for(int i=0; i<listaAnimais.size(); i++){
+                                    BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+                                }
+                            }
+
+                            if(listaTotalUAHA != null){
+                                BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+                            }
+                        }
+                    }
+
+                    getFragmentManager().popBackStack();
+                    getFragmentManager().popBackStack();
+                    getFragmentManager().popBackStack();
+                    //getFragmentManager().popBackStack("index_fragment", 0);
                 }
                 else{
-                    Toast.makeText(AnimaisActivity.this, "Você deve preencher todos os campos antes de finalizar!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Você deve preencher todos os campos antes de finalizar!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -147,8 +214,8 @@ public class AnimaisActivity extends AppCompatActivity {
     /**
      * Método para verificar se todos os animais contidos na lista são animais completos (dados preenchidos) ou não.
      * Utiliza como base para a verificação somente a categoria.
-     * @param lista lista de animais.
-     * @return verdadeiro caso todos os animais estejam com os campos preenchidos e false caso contrário.
+     * @param lista Lista de animais.
+     * @return Verdadeiro caso todos os animais estejam com os campos preenchidos e false caso contrário.
      */
     public boolean checkAnimais(ArrayList<Animais> lista){
         for(int i=0; i<lista.size(); i++){
@@ -164,7 +231,7 @@ public class AnimaisActivity extends AppCompatActivity {
      */
     public void adicionaLinha(){
         //Infla a linha para a tabela
-        TableRow linha_tabela = (TableRow) View.inflate(AnimaisActivity.this, R.layout.tabela_demanda_linha, null);
+        TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_demanda_linha, null);
         criarLinha(linha_tabela);
         setListenersLinha(linha_tabela);
 
@@ -209,14 +276,14 @@ public class AnimaisActivity extends AppCompatActivity {
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinner_categoria);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<>(AnimaisActivity.this, android.R.layout.simple_spinner_item, categoriaAnimal);
+        final ArrayAdapter<String> spinnerCategoriaAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, categoriaAnimal);
         spinnerCategoriaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(spinnerCategoriaAdapter);
 
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         Spinner spinnerMeses = linha_tabela.findViewById(R.id.spinner_meses);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
-        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<>(AnimaisActivity.this, android.R.layout.simple_spinner_item, arrayMeses);
+        ArrayAdapter<String> spinnerMesesAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrayMeses);
         spinnerMesesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMeses.setAdapter(spinnerMesesAdapter);
 
@@ -404,7 +471,7 @@ public class AnimaisActivity extends AppCompatActivity {
             }
         }
 
-        TextView quantidadeAnimal = findViewById(R.id.tv_totalAnimais);
+        TextView quantidadeAnimal = getView().findViewById(R.id.tv_totalAnimais);
         quantidadeAnimal.setText(String.valueOf(somaAnimal));
     }
 
@@ -426,14 +493,14 @@ public class AnimaisActivity extends AppCompatActivity {
         double consumo, numeroAnimais, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim;
 
         if(verificaVazioSP(spinnerCategoria) &&
-                verificaVazioET(etNumAnimais) &&
-                verificaVazioSP(spinnerMeses) &&
-                verificaVazioET(etPesoInicial) &&
-                verificaVazioET(etPesoFinal) &&
-                verificaVazioET(etPesoVer) &&
-                verificaVazioET(etPesoOut) &&
-                verificaVazioET(etPesoInv) &&
-                verificaVazioET(etPesoPrim)){
+           verificaVazioET(etNumAnimais) &&
+           verificaVazioSP(spinnerMeses) &&
+           verificaVazioET(etPesoInicial) &&
+           verificaVazioET(etPesoFinal) &&
+           verificaVazioET(etPesoVer) &&
+           verificaVazioET(etPesoOut) &&
+           verificaVazioET(etPesoInv) &&
+           verificaVazioET(etPesoPrim)){
 
             categoria = spinnerCategoria.getSelectedItem().toString();
             //consumo = Double.parseDouble(textViewConsumo.getText().toString());
@@ -596,24 +663,24 @@ public class AnimaisActivity extends AppCompatActivity {
         }
 
         //Recupera a área total vinda da Activity Piquete.
-        areaTotal = getIntent().getDoubleExtra("areaTotal", 1.0);
+        areaTotal = IndexFragment.propriedade.getArea();
 
         for(int i=0; i<listaTotalUA.size(); i++){
             listaTotalUAHA.set(i, Double.parseDouble(doisDecimais.format(listaTotalUA.get(i) / areaTotal).replace(",",".")));
         }
 
-        TextView totalJan = findViewById(R.id.tv_AreaUaMesJan);
-        TextView totalFev = findViewById(R.id.tv_AreaUaMesFev);
-        TextView totalMar = findViewById(R.id.tv_AreaUaMesMar);
-        TextView totalAbr = findViewById(R.id.tv_AreaUaMesAbr);
-        TextView totalMai = findViewById(R.id.tv_AreaUaMesMai);
-        TextView totalJun = findViewById(R.id.tv_AreaUaMesJun);
-        TextView totalJul = findViewById(R.id.tv_AreaUaMesJul);
-        TextView totalAgo = findViewById(R.id.tv_AreaUaMesAgo);
-        TextView totalSet = findViewById(R.id.tv_AreaUaMesSet);
-        TextView totalOut = findViewById(R.id.tv_AreaUaMesOut);
-        TextView totalNov = findViewById(R.id.tv_AreaUaMesNov);
-        TextView totalDez = findViewById(R.id.tv_AreaUaMesDez);
+        TextView totalJan = getView().findViewById(R.id.tv_AreaUaMesJan);
+        TextView totalFev = getView().findViewById(R.id.tv_AreaUaMesFev);
+        TextView totalMar = getView().findViewById(R.id.tv_AreaUaMesMar);
+        TextView totalAbr = getView().findViewById(R.id.tv_AreaUaMesAbr);
+        TextView totalMai = getView().findViewById(R.id.tv_AreaUaMesMai);
+        TextView totalJun = getView().findViewById(R.id.tv_AreaUaMesJun);
+        TextView totalJul = getView().findViewById(R.id.tv_AreaUaMesJul);
+        TextView totalAgo = getView().findViewById(R.id.tv_AreaUaMesAgo);
+        TextView totalSet = getView().findViewById(R.id.tv_AreaUaMesSet);
+        TextView totalOut = getView().findViewById(R.id.tv_AreaUaMesOut);
+        TextView totalNov = getView().findViewById(R.id.tv_AreaUaMesNov);
+        TextView totalDez = getView().findViewById(R.id.tv_AreaUaMesDez);
 
         //Altera os valores dos TextViews.
         for(int i=0; i<listaTotalUAHA.size(); i++){
@@ -632,10 +699,6 @@ public class AnimaisActivity extends AppCompatActivity {
                 case 11: { totalDez.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
             }
         }
-
-        //for(int k=0; k<listaTotalUAHA.size(); k++){
-        //    Log.i("lista", "listaTotalUAHA[" + k + "] =" + String.valueOf(listaTotalUAHA.get(k)));
-        //}
     }
 
     /**
@@ -712,7 +775,7 @@ public class AnimaisActivity extends AppCompatActivity {
         return !p.getSelectedItem().toString().isEmpty();
     }
 
-    public void finalizaEnvio() {
+    /*public void finalizaEnvio() {
         Intent intent = new Intent();
         intent.putExtra("nome_usuario", nomeUsuario);
         intent.putExtra("listaAnimais", listaAnimais);
@@ -721,9 +784,5 @@ public class AnimaisActivity extends AppCompatActivity {
         intent.putExtra("area", areaTotal);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    public void clicarVoltarAnimais(View view) {
-        finish();
-    }
+    }*/
 }

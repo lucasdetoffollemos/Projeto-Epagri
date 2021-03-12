@@ -16,6 +16,8 @@
     <string name="hint_et_pesoPrimavera">P P</string>
     <string name="hint_et_nomeProrpriedade">Nome da propriedade</string>
     <string name="hint_et_area">Área</string>
+    <string name="hint_et_nova_senha">Nova senha</string>
+    <string name="hint_et_nova_senha_repeat">Repita a senha</string>
 
     <!--Text's    -->
     <!--TextViews -->
@@ -23,7 +25,7 @@
     <string name="txt_tv_criarPerfil">Criar perfil</string>
     <string name="txt_tv_login">Login</string>
     <string name="txt_tv_cadastraPropriedade">Cadastre sua Propriedade</string>
-    <string name="txt_tv_local_propriedade">Local da Propriedade</string>
+    <string name="txt_tv_local_propriedade">Selecione no mapa a localidade</string>
     <string name="txt_tv_clima_selecionado">Clima selecionado:</string>
     <string name="txt_tv_total">Total</string>
     <string name="txt_tv_zero">0</string>
@@ -72,6 +74,8 @@
     <string name="txt_tv_qnt">Qtde</string>
     <string name="txt_tv_cadastreAnimais">Cadastre os Animais</string>
     <string name="txt_tv_config">Configurações</string>
+    <string name="txt_tv_config_cfa">Clima Quente - cfa</string>
+    <string name="txt_tv_config_cfb">Clima Frio - cfb</string>
     <string name="txt_tv_seusDados">Seu Dados</string>
     <string name="txt_tv_dadosPerfil">Dados Perfil</string>
     <string name="txt_tv_nome">Nome</string>
@@ -126,7 +130,7 @@
     <string name="txt_bt_cfa">cfa</string>
     <string name="txt_bt_cfb">cfb</string>
     <string name="txt_bt_modicar">Modificar senha</string>
-    <string name="txt_bt_alterarSenha">Alterar Senha</string>
+    <string name="txt_bt_confirmar">Confirmar</string>
     <string name="txt_bt_editar_dados">Editar Dados</string>
 
     <!-- Content Description das Imagens -->

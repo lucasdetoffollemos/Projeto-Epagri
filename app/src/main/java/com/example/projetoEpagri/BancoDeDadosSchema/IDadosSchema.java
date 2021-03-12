@@ -1,8 +1,8 @@
 package com.example.projetoEpagri.BancoDeDadosSchema;
 
 public interface IDadosSchema {
-    String TABELA_DADOS_NORTE = "dados_norte"; //cfa
-    String TABELA_DADOS_SUL = "dados_sul"; //cfb
+    String TABELA_DADOS_NORTE = "cfa"; //cfa
+    String TABELA_DADOS_SUL = "cfb"; //cfb
     String COLUNA_TIPO = "tipo_pastagem";
     String COLUNA_CONDICAO_DEGRADADA = "condicao_degradada";
     String COLUNA_CONDICAO_MEDIA = "condicao_media";

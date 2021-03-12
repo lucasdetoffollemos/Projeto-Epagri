@@ -73,7 +73,7 @@ public class FragmentDemandaProposta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_demanda_proposta, container, false);
 
-        layout_incluido_animais = rootView.findViewById(R.id.included_layout_animais_proposta);
+        //layout_incluido_animais = rootView.findViewById(R.id.included_layout_animais_proposta);
 
         inicializa();
         setListeners();
