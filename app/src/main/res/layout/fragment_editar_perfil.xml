@@ -148,6 +148,79 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldTipoPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions"
+                    android:padding="10dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_tipoPerfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:background="@drawable/spinner_style"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions"
+                    android:padding="10dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_estado"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:background="@drawable/spinner_style"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldCidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions"
+                    android:padding="10dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <Spinner
+                        android:id="@+id/spinner_cidade"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:background="@drawable/spinner_style" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
