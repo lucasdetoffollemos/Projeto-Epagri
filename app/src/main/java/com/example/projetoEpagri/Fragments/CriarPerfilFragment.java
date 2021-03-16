@@ -34,6 +34,7 @@ public class CriarPerfilFragment extends Fragment {
     private Spinner spinnerTipoPerfil, spinnerEstado, spinnerCidade;
     private ArrayList<String> tipoPerfilArray, estadosArray, cidadesArray, cidadesPrArray, cidadesScArray, cidadesRsArray;
     private String [] cidadesSc = new String[293], cidadesPr = new String[399], cidadesRs = new String[496];
+    private int posicaoSpinnerTipoPerfil, posicaoSpinnerEstado, posicaoSpinnerCidade;
 
     public CriarPerfilFragment() {}
 
@@ -93,14 +94,18 @@ public class CriarPerfilFragment extends Fragment {
         bt_criar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email, telefone, senha;
+                String email, telefone, tipoPerfil, estado, cidade, senha;
                 nome_usuario = et_nome.getText().toString().trim();  //trim remove espaços em branco antes e após a palavra.
                 email = et_email.getText().toString().trim();
                 telefone = et_telefone.getText().toString().trim();
+                tipoPerfil = spinnerTipoPerfil.getSelectedItem().toString();
+                estado = spinnerEstado.getSelectedItem().toString();
+                cidade = spinnerCidade.getSelectedItem().toString();
                 senha = et_senha.getText().toString().trim();
 
-                if(nome_usuario.length() > 0 && email.length() > 0 && telefone.length() > 0 && senha.length() > 0 ){
-                    criarPerfil(nome_usuario, email, telefone, senha);
+                if((nome_usuario.length() > 0) && (email.length() > 0) && (telefone.length() > 0) && ( posicaoSpinnerTipoPerfil > 0) && (posicaoSpinnerEstado > 0) && (posicaoSpinnerCidade > 0) && (senha.length() > 0 )){
+                    criarPerfil(nome_usuario, email, telefone, tipoPerfil, estado, cidade, senha);
+
                 }
                 else{
                     Toast.makeText(getActivity(), "Por favor, preencha todos os campos! ", Toast.LENGTH_SHORT).show();
@@ -112,6 +117,7 @@ public class CriarPerfilFragment extends Fragment {
         spinnerTipoPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicaoSpinnerTipoPerfil = position;
                 if(position > 0){
                     //Logic
                 }
@@ -124,6 +130,7 @@ public class CriarPerfilFragment extends Fragment {
         spinnerEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicaoSpinnerEstado = position;
                 //Lógica feita, para que quando o usuário clicar no estado x, o algoritimo irá adcionar no arrayList de cidades as cidades deste respectivo estado, e irá remover os arrayLists das cidades dos outros estados.
                 if(position == 1){
                     clearSpinnerCidade();
@@ -158,6 +165,7 @@ public class CriarPerfilFragment extends Fragment {
                     cidadesArray.removeAll(cidadesPrArray);
                     cidadesArray.removeAll(cidadesScArray);
                     cidadesArray.removeAll(cidadesRsArray);
+                    clearSpinnerCidade();
 
                 }
             }
@@ -169,6 +177,7 @@ public class CriarPerfilFragment extends Fragment {
         spinnerCidade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicaoSpinnerCidade = position;
                 //Logic
             }
             @Override
@@ -235,8 +244,8 @@ public class CriarPerfilFragment extends Fragment {
     /**
      * Método responsável por criar um usuário e salvar no banco de dados.
      */
-    public void criarPerfil(String nome, String email, String telefone, String senha){
-        Usuario u = new Usuario(nome, email, telefone, senha);
+    public void criarPerfil(String nome, String email, String telefone, String tipoPerfil, String estado, String cidade, String senha){
+        Usuario u = new Usuario(nome, email, telefone, tipoPerfil, estado, cidade, senha);
         BancoDeDados.usuarioDAO.inserirUsuario(u);
         Toast.makeText(getActivity(), "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
 

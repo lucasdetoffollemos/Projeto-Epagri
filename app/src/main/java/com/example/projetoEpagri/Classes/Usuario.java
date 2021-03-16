@@ -5,14 +5,26 @@ import java.util.Arrays;
 //Classe usuario, criada inicialmente para inserir dados do usuario no banco.
 public class Usuario {
     private Integer id;
-    private String nome, email, telefone, senha;
+    private String nome, email, telefone, tipo_perfil, estado, cidade, senha;
 
-    public Usuario( String nome, String email, String telefone, String senha){
+//    public Usuario( String nome, String email, String telefone, String senha){
+//        this.nome = nome;
+//        this.email = email;
+//        this.telefone = telefone;
+//        this.senha = senha;
+//    }
+
+    public Usuario( String nome, String email, String telefone, String tipo_perfil, String estado, String cidade, String senha){
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+        this.tipo_perfil = tipo_perfil;
+        this.estado = estado;
+        this.cidade = cidade;
         this.senha = senha;
     }
+
+
 
     public Usuario() {}
 
@@ -48,6 +60,30 @@ public class Usuario {
         this.telefone = telefone;
     }
 
+    public String getTipo_perfil() {
+        return tipo_perfil;
+    }
+
+    public void setTipo_perfil(String tipo_perfil) {
+        this.tipo_perfil = tipo_perfil;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
     public String getSenha() {
         return senha;
     }
@@ -67,7 +103,7 @@ public class Usuario {
         //return getNome();
 
         //Retornando varios elementos com um array
-        String [] arrayUsers = new String[]{" Nome: "+getNome(), " Email: "+getEmail(), " Telefone: "+getTelefone(), " Senha: "+getSenha()};
+        String [] arrayUsers = new String[]{" Nome: "+getNome(), " Email: "+getEmail(), " Telefone: "+getTelefone(), " Tipo perfil: "+ getTipo_perfil(), " Estado: "+ getEstado(), " Cidade: "+ getCidade()," Senha: "+getSenha()};
 
         return Arrays.toString(arrayUsers).replaceAll("(^\\[|$)", "");
     }

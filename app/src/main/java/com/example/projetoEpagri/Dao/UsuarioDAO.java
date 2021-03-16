@@ -27,6 +27,9 @@ public class UsuarioDAO implements IUsuarioSchema {
         values.put(COLUNA_NOME, usuario.getNome());
         values.put(COLUNA_EMAIL, usuario.getEmail());
         values.put(COLUNA_TELEFONE, usuario.getTelefone());
+        values.put(COLUNA_TIPO_PERFIL, usuario.getTipo_perfil());
+        values.put(COLUNA_ESTADO, usuario.getEstado());
+        values.put(COLUNA_CIDADE, usuario.getCidade());
         values.put(COLUNA_SENHA, usuario.getSenha());
 
         this.bancoDeDados.insert(TABELA_USUARIO, null, values);
@@ -47,7 +50,10 @@ public class UsuarioDAO implements IUsuarioSchema {
             usuario.setNome(cursor.getString(1));
             usuario.setEmail(cursor.getString(2));
             usuario.setTelefone(cursor.getString(3));
-            usuario.setSenha(cursor.getString(4));
+            usuario.setTipo_perfil(cursor.getString(4));
+            usuario.setEstado(cursor.getString(5));
+            usuario.setCidade(cursor.getString(6));
+            usuario.setSenha(cursor.getString(7));
             cursor.close();
         }
         return usuario;
@@ -68,7 +74,10 @@ public class UsuarioDAO implements IUsuarioSchema {
             usuario.setNome(cursor.getString(1));
             usuario.setEmail(cursor.getString(2));
             usuario.setTelefone(cursor.getString(3));
-            usuario.setSenha(cursor.getString(4));
+            usuario.setTipo_perfil(cursor.getString(4));
+            usuario.setEstado(cursor.getString(5));
+            usuario.setCidade(cursor.getString(6));
+            usuario.setSenha(cursor.getString(7));
             cursor.close();
         }
         return usuario;
@@ -97,13 +106,19 @@ public class UsuarioDAO implements IUsuarioSchema {
      * @param nome Representa o novo nome do usuário.
      * @param email Representa o novo email do usuário.
      * @param telefone Representa o novo telefone do usuário.
+     * @param tipo_perfil Representa o novo tipo do perfil do usuário.
+     * @param estado Representa o novo  estado do usuário.
+     * @param cidade Representa a novo cidade do usuário.
      * @param senha Representa a nova senha do usuário.
      */
-    public void updateUsuario(int id, String nome, String email, String telefone, String senha){
+    public void updateUsuario(int id, String nome, String email, String telefone, String tipo_perfil, String estado, String cidade, String senha){
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME,nome); //These Fields should be your String values of actual column names
         values.put(COLUNA_EMAIL, email);
         values.put(COLUNA_TELEFONE, telefone);
+        values.put(COLUNA_TIPO_PERFIL, tipo_perfil);
+        values.put(COLUNA_ESTADO, estado);
+        values.put(COLUNA_CIDADE, cidade);
         values.put(COLUNA_SENHA, senha);
 
         this.bancoDeDados.update(TABELA_USUARIO, values, COLUNA_ID + " = " + id, null);
@@ -123,8 +138,10 @@ public class UsuarioDAO implements IUsuarioSchema {
             usuario.setNome(cursor.getString(1));
             usuario.setEmail(cursor.getString(2));
             usuario.setTelefone(cursor.getString(3));
-            usuario.setSenha(cursor.getString(4));
-            listaUsuarios.add(usuario);
+            usuario.setTipo_perfil(cursor.getString(4));
+            usuario.setEstado(cursor.getString(5));
+            usuario.setCidade(cursor.getString(6));
+            usuario.setSenha(cursor.getString(7));
         }
         cursor.close();
         return listaUsuarios;

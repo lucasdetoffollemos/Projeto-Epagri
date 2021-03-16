@@ -6,6 +6,9 @@ public interface IUsuarioSchema {
     String COLUNA_NOME = "nome";
     String COLUNA_EMAIL = "email";
     String COLUNA_TELEFONE = "telefone";
+    String COLUNA_TIPO_PERFIL = "perfil";
+    String COLUNA_ESTADO = "estado";
+    String COLUNA_CIDADE = "cidade";
     String COLUNA_SENHA = "senha";
 
     String CREATE_TABELA_USUARIO = "CREATE TABLE IF NOT EXISTS "
@@ -14,6 +17,9 @@ public interface IUsuarioSchema {
         + COLUNA_NOME + " varchar(50), "
         + COLUNA_EMAIL + " varchar(50), "
         + COLUNA_TELEFONE + " varchar(50), "
+        + COLUNA_TIPO_PERFIL + " varchar(50),"
+        + COLUNA_ESTADO + " varchar(50), "
+        + COLUNA_CIDADE + " varchar(50), "
         + COLUNA_SENHA + " varchar(50))";
 
     String[] USUARIO_COLUNAS = new String[] {
@@ -21,6 +27,9 @@ public interface IUsuarioSchema {
         COLUNA_NOME,
         COLUNA_EMAIL,
         COLUNA_TELEFONE,
+        COLUNA_TIPO_PERFIL,
+        COLUNA_ESTADO,
+        COLUNA_CIDADE,
         COLUNA_SENHA
     };
 }

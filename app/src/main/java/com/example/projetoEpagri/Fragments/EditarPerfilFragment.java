@@ -40,6 +40,7 @@ public class EditarPerfilFragment extends Fragment {
     private Spinner spinnerTipoPerfil, spinnerEstado, spinnerCidade;
     private ArrayList<String> tipoPerfilArray, estadosArray, cidadesArray, cidadesPrArray, cidadesScArray, cidadesRsArray;
     private String [] cidadesSc = new String[293], cidadesPr = new String[399], cidadesRs = new String[496];
+    private int posicaoSpinnerTipoPerfil, posicaoSpinnerEstado, posicaoSpinnerCidade;
 
     public EditarPerfilFragment() {}
 
@@ -76,10 +77,8 @@ public class EditarPerfilFragment extends Fragment {
         final Button bt_atualizar = getView().findViewById(R.id.bt_atualizar);
         final Button bt_cancelar = getView().findViewById(R.id.bt_cancelar);
         final Button bt_excluir = getView().findViewById(R.id.bt_excluir);
-        et_editar_nome.setText(usuario.getNome());
-        et_editar_email.setText(usuario.getEmail());
-        et_editar_telefone.setText(usuario.getTelefone());
-        et_editar_senha.setText(usuario.getSenha());
+
+
 
         drawer_layout = getView().findViewById(R.id.drawerLayout);
         final View menu_drawer = getView().findViewById(R.id.included_nav_drawer);
@@ -108,6 +107,16 @@ public class EditarPerfilFragment extends Fragment {
         spinnerTipoPerfil = (Spinner) getView().findViewById(R.id.spinner_tipoPerfil);
         spinnerEstado = getView().findViewById(R.id.spinner_estado);
         spinnerCidade = getView().findViewById(R.id.spinner_cidade);
+
+        //colocando os dados que foram inseridos no cadastro do usuário, no edit text's e spinners respectivos de cada campo
+        et_editar_nome.setText(usuario.getNome());
+        et_editar_email.setText(usuario.getEmail());
+        et_editar_telefone.setText(usuario.getTelefone());
+
+        //pegar o valor dos spinners pra setar
+
+        et_editar_senha.setText(usuario.getSenha());
+
 
         //Clique no ícone do menu.
         iv_menu.setOnClickListener(new View.OnClickListener() {
@@ -152,13 +161,22 @@ public class EditarPerfilFragment extends Fragment {
         bt_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                String nome, email, telefone, senha;
+                String nome, email, telefone, tipo_perfil, estado, cidade, senha;
                 nome = et_editar_nome.getText().toString().trim();
                 email = et_editar_email.getText().toString().trim();
                 telefone = et_editar_telefone.getText().toString().trim();
+                tipo_perfil = spinnerTipoPerfil.getSelectedItem().toString();
+                estado = spinnerEstado.getSelectedItem().toString();
+                cidade = spinnerCidade.getSelectedItem().toString();
                 senha = et_editar_senha.getText().toString().trim();
 
-                atualizarDados(nome, email, telefone, senha);
+                if((nome.length() > 0) && (email.length() > 0) && (telefone.length() > 0) && ( posicaoSpinnerTipoPerfil > 0) && (posicaoSpinnerEstado > 0) && (posicaoSpinnerCidade > 0) && (senha.length() > 0 )){
+                    atualizarDados(nome, email, telefone, tipo_perfil, estado, cidade, senha);
+
+                }
+                else{
+                    Toast.makeText(getActivity(), "Por favor, preencha todos os campos! ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -169,10 +187,12 @@ public class EditarPerfilFragment extends Fragment {
             }
         });
 
+        setandoSpinners();
         //Spinner perfil
         spinnerTipoPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicaoSpinnerTipoPerfil = position;
                 if(position > 0){
                     //Logic
                 }
@@ -185,6 +205,7 @@ public class EditarPerfilFragment extends Fragment {
         spinnerEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicaoSpinnerEstado = position;
                 //Lógica feita, para que quando o usuário clicar no estado x, o algoritimo irá adcionar no arrayList de cidades as cidades deste respectivo estado, e irá remover os arrayLists das cidades dos outros estados.
                 if(position == 1){
                     clearSpinnerCidade();
@@ -219,6 +240,7 @@ public class EditarPerfilFragment extends Fragment {
                     cidadesArray.removeAll(cidadesPrArray);
                     cidadesArray.removeAll(cidadesScArray);
                     cidadesArray.removeAll(cidadesRsArray);
+                    clearSpinnerCidade();
 
                 }
             }
@@ -231,6 +253,7 @@ public class EditarPerfilFragment extends Fragment {
         spinnerCidade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicaoSpinnerCidade = position;
                 //Logic
             }
             @Override
@@ -238,18 +261,25 @@ public class EditarPerfilFragment extends Fragment {
         });
 
 
-        setandoSpinners();
+
+        spinnerTipoPerfil.setSelection(getSpinnerIndex(spinnerTipoPerfil, usuario.getTipo_perfil()));
+        spinnerEstado.setSelection(getSpinnerIndex(spinnerEstado, usuario.getEstado()));
+        spinnerCidade.setSelection(getSpinnerIndex(spinnerCidade, usuario.getCidade()));
+
     }
 
-    private void atualizarDados(final String nome, final String email, final String telefone, final String senha) {
+    private void atualizarDados(final String nome, final String email, final String telefone, final String tipoPerfil, final String estado, final String cidade, final String senha) {
         if(usuario != null){
             String nome_banco = usuario.getNome();
             String email_banco = usuario.getEmail();
             String telefone_banco = usuario.getTelefone();
+            String tipo_perfil_banco = usuario.getTipo_perfil();
+            String estado_banco = usuario.getEstado();
+            String cidade_banco = usuario.getCidade();
             String senha_banco = usuario.getSenha();
 
             //Verifica se os novos dados são iguais aos anteriores.
-            if(nome_banco.equals(nome) && email_banco.equals(email) && telefone_banco.equals(telefone) && senha_banco.equals(senha)){
+            if(nome_banco.equals(nome) && email_banco.equals(email) && telefone_banco.equals(telefone) && tipo_perfil_banco.equals(tipoPerfil) && estado_banco.equals(estado) && cidade_banco.equals(cidade) && senha_banco.equals(senha)){
                 Toast.makeText(getActivity(), "Os novos dados devem ser diferentes dos existentes!", Toast.LENGTH_SHORT).show();
             }
             else {
@@ -260,7 +290,7 @@ public class EditarPerfilFragment extends Fragment {
                 builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        BancoDeDados.usuarioDAO.updateUsuario(id_usuario, nome, email, telefone, senha);
+                        BancoDeDados.usuarioDAO.updateUsuario(id_usuario, nome, email, telefone, tipoPerfil, estado, cidade, senha);
                         Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
 
                         //Essa linha é necessária pois a ActivityIndex não é recriada após a atualização do nome
@@ -362,7 +392,6 @@ public class EditarPerfilFragment extends Fragment {
         //Array de cidades de santa catarina
         cidadesScArray = new ArrayList<>(Arrays.asList(cidadesSc));
 
-
         //Array de cidades do rio grande do sul
         cidadesRsArray = new ArrayList<>(Arrays.asList(cidadesRs));
 
@@ -370,6 +399,16 @@ public class EditarPerfilFragment extends Fragment {
         ArrayAdapter<String> cidadesAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, cidadesArray);
         cidadesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCidade.setAdapter(cidadesAdapter);
+    }
+
+
+    private int getSpinnerIndex(Spinner spinner, String s){
+        for (int i=0; i<spinner.getCount(); i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s)){
+                return i;
+            }
+        }
+        return 0;
     }
 
     /**
