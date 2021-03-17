@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_bot_buttons"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cinza"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/bt_removerLinha"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/verde"
+        android:gravity="center"
+        android:text="@string/txt_bt_remover"
+        android:textColor="@color/branco"
+        app:cornerRadius="8dp"
+        app:strokeColor="@color/preto" />
+
+    <Button
+        android:id="@+id/bt_proximo"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:background="@color/verde"
+        android:text="@string/txt_bt_proximo_passo"
+        android:textColor="@color/branco"
+        app:strokeColor="@color/preto" />
+
+    <Button
+        android:id="@+id/bt_adicionarLinha"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:background="@color/verde"
+        android:gravity="center"
+        android:text="@string/txt_bt_adicionar"
+        android:textColor="@color/branco"
+        app:cornerRadius="8dp"
+        app:strokeColor="@color/preto" />
+
+</LinearLayout>

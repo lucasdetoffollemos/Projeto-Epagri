@@ -18,7 +18,7 @@ public interface IPropriedadeSchema {
             + COLUNA_AREA + " real, "
             + COLUNA_QTDE_ANIMAIS + " integer, "
             + COLUNA_ID_USUARIO + " integer, "
-            + "FOREIGN KEY (" + COLUNA_ID_USUARIO + ") REFERENCES " + TABELA_USUARIO + " (" + COLUNA_ID + "))";
+            + "CONSTRAINT fk_propriedade_usuario_id FOREIGN KEY (" + COLUNA_ID_USUARIO + ") REFERENCES " + TABELA_USUARIO + " (" + COLUNA_ID + ") ON DELETE CASCADE)";
 
     String[] PROPRIEDADE_COLUNAS = new String[] {
             COLUNA_ID,

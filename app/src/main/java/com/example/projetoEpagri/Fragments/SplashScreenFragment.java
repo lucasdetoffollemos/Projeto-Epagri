@@ -45,8 +45,8 @@ public class SplashScreenFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Fragment fragment = LoginFragment.newInstance();
-                MainActivity.startFragment(fragment, "login_fragment", R.id.ll_main, false, false, getActivity());
+                Fragment login_fragment = LoginFragment.newInstance();
+                MainActivity.startFragment(login_fragment, "login_fragment", R.id.ll_main, false, false, getActivity());
             }
         }, 2000);
     }

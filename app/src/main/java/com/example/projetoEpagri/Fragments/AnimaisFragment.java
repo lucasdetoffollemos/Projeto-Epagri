@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.IndexActivity;
+import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
@@ -31,12 +32,24 @@ import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.BancoDeDados;
+import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class AnimaisFragment extends Fragment {
+    private static final String ARG_PARAM1 = "id_propriedade";
+    private static final String ARG_PARAM2 = "load";
+    private static final String ARG_PARAM3 = "atual_ou_proposta";
+
+    private final int DIAS = 30;
+    private final int KG = 1000;
+
+    private boolean load, load_complete = true, tabela_vazia = true;
+    private int id_propriedade;
+    private String modo;
+
     private ArrayList<String> categoriaAnimal; //Array utilizado para setar os valores das categorias de animais no spinner categoria.
     private ArrayList<String> arrayMeses; //Array utilizado para setar os valores mostrados no spinner entrada
 
@@ -52,13 +65,16 @@ public class AnimaisFragment extends Fragment {
     private double areaTotal;
     private DecimalFormat doisDecimais;
 
-    private TableLayout table_layout;
+    private TableLayout table_layout, saved_table_layout;
 
     public AnimaisFragment() {}
 
-    public static AnimaisFragment newInstance() {
+    public static AnimaisFragment newInstance(int id, boolean load, String modo) {
         AnimaisFragment fragment = new AnimaisFragment();
         Bundle args = new Bundle();
+        args.putInt(ARG_PARAM1, id);
+        args.putBoolean(ARG_PARAM2, load);
+        args.putString(ARG_PARAM3, modo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,6 +82,12 @@ public class AnimaisFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            id_propriedade = getArguments().getInt(ARG_PARAM1);
+            load = getArguments().getBoolean(ARG_PARAM2);
+            modo = getArguments().getString(ARG_PARAM3);
+        }
 
         //Criando um array de String para as categorias de animais.
         categoriaAnimal = new ArrayList<>();
@@ -102,6 +124,22 @@ public class AnimaisFragment extends Fragment {
         }
 
         doisDecimais = new DecimalFormat("#.##");
+
+        if(modo != null){
+            if(modo.equals("atual")){
+                listaAnimais = BancoDeDados.animaisDAO.getAllAnimaisByPropId(id_propriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+            } else if(modo.equals("proposta")){
+                listaAnimais = BancoDeDados.animaisDAO.getAllAnimaisByPropId(id_propriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
+            }
+
+            //Se a lista de piquetes retornados do banco for maior que 0, significa que precisa carregar esses piquetes para a tabela.
+            //Significa ainda que a tabela que será mostrada não será vazia, por isso muda-se .
+            if(listaAnimais.size() > 0){
+                load_complete = false;
+                tabela_vazia = false;
+            }
+        }
+
     }
 
     @Override
@@ -114,23 +152,67 @@ public class AnimaisFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        table_layout = getView().findViewById(R.id.tableLayout_tabelaAnimais);
-
+        final View toolbar = getView().findViewById(R.id.included_toolbar);
+        final View tabela_animais = getView().findViewById(R.id.included_tabela_animais);
+        final View bottom_bar = getView().findViewById(R.id.included_bottom_bar);
         final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
-        final Button bt_adicionar_linha = getView().findViewById(R.id.bt_adicionarLinha);
-        final Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
-        final Button bt_finalizar_envio = getView().findViewById(R.id.bt_finalizarEnvio);
+        Button bt_adicionar_linha = getView().findViewById(R.id.bt_adicionarLinha);
+        Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
+        Button bt_finalizar_atualizar = getView().findViewById(R.id.bt_proximo);
+        final TextView toolbar_title = toolbar.findViewById(R.id.tv_titulo_toolbar);
+        toolbar_title.setText("Cadastrar Animais");
 
-        adicionaLinha();
+        table_layout = tabela_animais.findViewById(R.id.tableLayout_tabelaAnimais);
+
+        bt_finalizar_atualizar.setText("Finalizar");
+
+        //Se o fragment for criado com a opção "carregar"significa que ele está sendo aberto dentro do VerDadosFragment.
+        //Sendo assim, desabilita-se o toolbar.
+        if(load){
+            toolbar.setVisibility(View.GONE);
+            bottom_bar.setVisibility(View.GONE);
+
+            Fragment parent = getParentFragment();
+            View v = parent.getView().findViewById(R.id.included_bottom_bar_ver_dados);
+
+            bt_adicionar_linha = v.findViewById(R.id.bt_adicionarLinha);
+            bt_remover_linha = v.findViewById(R.id.bt_removerLinha);
+            bt_finalizar_atualizar = v.findViewById(R.id.bt_proximo);
+
+            bt_finalizar_atualizar.setText("Atualizar Dados");
+
+            //Se estiver no modo de load, insere-se linhas na tabela de acordo com o número de piquetes cadastrados no banco de dados.
+            if(listaAnimais.size() > 0 && load_complete == false){
+                load_complete = false;
+
+                for(int i=0; i<listaAnimais.size(); i++){
+                    adicionaLinha();
+                }
+            }
+            else{ //Caso de estar no modo proposta sem a proposta ter sido feita.
+                if(tabela_vazia){
+                    adicionaLinha();
+                    tabela_vazia = false;
+                }
+
+            }
+        }
+        else{ //caso contrário adiciona-se uma única linha na tabela.
+            if(saved_table_layout == null){
+                adicionaLinha();
+            }
+        }
 
         //Clique no botão voltar. Desfaz as operações realizadas no PiqueteFragment.
         iv_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IndexFragment.propriedade.setArea(0.0);
-                IndexFragment.propriedade.setListaPiqueteAtual(null);
-                IndexFragment.listaTotaisMes = null;
-                IndexFragment.listaTotaisEstacoes = null;
+                if(!load){
+                    IndexFragment.propriedade.setArea(0.0);
+                    IndexFragment.propriedade.setListaPiqueteAtual(null);
+                    IndexFragment.listaTotaisMes = null;
+                    IndexFragment.listaTotaisEstacoes = null;
+                }
 
                 getFragmentManager().popBackStack();
             }
@@ -157,52 +239,15 @@ public class AnimaisFragment extends Fragment {
             }
         });
 
-        bt_finalizar_envio.setOnClickListener(new View.OnClickListener() {
+        bt_finalizar_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkAnimais(listaAnimais)){
-                    IndexFragment.propriedade.setListaAnimaisAtual(listaAnimais);
-                    IndexFragment.propriedade.setQtdeAnimais(somaAnimal);
-                    IndexFragment.listaTotalUAHA = new ArrayList<>(listaTotalUAHA);
-
-                    int id_usuario = BancoDeDados.usuarioDAO.getUSuarioId(IndexActivity.nome_usuario);
-
-                    if(id_usuario != -1){
-                        BancoDeDados.propriedadeDAO.inserirPropriedade(IndexFragment.propriedade, id_usuario);
-
-                        int propriedadeId = BancoDeDados.propriedadeDAO.getPropriedadeId(IndexFragment.propriedade.getNome());
-
-                        if(propriedadeId != -1){
-                            if(IndexFragment.propriedade.getListaPiqueteAtual() != null){
-                                for(int i=0; i<IndexFragment.propriedade.getListaPiqueteAtual().size(); i++){
-                                    BancoDeDados.piqueteDAO.inserirPiquete(IndexFragment.propriedade.getListaPiqueteAtual().get(i), propriedadeId, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
-                                }
-                            }
-
-                            if(IndexFragment.listaTotaisMes != null){
-                                BancoDeDados.totalPiqueteMesDAO.inserirTotalMes(IndexFragment.listaTotaisMes, propriedadeId, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
-                            }
-
-                            if(IndexFragment.listaTotaisEstacoes != null){
-                                BancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(IndexFragment.listaTotaisEstacoes, propriedadeId, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
-                            }
-
-                            if(listaAnimais != null){
-                                for(int i=0; i<listaAnimais.size(); i++){
-                                    BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), propriedadeId, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
-                                }
-                            }
-
-                            if(listaTotalUAHA != null){
-                                BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, propriedadeId, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
-                            }
-                        }
+                    if(load){
+                        atualizarDados(listaAnimais, id_propriedade);
+                    }else{
+                        finalizar();
                     }
-
-                    getFragmentManager().popBackStack();
-                    getFragmentManager().popBackStack();
-                    getFragmentManager().popBackStack();
-                    //getFragmentManager().popBackStack("index_fragment", 0);
                 }
                 else{
                     Toast.makeText(getActivity(), "Você deve preencher todos os campos antes de finalizar!", Toast.LENGTH_SHORT).show();
@@ -233,6 +278,17 @@ public class AnimaisFragment extends Fragment {
         //Infla a linha para a tabela
         TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_demanda_linha, null);
         criarLinha(linha_tabela);
+
+        //Verifica se os animais já foram carregados. Se não foram, faz o loading.
+        if(!load_complete){
+            loadAnimais(linha_tabela);
+            calculaTotalAnimais();
+
+            if(numeroDeLinhas+1 == listaAnimais.size()){
+                load_complete = true; //Carregou todos os animais.
+            }
+        }
+
         setListenersLinha(linha_tabela);
 
         posicaoLinhaTabela++;
@@ -295,12 +351,81 @@ public class AnimaisFragment extends Fragment {
     }
 
     /**
+     * Método responsável por identificar a posição de um determinado valor dentro do spinner.
+     * @param spinner Representa o spinner que contém os valores.
+     * @param s Representa o valor buscado dentro do spinner
+     * @return A posição desse valor na lista de valores do spinner.
+     */
+    private int getSpinnerIndex(Spinner spinner, String s){
+        for (int i=0; i<spinner.getCount(); i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s)){
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Método responsável por carregar todos os animais do banco de dados.
+     * @param linha_tabela representa a última linha adicionada.
+     */
+    public void loadAnimais(TableRow linha_tabela){
+        final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
+        final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(1);
+        final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(2);
+        final EditText etPesoInicial = (EditText) linha_tabela.getChildAt(3);
+        final EditText etPesoFinal = (EditText) linha_tabela.getChildAt(4);
+        final EditText etPesoVer = (EditText) linha_tabela.getChildAt(5);
+        final EditText etPesoOut = (EditText) linha_tabela.getChildAt(6);
+        final EditText etPesoInv = (EditText) linha_tabela.getChildAt(7);
+        final EditText etPesoPrim = (EditText) linha_tabela.getChildAt(8);
+        final TextView consumoJan = (TextView) linha_tabela.getChildAt(9);
+        final TextView consumoFev = (TextView) linha_tabela.getChildAt(10);
+        final TextView consumoMar = (TextView) linha_tabela.getChildAt(11);
+        final TextView consumoAbr = (TextView) linha_tabela.getChildAt(12);
+        final TextView consumoMai = (TextView) linha_tabela.getChildAt(13);
+        final TextView consumoJun = (TextView) linha_tabela.getChildAt(14);
+        final TextView consumoJul = (TextView) linha_tabela.getChildAt(15);
+        final TextView consumoAgo = (TextView) linha_tabela.getChildAt(16);
+        final TextView consumoSet = (TextView) linha_tabela.getChildAt(17);
+        final TextView consumoOut = (TextView) linha_tabela.getChildAt(18);
+        final TextView consumoNov = (TextView) linha_tabela.getChildAt(19);
+        final TextView consumoDez = (TextView) linha_tabela.getChildAt(20);
+
+        spinnerCategoria.setSelection(getSpinnerIndex(spinnerCategoria, listaAnimais.get(numeroDeLinhas).getCategoria()));
+        etNumAnimais.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getNumAnimais()));
+        spinnerMeses.setSelection(getSpinnerIndex(spinnerMeses, listaAnimais.get(numeroDeLinhas).getEntradaMes()));
+        etPesoInicial.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getPesoInicial()));
+        etPesoFinal.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getPesoFinal()));
+        etPesoVer.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getPesoGanhoVer()));
+        etPesoOut.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getPesoGanhoOut()));
+        etPesoInv.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getPesoGanhoInv()));
+        etPesoPrim.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getPesoGanhoPrim()));
+        consumoJan.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(0)));
+        consumoFev.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(1)));
+        consumoMar.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(2)));
+        consumoAbr.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(3)));
+        consumoMai.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(4)));
+        consumoJun.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(5)));
+        consumoJul.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(6)));
+        consumoAgo.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(7)));
+        consumoSet.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(8)));
+        consumoOut.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(9)));
+        consumoNov.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(10)));
+        consumoDez.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(11)));
+
+        if(qtdeAnimais.size() <= numeroDeLinhas){
+            qtdeAnimais.add(listaAnimais.get(numeroDeLinhas).getNumAnimais());
+        }
+    }
+
+    /**
      * Identifica os elementos da linha, dinamicamente, pelo seu index, e guarda os itens que foram selecionado, no spinner, ou armazenados no editText, para uso posterior
      * @param linha_tabela Representa a linha que foi adicionada na tabela.
      */
     public void setListenersLinha(final TableRow linha_tabela){
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
-        //final EditText tv_consumo = (EditText) linha_tabela.getChildAt(1);
         final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(1);
         final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(2);
         final EditText etPesoInicial = (EditText) linha_tabela.getChildAt(3);
@@ -550,7 +675,7 @@ public class AnimaisFragment extends Fragment {
             int cont = 0;
             //Estrutura de repetiçao feita para gerar a sequência de somas que resulta no peso final estipulado pelo usuário.
             for(peso_atual = pesoInicial; peso_atual < pesoFinal;){
-                ganho = (ganhoEstacao[posicao] * 30) / 1000;
+                ganho = (ganhoEstacao[posicao] * DIAS) / KG;
                 peso_atual = (peso_atual + ganho);
 
                 //Mapeia para um array os pesos de cada mês já multiplicados pela quantidade de animais.
@@ -659,11 +784,18 @@ public class AnimaisFragment extends Fragment {
         //Transforma os totais de cada mês em UA (1 UA = 450KG.).
         ArrayList<Double> listaTotalUA = percorreMatrizESoma(matrizUA);
         for(int i=0; i<listaTotalUA.size(); i++){
-            listaTotalUA.set(i, listaTotalUA.get(i) / 450);
+            listaTotalUA.set(i, (listaTotalUA.get(i) / 450));
         }
 
+
         //Recupera a área total vinda da Activity Piquete.
-        areaTotal = IndexFragment.propriedade.getArea();
+        if(load){
+            Propriedade p = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeById(id_propriedade);
+            areaTotal = p.getArea();
+        }
+        else{
+            areaTotal = IndexFragment.propriedade.getArea();
+        }
 
         for(int i=0; i<listaTotalUA.size(); i++){
             listaTotalUAHA.set(i, Double.parseDouble(doisDecimais.format(listaTotalUA.get(i) / areaTotal).replace(",",".")));
@@ -775,14 +907,117 @@ public class AnimaisFragment extends Fragment {
         return !p.getSelectedItem().toString().isEmpty();
     }
 
-    /*public void finalizaEnvio() {
-        Intent intent = new Intent();
-        intent.putExtra("nome_usuario", nomeUsuario);
-        intent.putExtra("listaAnimais", listaAnimais);
-        intent.putExtra("listaTotaisUAHA", listaTotalUAHA);
-        intent.putExtra("qtdeAnimal", somaAnimal);
-        intent.putExtra("area", areaTotal);
-        setResult(RESULT_OK, intent);
-        finish();
-    }*/
+    public void finalizar(){
+        IndexFragment.propriedade.setListaAnimaisAtual(listaAnimais);
+        IndexFragment.propriedade.setQtdeAnimais(somaAnimal);
+        IndexFragment.listaTotalUAHA = new ArrayList<>(listaTotalUAHA);
+
+        int id_usuario = BancoDeDados.usuarioDAO.getUSuarioId(IndexActivity.nome_usuario);
+
+        if(id_usuario != -1){
+            BancoDeDados.propriedadeDAO.inserirPropriedade(IndexFragment.propriedade, id_usuario);
+            id_propriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(IndexFragment.propriedade.getNome());
+
+            if(id_propriedade >= 0 ){
+                if(IndexFragment.propriedade.getListaPiqueteAtual() != null){
+                    for(int i=0; i<IndexFragment.propriedade.getListaPiqueteAtual().size(); i++){
+                        BancoDeDados.piqueteDAO.inserirPiquete(IndexFragment.propriedade.getListaPiqueteAtual().get(i), id_propriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
+                    }
+                }
+
+                if(IndexFragment.listaTotaisMes != null){
+                    BancoDeDados.totalPiqueteMesDAO.inserirTotalMes(IndexFragment.listaTotaisMes, id_propriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
+                }
+
+                if(IndexFragment.listaTotaisEstacoes != null){
+                    BancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(IndexFragment.listaTotaisEstacoes, id_propriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
+                }
+
+                if(listaAnimais != null){
+                    for(int i=0; i<listaAnimais.size(); i++){
+                        BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), id_propriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+                    }
+                }
+
+                if(listaTotalUAHA != null){
+                    BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, id_propriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+                }
+            }
+        }
+
+        getFragmentManager().popBackStack();
+        getFragmentManager().popBackStack();
+        getFragmentManager().popBackStack();
+    }
+
+    public void atualizarDados(ArrayList<Animais> listaAnimais, int idPropriedade) {
+        if(modo.equals("atual")){
+            //Deleta os valores antigos.
+            BancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+            BancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+
+            //Salva os novos valores.
+            for(int i=0; i<listaAnimais.size(); i++){
+                BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
+            }
+
+            BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
+
+            //Atualiza a qtde de animais na tabela de propriedades.
+            BancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, somaAnimal);
+        }
+        else if(modo.equals("proposta")){
+            //Deleta os valores antigos.
+            BancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
+            BancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
+
+            //Salva os novos valores.
+            for(int i=0; i<listaAnimais.size(); i++){
+                BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
+            }
+
+            BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
+
+            //Atualiza a qtde de animais na tabela de propriedades.
+            BancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, somaAnimal);
+        }
+
+
+        Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Método chamado quando o Fragment é pausado, exemplo: quando o AnimaisFragment é mostrado ou quando troca-se de aba no VerDadosFragment.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        saved_table_layout = new TableLayout(getActivity());
+
+        while (table_layout.getChildCount() > 0){
+            TableRow linha = (TableRow) table_layout.getChildAt(0);
+            table_layout.removeViewAt(0);
+            saved_table_layout.addView(linha);
+        }
+    }
+
+    /**
+     * Método chamado toda vez que o fragment é mostrado.
+     * Utilizado para recuperar o estado da tabela.
+     */
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(saved_table_layout != null){
+            numeroDeLinhas = saved_table_layout.getChildCount();
+
+            while(saved_table_layout.getChildCount() > 0){
+                TableRow linha = (TableRow) saved_table_layout.getChildAt(0);
+                saved_table_layout.removeViewAt(0);
+                table_layout.addView(linha);
+            }
+        }
+    }
 }

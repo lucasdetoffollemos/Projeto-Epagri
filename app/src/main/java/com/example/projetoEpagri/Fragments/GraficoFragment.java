@@ -29,18 +29,18 @@ import java.util.ArrayList;
 public class GraficoFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "id_propriedade";
-    private static final String ARG_PARAM2 = "atual";
+    private static final String ARG_PARAM2 = "atual_ou_proposta";
 
     private int id_propriedade;
     private ArrayList<Double> totaisPiqueteMes, totaisAnimalMes;
 
     public GraficoFragment() {}
 
-    public static GraficoFragment newInstance(int id, int atual) {
+    public static GraficoFragment newInstance(int id, String modo) {
         GraficoFragment fragment = new GraficoFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, id);
-        args.putInt(ARG_PARAM2, atual);
+        args.putString(ARG_PARAM2, modo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,14 +50,14 @@ public class GraficoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             id_propriedade = getArguments().getInt(ARG_PARAM1);
-            int atual_ou_proposta = getArguments().getInt(ARG_PARAM2);
+            String atual_ou_proposta = getArguments().getString(ARG_PARAM2);
 
             //Atual
-            if(atual_ou_proposta == 1){
+            if(atual_ou_proposta.equals("atual")){
                 totaisPiqueteMes = BancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(id_propriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
                 totaisAnimalMes = BancoDeDados.totalAnimaisDAO.getTotalMesByPropId(id_propriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
             }//Proposta
-            else{
+            else if(atual_ou_proposta.equals("proposta")){
                 totaisPiqueteMes = BancoDeDados.totalPiqueteMesDAO.getTotalMesByPropId(id_propriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
                 totaisAnimalMes = BancoDeDados.totalAnimaisDAO.getTotalMesByPropId(id_propriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
             }
@@ -83,7 +83,7 @@ public class GraficoFragment extends Fragment {
 
         //Cria as séries baseados nos valores retornados do banco de dados.
         for(int i=1; i<=12; i++){
-            oferta.appendData(new DataPoint(i-1, totaisPiqueteMes.get(i-1)), true, 12);
+            oferta.appendData(new DataPoint(i-1, totaisPiqueteMes.get(i-1)/1000), true, 12);
             demanda.appendData(new DataPoint(i-1, totaisAnimalMes.get(i-1)), true, 12);
         }
 

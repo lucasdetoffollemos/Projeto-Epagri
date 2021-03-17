@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/tabela_demanda_1" />
+
+            <TableLayout
+                android:id="@+id/tableLayout_tabelaAnimais"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="948dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="895dp"
+                android:layout_marginLeft="895dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/background_dark" />
+
+            <include layout="@layout/linha_resultados_ua_ha_demanda" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</ScrollView>

@@ -36,7 +36,8 @@
         android:inputType="number|numberDecimal"
         android:maxLength="6"
         android:maxLines="1"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:imeOptions="actionDone"/>
 
 
     <TextView

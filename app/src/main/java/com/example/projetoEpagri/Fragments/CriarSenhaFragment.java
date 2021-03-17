@@ -67,7 +67,8 @@ public class CriarSenhaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
+        final View toolbar = getView().findViewById(R.id.included_toolbar);
+        final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
         final EditText et_senha = getView().findViewById(R.id.et_senha);
         final EditText et_senha_repeat = getView().findViewById(R.id.et_senha_repeat);
         final Button bt_confirmar = getView().findViewById(R.id.bt_confirmar_senha);
@@ -141,11 +142,13 @@ public class CriarSenhaFragment extends Fragment {
      * @param nome_usuario Nome do usuário.
      */
     public void startActivityIndex(String nome_usuario){
-        getFragmentManager().popBackStack();
-        getFragmentManager().popBackStack();
+        //getFragmentManager().popBackStack();
+        //getFragmentManager().popBackStack();
 
         Intent i = new Intent(getActivity(), IndexActivity.class);
         i.putExtra("nome_usuario", nome_usuario);
         startActivity(i);
+
+        getActivity().finish();
     }
 }

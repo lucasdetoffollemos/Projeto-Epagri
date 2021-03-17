@@ -61,14 +61,14 @@
     <string name="txt_tv_ganhoPesoDiaOutono">Outono</string>
     <string name="txt_tv_ganhoPesoDiaInverno">Inverno</string>
     <string name="txt_tv_ganhoPesoDiaPrimavera">Primavera</string>
-    <string name="txt_tv_pesoMedioAnimaisMes">PESO MÉDIO DOS ANIMAIS (kg/mês)</string>
+    <string name="txt_tv_pesoMedioAnimaisMes">Peso Médio dos Animais (kg/mês)</string>
     <string name="txt_tv_piquete">Piquetes / \nPastagens</string>
     <string name="txt_tv_condicaoPastagem">Condição da\nPastagem</string>
     <string name="txt_tv_areaHa">Área\n(ha)*</string>
-    <string name="txt_tv_producaoEstimadaAno">PRODUÇÃO ESTIMADA (kg.MS/ha.ano)</string>
-    <string name="txt_tv_producaoEstimadaMes">Produção Estimada (Ton. MS/mês)</string>
+    <string name="txt_tv_producaoEstimadaAno">Produção Estimada (kg.MS/ha.ano)</string>
+    <string name="txt_tv_producaoEstimadaMes">Produção Estimada (kg. MS/mês)</string>
     <string name="txt_tv_producaoEstimada">Produção estimada</string>
-    <string name="txt_tv_bemVindo">Bem vindo.</string>
+    <string name="txt_tv_bemVindo">Bem vindo</string>
     <string name="txt_tv_nomeProp">Nome da propriedade</string>
     <string name="txt_tv_areaProp">Área Prop</string>
     <string name="txt_tv_qnt">Qtde</string>
@@ -87,7 +87,12 @@
     <string name="txt_tv_cadastreProp">Cadastre a Propriedade</string>
     <string name="txt_tv_sobre">Sobre</string>
     <string name="txt_tv_sobreNos">Sobre Nós</string>
-    <string name="txt_tv_textoSobre">Lorem ipsum duis nec pretium ultrices laoreet aptent, sociosqu eu consequat convallis lobortis dui a mauris, cras phasellus id interdum congue nec. euismod aptent arcu luctus neque varius mauris quisque ante pulvinar dictum lorem ligula eu at, cubilia in euismod posuere fringilla metus habitant turpis nisl porttitor nisl dictumst. ut in netus eros suscipit velit ut faucibus elementum, viverra libero pretium aliquam mollis convallis imperdiet quis, eget ultrices inceptos etiam tincidunt quisque metusa.</string>
+    <string name="txt_tv_textoSobre">
+        O aplicativo para planejamento e balanço forrageiro desenvolvido pela Epagri, IFSC e UFPR, Embrapa veio para auxiliar e facilitar o trabalho
+        dos técnicos e pecuaristas, permitindo um controle maior da produção de forragem e lotação animal em suas pastagens de forma ágil e prática.
+        O planejamento forrageiro é essencial para que o pecuarista tenha mais controle e eficiência de sua produção, possibilitando atingir patamares
+        e objetivos maiores em sua propriedade em um cenário de cada vez maior competitividade regional, nacional e internacional da pecuária.
+    </string>
     <string name="txt_tv_dadosProp">Dados da Propriedade</string>
     <string name="txt_tv_projEpagri">Projeto Epagri</string>
     <string name="txt_tv_inicio">Início</string>

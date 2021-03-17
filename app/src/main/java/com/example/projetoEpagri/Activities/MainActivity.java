@@ -1,24 +1,17 @@
 package com.example.projetoEpagri.Activities;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.Classes.BancoDeDados;
-import com.example.projetoEpagri.Fragments.LoginFragment;
 import com.example.projetoEpagri.Fragments.SplashScreenFragment;
 import com.example.projetoEpagri.R;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
     public static BancoDeDados bancoDeDados;
@@ -40,7 +33,9 @@ public class MainActivity extends AppCompatActivity{
         }
 
         Fragment fragment = SplashScreenFragment.newInstance();
-        startFragment(fragment, "splash_screen_fragment", R.id.ll_main, false, false, this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.ll_main, fragment, "splash_screen_fragment");
+        transaction.commit();
     }
 
     /**

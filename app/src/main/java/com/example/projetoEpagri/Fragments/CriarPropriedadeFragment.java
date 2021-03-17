@@ -47,12 +47,16 @@ public class CriarPropriedadeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
+        final View toolbar = getView().findViewById(R.id.included_toolbar);
+        final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
         final EditText et_nome_propriedade = getView().findViewById(R.id.et_nomePropriedade);
         final ImageView iv_mapa = getView().findViewById(R.id.iv_map);
         final TextView tv_texto_clima = getView().findViewById(R.id.tv_texto_clima);
         final TextView tv_clima = getView().findViewById(R.id.tv_clima);
         final Button bt_proximo = getView().findViewById(R.id.bt_levaPiquete);
+
+        TextView toolbar_title = toolbar.findViewById(R.id.tv_titulo_toolbar);
+        toolbar_title.setText("Cadastrar Propriedade");
 
         iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
         tv_clima.setText("Clima Quente - cfa");
@@ -105,7 +109,7 @@ public class CriarPropriedadeFragment extends Fragment {
                 if(!nome_propriedade.isEmpty()){
                     IndexFragment.propriedade = new Propriedade(nome_propriedade, regiao);
 
-                    Fragment piquete_fragment = PiqueteFragment.newInstance();
+                    Fragment piquete_fragment = PiqueteFragment.newInstance(-1, false, null);
                     MainActivity.startFragment(piquete_fragment, "piquete_fragment", R.id.ll_index, true, true, getActivity());
                 }
                 else{

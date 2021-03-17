@@ -142,6 +142,7 @@ public class UsuarioDAO implements IUsuarioSchema {
             usuario.setEstado(cursor.getString(5));
             usuario.setCidade(cursor.getString(6));
             usuario.setSenha(cursor.getString(7));
+            listaUsuarios.add(usuario);
         }
         cursor.close();
         return listaUsuarios;

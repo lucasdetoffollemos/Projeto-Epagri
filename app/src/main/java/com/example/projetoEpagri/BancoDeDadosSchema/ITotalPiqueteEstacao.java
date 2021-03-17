@@ -19,7 +19,7 @@ public interface ITotalPiqueteEstacao {
             + COLUNA_TOTAL_INV + " real, "
             + COLUNA_TOTAL_PRIM + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
+            + "CONSTRAINT fk_total_estacao_atual_propriedade_id FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + ") ON DELETE CASCADE)";
 
     String CREATE_TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA = "CREATE TABLE IF NOT EXISTS "
             + TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA + "("
@@ -29,5 +29,5 @@ public interface ITotalPiqueteEstacao {
             + COLUNA_TOTAL_INV + " real, "
             + COLUNA_TOTAL_PRIM + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
+            + "CONSTRAINT fk_total_estacao_proposta_propriedade_id FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + ") ON DELETE CASCADE)";
 }

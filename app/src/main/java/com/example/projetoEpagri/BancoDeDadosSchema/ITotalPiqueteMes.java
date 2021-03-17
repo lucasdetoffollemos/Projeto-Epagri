@@ -35,7 +35,7 @@ public interface ITotalPiqueteMes {
             + COLUNA_TOTAL_NOV + " real, "
             + COLUNA_TOTAL_DEZ + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY ("+ COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
+            + "CONSTRAINT fk_total_mes_atual_propriedade_id FOREIGN KEY ("+ COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + ") ON DELETE CASCADE)";
 
     String CREATE_TABELA_TOTAL_PIQUETE_MES_PROPOSTA = "CREATE TABLE IF NOT EXISTS "
             + TABELA_TOTAL_PIQUETE_MES_PROPOSTA + "("
@@ -53,5 +53,5 @@ public interface ITotalPiqueteMes {
             + COLUNA_TOTAL_NOV + " real, "
             + COLUNA_TOTAL_DEZ + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY ("+ COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + "))";
+            + "CONSTRAINT fk_total_mes_proposta_propriedade_id FOREIGN KEY ("+ COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " (" + COLUNA_ID + ") ON DELETE CASCADE)";
 }

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.projetoEpagri.Activities.IndexActivity;
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.ListViewPropriedadesAdapter;
@@ -106,9 +107,6 @@ public class IndexFragment extends Fragment {
         nome.setText(usuario.getNome());
         email.setText(usuario.getEmail());
 
-        //listview_adapter.notifyDataSetChanged();
-        //lv_propriedades.invalidateViews();
-
         //Clique no ícone do menu.
         iv_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,23 +166,25 @@ public class IndexFragment extends Fragment {
         int id_propriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
 
         if(item.getItemId() == R.id.mi_ver_dados){
-            //Intent i = new Intent(IndexActivity.this, TabsActivity.class);
-            //i.putExtra("nomePropriedade", propriedade.getNome());
-            //i.putExtra("nome_usuario", nomeUsuario);
-            //IndexActivity.this.startActivity(i);
-            Toast.makeText(getActivity(), "ver dados", Toast.LENGTH_LONG).show();
+            IndexFragment.propriedade = new Propriedade(propriedade.getNome(), propriedade.getRegiao());
+            Fragment ver_dados_fragment = VerDadosFragment.newInstance(propriedade.getNome(), false);
+            MainActivity.startFragment(ver_dados_fragment, "ver_dados_fragment", R.id.ll_index, true, true, getActivity());
         }
         else if(item.getItemId() == R.id.mi_fazer_proposta) {
-            Toast.makeText(getActivity(), "fazer proposta", Toast.LENGTH_LONG).show();
+            IndexFragment.propriedade = new Propriedade(propriedade.getNome(), propriedade.getRegiao());
+            Fragment ver_dados_fragment = VerDadosFragment.newInstance(propriedade.getNome(), true);
+            MainActivity.startFragment(ver_dados_fragment, "ver_dados_fragment", R.id.ll_index, true, true, getActivity());
         }
         else if(item.getItemId() == R.id.mi_ver_grafico_atual){
-            Fragment grafico_fragment = GraficoFragment.newInstance(id_propriedade, 1);
+            Fragment grafico_fragment = GraficoFragment.newInstance(id_propriedade, "atual");
             MainActivity.startFragment(grafico_fragment, "grafico_fragment", R.id.ll_index, true, true, getActivity());
         }
         else if(item.getItemId() == R.id.mi_ver_grafico_proposta){
-            if(!MainActivity.bancoDeDados.verificaTabelaVazia(ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA) &&
-               !MainActivity.bancoDeDados.verificaTabelaVazia(ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA)){
-                Fragment grafico_fragment = GraficoFragment.newInstance(id_propriedade, 1);
+            //Arrumar um jeito de verificar se as tabelas possuem entradas com o id da propriedade ou não.
+
+            if(MainActivity.bancoDeDados.verificaConteudoTabelaById(id_propriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA, ITotalPiqueteMes.COLUNA_ID_PROPRIEDADE) &&
+               MainActivity.bancoDeDados.verificaConteudoTabelaById(id_propriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA, ITotalAnimais.COLUNA_ID_PROPRIEDADE)){
+                Fragment grafico_fragment = GraficoFragment.newInstance(id_propriedade,  "proposta");
                 MainActivity.startFragment(grafico_fragment, "grafico_fragment", R.id.ll_index, true, true, getActivity());
             }
             else{

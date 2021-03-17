@@ -61,6 +61,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:maxLines="1"
+                    android:imeOptions="actionDone"
                     tools:ignore="LabelFor" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +93,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:imeOptions="actionDone"
                     tools:ignore="LabelFor" />
 
             </com.google.android.material.textfield.TextInputLayout>

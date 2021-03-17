@@ -82,6 +82,7 @@
                         android:inputType="textPersonName"
                         android:maxLines="1"
                         android:text="@string/txt_tv_nome"
+                        android:imeOptions="actionDone"
                         tools:ignore="LabelFor,TextFields" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,6 +113,7 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:text="@string/txt_tv_email"
+                        android:imeOptions="actionDone"
                         tools:ignore="LabelFor,TextFields" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -143,6 +145,7 @@
                         android:inputType="phone"
                         android:maxLines="1"
                         android:text="@string/txt_tv_telefone"
+                        android:imeOptions="actionDone"
                         tools:ignore="LabelFor,TextFields" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -161,14 +164,13 @@
                     app:boxCornerRadiusTopEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    >
+                    app:boxStrokeWidthFocused="0dp">
+
                     <Spinner
                         android:id="@+id/spinner_tipoPerfil"
                         android:layout_width="match_parent"
                         android:layout_height="65dp"
-                        android:background="@drawable/spinner_style"
-                        />
+                        android:background="@drawable/spinner_style" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -186,14 +188,13 @@
                     app:boxCornerRadiusTopEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    >
+                    app:boxStrokeWidthFocused="0dp">
+
                     <Spinner
                         android:id="@+id/spinner_estado"
                         android:layout_width="match_parent"
                         android:layout_height="65dp"
-                        android:background="@drawable/spinner_style"/>
-
+                        android:background="@drawable/spinner_style" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -210,8 +211,8 @@
                     app:boxCornerRadiusTopEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    >
+                    app:boxStrokeWidthFocused="0dp">
+
                     <Spinner
                         android:id="@+id/spinner_cidade"
                         android:layout_width="match_parent"
@@ -248,6 +249,7 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:text="@string/text_tv_senha"
+                        android:imeOptions="actionDone"
                         tools:ignore="LabelFor" />
 
                 </com.google.android.material.textfield.TextInputLayout>

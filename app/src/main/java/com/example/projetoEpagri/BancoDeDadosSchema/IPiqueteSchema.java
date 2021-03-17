@@ -45,7 +45,7 @@ public interface IPiqueteSchema {
             + COLUNA_PRODUCAO_DEZ + " real, "
             + COLUNA_TOTAL + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + "))";
+            + "CONSTRAINT fk_piquete_atual_propriedade_id FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + ") ON DELETE CASCADE)";
 
     String CREATE_TABELA_PIQUETE_PROPOSTA = "CREATE TABLE IF NOT EXISTS "
             + TABELA_PIQUETE_PROPOSTA + "("
@@ -68,5 +68,5 @@ public interface IPiqueteSchema {
             + COLUNA_PRODUCAO_DEZ + " real, "
             + COLUNA_TOTAL + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + "))";
+            + "CONSTRAINT fk_piquete_proposta_propriedade_id FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + ") ON DELETE CASCADE)";
 }

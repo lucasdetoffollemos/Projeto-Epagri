@@ -12,7 +12,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.MainActivity"
+                  android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,16 +22,8 @@
         <activity
             android:name=".Activities.IndexActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustNothing">
         </activity>
-        <!--<activity
-            android:name=".Activities.TabsActivity"
-            android:screenOrientation="landscape"
-            tools:ignore="LockedOrientationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.projetoEpagri.Activities.IndexActivity" />
-        </activity>-->
 
         <meta-data
             android:name="preloaded_fonts"

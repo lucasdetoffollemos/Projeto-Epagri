@@ -55,7 +55,7 @@ public interface IAnimaisSchema {
             + COLUNA_PESO_NOV + " real, "
             + COLUNA_PESO_DEZ + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + "))";
+            + "CONSTRAINT fk_animais_atual_propriedade_id FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + ") ON DELETE CASCADE)";
 
     String CREATE_TABELA_ANIMAIS_PROPOSTA = "CREATE TABLE IF NOT EXISTS "
             + TABELA_ANIMAIS_PROPOSTA + "("
@@ -83,5 +83,5 @@ public interface IAnimaisSchema {
             + COLUNA_PESO_NOV + " real, "
             + COLUNA_PESO_DEZ + " real, "
             + COLUNA_ID_PROPRIEDADE + " integer, "
-            + "FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + "))";
+            + "CONSTRAINT fk_animais_proposta_propriedade_id FOREIGN KEY (" + COLUNA_ID_PROPRIEDADE + ") REFERENCES " + TABELA_PROPRIEDADE + " ("+ COLUNA_ID + ") ON DELETE CASCADE)";
 }

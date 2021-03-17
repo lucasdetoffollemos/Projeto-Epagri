@@ -54,6 +54,29 @@ public class PropriedadeDAO implements IPropriedadeSchema {
         return p;
     }
 
+    public Propriedade getPropriedadeById(int id){
+        String sql_query = "SELECT * FROM " + TABELA_PROPRIEDADE + " WHERE " + COLUNA_ID + "=" + id;
+        Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
+
+        Propriedade p = new Propriedade();
+        if (cursor != null && cursor.moveToFirst()) {
+            p.setNome(cursor.getString(1));
+            p.setRegiao(cursor.getString(2));
+            p.setArea(cursor.getDouble(3));
+            p.setQtdeAnimais(cursor.getInt(4));
+            p.setListaPiqueteAtual(null); //Precisa consultar na outra tabela.
+            p.setListaAnimaisAtual(null);
+            cursor.close();
+        }
+
+        return p;
+    }
+
+    /**
+     * Método responsável por retornar o id de uma determinada propriedade baseada no seu nome.
+     * @param nome
+     * @return
+     */
     public int getPropriedadeId(String nome){
         String sql_query = "SELECT * FROM " + TABELA_PROPRIEDADE + " WHERE " + COLUNA_NOME + "=" + "\"" + nome + "\"";
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);

@@ -106,13 +106,38 @@ public class BancoDeDados{
             count++;
         }
 
-
         if(count > 0){
             vazia = false;
         }
 
         cursor.close();
         return vazia;
+    }
+
+    /**
+     * Método para verificar a existência de um conteúdo de uma tabela baseado no valor, na coluna e na tabela.
+     * @param valor Valor que deseja-se verificar a existência.
+     * @param NOME_TABELA Nome da tabela.
+     * @param NOME_COLUNA Coluna onde deseja-se procurar o valor.
+     * @return
+     */
+    public boolean verificaConteudoTabelaById(int valor, String NOME_TABELA, String NOME_COLUNA){
+        String sql_query = "SELECT * FROM " + NOME_TABELA + " WHERE " + NOME_COLUNA + "=\"" + valor + "\"";
+        Cursor cursor = this.sqLiteDatabase.rawQuery(sql_query, null);
+        cursor.moveToFirst();
+
+        int count = 0;
+
+        while(!cursor.isAfterLast()){
+            cursor.moveToNext();
+            count++;
+        }
+
+        if(count > 0){
+            return true;
+        }
+
+        return false;
     }
 
     private static class BancoHelper extends SQLiteOpenHelper{
@@ -142,5 +167,11 @@ public class BancoDeDados{
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+            super.onOpen(db);
+            db.execSQL("PRAGMA foreign_keys=ON");
+        }
     }
 }

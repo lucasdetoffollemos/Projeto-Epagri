@@ -14,11 +14,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.Fragments.ConfiguracoesFragment;
 import com.example.projetoEpagri.Fragments.EditarPerfilFragment;
@@ -30,15 +28,11 @@ import java.util.List;
 
 public class IndexActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
     public static String nome_usuario;
-    //private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
-
-        //fragmentManager = getSupportFragmentManager();
-        //fragmentManager.addOnBackStackChangedListener(this);
 
         Intent intent = getIntent();
         nome_usuario = intent.getStringExtra("nome_usuario");
@@ -55,18 +49,15 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
     public Fragment getTopFragment(){
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         List<Fragment> list = fragmentManager.getFragments();
-        //Toast.makeText(this, topFragment.getTag(), Toast.LENGTH_LONG).show();
         return list.get(list.size() - 1);
     }
 
+    //Pode ser útil.
+    /**
+     * Método executado toda vez que a pilha de fragments sofre alteração.
+     */
     @Override
-    public void onBackStackChanged() {
-        //Fragment fragment = getTopFragment();
-        //if(fragment.getTag().equals("piquete_fragment")){
-            //Toast.makeText(this, "Achei o piquete", Toast.LENGTH_SHORT).show();
-
-       // }
-    }
+    public void onBackStackChanged() {}
 
     /**
      * Método chamado ao clicar no botão voltar do smartphone.

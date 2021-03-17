@@ -120,5 +120,7 @@ public class LoginFragment extends Fragment {
         Intent i = new Intent(getActivity(), IndexActivity.class);
         i.putExtra("nome_usuario", nome_usuario);
         startActivity(i);
+
+        getActivity().finish();
     }
 }

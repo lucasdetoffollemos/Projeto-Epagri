@@ -46,7 +46,8 @@ public class EsqueceuSenhaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
+        final View toolbar = getView().findViewById(R.id.included_toolbar);
+        final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
         final EditText et_email = getView().findViewById(R.id.et_email);
         final Button bt_modifica = getView().findViewById(R.id.bt_confirmar_email);
 
