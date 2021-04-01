@@ -1,6 +1,7 @@
 package com.example.projetoEpagri.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,11 +11,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.Classes.BancoDeDados;
+import com.example.projetoEpagri.Fragments.IndexFragment;
+import com.example.projetoEpagri.Fragments.LoginFragment;
 import com.example.projetoEpagri.Fragments.SplashScreenFragment;
 import com.example.projetoEpagri.R;
 
 public class MainActivity extends AppCompatActivity{
     public static BancoDeDados bancoDeDados;
+    public int codigoReq = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +36,22 @@ public class MainActivity extends AppCompatActivity{
             inseriDadosTabelaPastagemSul();
         }
 
-        Fragment fragment = SplashScreenFragment.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.ll_main, fragment, "splash_screen_fragment");
-        transaction.commit();
+        //pegando o código que vem da index activity
+        Intent intent = getIntent();
+        codigoReq = intent.getIntExtra("cod", 2);
+
+        //se o código for diferente de 1, que é o código vindo da index, mostrar a splash screen, se o código for igual a 1, ou seja o código veio da index, nao mostrart a splash screen
+        if(codigoReq != 1){
+            Fragment fragment = SplashScreenFragment.newInstance();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.ll_main, fragment, "splash_screen_fragment");
+            transaction.commit();
+        }
+        else{
+            Fragment main_fragment = LoginFragment.newInstance();
+            MainActivity.startFragment(main_fragment, "main_fragment", R.id.ll_main, false, false, this);
+        }
+
     }
 
     /**

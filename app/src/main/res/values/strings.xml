@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Epagri</string>
+    <string name="app_name">PLANPEC</string>
 
     <!--Hint's-->
     <!--Edit Text's   -->
@@ -94,7 +94,7 @@
         e objetivos maiores em sua propriedade em um cenário de cada vez maior competitividade regional, nacional e internacional da pecuária.
     </string>
     <string name="txt_tv_dadosProp">Dados da Propriedade</string>
-    <string name="txt_tv_projEpagri">Projeto Epagri</string>
+    <string name="txt_tv_planpec">PlanPec</string>
     <string name="txt_tv_inicio">Início</string>
     <string name="txt_tv_config_msg">Que dados você deseja editar?</string>
     <string name="txt_tv_titulo_tabela_edit">Estimativas da Produção Total e Distribuição das Principais Forrageiras</string>

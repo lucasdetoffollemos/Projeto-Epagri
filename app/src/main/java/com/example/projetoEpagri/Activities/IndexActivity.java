@@ -176,7 +176,7 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
         builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                voltaParaLogin();
             }
         });
 
@@ -188,5 +188,15 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
         });
 
         builder.show();
+    }
+
+    //método que é chamado quando usuário clica na opção sair, e é redirecionado para a activity main/login, levando um codigo com ela, e removendo toda a pilha de activities anteriores
+    public void voltaParaLogin(){
+        Intent i = new Intent(IndexActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("cod", 1);
+        startActivity(i);
+        //Destroi a MainActivity.
+        finish();
     }
 }

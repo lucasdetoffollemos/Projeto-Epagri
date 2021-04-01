@@ -23,7 +23,7 @@
             android:textStyle="bold"
             android:textColor="@color/branco"
             android:gravity="center"
-            android:text="@string/txt_tv_projEpagri"/>
+            android:text="@string/txt_tv_planpec"/>
 
         <LinearLayout
             android:layout_width="match_parent"
