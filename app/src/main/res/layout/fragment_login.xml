@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
                     android:text="PlanPec"
-                    android:textColor="@color/preto"
+                    android:textColor="@color/verde"
                     android:textSize="50sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
