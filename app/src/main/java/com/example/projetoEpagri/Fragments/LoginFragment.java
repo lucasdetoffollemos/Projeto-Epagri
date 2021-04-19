@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,11 +99,12 @@ public class LoginFragment extends Fragment {
      * @param senha Senha do usuário.
      */
     public void login(String nome, String senha) {
-        boolean check_email_senha =  BancoDeDados.usuarioDAO.login(nome, senha);
+        String senha_hashed = MainActivity.bancoDeDados.bin2hex(MainActivity.bancoDeDados.generateHash((nome+senha)));
+        boolean check_email_senha = BancoDeDados.usuarioDAO.login(nome, senha_hashed);
 
         if(check_email_senha){
             Toast.makeText(getActivity(), "Usuário logado", Toast.LENGTH_SHORT).show();
-            startActivityIndex(nome);
+            startActivityIndex(nome, senha);
         }
         else if(nome.isEmpty() || senha.isEmpty()){
             Toast.makeText(getActivity(), "Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
@@ -116,9 +118,10 @@ public class LoginFragment extends Fragment {
      * Método responsável por iniciar a ActivityIndex.
      * @param nome_usuario Nome do usuário.
      */
-    public void startActivityIndex(String nome_usuario){
+    public void startActivityIndex(String nome_usuario, String senha){
         Intent i = new Intent(getActivity(), IndexActivity.class);
         i.putExtra("nome_usuario", nome_usuario);
+        i.putExtra("senha", senha);
         startActivity(i);
 
         getActivity().finish();

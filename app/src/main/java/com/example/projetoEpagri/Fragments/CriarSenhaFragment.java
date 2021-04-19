@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.IndexActivity;
+import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.R;
 
@@ -102,8 +103,10 @@ public class CriarSenhaFragment extends Fragment {
      * Método para alterar a senha do usuário.
      */
     public void modificarSenha(final String senha) {
+        final String senha_hashed = MainActivity.bancoDeDados.bin2hex(MainActivity.bancoDeDados.generateHash((nome_usuario+senha)));
+
         //Verifica se a senha ja existe.
-        if(senha_usuario.equals(senha)) {
+        if(senha_usuario.equals(senha_hashed)) {
             Toast.makeText(getActivity(), "A nova senha precisa ser diferente da senha atual!", Toast.LENGTH_SHORT).show();
         }else{
             //Cria a caixa de confirmação para verificar se o usuário quer ou não alterar sua senha.
@@ -113,14 +116,14 @@ public class CriarSenhaFragment extends Fragment {
             builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    BancoDeDados.usuarioDAO.updateUsuarioId(id_usuario, senha);
+                    BancoDeDados.usuarioDAO.updateUsuarioId(id_usuario, senha_hashed);
                     Toast.makeText(getActivity(), "Senha alterada com sucesso!", Toast.LENGTH_SHORT).show();
 
                     //Redireciona o usuário para o IndexFragment após 2 seg.
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            startActivityIndex(nome_usuario);
+                            startActivityIndex(nome_usuario, senha);
                         }
                     }, 1500);
                 }
@@ -141,12 +144,13 @@ public class CriarSenhaFragment extends Fragment {
      * Método responsável por iniciar a ActivityIndex.
      * @param nome_usuario Nome do usuário.
      */
-    public void startActivityIndex(String nome_usuario){
+    public void startActivityIndex(String nome_usuario, String senha){
         //getFragmentManager().popBackStack();
         //getFragmentManager().popBackStack();
 
         Intent i = new Intent(getActivity(), IndexActivity.class);
         i.putExtra("nome_usuario", nome_usuario);
+        i.putExtra("senha", senha);
         startActivity(i);
 
         getActivity().finish();

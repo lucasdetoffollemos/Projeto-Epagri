@@ -6,7 +6,7 @@
     <string name="hint_et_nome">Nome de Usuário</string>
     <string name="hint_et_senha">Senha</string>
     <string name="hint_et_email">Email</string>
-    <string name="hint_et_telefone">Telefone</string>
+    <string name="hint_et_telefone">(DDD) Telefone</string>
     <string name="hint_numero_animais">qtde</string>
     <string name="hint_et_pesoInicial">P I</string>
     <string name="hint_et_pesoFinal">P F</string>

@@ -2,6 +2,7 @@ package com.example.projetoEpagri.Dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ public class UsuarioDAO implements IUsuarioSchema {
      * Método para inserir um usuário no banco de dados (tabela usuarios).
      * @param usuario Representa o objeto usuário que será salvo no banco de dados.
      */
-    public void inserirUsuario(Usuario usuario){
+    public boolean inserirUsuario(Usuario usuario){
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME, usuario.getNome());
         values.put(COLUNA_EMAIL, usuario.getEmail());
@@ -32,7 +33,14 @@ public class UsuarioDAO implements IUsuarioSchema {
         values.put(COLUNA_CIDADE, usuario.getCidade());
         values.put(COLUNA_SENHA, usuario.getSenha());
 
-        this.bancoDeDados.insert(TABELA_USUARIO, null, values);
+        try{
+            this.bancoDeDados.insertOrThrow(TABELA_USUARIO, null, values);
+        }
+        catch (SQLiteConstraintException e){
+            return false;
+        }
+
+        return true;
     }
 
     /**

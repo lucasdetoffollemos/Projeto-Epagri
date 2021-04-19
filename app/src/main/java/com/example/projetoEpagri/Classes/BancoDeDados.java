@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
@@ -22,6 +24,18 @@ import com.example.projetoEpagri.Dao.TotalAnimaisDAO;
 import com.example.projetoEpagri.Dao.TotalPiqueteEstacaoDAO;
 import com.example.projetoEpagri.Dao.TotalPiqueteMesDAO;
 import com.example.projetoEpagri.Dao.UsuarioDAO;
+
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.Signature;
+
+import javax.crypto.Cipher;
 
 public class BancoDeDados{
     private static final String BANCO_DE_DADOS_NOME = "bancoDeDadosProjetoEpagri.db";
@@ -138,6 +152,34 @@ public class BancoDeDados{
         }
 
         return false;
+    }
+
+    /**
+     * Método utilizado para gerar uma hash para determinada string.
+     * @param string Representa a string para qual será gerada o hash.
+     * @return
+     */
+    public byte[] generateHash(String string) {
+        MessageDigest digest = null;
+
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        }
+
+        digest.reset();
+
+        return digest.digest(string.getBytes());
+    }
+
+    /**
+     * Método utilizado converter de binário para hexadecimal.
+     * @param data Representa a informação binária que será convertida.
+     * @return
+     */
+    public String bin2hex(byte[] data) {
+        return String.format("%0" + (data.length*2) + "X", new BigInteger(1, data));
     }
 
     private static class BancoHelper extends SQLiteOpenHelper{

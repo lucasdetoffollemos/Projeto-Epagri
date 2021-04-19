@@ -3,6 +3,7 @@ package com.example.projetoEpagri.Fragments;
 import android.content.Intent;
 
 import android.content.pm.ActivityInfo;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.IndexActivity;
+import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Usuario;
 import com.example.projetoEpagri.R;
@@ -31,11 +33,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class CriarPerfilFragment extends Fragment {
-    private String nome_usuario;
+    private String nome_usuario, senha;
     private ArrayList<String> cidades_pr, cidades_rs, cidades_sc, cidades;
     private boolean alterou_estado = false;
 
@@ -142,19 +145,42 @@ public class CriarPerfilFragment extends Fragment {
         bt_criar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email, telefone, tipoPerfil, estado, cidade, senha;
+                String email, telefone, tipoPerfil, estado, cidade;
                 nome_usuario = et_nome.getText().toString().trim();  //trim remove espaços em branco antes e após a palavra.
-                email = et_email.getText().toString().trim();
+                email = et_email.getText().toString().toLowerCase().trim();
                 telefone = et_telefone.getText().toString().trim();
                 tipoPerfil = spinner_tipo_perfil.getSelectedItem().toString();
                 estado = spinner_estado.getSelectedItem().toString();
                 cidade = spinner_cidade.getSelectedItem().toString();
                 senha = et_senha.getText().toString().trim();
 
+                //Verifica se todos os campos foram preenchidos.
                 if((nome_usuario.length() > 0) && (email.length() > 0) && (telefone.length() > 0) && !tipoPerfil.equals("Selecione o perfil") && !estado.equals("Selecione o Estado") && !cidade.equals("Selecione a cidade") && (senha.length() > 0 )){
-                    if(email.contains("@") && email.contains(".")){
-                        criarPerfil(nome_usuario, email, telefone, tipoPerfil, estado, cidade, senha);
-                        bt_criar.setEnabled(false);
+                    if(email.contains("@") && email.contains(".")){ //Verifica o formato do e-mail.
+                        if(telefone.length() == 11){
+                            String senha_hashed = MainActivity.bancoDeDados.bin2hex(MainActivity.bancoDeDados.generateHash((nome_usuario+senha)));
+
+                            Usuario u = new Usuario(nome_usuario, email, telefone, tipoPerfil, estado, cidade, senha_hashed);
+
+                            if(BancoDeDados.usuarioDAO.inserirUsuario(u)){
+                                Toast.makeText(getActivity(), "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
+                                bt_criar.setEnabled(false);
+
+                                //O código abaixo aguarda 2 seg e redireciona o usuário para o IndexFragment.
+                                new Timer().schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        startActivityIndex(nome_usuario, senha);
+                                    }
+                                }, 1000);
+                            }
+                            else{
+                                Toast.makeText(getActivity(), "O nome de usuário já existe!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Formato de telefone inválido!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else{
                         Toast.makeText(getActivity(), "Formato de e-mail inválido! ", Toast.LENGTH_SHORT).show();
@@ -212,27 +238,17 @@ public class CriarPerfilFragment extends Fragment {
      * Método responsável por criar um usuário e salvar no banco de dados.
      */
     public void criarPerfil(String nome, String email, String telefone, String tipoPerfil, String estado, String cidade, String senha){
-        Usuario u = new Usuario(nome, email, telefone, tipoPerfil, estado, cidade, senha);
-        BancoDeDados.usuarioDAO.inserirUsuario(u);
-        Toast.makeText(getActivity(), "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
 
-
-        //O código abaixo aguarda 2 seg e redireciona o usuário para o IndexFragment.
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                startActivityIndex(nome_usuario);
-            }
-        }, 1000);
     }
 
     /**
      * Método responsável por iniciar a ActivityIndex.
      * @param nome_usuario
      */
-    public void startActivityIndex(String nome_usuario){
+    public void startActivityIndex(String nome_usuario, String senha){
         Intent i = new Intent(getActivity(), IndexActivity.class);
         i.putExtra("nome_usuario", nome_usuario);
+        i.putExtra("senha", senha);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
 

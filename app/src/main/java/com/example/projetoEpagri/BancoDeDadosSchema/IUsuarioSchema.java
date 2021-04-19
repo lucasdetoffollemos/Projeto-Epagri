@@ -14,13 +14,13 @@ public interface IUsuarioSchema {
     String CREATE_TABELA_USUARIO = "CREATE TABLE IF NOT EXISTS "
         + TABELA_USUARIO + "("
         + COLUNA_ID + " integer PRIMARY KEY AUTOINCREMENT, "
-        + COLUNA_NOME + " varchar(50), "
+        + COLUNA_NOME + " varchar(50) UNIQUE, "
         + COLUNA_EMAIL + " varchar(50), "
         + COLUNA_TELEFONE + " varchar(50), "
         + COLUNA_TIPO_PERFIL + " varchar(50),"
         + COLUNA_ESTADO + " varchar(50), "
         + COLUNA_CIDADE + " varchar(50), "
-        + COLUNA_SENHA + " varchar(50))";
+        + COLUNA_SENHA + " varchar(64))";
 
     String[] USUARIO_COLUNAS = new String[] {
         COLUNA_ID,

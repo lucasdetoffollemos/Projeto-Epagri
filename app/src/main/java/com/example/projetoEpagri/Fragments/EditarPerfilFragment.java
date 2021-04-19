@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.IndexActivity;
+import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
@@ -101,7 +102,7 @@ public class EditarPerfilFragment extends Fragment {
         et_editar_nome.setText(usuario.getNome());
         et_editar_email.setText(usuario.getEmail());
         et_editar_telefone.setText(usuario.getTelefone());
-        et_editar_senha.setText(usuario.getSenha());
+        et_editar_senha.setText(IndexActivity.senha);
 
         drawer_layout = getView().findViewById(R.id.drawerLayout);
         final View menu_drawer = getView().findViewById(R.id.included_nav_drawer);
@@ -273,43 +274,50 @@ public class EditarPerfilFragment extends Fragment {
             String tipo_perfil_banco = usuario.getTipo_perfil();
             String estado_banco = usuario.getEstado();
             String cidade_banco = usuario.getCidade();
-            String senha_banco = usuario.getSenha();
+            String senha_banco_hashed = usuario.getSenha();
+            final String senha_hashed = MainActivity.bancoDeDados.bin2hex(MainActivity.bancoDeDados.generateHash((nome_banco+senha)));
 
             //Verifica se todos os campos estão preenchidos.
             if(nome.length() > 0 && email.length() > 0 && telefone.length() > 0 && tipoPerfil.length() > 0 && estado.length() > 0 && cidade.length() > 0 && senha.length() > 0 ){
                 //Verifica se o formato de e-mail é válido.
                 if(email.contains("@") && email.contains(".")){
-                    //Verifica se os novos dados são diferentes dos anteriores.
-                    if(nome_banco.equals(nome) && email_banco.equals(email) && telefone_banco.equals(telefone) && tipo_perfil_banco.equals(tipoPerfil) && estado_banco.equals(estado) && cidade_banco.equals(cidade) && senha_banco.equals(senha)){
-                        Toast.makeText(getActivity(), "Os novos dados devem ser diferentes dos existentes!", Toast.LENGTH_SHORT).show();
+                    if(telefone.length() == 11){
+                        //Verifica se os novos dados são diferentes dos anteriores.
+                        if(nome_banco.equals(nome) && email_banco.equals(email) && telefone_banco.equals(telefone) && tipo_perfil_banco.equals(tipoPerfil) && estado_banco.equals(estado) && cidade_banco.equals(cidade) && senha_banco_hashed.equals(senha_hashed)){
+                            Toast.makeText(getActivity(), "Os novos dados devem ser diferentes dos existentes!", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                            builder.setTitle("ATENÇÃO");
+                            builder.setMessage( "Tem certeza que deseja continuar?" );
+                            builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    BancoDeDados.usuarioDAO.updateUsuario(id_usuario, nome, email, telefone, tipoPerfil, estado, cidade, senha_hashed);
+                                    Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
+
+                                    //Essa linha é necessária pois a ActivityIndex não é recriada após a atualização do nome
+                                    //no EditarPerfilFragment. Sendo assim, o valor atualizado do nome é perdido e ao voltar
+                                    //para o EditarPerfilFragment, não consegue-se recuperar os dados do banco a partir do nome.
+                                    IndexActivity.nome_usuario = nome;
+                                    IndexActivity.senha = senha;
+                                    getFragmentManager().popBackStack();
+                                }
+                            });
+
+                            builder.setNegativeButton(" NÃO ", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            builder.show();
+                        }
                     }
                     else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                        builder.setTitle("ATENÇÃO");
-                        builder.setMessage( "Tem certeza que deseja continuar?" );
-                        builder.setPositiveButton(" SIM ", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                BancoDeDados.usuarioDAO.updateUsuario(id_usuario, nome, email, telefone, tipoPerfil, estado, cidade, senha);
-                                Toast.makeText(getActivity(), "Dados Atualizados com Sucesso!", Toast.LENGTH_SHORT).show();
-
-                                //Essa linha é necessária pois a ActivityIndex não é recriada após a atualização do nome
-                                //no EditarPerfilFragment. Sendo assim, o valor atualizado do nome é perdido e ao voltar
-                                //para o EditarPerfilFragment, não consegue-se recuperar os dados do banco a partir do nome.
-                                IndexActivity.nome_usuario = nome;
-                                getFragmentManager().popBackStack();
-                            }
-                        });
-
-                        builder.setNegativeButton(" NÃO ", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        builder.show();
+                        Toast.makeText(getActivity(), "Formato de telefone inválido!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{

@@ -27,7 +27,7 @@ import com.example.projetoEpagri.R;
 import java.util.List;
 
 public class IndexActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
-    public static String nome_usuario;
+    public static String nome_usuario, senha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
 
         Intent intent = getIntent();
         nome_usuario = intent.getStringExtra("nome_usuario");
+        senha = intent.getStringExtra("senha");
 
         //Mostra o IndexFragment.
         Fragment index_fragment = IndexFragment.newInstance();
