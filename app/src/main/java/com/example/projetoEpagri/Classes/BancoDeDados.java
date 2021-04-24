@@ -5,9 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
@@ -26,16 +24,8 @@ import com.example.projetoEpagri.Dao.TotalPiqueteMesDAO;
 import com.example.projetoEpagri.Dao.UsuarioDAO;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.Signature;
-
-import javax.crypto.Cipher;
 
 public class BancoDeDados{
     private static final String BANCO_DE_DADOS_NOME = "bancoDeDadosProjetoEpagri.db";
@@ -67,20 +57,19 @@ public class BancoDeDados{
         this.bancoHelper = new BancoHelper(this.context);
         sqLiteDatabase = bancoHelper.getWritableDatabase();
 
-        usuarioDAO = new UsuarioDAO(sqLiteDatabase);
-        dadosDAO = new DadosDAO(sqLiteDatabase);
-        propriedadeDAO = new PropriedadeDAO(sqLiteDatabase);
-        piqueteDAO = new PiqueteDAO(sqLiteDatabase);
-        totalPiqueteMesDAO = new TotalPiqueteMesDAO(sqLiteDatabase);
-        totalPiqueteEstacaoDAO = new TotalPiqueteEstacaoDAO(sqLiteDatabase);
-        animaisDAO = new AnimaisDAO(sqLiteDatabase);
-        totalAnimaisDAO = new TotalAnimaisDAO(sqLiteDatabase);
+        this.usuarioDAO = new UsuarioDAO(sqLiteDatabase);
+        this.dadosDAO = new DadosDAO(sqLiteDatabase);
+        this.propriedadeDAO = new PropriedadeDAO(sqLiteDatabase);
+        this.piqueteDAO = new PiqueteDAO(sqLiteDatabase);
+        this.totalPiqueteMesDAO = new TotalPiqueteMesDAO(sqLiteDatabase);
+        this.totalPiqueteEstacaoDAO = new TotalPiqueteEstacaoDAO(sqLiteDatabase);
+        this.animaisDAO = new AnimaisDAO(sqLiteDatabase);
+        this.totalAnimaisDAO = new TotalAnimaisDAO(sqLiteDatabase);
     }
 
     /**
      * Método responsável por encerrar as interações com o banco de dados.
      */
-    @SuppressWarnings("unused")
     public void fechaConexao(){
         sqLiteDatabase.close();
         bancoHelper.close();
@@ -133,7 +122,7 @@ public class BancoDeDados{
      * @param valor Valor que deseja-se verificar a existência.
      * @param NOME_TABELA Nome da tabela.
      * @param NOME_COLUNA Coluna onde deseja-se procurar o valor.
-     * @return
+     * @return true caso tenha encontrado o valor procurado na coluna desejada e false caso contrário.
      */
     public boolean verificaConteudoTabelaById(int valor, String NOME_TABELA, String NOME_COLUNA){
         String sql_query = "SELECT * FROM " + NOME_TABELA + " WHERE " + NOME_COLUNA + "=\"" + valor + "\"";
@@ -146,18 +135,15 @@ public class BancoDeDados{
             cursor.moveToNext();
             count++;
         }
+        cursor.close();
 
-        if(count > 0){
-            return true;
-        }
-
-        return false;
+        return count > 0;
     }
 
     /**
      * Método utilizado para gerar uma hash para determinada string.
      * @param string Representa a string para qual será gerada o hash.
-     * @return
+     * @return Retorna o hash gerado em binário.
      */
     public byte[] generateHash(String string) {
         MessageDigest digest = null;
@@ -168,15 +154,19 @@ public class BancoDeDados{
             e1.printStackTrace();
         }
 
-        digest.reset();
-
-        return digest.digest(string.getBytes());
+        if (digest != null) {
+            digest.reset();
+            return digest.digest(string.getBytes());
+        }
+        else{
+            return null;
+        }
     }
 
     /**
      * Método utilizado converter de binário para hexadecimal.
      * @param data Representa a informação binária que será convertida.
-     * @return
+     * @return Retorna a informação em hexadecimal.
      */
     public String bin2hex(byte[] data) {
         return String.format("%0" + (data.length*2) + "X", new BigInteger(1, data));

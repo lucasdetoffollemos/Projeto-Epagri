@@ -110,58 +110,6 @@
         app:layout_constraintStart_toEndOf="@+id/lv_tv_total_animais"
         app:layout_constraintTop_toBottomOf="@+id/lv_tv_nome_propriedade" />
 
-    <!--
-    <Button
-        android:id="@+id/lv_bt_ver_dados"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/bt_lv_ver_dados"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv_tv_area_propriedade"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/lv_bt_grafico_atual"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_weight="1"
-        android:text="@string/bt_lv_ver_grafico_atual"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/lv_bt_grafico_proposta"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv_bt_ver_dados"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/lv_bt_grafico_proposta"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:text="@string/bt_lv_ver_grafico_proposta"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lv_bt_grafico_atual"
-        app:layout_constraintTop_toBottomOf="@+id/lv_bt_ver_dados"
-        app:layout_constraintVertical_bias="0.0" />
--->
     <android.widget.Button
         android:id="@+id/lv_bt_excluir"
         android:layout_width="25dp"

@@ -24,23 +24,18 @@ import android.widget.Toast;
 import com.example.projetoEpagri.Activities.IndexActivity;
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.ListViewPropriedadesAdapter;
 import com.example.projetoEpagri.Classes.Propriedade;
-import com.example.projetoEpagri.Classes.Usuario;
 import com.example.projetoEpagri.R;
 
 import java.util.ArrayList;
 
 public class IndexFragment extends Fragment {
-    private int id_usuario;
-    private ArrayList<Propriedade> lista_propriedades;
     private ListView lv_propriedades;
     private ListViewPropriedadesAdapter listview_adapter;
     private DrawerLayout drawer_layout;
-    private TextView tv_bem_vindo;
 
     //Estrutura compartilhada para armazenamento dos dados no banco. Vão sendo preenchidos aos poucos conforme os fragments.
     public static Propriedade propriedade; //Propriedade a ser criada quando o usuário clica no botão cadastrar propriedade.
@@ -60,8 +55,6 @@ public class IndexFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Recupera o id do usuário baseado no seu nome.
-        id_usuario = BancoDeDados.usuarioDAO.getUSuarioId(IndexActivity.nome_usuario);
     }
 
     @Override
@@ -79,7 +72,7 @@ public class IndexFragment extends Fragment {
         final Button bt_cadastrarPropriedade = getView().findViewById(R.id.bt_cadastrar_propriedade);
 
         //Recupera as propriedades do usuário baseado no seu ID.
-        lista_propriedades = BancoDeDados.propriedadeDAO.getAllPropriedadesByUserId(id_usuario);
+        ArrayList<Propriedade> lista_propriedades = BancoDeDados.propriedadeDAO.getAllPropriedadesByUserId(IndexActivity.usuario.getId());
         listview_adapter = new ListViewPropriedadesAdapter(getContext(), lista_propriedades);
         lv_propriedades.setAdapter(listview_adapter);
 
@@ -88,8 +81,8 @@ public class IndexFragment extends Fragment {
         final View menu_drawer = getView().findViewById(R.id.included_nav_drawer);
         final LinearLayout ll_menu_inicio = getView().findViewById(R.id.ll_menu_inicio);
 
-        tv_bem_vindo = getView().findViewById(R.id.tv_tituloIndex);
-        String msg_boas_vindas = getString(R.string.txt_tv_bemVindo) + " " + IndexActivity.nome_usuario + "!";
+        TextView tv_bem_vindo = getView().findViewById(R.id.tv_tituloIndex);
+        String msg_boas_vindas = getString(R.string.txt_tv_bemVindo) + " " + IndexActivity.usuario.getNome() + "!";
         tv_bem_vindo.setText(msg_boas_vindas);
 
         //Se existirem propriedades, esconde o textview "Bem vindo Usuário"
@@ -99,13 +92,9 @@ public class IndexFragment extends Fragment {
 
         registerForContextMenu(lv_propriedades);
 
-        //Mostra nome e e-mail do usuário no drawer layout.
-        Usuario usuario = BancoDeDados.usuarioDAO.getUsuario(id_usuario);
-        TextView nome, email;
+        TextView nome;
         nome = menu_drawer.findViewById(R.id.tv_nomeDinamico);
-        email = menu_drawer.findViewById(R.id.tv_emailDinamico);
-        nome.setText(usuario.getNome());
-        email.setText(usuario.getEmail());
+        nome.setText(IndexActivity.usuario.getNome());
 
         //Clique no ícone do menu.
         iv_menu.setOnClickListener(new View.OnClickListener() {

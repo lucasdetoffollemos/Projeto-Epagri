@@ -15,7 +15,7 @@
 
         <include
             android:id="@+id/included_toolbar"
-            layout="@layout/toolbar"></include>
+            layout="@layout/toolbar"/>
 
         <TextView
             android:id="@+id/tv_tituloRecuperaSEnha"
@@ -32,12 +32,12 @@
             app:layout_constraintTop_toBottomOf="@+id/included_toolbar" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldEmail"
+            android:id="@+id/textFieldNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:ems="10"
-            android:hint="@string/hint_et_email"
+            android:hint="@string/hint_et_nome"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:padding="10dp"
@@ -50,23 +50,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_tituloRecuperaSEnha"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_nome">
 
             <EditText
-                android:id="@+id/et_email"
+                android:id="@+id/et_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:background="@null"
-                android:inputType="text"
-                android:maxLines="1"
                 android:imeOptions="actionDone"
-                tools:ignore="LabelFor,TextFields" />
-
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/bt_confirmar_email"
+            android:id="@+id/bt_confirmar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

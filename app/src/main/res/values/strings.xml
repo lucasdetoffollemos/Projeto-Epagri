@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PLANPEC</string>
+    <string name="app_name">PlanPec</string>
 
     <!--Hint's-->
     <!--Edit Text's   -->
@@ -137,14 +137,13 @@
     <string name="txt_bt_modicar">Modificar senha</string>
     <string name="txt_bt_confirmar">Confirmar</string>
     <string name="txt_bt_editar_dados">Editar Dados</string>
+    <string name="txt_bt_atualizar_dados">Atualizar Dados</string>
 
     <!-- Content Description das Imagens -->
     <string name="cd_logo_ufpr">Logo UFPR</string>
     <string name="cd_logo_ifsc">Logo IFSC</string>
     <string name="cd_logo_epagri">Logo EPAGRI</string>
     <string name="img_inicial">Imagem Inicial</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Tab Items-->
     <string name="txt_tab_oferta_atual">Oferta Atual</string>
@@ -163,5 +162,14 @@
     <string name="txt_bt_excluirConta">Excluir conta</string>
     <string name="cd_logo_emprapa">LOGO EMBRAPA</string>
 
+    <!-- Toolbars title -->
+    <string name="tb_title_cadastrar_piquetes">Cadastrar Piquetes</string>
+    <string name="tb_title_cadastrar_animais">Cadastrar Animais</string>
+
+    <!-- Menu Propriedades -->
+    <string name="menu_ver_dados">Cadastrar Animais</string>
+    <string name="menu_fazer_proposta">Cadastrar Animais</string>
+    <string name="menu_grafico_atual">Cadastrar Animais</string>
+    <string name="menu_grafico_proposta">Cadastrar Animais</string>
 
 </resources>

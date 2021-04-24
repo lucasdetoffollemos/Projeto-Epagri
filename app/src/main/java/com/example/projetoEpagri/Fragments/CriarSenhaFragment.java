@@ -145,9 +145,6 @@ public class CriarSenhaFragment extends Fragment {
      * @param nome_usuario Nome do usuário.
      */
     public void startActivityIndex(String nome_usuario, String senha){
-        //getFragmentManager().popBackStack();
-        //getFragmentManager().popBackStack();
-
         Intent i = new Intent(getActivity(), IndexActivity.class);
         i.putExtra("nome_usuario", nome_usuario);
         i.putExtra("senha", senha);

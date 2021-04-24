@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -101,6 +100,8 @@ public class ConfiguracoesFragment extends Fragment {
                 scrollView.requestFocusFromTouch();
                 return false;
             }
+
+
         });
 
         bt_atualizar.setOnClickListener(new View.OnClickListener() {

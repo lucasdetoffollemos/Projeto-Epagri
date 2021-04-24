@@ -5,11 +5,10 @@ import java.util.Arrays;
 //Classe usuario, criada inicialmente para inserir dados do usuario no banco.
 public class Usuario {
     private Integer id;
-    private String nome, email, telefone, tipo_perfil, estado, cidade, senha;
+    private String nome, telefone, tipo_perfil, estado, cidade, senha;
 
-    public Usuario( String nome, String email, String telefone, String tipo_perfil, String estado, String cidade, String senha){
+    public Usuario( String nome, String telefone, String tipo_perfil, String estado, String cidade, String senha){
         this.nome = nome;
-        this.email = email;
         this.telefone = telefone;
         this.tipo_perfil = tipo_perfil;
         this.estado = estado;
@@ -25,14 +24,6 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getNome() {
@@ -94,7 +85,7 @@ public class Usuario {
         //return getNome();
 
         //Retornando varios elementos com um array
-        String [] arrayUsers = new String[]{" Nome: "+getNome(), " Email: "+getEmail(), " Telefone: "+getTelefone()," Tipo perfil: "+ getTipo_perfil(), " Estado: "+ getEstado(), " Cidade: "+ getCidade(), " Senha: "+getSenha()};
+        String [] arrayUsers = new String[]{" Nome: "+getNome(), " Telefone: "+getTelefone()," Tipo perfil: "+ getTipo_perfil(), " Estado: "+ getEstado(), " Cidade: "+ getCidade(), " Senha: "+getSenha()};
 
         return Arrays.toString(arrayUsers).replaceAll("(^\\[|$)", "");
     }

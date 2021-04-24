@@ -15,20 +15,7 @@
         android:textColor="@color/preto"
         android:textSize="14sp"
         android:textStyle="bold" />
-<!--
-    <TextView
-        android:id="@+id/tv_consumo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="-1dp"
-        android:layout_marginLeft="-1dp"
-        android:background="@drawable/borda_preta_fundo_verde"
-        android:gravity="center"
-        android:text="@string/txt_tv_Consumo"
-        android:textColor="@color/preto"
-        android:textSize="14sp"
-        android:textStyle="bold" />
--->
+
     <TextView
         android:id="@+id/tv_Nanimais"
         android:layout_width="80dp"

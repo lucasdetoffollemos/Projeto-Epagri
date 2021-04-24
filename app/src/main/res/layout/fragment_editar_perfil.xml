@@ -87,38 +87,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textFieldEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:ems="10"
-                    android:hint="@string/hint_et_email"
-                    android:importantForAutofill="no"
-                    android:inputType="textPassword"
-                    android:padding="10dp"
-                    app:boxCornerRadiusBottomEnd="8dp"
-                    app:boxCornerRadiusBottomStart="8dp"
-                    app:boxCornerRadiusTopEnd="8dp"
-                    app:boxCornerRadiusTopStart="8dp"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:startIconDrawable="@drawable/ic_email">
-
-                    <EditText
-                        android:id="@+id/et_editar_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints=""
-                        android:background="@null"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:text="@string/txt_tv_email"
-                        android:imeOptions="actionDone"
-                        tools:ignore="LabelFor,TextFields" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldTelefone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

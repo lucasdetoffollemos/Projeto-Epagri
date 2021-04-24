@@ -1,5 +1,6 @@
 package com.example.projetoEpagri.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
@@ -51,15 +52,14 @@ public class CriarPropriedadeFragment extends Fragment {
         final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
         final EditText et_nome_propriedade = getView().findViewById(R.id.et_nomePropriedade);
         final ImageView iv_mapa = getView().findViewById(R.id.iv_map);
-        final TextView tv_texto_clima = getView().findViewById(R.id.tv_texto_clima);
         final TextView tv_clima = getView().findViewById(R.id.tv_clima);
         final Button bt_proximo = getView().findViewById(R.id.bt_levaPiquete);
 
         TextView toolbar_title = toolbar.findViewById(R.id.tv_titulo_toolbar);
-        toolbar_title.setText("Cadastrar Propriedade");
+        toolbar_title.setText(R.string.txt_bt_cadastroPropriedade);
 
         iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
-        tv_clima.setText("Clima Quente - cfa");
+        tv_clima.setText(R.string.txt_tv_config_cfa);
         regiao = "cfa";
 
         iv_voltar.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,9 @@ public class CriarPropriedadeFragment extends Fragment {
             }
         });
 
+        //TERMINAR DE FAZER AO RECEBER OS MAPAS!
         iv_mapa.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public void onClick(View v) {
                 Integer id = (Integer) iv_mapa.getTag();
@@ -83,13 +85,13 @@ public class CriarPropriedadeFragment extends Fragment {
                         iv_mapa.setImageResource(R.drawable.img_mapa_sul_cfb);
                         iv_mapa.setTag(R.drawable.img_mapa_sul_cfb);
                         regiao = "cfb";
-                        tv_clima.setText("Clima Frio - cfb");
+                        tv_clima.setText(R.string.txt_tv_config_cfb);
                         break;
                     case R.drawable.img_mapa_sul_cfb:
                         iv_mapa.setImageResource(R.drawable.img_mapa_sul_branco);
                         iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
                         regiao = "cfa";
-                        tv_clima.setText("Clima Quente - cfa");
+                        tv_clima.setText(R.string.txt_tv_config_cfa);
 
                         break;
                     //TODO mapa sul cfb.

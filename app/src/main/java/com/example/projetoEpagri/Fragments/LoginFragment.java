@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,10 +99,11 @@ public class LoginFragment extends Fragment {
      */
     public void login(String nome, String senha) {
         String senha_hashed = MainActivity.bancoDeDados.bin2hex(MainActivity.bancoDeDados.generateHash((nome+senha)));
-        boolean check_email_senha = BancoDeDados.usuarioDAO.login(nome, senha_hashed);
+        boolean check = BancoDeDados.usuarioDAO.login(nome, senha_hashed);
 
-        if(check_email_senha){
+        if(check){
             Toast.makeText(getActivity(), "Usuário logado", Toast.LENGTH_SHORT).show();
+
             startActivityIndex(nome, senha);
         }
         else if(nome.isEmpty() || senha.isEmpty()){

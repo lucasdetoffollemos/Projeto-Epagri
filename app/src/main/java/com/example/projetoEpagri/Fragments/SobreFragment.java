@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.IndexActivity;
 import com.example.projetoEpagri.Classes.BancoDeDados;
@@ -22,7 +21,6 @@ import com.example.projetoEpagri.Classes.Usuario;
 import com.example.projetoEpagri.R;
 
 public class SobreFragment extends Fragment {
-    private int idUsuario;
     private DrawerLayout drawer_layout;
 
     public SobreFragment() {}
@@ -37,8 +35,6 @@ public class SobreFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        idUsuario = BancoDeDados.usuarioDAO.getUSuarioId(IndexActivity.nome_usuario);
     }
 
     @Override
@@ -58,12 +54,9 @@ public class SobreFragment extends Fragment {
         final LinearLayout ll_menu_perfil = getView().findViewById(R.id.ll_menu_perfil);
         final LinearLayout ll_menu_sobre = getView().findViewById(R.id.ll_menu_sobre);
 
-        Usuario usuario = BancoDeDados.usuarioDAO.getUsuario(idUsuario);
-        TextView nome, email;
+        TextView nome;
         nome = menu_drawer.findViewById(R.id.tv_nomeDinamico);
-        email = menu_drawer.findViewById(R.id.tv_emailDinamico);
-        nome.setText(usuario.getNome());
-        email.setText(usuario.getEmail());
+        nome.setText(IndexActivity.usuario.getNome());
 
         //Clique no ícone do menu.
         iv_menu.setOnClickListener(new View.OnClickListener() {

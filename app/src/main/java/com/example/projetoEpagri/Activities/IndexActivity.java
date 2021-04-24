@@ -17,7 +17,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.projetoEpagri.Classes.BancoDeDados;
+import com.example.projetoEpagri.Classes.Usuario;
 import com.example.projetoEpagri.Fragments.ConfiguracoesFragment;
 import com.example.projetoEpagri.Fragments.EditarPerfilFragment;
 import com.example.projetoEpagri.Fragments.IndexFragment;
@@ -27,7 +30,8 @@ import com.example.projetoEpagri.R;
 import java.util.List;
 
 public class IndexActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
-    public static String nome_usuario, senha;
+    //public static String nome_usuario, senha;
+    public static Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +39,16 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
         setContentView(R.layout.activity_index);
 
         Intent intent = getIntent();
-        nome_usuario = intent.getStringExtra("nome_usuario");
-        senha = intent.getStringExtra("senha");
+        String nome_usuario = intent.getStringExtra("nome_usuario");
+        String senha = intent.getStringExtra("senha");
+
+        usuario = MainActivity.bancoDeDados.usuarioDAO.getUsuario(nome_usuario);
+
+        if(usuario != null){
+            int id_usuario = MainActivity.bancoDeDados.usuarioDAO.getUSuarioId(nome_usuario);
+            usuario.setId(id_usuario);
+            usuario.setSenha(senha);
+        }
 
         //Mostra o IndexFragment.
         Fragment index_fragment = IndexFragment.newInstance();
@@ -45,7 +57,7 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
 
     /**
      * Método responsável por retornar o fragment no topo da pilha.
-     * @return
+     * @return Retorna o fragment no topo do stack.
      */
     public Fragment getTopFragment(){
         FragmentManager fragmentManager = this.getSupportFragmentManager();
@@ -64,7 +76,9 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
      * Método chamado ao clicar no botão voltar do smartphone.
      */
     public void onBackPressed(){
-        if(getTopFragment().getTag().equals("index_fragment")){
+        String tag = getTopFragment().getTag();
+
+        if(tag != null && tag.equals("index_fragment")){
             logout();
         }
         else{
@@ -99,7 +113,9 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
      * @param v View.
      */
     public void clickMenuItemPerfil(View v) {
-        if(!getTopFragment().getTag().equals("editar_perfil_fragment")){
+        String tag = getTopFragment().getTag();
+
+        if(tag != null && !tag.equals("editar_perfil_fragment")){
             Fragment editar_perfil_fragment = EditarPerfilFragment.newInstance();
             MainActivity.startFragment(editar_perfil_fragment, "editar_perfil_fragment", R.id.ll_index, true, true, this);
         }
@@ -110,7 +126,9 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
      * @param v View.
      */
     public void clickMenuItemSobre(View v) {
-        if(!getTopFragment().getTag().equals("sobre_fragment")){
+        String tag = getTopFragment().getTag();
+
+        if(tag != null && !tag.equals("sobre_fragment")){
             Fragment sobre_fragment = SobreFragment.newInstance();
             MainActivity.startFragment(sobre_fragment, "sobre_fragment", R.id.ll_index, true, true, this);
         }
@@ -121,39 +139,45 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
      * @param v View.
      */
     public void clickMenuItemConfiguracoes(View v) {
-        if(!getTopFragment().getTag().equals("configuracoes_fragment")){
+        String tag = getTopFragment().getTag();
 
-            //Criando a caixa de pergunta, se o usuário quer ou não sair do app
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if(tag != null && !tag.equals("configuracoes_fragment")){
+            if(usuario != null && usuario.getTipo_perfil().equals("Técnico")){
+                //Criando a caixa de pergunta, se o usuário quer ou não sair do app
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            builder.setTitle("Configurações");
-            builder.setMessage("Quais dados você deseja editar?");
-            builder.setPositiveButton("cfa", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Fragment configuracoes_fragment = ConfiguracoesFragment.newInstance("cfa");
-                    MainActivity.startFragment(configuracoes_fragment, "configuracoes_fragment", R.id.ll_index, true, true, IndexActivity.this);
-                }
-            });
+                builder.setTitle("Configurações");
+                builder.setMessage("Quais dados você deseja editar?");
+                builder.setPositiveButton("cfa", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Fragment configuracoes_fragment = ConfiguracoesFragment.newInstance("cfa");
+                        MainActivity.startFragment(configuracoes_fragment, "configuracoes_fragment", R.id.ll_index, true, true, IndexActivity.this);
+                    }
+                });
 
-            builder.setNegativeButton("cfb", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Fragment configuracoes_fragment = ConfiguracoesFragment.newInstance("cfb");
-                    MainActivity.startFragment(configuracoes_fragment, "configuracoes_fragment", R.id.ll_index, true, true, IndexActivity.this);
+                builder.setNegativeButton("cfb", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Fragment configuracoes_fragment = ConfiguracoesFragment.newInstance("cfb");
+                        MainActivity.startFragment(configuracoes_fragment, "configuracoes_fragment", R.id.ll_index, true, true, IndexActivity.this);
 
-                }
-            });
+                    }
+                });
 
-            builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+                builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
 
-            builder.show();
+                builder.show();
+            }
+            else{
+                Toast.makeText(this, "Operação Inválida! Somente o perfil de Técnico tem acesso a essa funcionalidade!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -197,7 +221,7 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("cod", 1);
         startActivity(i);
-        //Destroi a MainActivity.
+        //Destroi a IndexActivity.
         finish();
     }
 }

@@ -3,9 +3,10 @@ package com.example.projetoEpagri.Fragments;
 import android.content.Intent;
 
 import android.content.pm.ActivityInfo;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -33,16 +34,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class CriarPerfilFragment extends Fragment {
     private String nome_usuario, senha;
     private ArrayList<String> cidades_pr, cidades_rs, cidades_sc, cidades;
-    private boolean alterou_estado = false;
 
-    public CriarPerfilFragment() {}
+    public CriarPerfilFragment() {
+    }
 
     public static CriarPerfilFragment newInstance() {
         CriarPerfilFragment fragment = new CriarPerfilFragment();
@@ -72,13 +72,12 @@ public class CriarPerfilFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final View toolbar = getView().findViewById(R.id.included_toolbar);
         final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
         final EditText et_nome = getView().findViewById(R.id.et_nome);
-        final EditText et_email = getView().findViewById(R.id.et_email);
         final EditText et_telefone = getView().findViewById(R.id.et_telefone);
         final Spinner spinner_tipo_perfil = getView().findViewById(R.id.spinner_tipoPerfil);
         final Spinner spinner_estado = getView().findViewById(R.id.spinner_estado);
@@ -99,9 +98,12 @@ public class CriarPerfilFragment extends Fragment {
         //Spinner perfil
         spinner_tipo_perfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {}
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         //Spinner estado
@@ -110,9 +112,9 @@ public class CriarPerfilFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //Lógica feita, para que quando o usuário clicar no estado x, o algoritimo irá adcionar no arrayList de cidades as cidades deste respectivo estado, e irá remover os arrayLists das cidades dos outros estados.
 
-                if(position == 0){
+                if (position == 0) {
                     cidades = new ArrayList<>();
-                }else if (position == 1) {
+                } else if (position == 1) {
                     cidades = new ArrayList<>(cidades_pr);
                 } else if (position == 2) {
                     cidades = new ArrayList<>(cidades_rs);
@@ -127,27 +129,29 @@ public class CriarPerfilFragment extends Fragment {
                 cidadesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_cidade.setAdapter(cidadesAdapter);
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         //Spinner cidade
         spinner_cidade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Logic
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
-    //Clique no botão "Criar".
+        //Clique no botão "Criar".
         bt_criar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email, telefone, tipoPerfil, estado, cidade;
+                String telefone, tipoPerfil, estado, cidade;
                 nome_usuario = et_nome.getText().toString().trim();  //trim remove espaços em branco antes e após a palavra.
-                email = et_email.getText().toString().toLowerCase().trim();
                 telefone = et_telefone.getText().toString().trim();
                 tipoPerfil = spinner_tipo_perfil.getSelectedItem().toString();
                 estado = spinner_estado.getSelectedItem().toString();
@@ -155,38 +159,30 @@ public class CriarPerfilFragment extends Fragment {
                 senha = et_senha.getText().toString().trim();
 
                 //Verifica se todos os campos foram preenchidos.
-                if((nome_usuario.length() > 0) && (email.length() > 0) && (telefone.length() > 0) && !tipoPerfil.equals("Selecione o perfil") && !estado.equals("Selecione o Estado") && !cidade.equals("Selecione a cidade") && (senha.length() > 0 )){
-                    if(email.contains("@") && email.contains(".")){ //Verifica o formato do e-mail.
-                        if(telefone.length() == 11){
-                            String senha_hashed = MainActivity.bancoDeDados.bin2hex(MainActivity.bancoDeDados.generateHash((nome_usuario+senha)));
+                if ((nome_usuario.length() > 0) && (telefone.length() > 0) && !tipoPerfil.equals("Selecione o perfil") && !estado.equals("Selecione o Estado") && !cidade.equals("Selecione a cidade") && (senha.length() > 0)) {
+                    if (telefone.length() == 11) {
+                        String senha_hashed = MainActivity.bancoDeDados.bin2hex(MainActivity.bancoDeDados.generateHash((nome_usuario + senha)));
 
-                            Usuario u = new Usuario(nome_usuario, email, telefone, tipoPerfil, estado, cidade, senha_hashed);
+                        Usuario u = new Usuario(nome_usuario, telefone, tipoPerfil, estado, cidade, senha_hashed);
 
-                            if(BancoDeDados.usuarioDAO.inserirUsuario(u)){
-                                Toast.makeText(getActivity(), "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
-                                bt_criar.setEnabled(false);
+                        if (BancoDeDados.usuarioDAO.inserirUsuario(u)) {
+                            Toast.makeText(getActivity(), "Usuario criado com sucesso! ", Toast.LENGTH_SHORT).show();
+                            bt_criar.setEnabled(false);
 
-                                //O código abaixo aguarda 2 seg e redireciona o usuário para o IndexFragment.
-                                new Timer().schedule(new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        startActivityIndex(nome_usuario, senha);
-                                    }
-                                }, 1000);
-                            }
-                            else{
-                                Toast.makeText(getActivity(), "O nome de usuário já existe!", Toast.LENGTH_SHORT).show();
-                            }
+                            //O código abaixo aguarda 2 seg e redireciona o usuário para o IndexFragment.
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    startActivityIndex(nome_usuario, senha);
+                                }
+                            }, 1000);
+                        } else {
+                            Toast.makeText(getActivity(), "O nome de usuário já existe!", Toast.LENGTH_SHORT).show();
                         }
-                        else{
-                            Toast.makeText(getActivity(), "Formato de telefone inválido!", Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Formato de telefone inválido!", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        Toast.makeText(getActivity(), "Formato de e-mail inválido! ", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Por favor, preencha todos os campos! ", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -196,11 +192,11 @@ public class CriarPerfilFragment extends Fragment {
     /**
      * Método utilizado cada vez que o usuário trocar o estado, limpar o spinner cidade(Para nao ficar cidades do estado )
      */
-    public void clearSpinner(Spinner s){
-        s.setSelection(0,true);
+    public void clearSpinner(Spinner s) {
+        s.setSelection(0, true);
     }
 
-    public void setUpSpinners(Spinner spinner_tipo_perfil, Spinner spinner_estado, Spinner spinner_cidade){
+    public void setUpSpinners(Spinner spinner_tipo_perfil, Spinner spinner_estado, Spinner spinner_cidade) {
         //Spinner perfil.
         ArrayList<String> array_perfil = new ArrayList<>();
         array_perfil.add("Selecione o perfil");
@@ -235,17 +231,12 @@ public class CriarPerfilFragment extends Fragment {
     }
 
     /**
-     * Método responsável por criar um usuário e salvar no banco de dados.
-     */
-    public void criarPerfil(String nome, String email, String telefone, String tipoPerfil, String estado, String cidade, String senha){
-
-    }
-
-    /**
      * Método responsável por iniciar a ActivityIndex.
-     * @param nome_usuario
+     *
+     * @param nome_usuario Representa o nome do usuário.
+     * @param senha        Representa a senha do usuário.
      */
-    public void startActivityIndex(String nome_usuario, String senha){
+    public void startActivityIndex(String nome_usuario, String senha) {
         Intent i = new Intent(getActivity(), IndexActivity.class);
         i.putExtra("nome_usuario", nome_usuario);
         i.putExtra("senha", senha);
@@ -258,11 +249,12 @@ public class CriarPerfilFragment extends Fragment {
 
     /**
      * Método responsável por retornar o arquivo JSON.
+     *
      * @param nome_arquivo Nome do arquivo.
      * @return Arquivo JSON.
      */
     public String loadJSONFromAsset(String nome_arquivo) {
-        String json = null;
+        String json;
         try {
             InputStream is = getActivity().getAssets().open(nome_arquivo);
             int size = is.available();
@@ -279,6 +271,7 @@ public class CriarPerfilFragment extends Fragment {
 
     /**
      * Método responsável por percorrer o arquivo JSON e adicionar as cidades numa lista de strings.
+     *
      * @param nome_arquivo Nome do arquivo JSON.
      * @return Lista de string contendo as cidades encontradas no arquivo.
      * @throws JSONException Lança uma exceção caso não consiga criar um objeto a partir do arquivo JSON.

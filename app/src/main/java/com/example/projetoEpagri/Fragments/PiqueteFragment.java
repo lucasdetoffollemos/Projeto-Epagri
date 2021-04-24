@@ -43,7 +43,6 @@ public class PiqueteFragment extends Fragment {
 
     private final double APROVEITAMENTO = 0.60;
     private final int KG = 1000;
-    private final int PORCENTAGEM = 100;
     //load - indica se o fragment está sendo aberto a partir do CriarPropriedadeFragment (false) ou a partir do VerDadosFragment (true).
     //load_complete - indica se todos os piquetes já foram carregados para a tabela (quando no modo load).
     //fez_proposta - indica se o usuário fez uma proposta para a propriedade ou se a tabela está vazia.
@@ -80,7 +79,6 @@ public class PiqueteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "onCreate", Toast.LENGTH_SHORT).show();
 
         if (getArguments() != null) {
             id_propriedade = getArguments().getInt(ARG_PARAM1);
@@ -150,7 +148,7 @@ public class PiqueteFragment extends Fragment {
         Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
         Button bt_proximo_atualizar = getView().findViewById(R.id.bt_proximo);
         final TextView toolbar_title = toolbar.findViewById(R.id.tv_titulo_toolbar);
-        toolbar_title.setText("Cadastrar Piquetes");
+        toolbar_title.setText(R.string.tb_title_cadastrar_piquetes);
 
         final TextView jan = getView().findViewById(R.id.tv_AreaTotalMesJan);
         final TextView fev = getView().findViewById(R.id.tv_AreaTotalMesFev);
@@ -193,10 +191,10 @@ public class PiqueteFragment extends Fragment {
             bt_adicionar_linha = v.findViewById(R.id.bt_adicionarLinha);
             bt_remover_linha = v.findViewById(R.id.bt_removerLinha);
             bt_proximo_atualizar = v.findViewById(R.id.bt_proximo);
-            bt_proximo_atualizar.setText("Atualizar Dados");
+            bt_proximo_atualizar.setText(R.string.txt_bt_atualizar_dados);
 
             //Se estiver no modo de load e o load ainda não tiver sido feito.
-            if(listaPiquetes.size() > 0 && load_complete == false){
+            if(listaPiquetes.size() > 0 && !load_complete){
                 //Insere-se linhas na tabela de acordo com o número de piquetes cadastrados no banco de dados
                 for(int i=0; i<listaPiquetes.size(); i++){
                     adicionaLinha();
@@ -221,6 +219,7 @@ public class PiqueteFragment extends Fragment {
             public void onClick(View v) {
                 IndexFragment.propriedade = null;
                 getFragmentManager().popBackStack();
+
             }
         });
 
@@ -578,13 +577,14 @@ public class PiqueteFragment extends Fragment {
         TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
 
         double valor = 0.0;
+        int PORCENTAGEM = 100;
         if(this.propriedade.getRegiao().equals("cfa")){
-            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/PORCENTAGEM;
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/ PORCENTAGEM;
             valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * APROVEITAMENTO * valor * area).replace(",", "."));
             //VALOR = CONDIÇÃO (tabelaa dados) * APROVEITAMENTO * PORCENTAGEM (tabela dados) * AREA
         }
         else if(this.propriedade.getRegiao().equals("cfb")){
-            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/PORCENTAGEM;
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/ PORCENTAGEM;
             valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * APROVEITAMENTO * valor * area).replace(",", "."));
         }
 

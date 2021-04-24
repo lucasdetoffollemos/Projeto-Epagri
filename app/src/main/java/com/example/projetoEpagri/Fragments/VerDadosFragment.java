@@ -6,18 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.MainActivity;
-import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -25,7 +21,6 @@ public class VerDadosFragment extends Fragment {
     private static final String ARG_PARAM1 = "nome_propriedade";
     private static final String ARG_PARAM2 =  "fazer_proposta";
 
-    private String nome_propriedade;
     private int id_propriedade;
     private boolean fazer_proposta; //Flag para indicar se o Fragment está sendo aberto no modo "Fazer Proposta".
 
@@ -44,14 +39,14 @@ public class VerDadosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            nome_propriedade = getArguments().getString(ARG_PARAM1);
+            String nome_propriedade = getArguments().getString(ARG_PARAM1);
             fazer_proposta = getArguments().getBoolean(ARG_PARAM2);
             id_propriedade = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeId(nome_propriedade);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         if(fazer_proposta){
             return inflater.inflate(R.layout.fragment_fazer_proposta, container, false);

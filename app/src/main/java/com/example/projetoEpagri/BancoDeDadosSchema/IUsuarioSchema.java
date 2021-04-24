@@ -4,7 +4,6 @@ public interface IUsuarioSchema {
     String TABELA_USUARIO = "usuarios";
     String COLUNA_ID = "id";
     String COLUNA_NOME = "nome";
-    String COLUNA_EMAIL = "email";
     String COLUNA_TELEFONE = "telefone";
     String COLUNA_TIPO_PERFIL = "perfil";
     String COLUNA_ESTADO = "estado";
@@ -15,7 +14,6 @@ public interface IUsuarioSchema {
         + TABELA_USUARIO + "("
         + COLUNA_ID + " integer PRIMARY KEY AUTOINCREMENT, "
         + COLUNA_NOME + " varchar(50) UNIQUE, "
-        + COLUNA_EMAIL + " varchar(50), "
         + COLUNA_TELEFONE + " varchar(50), "
         + COLUNA_TIPO_PERFIL + " varchar(50),"
         + COLUNA_ESTADO + " varchar(50), "
@@ -25,7 +23,6 @@ public interface IUsuarioSchema {
     String[] USUARIO_COLUNAS = new String[] {
         COLUNA_ID,
         COLUNA_NOME,
-        COLUNA_EMAIL,
         COLUNA_TELEFONE,
         COLUNA_TIPO_PERFIL,
         COLUNA_ESTADO,

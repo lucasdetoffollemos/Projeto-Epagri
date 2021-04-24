@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IUsuarioSchema;
 import com.example.projetoEpagri.Classes.Usuario;
@@ -26,7 +25,6 @@ public class UsuarioDAO implements IUsuarioSchema {
     public boolean inserirUsuario(Usuario usuario){
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME, usuario.getNome());
-        values.put(COLUNA_EMAIL, usuario.getEmail());
         values.put(COLUNA_TELEFONE, usuario.getTelefone());
         values.put(COLUNA_TIPO_PERFIL, usuario.getTipo_perfil());
         values.put(COLUNA_ESTADO, usuario.getEstado());
@@ -56,36 +54,34 @@ public class UsuarioDAO implements IUsuarioSchema {
         if (cursor != null && cursor.moveToFirst()) {
             usuario.setId(cursor.getInt(0));
             usuario.setNome(cursor.getString(1));
-            usuario.setEmail(cursor.getString(2));
-            usuario.setTelefone(cursor.getString(3));
-            usuario.setTipo_perfil(cursor.getString(4));
-            usuario.setEstado(cursor.getString(5));
-            usuario.setCidade(cursor.getString(6));
-            usuario.setSenha(cursor.getString(7));
+            usuario.setTelefone(cursor.getString(2));
+            usuario.setTipo_perfil(cursor.getString(3));
+            usuario.setEstado(cursor.getString(4));
+            usuario.setCidade(cursor.getString(5));
+            usuario.setSenha(cursor.getString(6));
             cursor.close();
         }
         return usuario;
     }
 
     /**
-     * Método para recuperar um usuário baseado no email;
-     * @param email Representa o email do usuário que deseja-se recuperar.
+     * Método para recuperar um usuário baseado no nome;
+     * @param nome Representa o nome do usuário que deseja-se recuperar.
      * @return Retorna o usuário recuperado.
      */
-    public Usuario getUsuario(String email){
-        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_EMAIL + "=\"" + email + "\"";
+    public Usuario getUsuario(String nome){
+        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=\"" + nome + "\"";
         Cursor cursor = this.bancoDeDados.rawQuery(sql_query, null);
 
         Usuario usuario = new Usuario();
         if (cursor != null && cursor.moveToFirst()) {
             usuario.setId(cursor.getInt(0));
             usuario.setNome(cursor.getString(1));
-            usuario.setEmail(cursor.getString(2));
-            usuario.setTelefone(cursor.getString(3));
-            usuario.setTipo_perfil(cursor.getString(4));
-            usuario.setEstado(cursor.getString(5));
-            usuario.setCidade(cursor.getString(6));
-            usuario.setSenha(cursor.getString(7));
+            usuario.setTelefone(cursor.getString(2));
+            usuario.setTipo_perfil(cursor.getString(3));
+            usuario.setEstado(cursor.getString(4));
+            usuario.setCidade(cursor.getString(5));
+            usuario.setSenha(cursor.getString(6));
             cursor.close();
         }
         return usuario;
@@ -112,17 +108,15 @@ public class UsuarioDAO implements IUsuarioSchema {
      * Método para atualizar um usuário.
      * @param id Representa o id do usuário que deseja-se atualizar os dados.
      * @param nome Representa o novo nome do usuário.
-     * @param email Representa o novo email do usuário.
      * @param telefone Representa o novo telefone do usuário.
      * @param tipo_perfil Representa o novo tipo do perfil do usuário.
      * @param estado Representa o novo  estado do usuário.
      * @param cidade Representa a novo cidade do usuário.
      * @param senha Representa a nova senha do usuário.
      */
-    public void updateUsuario(int id, String nome, String email, String telefone, String tipo_perfil, String estado, String cidade, String senha){
+    public void updateUsuario(int id, String nome, String telefone, String tipo_perfil, String estado, String cidade, String senha){
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME,nome); //These Fields should be your String values of actual column names
-        values.put(COLUNA_EMAIL, email);
         values.put(COLUNA_TELEFONE, telefone);
         values.put(COLUNA_TIPO_PERFIL, tipo_perfil);
         values.put(COLUNA_ESTADO, estado);
@@ -144,12 +138,11 @@ public class UsuarioDAO implements IUsuarioSchema {
             Usuario usuario = new Usuario();
             usuario.setId(cursor.getInt(0));
             usuario.setNome(cursor.getString(1));
-            usuario.setEmail(cursor.getString(2));
-            usuario.setTelefone(cursor.getString(3));
-            usuario.setTipo_perfil(cursor.getString(4));
-            usuario.setEstado(cursor.getString(5));
-            usuario.setCidade(cursor.getString(6));
-            usuario.setSenha(cursor.getString(7));
+            usuario.setTelefone(cursor.getString(2));
+            usuario.setTipo_perfil(cursor.getString(3));
+            usuario.setEstado(cursor.getString(4));
+            usuario.setCidade(cursor.getString(5));
+            usuario.setSenha(cursor.getString(6));
             listaUsuarios.add(usuario);
         }
         cursor.close();
@@ -203,25 +196,27 @@ public class UsuarioDAO implements IUsuarioSchema {
     }
 
     /**
-     * Verifica se existe o email recebido por parâmetro e retorna true, caso contrário retorna false.
-     * @param email email do usuário
+     * Verifica se existe o nome recebido por parâmetro e retorna true, caso contrário retorna false.
+     * @param nome Representa o nome do usuário.
      * @return true caso exista, false caso não exista.
      */
-    public boolean verificaEmailUsuario(String email){
-        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_EMAIL + "=?";
-        Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{email});
+    public boolean verificaNomeUsuario(String nome){
+        String sql_query = "SELECT * FROM " + TABELA_USUARIO + " WHERE " + COLUNA_NOME + "=?";
+        Cursor c = this.bancoDeDados.rawQuery(sql_query, new String[]{nome});
 
         if(c.getCount()>0){
+            c.close();
             return true;
         }else{
+            c.close();
             return false;
         }
     }
 
     /**
-     * Fazendo a alteração da senha pelo id do usuário
-     * @param id
-     * @param senha
+     * Método responsável por alterar a senha do usuário baseado no seu id.
+     * @param id Representa o id do usuário.
+     * @param senha Representa a senha do usuário.
      */
     public void updateUsuarioId(int id, String senha){
         ContentValues values = new ContentValues();

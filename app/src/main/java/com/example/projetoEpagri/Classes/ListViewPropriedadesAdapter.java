@@ -1,6 +1,5 @@
 package com.example.projetoEpagri.Classes;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,12 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projetoEpagri.Activities.MainActivity;
-import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
-import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
-import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.R;
 
 import java.util.ArrayList;
@@ -26,9 +19,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
     private final Context context;
     public ArrayList<Propriedade> listaPropriedades;
     private int idPropriedade;
-    private static LayoutInflater inflater=null;
-
-    //Atributo para animação no botão
+    private static LayoutInflater inflater = null;
 
     public ListViewPropriedadesAdapter(Context context, ArrayList<Propriedade> lista){
         this.context = context;
@@ -56,7 +47,7 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         return 0;
     }
 
-    public class Holder{
+    public static class Holder{
         TextView tv_nome, tv_area, tv_qtde;
         Button bt_excluir;
     }

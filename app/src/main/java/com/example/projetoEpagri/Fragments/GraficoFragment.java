@@ -31,7 +31,6 @@ public class GraficoFragment extends Fragment {
     private static final String ARG_PARAM1 = "id_propriedade";
     private static final String ARG_PARAM2 = "atual_ou_proposta";
 
-    private int id_propriedade;
     private ArrayList<Double> totaisPiqueteMes, totaisAnimalMes;
 
     public GraficoFragment() {}
@@ -49,7 +48,7 @@ public class GraficoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id_propriedade = getArguments().getInt(ARG_PARAM1);
+            int id_propriedade = getArguments().getInt(ARG_PARAM1);
             String atual_ou_proposta = getArguments().getString(ARG_PARAM2);
 
             //Atual

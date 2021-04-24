@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="1"></include>
+            app:layout_constraintVertical_weight="1"/>
 
 
         <include
@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/included_toolbar"
             app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintVertical_weight="8"></include>
+            app:layout_constraintVertical_weight="8"/>
 
         <include
             android:id="@+id/included_bottom_bar"
@@ -42,6 +42,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_weight="1"></include>
+            app:layout_constraintVertical_weight="1"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

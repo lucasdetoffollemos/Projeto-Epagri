@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/todo"
-                android:onClick="clicarVoltarGrafico"
                 android:src="@drawable/ic_voltar"
                 android:tint="@color/preto"
                 tools:ignore="OnClick" />

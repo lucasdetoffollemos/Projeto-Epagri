@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.IndexActivity;
-import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
@@ -43,9 +42,6 @@ public class AnimaisFragment extends Fragment {
     private static final String ARG_PARAM2 = "load";
     private static final String ARG_PARAM3 = "atual_ou_proposta";
 
-    private final int DIAS = 30;
-    private final int KG = 1000;
-
     private boolean load, load_complete = true, tabela_vazia = true;
     private int id_propriedade;
     private String modo;
@@ -62,7 +58,6 @@ public class AnimaisFragment extends Fragment {
     private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
 
     private int somaAnimal;
-    private double areaTotal;
     private DecimalFormat doisDecimais;
 
     private TableLayout table_layout, saved_table_layout;
@@ -160,11 +155,11 @@ public class AnimaisFragment extends Fragment {
         Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
         Button bt_finalizar_atualizar = getView().findViewById(R.id.bt_proximo);
         final TextView toolbar_title = toolbar.findViewById(R.id.tv_titulo_toolbar);
-        toolbar_title.setText("Cadastrar Animais");
+        toolbar_title.setText(R.string.tb_title_cadastrar_animais);
 
         table_layout = tabela_animais.findViewById(R.id.tableLayout_tabelaAnimais);
 
-        bt_finalizar_atualizar.setText("Finalizar");
+        bt_finalizar_atualizar.setText(R.string.txt_bt_finalizar);
 
         //Se o fragment for criado com a opção "carregar"significa que ele está sendo aberto dentro do VerDadosFragment.
         //Sendo assim, desabilita-se o toolbar.
@@ -179,10 +174,10 @@ public class AnimaisFragment extends Fragment {
             bt_remover_linha = v.findViewById(R.id.bt_removerLinha);
             bt_finalizar_atualizar = v.findViewById(R.id.bt_proximo);
 
-            bt_finalizar_atualizar.setText("Atualizar Dados");
+            bt_finalizar_atualizar.setText(R.string.txt_bt_atualizar_dados);
 
             //Se estiver no modo de load, insere-se linhas na tabela de acordo com o número de piquetes cadastrados no banco de dados.
-            if(listaAnimais.size() > 0 && load_complete == false){
+            if(listaAnimais.size() > 0 && !load_complete){
                 load_complete = false;
 
                 for(int i=0; i<listaAnimais.size(); i++){
@@ -675,6 +670,8 @@ public class AnimaisFragment extends Fragment {
             int cont = 0;
             //Estrutura de repetiçao feita para gerar a sequência de somas que resulta no peso final estipulado pelo usuário.
             for(peso_atual = pesoInicial; peso_atual < pesoFinal;){
+                int DIAS = 30;
+                int KG = 1000;
                 ganho = (ganhoEstacao[posicao] * DIAS) / KG;
                 peso_atual = (peso_atual + ganho);
 
@@ -789,8 +786,9 @@ public class AnimaisFragment extends Fragment {
 
 
         //Recupera a área total vinda da Activity Piquete.
+        double areaTotal;
         if(load){
-            Propriedade p = MainActivity.bancoDeDados.propriedadeDAO.getPropriedadeById(id_propriedade);
+            Propriedade p = BancoDeDados.propriedadeDAO.getPropriedadeById(id_propriedade);
             areaTotal = p.getArea();
         }
         else{
@@ -912,10 +910,8 @@ public class AnimaisFragment extends Fragment {
         IndexFragment.propriedade.setQtdeAnimais(somaAnimal);
         IndexFragment.listaTotalUAHA = new ArrayList<>(listaTotalUAHA);
 
-        int id_usuario = BancoDeDados.usuarioDAO.getUSuarioId(IndexActivity.nome_usuario);
-
-        if(id_usuario != -1){
-            BancoDeDados.propriedadeDAO.inserirPropriedade(IndexFragment.propriedade, id_usuario);
+        if(IndexActivity.usuario.getId() != -1){
+            BancoDeDados.propriedadeDAO.inserirPropriedade(IndexFragment.propriedade, IndexActivity.usuario.getId());
             id_propriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(IndexFragment.propriedade.getNome());
 
             if(id_propriedade >= 0 ){

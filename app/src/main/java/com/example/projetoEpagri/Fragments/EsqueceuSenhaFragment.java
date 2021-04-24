@@ -48,8 +48,8 @@ public class EsqueceuSenhaFragment extends Fragment {
 
         final View toolbar = getView().findViewById(R.id.included_toolbar);
         final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
-        final EditText et_email = getView().findViewById(R.id.et_email);
-        final Button bt_modifica = getView().findViewById(R.id.bt_confirmar_email);
+        final EditText et_nome = getView().findViewById(R.id.et_nome);
+        final Button bt_modifica = getView().findViewById(R.id.bt_confirmar);
 
         //Clique no botão "voltar".
         iv_voltar.setOnClickListener(new View.OnClickListener() {
@@ -63,27 +63,27 @@ public class EsqueceuSenhaFragment extends Fragment {
         bt_modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                String email = et_email.getText().toString().trim();
-                verificaEmail(email);
+                String nome = et_nome.getText().toString().trim();
+                verificaNome(nome);
             }
         });
     }
 
     /**
-     *  Método para verificar se o email do usuário existe,
+     *  Método para verificar se o nome do usuário existe,
      *  se existir leva para outra página para criação da nova senha, se não existir apenas apresenta um toast.
      */
-    public void verificaEmail(String email) {
-        Boolean usuario_check = BancoDeDados.usuarioDAO.verificaEmailUsuario(email);
+    public void verificaNome(String nome) {
+        boolean usuario_check = BancoDeDados.usuarioDAO.verificaNomeUsuario(nome);
 
         if(usuario_check){
-            Usuario usuario = BancoDeDados.usuarioDAO.getUsuario(email);
+            Usuario usuario = BancoDeDados.usuarioDAO.getUsuario(nome);
 
             Fragment criar_senha_fragment = CriarSenhaFragment.newInstance(usuario.getNome(), usuario.getSenha());
             MainActivity.startFragment(criar_senha_fragment, "criar_senha_fragment", R.id.ll_main, true, true, getActivity());
         }
         else{
-            Toast.makeText(getActivity(), "Email não encontrado!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Usuário não encontrado!", Toast.LENGTH_SHORT).show();
         }
     }
 }

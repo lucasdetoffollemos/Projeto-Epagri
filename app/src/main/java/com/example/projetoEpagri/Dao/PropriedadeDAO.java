@@ -74,8 +74,8 @@ public class PropriedadeDAO implements IPropriedadeSchema {
 
     /**
      * Método responsável por retornar o id de uma determinada propriedade baseada no seu nome.
-     * @param nome
-     * @return
+     * @param nome Nome da propriedade.
+     * @return Retorna o id da propriedade especificada.
      */
     public int getPropriedadeId(String nome){
         String sql_query = "SELECT * FROM " + TABELA_PROPRIEDADE + " WHERE " + COLUNA_NOME + "=" + "\"" + nome + "\"";
@@ -187,7 +187,7 @@ public class PropriedadeDAO implements IPropriedadeSchema {
 
     /**
      * Método para remover uma única propriedade baseado no id.
-     * @param id
+     * @param id Representa o id da propriedade.
      */
     public void deletePropriedadeById(int id){
         this.bancoDeDados.delete(TABELA_PROPRIEDADE,COLUNA_ID_USUARIO + "=?", new String[]{Integer.toString(id)});
