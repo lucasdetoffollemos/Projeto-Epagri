@@ -31,7 +31,10 @@ import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Piquete;
 import com.example.projetoEpagri.Classes.Propriedade;
+import com.example.projetoEpagri.Classes.Tutorial;
 import com.example.projetoEpagri.R;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -50,8 +53,9 @@ public class PiqueteFragment extends Fragment {
     private int id_propriedade;
     private String modo;
 
-    private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
+    private int posicaoLinhaTabela = -1, numeroDeLinhas = 0;
     private TableLayout table_layout, saved_table_layout;
+    private TableRow linha_tutorial;
 
     private double producaoEstimadaD, areaTotal;
     private ArrayList<Double> listaDeAreas;             //lista com as áreas de todas as linhas.
@@ -64,7 +68,8 @@ public class PiqueteFragment extends Fragment {
 
     private DecimalFormat doisDecimais;
 
-    public PiqueteFragment() {}
+    public PiqueteFragment() {
+    }
 
     public static PiqueteFragment newInstance(int id, boolean load, String modo) {
         PiqueteFragment fragment = new PiqueteFragment();
@@ -86,7 +91,7 @@ public class PiqueteFragment extends Fragment {
             modo = getArguments().getString(ARG_PARAM3);
         }
 
-        if(IndexFragment.propriedade != null){
+        if (IndexFragment.propriedade != null) {
             this.propriedade = IndexFragment.propriedade;
         }
 
@@ -97,13 +102,13 @@ public class PiqueteFragment extends Fragment {
         listaPiquetes = new ArrayList<>();
         listaTextViewTotaisMes = new ArrayList<>();
 
-        if(listaTotaisMes.isEmpty()){
-            for(int i=0; i<12; i++){
+        if (listaTotaisMes.isEmpty()) {
+            for (int i = 0; i < 12; i++) {
                 listaTotaisMes.add(0.0);
             }
         }
 
-        if(listaTotaisEstacoes.isEmpty() ){
+        if (listaTotaisEstacoes.isEmpty()) {
             listaTotaisEstacoes.add(0.0); //Verao
             listaTotaisEstacoes.add(0.0); //Outono
             listaTotaisEstacoes.add(0.0); //Inverno
@@ -114,16 +119,16 @@ public class PiqueteFragment extends Fragment {
 
         //Testa se o modo é null pois quando o Fragment é carregado a partir do CriarPropriedadeFragment passa-se o modo como null
         // (não é atual nem proposta pois a propriedade recém está sendo criada).
-        if(modo != null){
-            if(modo.equals("atual")){
+        if (modo != null) {
+            if (modo.equals("atual")) {
                 listaPiquetes = BancoDeDados.piqueteDAO.getAllPiquetesByPropId(id_propriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
-            } else if(modo.equals("proposta")){
+            } else if (modo.equals("proposta")) {
                 listaPiquetes = BancoDeDados.piqueteDAO.getAllPiquetesByPropId(id_propriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
             }
 
             //Se a lista de piquetes retornados do banco for maior que 0, significa que precisa carregar esses piquetes para a tabela.
             //Significa ainda que a tabela que será mostrada não será vazia, por isso muda-se .
-            if(listaPiquetes.size() > 0){
+            if (listaPiquetes.size() > 0) {
                 load_complete = false;
                 tabela_vazia = false;
             }
@@ -144,6 +149,7 @@ public class PiqueteFragment extends Fragment {
         final View tabela_piquete = getView().findViewById(R.id.included_tabela_piquete);
         final View bottom_bar = getView().findViewById(R.id.included_bottom_bar);
         final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
+        final ImageView iv_vaca = getView().findViewById(R.id.iv_vaca);
         Button bt_adicionar_linha = getView().findViewById(R.id.bt_adicionarLinha);
         Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
         Button bt_proximo_atualizar = getView().findViewById(R.id.bt_proximo);
@@ -179,7 +185,7 @@ public class PiqueteFragment extends Fragment {
         table_layout = tabela_piquete.findViewById(R.id.tableLayout_tabelaAnimais);
 
         //Se o fragment for criado com a opção "load" significa que ele está sendo aberto dentro do VerDadosFragment.
-        if(load){
+        if (load) {
             //Desabilita-se os toolbars.
             toolbar.setVisibility(View.GONE);
             bottom_bar.setVisibility(View.GONE);
@@ -194,21 +200,19 @@ public class PiqueteFragment extends Fragment {
             bt_proximo_atualizar.setText(R.string.txt_bt_atualizar_dados);
 
             //Se estiver no modo de load e o load ainda não tiver sido feito.
-            if(listaPiquetes.size() > 0 && !load_complete){
+            if (listaPiquetes.size() > 0 && !load_complete) {
                 //Insere-se linhas na tabela de acordo com o número de piquetes cadastrados no banco de dados
-                for(int i=0; i<listaPiquetes.size(); i++){
+                for (int i = 0; i < listaPiquetes.size(); i++) {
                     adicionaLinha();
                 }
-            }
-            else{ //Caso de estar no modo proposta sem a proposta ter sido feita.
-                if(tabela_vazia){
+            } else { //Caso de estar no modo proposta sem a proposta ter sido feita.
+                if (tabela_vazia) {
                     adicionaLinha();
                     tabela_vazia = false;
                 }
             }
-        }
-        else{ //caso contrário adiciona-se uma única linha na tabela.
-            if(saved_table_layout == null){
+        } else { //caso contrário adiciona-se uma única linha na tabela.
+            if (saved_table_layout == null) {
                 adicionaLinha();
             }
         }
@@ -235,11 +239,10 @@ public class PiqueteFragment extends Fragment {
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeroDeLinhas > 1){
+                if (numeroDeLinhas > 1) {
                     removeLinha();
                     calculaTotais();
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Operação Inválida!! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -249,11 +252,10 @@ public class PiqueteFragment extends Fragment {
         bt_proximo_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!listaDeAreas.contains(0.0)){
-                    if(load){
+                if (!listaDeAreas.contains(0.0)) {
+                    if (load) {
                         atualizarDados(listaPiquetes, id_propriedade);
-                    }
-                    else{
+                    } else {
                         IndexFragment.propriedade.setArea(areaTotal);
                         IndexFragment.propriedade.setListaPiqueteAtual(listaPiquetes);
                         IndexFragment.listaTotaisMes = new ArrayList<>(listaTotaisMes);
@@ -262,27 +264,110 @@ public class PiqueteFragment extends Fragment {
                         Fragment animais_fragment = AnimaisFragment.newInstance(-1, false, null);
                         MainActivity.startFragment(animais_fragment, "animais_fragment", R.id.ll_index, true, true, getActivity());
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Você deve preencher todos os campos \"Área\"!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        IndexFragment.tutorial = MainActivity.bancoDeDados.tutorialDAO.getTutorial();
+
+        if (IndexFragment.tutorial != null && IndexFragment.tutorial.getInserir_piquetes() == 0) {
+            iv_vaca.setVisibility(View.VISIBLE);
+
+            new TapTargetSequence(getActivity())
+                    .targets(
+                            TapTarget.forView(iv_vaca, "Etapa 2", "Nessa etapa você deve cadastrar os piquetes existentes na propriedade.\n\nCada linha da tabela representa um piquete diferente.")
+                                    .id(1)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false),
+                            TapTarget.forView((Spinner) linha_tutorial.getChildAt(0), "Tipo de Pastagem", "Escolha o tipo da pastagem do piquete.")
+                                    .id(2)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .transparentTarget(true),
+                            TapTarget.forView((Spinner) linha_tutorial.getChildAt(1), "Condição da Pastagem", "Escolha a qual é a condição da pastagem: degradada, média ou ótima.")
+                                    .id(3)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .transparentTarget(true),
+                            TapTarget.forView((EditText) linha_tutorial.getChildAt(2), "Área", "Digite no campo \"Área\" qual é o tamanho do piquete em hectares.")
+                                    .id(4)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .transparentTarget(true),
+                            TapTarget.forView(bt_adicionar_linha, "Adicionar Piquete", "Você pode adicionar mais piquetes clicando no botão \"+\".")
+                                    .id(5)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false),
+                            TapTarget.forView(bt_remover_linha, "Remover Piquete", "Você pode remover piquetes clicando no botão \"-\".")
+                                    .id(6)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false),
+                            TapTarget.forView(iv_vaca, "Próximo passo", "Ao finalizar essa etapa, basta clicar no botão \"Próximo Passo\" localizado logo abaixo...")
+                                    .id(7)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false))
+                    .listener(new TapTargetSequence.Listener() {
+                        // This listener will tell us when interesting(tm) events happen in regards
+                        // to the sequence
+                        @Override
+                        public void onSequenceFinish() {
+                            iv_vaca.setVisibility(View.GONE);
+                            MainActivity.bancoDeDados.tutorialDAO.update(1, 1, 1, 1, 0, 0);
+                        }
+
+                        @Override
+                        public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                            switch (lastTarget.id()) {
+                                case 1:
+                                    iv_vaca.setVisibility(View.GONE);
+                                    break;
+                                case 6:
+                                    iv_vaca.setVisibility(View.VISIBLE);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onSequenceCanceled(TapTarget lastTarget) {
+                            iv_vaca.setVisibility(View.GONE);
+                            MainActivity.bancoDeDados.tutorialDAO.update(1, 1, 1, 1, 0, 0);
+                        }
+                    }
+            ).start();
+        }
+
     }
 
     /**
      * Método responsável por adicionar uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
      */
-    public void adicionaLinha(){
+    public void adicionaLinha() {
         //Infla a linha para a tabela
         TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_oferta_linha, null);
+        linha_tutorial = linha_tabela;
         criarLinha(linha_tabela);
 
         //Verifica se os piquetes já foram carregados. Se não foram, faz o loading.
-        if(!load_complete){
+        if (!load_complete) {
             loadPiquetes(linha_tabela);
 
-            if(numeroDeLinhas+1 == listaPiquetes.size()){
+            if (numeroDeLinhas + 1 == listaPiquetes.size()) {
                 load_complete = true; //Carregou todos os piquetes.
             }
         }
@@ -298,8 +383,8 @@ public class PiqueteFragment extends Fragment {
             listaDeAreas.add(0.0);
         }
 
-        double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-        if(matrizMeses.size() < numeroDeLinhas){
+        double[] startArray = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        if (matrizMeses.size() < numeroDeLinhas) {
             matrizMeses.add(startArray);
         }
 
@@ -312,23 +397,23 @@ public class PiqueteFragment extends Fragment {
     /**
      * Método responsável por remover uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
      */
-    public void removeLinha(){
+    public void removeLinha() {
         table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
 
-        if(numeroDeLinhas > 0){
-            listaDeAreas.remove(numeroDeLinhas-1);
-            matrizMeses.remove(numeroDeLinhas-1);
-            listaPiquetes.remove(numeroDeLinhas-1);
+        if (numeroDeLinhas > 0) {
+            listaDeAreas.remove(numeroDeLinhas - 1);
+            matrizMeses.remove(numeroDeLinhas - 1);
+            listaPiquetes.remove(numeroDeLinhas - 1);
 
             posicaoLinhaTabela--;
             numeroDeLinhas--;
 
-            if(numeroDeLinhas == 0){
-                for(int i=0; i<listaTotaisMes.size(); i++){
+            if (numeroDeLinhas == 0) {
+                for (int i = 0; i < listaTotaisMes.size(); i++) {
                     listaTotaisMes.set(i, 0.0);
                 }
 
-                for(int i=0; i<listaTotaisEstacoes.size(); i++){
+                for (int i = 0; i < listaTotaisEstacoes.size(); i++) {
                     listaTotaisEstacoes.set(i, 0.0);
                 }
             }
@@ -338,14 +423,13 @@ public class PiqueteFragment extends Fragment {
     /**
      * Método responsável por adicionar uma linha na tabela oferta atual e configurar o adapter dos spinners.
      */
-    private void criarLinha(TableRow linha_tabela){
+    private void criarLinha(TableRow linha_tabela) {
         // Array que armazena os tipos de piquetes, vindos do arquivo DadosDAO.java.
         ArrayList<String> tipoPiquete = new ArrayList<>();
 
-        if(this.propriedade.getRegiao().equals("cfa")){
+        if (this.propriedade.getRegiao().equals("cfa")) {
             tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_NORTE);
-        }
-        else if(this.propriedade.getRegiao().equals("cfb")){
+        } else if (this.propriedade.getRegiao().equals("cfb")) {
             tipoPiquete = BancoDeDados.dadosDAO.getTiposPastagem(IDadosSchema.TABELA_DADOS_SUL);
         }
 
@@ -378,13 +462,14 @@ public class PiqueteFragment extends Fragment {
 
     /**
      * Método responsável por identificar a posição de um determinado valor dentro do spinner.
+     *
      * @param spinner Representa o spinner que contém os valores.
-     * @param s Representa o valor que deseja-se encontrar.
+     * @param s       Representa o valor que deseja-se encontrar.
      * @return Retorna a posição do valor dentro da lista de valores do spinner.
      */
-    private int getSpinnerIndex(Spinner spinner, String s){
-        for (int i=0; i<spinner.getCount(); i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s)){
+    private int getSpinnerIndex(Spinner spinner, String s) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s)) {
                 return i;
             }
         }
@@ -394,6 +479,7 @@ public class PiqueteFragment extends Fragment {
 
     /**
      * Método responsável por carregar todos os piquetes do banco de dados.
+     *
      * @param linha_tabela representa a última linha adicionada.
      */
     public void loadPiquetes(TableRow linha_tabela) {
@@ -446,6 +532,7 @@ public class PiqueteFragment extends Fragment {
     /**
      * Identifica os elementos dentro da TableRow que foi inflada e chama o método de calcular quando algum valor
      * é escolhido nos spinners ou texto digitado no campo área.
+     *
      * @param linha_tabela Representa a linha adicionada na tabela.
      */
     private void setListenersLinha(final TableRow linha_tabela) {
@@ -461,7 +548,8 @@ public class PiqueteFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         //Quando o spinner CONDIÇAO for clicado, a funçao ira converter o spinner para string, e logo depeois chamar a funçao calcular()
@@ -472,13 +560,15 @@ public class PiqueteFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         //Quando o usuário digitar um número no campo Área, esta funçao ira converter o valor recebido por ele, e será chamadoa funçao calcular().
         editTextArea.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -486,32 +576,33 @@ public class PiqueteFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
     /**
      * Método utilizado para ler os valores preenchidos pelo usuário (spinners e área) e fazer os cálculos de produção
      * estimada, meses e total.
-     * @param linha_tabela Representa a linha preenchida com os dados.
-     * @param spinnerTipo Representa o spinner com o tipo da pastagem.
+     *
+     * @param linha_tabela    Representa a linha preenchida com os dados.
+     * @param spinnerTipo     Representa o spinner com o tipo da pastagem.
      * @param spinnerCondicao Representa o spinner com a condição da pastagem.
-     * @param editTextArea Representa o campo de texto com a área da pastagem.
+     * @param editTextArea    Representa o campo de texto com a área da pastagem.
      */
-    public void calcular(final TableRow linha_tabela, Spinner spinnerTipo, Spinner spinnerCondicao, EditText editTextArea){
+    public void calcular(final TableRow linha_tabela, Spinner spinnerTipo, Spinner spinnerCondicao, EditText editTextArea) {
         //Declaração de atributos que são utilizados dentro da inner class (se não forem declarados, não tem acesso)
         String tipo = spinnerTipo.getSelectedItem().toString();
         String condicao = spinnerCondicao.getSelectedItem().toString();
         String areaS = editTextArea.getText().toString();
 
-        int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
+        int posicao = Integer.parseInt(linha_tabela.getTag().toString()) + 1;
 
         //Adiciona as áreas digitadas na lista de áreas.
         double areaD;
-        if(areaS.length() > 0) {
+        if (areaS.length() > 0) {
             areaD = Double.parseDouble(areaS);
-        }
-        else{
+        } else {
             areaD = 0;
         }
         this.listaDeAreas.set(posicao, areaD);
@@ -520,17 +611,17 @@ public class PiqueteFragment extends Fragment {
         calculaProducaoEstimada(linha_tabela, tipo, condicao);
 
         //Cálcula a produção para cada mês. E faz a soma de todos os meses
-        double [] arrayMesesProd = new double[12];
+        double[] arrayMesesProd = new double[12];
         double totalKgAnual = 0;
-        for(int i=1; i<=12; i++){
-            arrayMesesProd[i-1] = calculaMes(linha_tabela, tipo, condicao, areaD, i);
-            totalKgAnual = totalKgAnual + arrayMesesProd[i-1];
+        for (int i = 1; i <= 12; i++) {
+            arrayMesesProd[i - 1] = calculaMes(linha_tabela, tipo, condicao, areaD, i);
+            totalKgAnual = totalKgAnual + arrayMesesProd[i - 1];
         }
 
         /*Mapeia os dados para a matriz.
         Salva os valores calculados para cada mes (em todas as linhas) em uma matriz.
         */
-        if(matrizMeses.size() >= numeroDeLinhas){
+        if (matrizMeses.size() >= numeroDeLinhas) {
             matrizMeses.set(posicao, arrayMesesProd);
         }
 
@@ -541,7 +632,7 @@ public class PiqueteFragment extends Fragment {
 
         calculaTotais();
 
-        if(listaPiquetes.size() >= numeroDeLinhas){
+        if (listaPiquetes.size() >= numeroDeLinhas) {
             Piquete p = new Piquete(tipo, condicao, areaD, producaoEstimadaD, arrayMesesProd, intTotalKg);
             listaPiquetes.set(posicao, p);
         }
@@ -550,13 +641,13 @@ public class PiqueteFragment extends Fragment {
     /**
      * Método para calcula a produção estimada.
      */
-    public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao){
+    public void calculaProducaoEstimada(final TableRow linha_tabela, String tipoPastagem, String condicao) {
         TextView tv_prod = (TextView) linha_tabela.getChildAt(3); //posição da coluna produção estimada.
 
         //Produção Estimada = valor da tabela x aproveitamento (isso em toneladas).
-        if(this.propriedade.getRegiao().equals("cfa")){
+        if (this.propriedade.getRegiao().equals("cfa")) {
             this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * KG * APROVEITAMENTO; //kg
-        }else if(this.propriedade.getRegiao().equals("cfb")){
+        } else if (this.propriedade.getRegiao().equals("cfb")) {
             this.producaoEstimadaD = (BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * KG * APROVEITAMENTO;
         }
 
@@ -566,44 +657,43 @@ public class PiqueteFragment extends Fragment {
 
     /**
      * Método para calcular a produção em cada um dos meses.
+     *
      * @param linha_tabela Representa a linha da tabela da qual os valores serão calculados.
      * @param tipoPastagem Representa o tipo da pastagem.
-     * @param condicao Representa a condição da pastagem.
-     * @param area Representa a área da pastagem.
-     * @param mes Representa o valor númerico do mês (1 a 12).
+     * @param condicao     Representa a condição da pastagem.
+     * @param area         Representa a área da pastagem.
+     * @param mes          Representa o valor númerico do mês (1 a 12).
      */
-    public double calculaMes(final TableRow linha_tabela, String tipoPastagem, String condicao, double area, int mes){
+    public double calculaMes(final TableRow linha_tabela, String tipoPastagem, String condicao, double area, int mes) {
         //Janeiro está na posição 4, por isso mes+3.
-        TextView tv_mes = (TextView) linha_tabela.getChildAt(mes+3);
+        TextView tv_mes = (TextView) linha_tabela.getChildAt(mes + 3);
 
         double valor = 0.0;
         int PORCENTAGEM = 100;
-        if(this.propriedade.getRegiao().equals("cfa")){
-            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE)/ PORCENTAGEM;
+        if (this.propriedade.getRegiao().equals("cfa")) {
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_NORTE) / PORCENTAGEM;
             valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_NORTE)) * APROVEITAMENTO * valor * area).replace(",", "."));
             //VALOR = CONDIÇÃO (tabelaa dados) * APROVEITAMENTO * PORCENTAGEM (tabela dados) * AREA
-        }
-        else if(this.propriedade.getRegiao().equals("cfb")){
-            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL)/ PORCENTAGEM;
+        } else if (this.propriedade.getRegiao().equals("cfb")) {
+            valor = (float) BancoDeDados.dadosDAO.getMeses(mes, tipoPastagem, IDadosSchema.TABELA_DADOS_SUL) / PORCENTAGEM;
             valor = Double.parseDouble(this.doisDecimais.format((BancoDeDados.dadosDAO.getCondicao(tipoPastagem, condicao, IDadosSchema.TABELA_DADOS_SUL)) * APROVEITAMENTO * valor * area).replace(",", "."));
         }
 
-        String resultado = this.doisDecimais.format(valor*KG);
+        String resultado = this.doisDecimais.format(valor * KG);
 
-        if(valor != 0){
+        if (valor != 0) {
             tv_mes.setText(resultado);
-        }
-        else {
+        } else {
             tv_mes.setText(" ");
         }
 
-        return (valor*KG);
+        return (valor * KG);
     }
 
     /**
      * Método para calcular os totais de cada coluna (mês).
      */
-    public void calculaTotais(){
+    public void calculaTotais() {
         //Calcula a área total.
         this.areaTotal = 0.0;
         for (int i = 0; i < this.listaDeAreas.size(); i++) {
@@ -675,9 +765,9 @@ public class PiqueteFragment extends Fragment {
     /**
      * Método responsável por alterar o texto dos textviews dos totais dos meses e das estaçoes.
      */
-    public void setTextViewsTotais(ArrayList<Double> listaTotaisMes, ArrayList<Double> listaTotaisEstacoes){
-        if(listaTotaisMes.size() > 0){
-            for(int j=0; j<listaTotaisMes.size(); j++){
+    public void setTextViewsTotais(ArrayList<Double> listaTotaisMes, ArrayList<Double> listaTotaisEstacoes) {
+        if (listaTotaisMes.size() > 0) {
+            for (int j = 0; j < listaTotaisMes.size(); j++) {
                 this.listaTextViewTotaisMes.get(j).setText(this.doisDecimais.format((listaTotaisMes.get(j))));
             }
         }
@@ -687,7 +777,7 @@ public class PiqueteFragment extends Fragment {
         TextView totalInv = getView().findViewById(R.id.tv_AreaTotalInve);
         TextView totalPrim = getView().findViewById(R.id.tv_AreaTotalPrim);
 
-        if(listaTotaisEstacoes.size() > 0){
+        if (listaTotaisEstacoes.size() > 0) {
             totalVer.setText(this.doisDecimais.format(listaTotaisEstacoes.get(0)));
             totalOut.setText(this.doisDecimais.format(listaTotaisEstacoes.get(1)));
             totalInv.setText(this.doisDecimais.format(listaTotaisEstacoes.get(2)));
@@ -699,14 +789,14 @@ public class PiqueteFragment extends Fragment {
      * Método chamado toda vez que o botão Próximo Passo é clicado, e tem como objetivo levar o usário para outra activity e mandar um array de totais/mês. (Obs: método é acionado, no onclick do Botao Proximo Passo, que se encontra em activity_piquete.xml)
      */
     public void atualizarDados(ArrayList<Piquete> listaPiquetes, int idPropriedade) {
-        if(modo.equals("atual")){
+        if (modo.equals("atual")) {
             //Deleta os valores antigos.
             BancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
             BancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
             BancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
 
             //Salva os novos valores.
-            for(int i=0; i<listaPiquetes.size(); i++){
+            for (int i = 0; i < listaPiquetes.size(); i++) {
                 BancoDeDados.piqueteDAO.inserirPiquete(listaPiquetes.get(i), idPropriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
             }
 
@@ -715,15 +805,14 @@ public class PiqueteFragment extends Fragment {
 
             //Atualiza a área total na tabela de propriedades.
             BancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, areaTotal);
-        }
-        else if(modo.equals("proposta")){
+        } else if (modo.equals("proposta")) {
             //Deleta os valores antigos.
             BancoDeDados.piqueteDAO.deletePiqueteByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
             BancoDeDados.totalPiqueteMesDAO.deleteTotalMesByPropId(idPropriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_PROPOSTA);
             BancoDeDados.totalPiqueteEstacaoDAO.deleteTotalEstacaoByPropId(idPropriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
 
             //Salva os novos valores.
-            for(int i=0; i<listaPiquetes.size(); i++){
+            for (int i = 0; i < listaPiquetes.size(); i++) {
                 BancoDeDados.piqueteDAO.inserirPiquete(listaPiquetes.get(i), idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
             }
 
@@ -744,7 +833,7 @@ public class PiqueteFragment extends Fragment {
 
         saved_table_layout = new TableLayout(getActivity());
 
-        while (table_layout.getChildCount() > 0){
+        while (table_layout.getChildCount() > 0) {
             TableRow linha = (TableRow) table_layout.getChildAt(0);
             table_layout.removeViewAt(0);
             saved_table_layout.addView(linha);
@@ -759,10 +848,10 @@ public class PiqueteFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if(saved_table_layout != null){
+        if (saved_table_layout != null) {
             numeroDeLinhas = saved_table_layout.getChildCount();
 
-            while(saved_table_layout.getChildCount() > 0){
+            while (saved_table_layout.getChildCount() > 0) {
                 TableRow linha = (TableRow) saved_table_layout.getChildAt(0);
                 saved_table_layout.removeViewAt(0);
                 table_layout.addView(linha);

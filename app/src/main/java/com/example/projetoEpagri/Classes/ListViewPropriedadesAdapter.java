@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Fragments.IndexFragment;
 import com.example.projetoEpagri.R;
 
 import java.util.ArrayList;
@@ -74,8 +75,6 @@ public class ListViewPropriedadesAdapter extends BaseAdapter {
         holder.tv_qtde.setText(String.valueOf(propriedade.getQtdeAnimais()));
 
         idPropriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(propriedade.getNome());
-        //final ArrayList<Piquete> listaPiqueteProposta = BancoDeDados.piqueteDAO.getAllPiquetesByPropId(idPropriedade, IPiqueteSchema.TABELA_PIQUETE_PROPOSTA);
-        //final ArrayList<Animais> listaAnimaisProposta = BancoDeDados.animaisDAO.getAllAnimaisByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
 
         //Listener do botão "excluir"
         holder.bt_excluir.setOnClickListener(new View.OnClickListener() {

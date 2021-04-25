@@ -13,6 +13,7 @@ import com.example.projetoEpagri.BancoDeDadosSchema.IPropriedadeSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteEstacao;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalPiqueteMes;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITutorialSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IUsuarioSchema;
 import com.example.projetoEpagri.Dao.AnimaisDAO;
 import com.example.projetoEpagri.Dao.DadosDAO;
@@ -21,6 +22,7 @@ import com.example.projetoEpagri.Dao.PropriedadeDAO;
 import com.example.projetoEpagri.Dao.TotalAnimaisDAO;
 import com.example.projetoEpagri.Dao.TotalPiqueteEstacaoDAO;
 import com.example.projetoEpagri.Dao.TotalPiqueteMesDAO;
+import com.example.projetoEpagri.Dao.TutorialDAO;
 import com.example.projetoEpagri.Dao.UsuarioDAO;
 
 import java.math.BigInteger;
@@ -43,6 +45,7 @@ public class BancoDeDados{
     public static TotalPiqueteEstacaoDAO totalPiqueteEstacaoDAO;
     public static AnimaisDAO animaisDAO;
     public static TotalAnimaisDAO totalAnimaisDAO;
+    public static TutorialDAO tutorialDAO;
 
     public BancoDeDados(Context context) {
         this.context = context;
@@ -65,6 +68,7 @@ public class BancoDeDados{
         this.totalPiqueteEstacaoDAO = new TotalPiqueteEstacaoDAO(sqLiteDatabase);
         this.animaisDAO = new AnimaisDAO(sqLiteDatabase);
         this.totalAnimaisDAO = new TotalAnimaisDAO(sqLiteDatabase);
+        this.tutorialDAO = new TutorialDAO(sqLiteDatabase);
     }
 
     /**
@@ -195,6 +199,8 @@ public class BancoDeDados{
             db.execSQL(ITotalPiqueteEstacao.CREATE_TABELA_TOTAL_PIQUETE_ESTACAO_PROPOSTA);
             db.execSQL(IAnimaisSchema.CREATE_TABELA_ANIMAIS_PROPOSTA);
             db.execSQL(ITotalAnimais.CREATE_TABELA_TOTAL_ANIMAIS_PROPOSTA);
+            //Tutorial
+            db.execSQL(ITutorialSchema.CREATE_TABELA_TUTORIAL);
         }
 
         @Override

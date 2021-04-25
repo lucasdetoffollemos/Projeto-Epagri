@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetoEpagri.Activities.IndexActivity;
+import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.BancoDeDadosSchema.IAnimaisSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.IPiqueteSchema;
 import com.example.projetoEpagri.BancoDeDadosSchema.ITotalAnimais;
@@ -33,6 +34,8 @@ import com.example.projetoEpagri.Classes.Animais;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Classes.Propriedade;
 import com.example.projetoEpagri.R;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -55,14 +58,16 @@ public class AnimaisFragment extends Fragment {
     private ArrayList<Double> listaTotalUAHA;
 
     private double resultadoConsumo; //Variável utilizada para setar o consumo de acordo com a categoria do animal escolhido.
-    private int posicaoLinhaTabela=-1, numeroDeLinhas=0;
+    private int posicaoLinhaTabela = -1, numeroDeLinhas = 0;
 
     private int somaAnimal;
     private DecimalFormat doisDecimais;
 
     private TableLayout table_layout, saved_table_layout;
+    private TableRow linha_tutorial;
 
-    public AnimaisFragment() {}
+    public AnimaisFragment() {
+    }
 
     public static AnimaisFragment newInstance(int id, boolean load, String modo) {
         AnimaisFragment fragment = new AnimaisFragment();
@@ -114,22 +119,22 @@ public class AnimaisFragment extends Fragment {
         matrizUA = new ArrayList<>();
         listaAnimais = new ArrayList<>();
         listaTotalUAHA = new ArrayList<>();
-        for(int i=0; i<12; i++){
+        for (int i = 0; i < 12; i++) {
             listaTotalUAHA.add(0.0);
         }
 
         doisDecimais = new DecimalFormat("#.##");
 
-        if(modo != null){
-            if(modo.equals("atual")){
+        if (modo != null) {
+            if (modo.equals("atual")) {
                 listaAnimais = BancoDeDados.animaisDAO.getAllAnimaisByPropId(id_propriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
-            } else if(modo.equals("proposta")){
+            } else if (modo.equals("proposta")) {
                 listaAnimais = BancoDeDados.animaisDAO.getAllAnimaisByPropId(id_propriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
             }
 
             //Se a lista de piquetes retornados do banco for maior que 0, significa que precisa carregar esses piquetes para a tabela.
             //Significa ainda que a tabela que será mostrada não será vazia, por isso muda-se .
-            if(listaAnimais.size() > 0){
+            if (listaAnimais.size() > 0) {
                 load_complete = false;
                 tabela_vazia = false;
             }
@@ -151,6 +156,7 @@ public class AnimaisFragment extends Fragment {
         final View tabela_animais = getView().findViewById(R.id.included_tabela_animais);
         final View bottom_bar = getView().findViewById(R.id.included_bottom_bar);
         final ImageView iv_voltar = getView().findViewById(R.id.iv_voltar);
+        final ImageView iv_vaca = getView().findViewById(R.id.iv_vaca);
         Button bt_adicionar_linha = getView().findViewById(R.id.bt_adicionarLinha);
         Button bt_remover_linha = getView().findViewById(R.id.bt_removerLinha);
         Button bt_finalizar_atualizar = getView().findViewById(R.id.bt_proximo);
@@ -163,7 +169,7 @@ public class AnimaisFragment extends Fragment {
 
         //Se o fragment for criado com a opção "carregar"significa que ele está sendo aberto dentro do VerDadosFragment.
         //Sendo assim, desabilita-se o toolbar.
-        if(load){
+        if (load) {
             toolbar.setVisibility(View.GONE);
             bottom_bar.setVisibility(View.GONE);
 
@@ -177,23 +183,21 @@ public class AnimaisFragment extends Fragment {
             bt_finalizar_atualizar.setText(R.string.txt_bt_atualizar_dados);
 
             //Se estiver no modo de load, insere-se linhas na tabela de acordo com o número de piquetes cadastrados no banco de dados.
-            if(listaAnimais.size() > 0 && !load_complete){
+            if (listaAnimais.size() > 0 && !load_complete) {
                 load_complete = false;
 
-                for(int i=0; i<listaAnimais.size(); i++){
+                for (int i = 0; i < listaAnimais.size(); i++) {
                     adicionaLinha();
                 }
-            }
-            else{ //Caso de estar no modo proposta sem a proposta ter sido feita.
-                if(tabela_vazia){
+            } else { //Caso de estar no modo proposta sem a proposta ter sido feita.
+                if (tabela_vazia) {
                     adicionaLinha();
                     tabela_vazia = false;
                 }
 
             }
-        }
-        else{ //caso contrário adiciona-se uma única linha na tabela.
-            if(saved_table_layout == null){
+        } else { //caso contrário adiciona-se uma única linha na tabela.
+            if (saved_table_layout == null) {
                 adicionaLinha();
             }
         }
@@ -202,7 +206,7 @@ public class AnimaisFragment extends Fragment {
         iv_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!load){
+                if (!load) {
                     IndexFragment.propriedade.setArea(0.0);
                     IndexFragment.propriedade.setListaPiqueteAtual(null);
                     IndexFragment.listaTotaisMes = null;
@@ -223,12 +227,11 @@ public class AnimaisFragment extends Fragment {
         bt_remover_linha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeroDeLinhas > 1){
+                if (numeroDeLinhas > 1) {
                     removeLinha();
                     calculaTotalAnimais();
                     calculoUaHa(matrizUA);
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Operação Inválida! Você deve manter pelo menos 1 linha na tabela!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -237,29 +240,137 @@ public class AnimaisFragment extends Fragment {
         bt_finalizar_atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkAnimais(listaAnimais)){
-                    if(load){
+                if (checkAnimais(listaAnimais)) {
+                    if (load) {
                         atualizarDados(listaAnimais, id_propriedade);
-                    }else{
+                    } else {
                         finalizar();
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Você deve preencher todos os campos antes de finalizar!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        IndexFragment.tutorial = MainActivity.bancoDeDados.tutorialDAO.getTutorial();
+
+        if (IndexFragment.tutorial != null && IndexFragment.tutorial.getInserir_animais() == 0) {
+            iv_vaca.setVisibility(View.VISIBLE);
+
+            new TapTargetSequence(getActivity())
+                    .targets(
+                            TapTarget.forView(iv_vaca, "Etapa 3", "Nessa etapa você deve cadastrar os animais existentes na propriedade.\n\nCada linha da tabela representa um grupo diferente de animais.")
+                                    .id(1)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false),
+                            TapTarget.forView((Spinner) linha_tutorial.getChildAt(0), "Categoria", "Escolha a categoria dos animais.")
+                                    .id(2)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .transparentTarget(true),
+                            TapTarget.forView((EditText) linha_tutorial.getChildAt(1), "Quantidade", "Escreva no campo de texto a quantidade de animais.")
+                                    .id(3)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .transparentTarget(true),
+                            TapTarget.forView((Spinner) linha_tutorial.getChildAt(2), "Entrada no Pasto", "Escolha o mês que os animais começaram a pastar.")
+                                    .id(4)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .transparentTarget(true),
+                            TapTarget.forView((EditText) linha_tutorial.getChildAt(3), "Peso Inicial", "Escreva no campo de texto qual a média de peso inicial dos animais.")
+                                    .id(5)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false)
+                                    .transparentTarget(true),
+                            TapTarget.forView((EditText) linha_tutorial.getChildAt(4), "Peso Final", "Escreva no campo de texto qual a média de peso final dos animais.")
+                                    .id(6)
+                                    .titleTextSize(20)
+                                    .targetRadius(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false)
+                                    .transparentTarget(true),
+                            TapTarget.forView(iv_vaca, "Ganho de Peso por Estação", "Você ainda pode editar qual o ganho de peso (em gramas) por dia dos diferentes grupos de animais de acordo com a estação do ano.")
+                                    .id(7)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false),
+                            TapTarget.forView(bt_adicionar_linha, "Adicionar Animais", "Você pode adicionar mais animais clicando no botão \"+\".")
+                                    .id(8)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false),
+                            TapTarget.forView(bt_remover_linha, "Remover Animais", "Você pode remover animais clicando no botão \"-\".")
+                                    .id(9)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false),
+                            TapTarget.forView(iv_vaca, "Finalizar", "Ao finalizar essa etapa, basta clicar no botão \"Finalizar\" localizado logo abaixo...")
+                                    .id(10)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false))
+                    .listener(new TapTargetSequence.Listener() {
+                        // This listener will tell us when interesting(tm) events happen in regards
+                        // to the sequence
+                        @Override
+                        public void onSequenceFinish() {
+                            iv_vaca.setVisibility(View.GONE);
+                            MainActivity.bancoDeDados.tutorialDAO.update(1, 1, 1, 1, 1, 0);
+                        }
+
+                        @Override
+                        public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                            switch (lastTarget.id()) {
+                                case 1:
+                                    iv_vaca.setVisibility(View.GONE);
+                                    break;
+                                case 6:
+                                    iv_vaca.setVisibility(View.VISIBLE);
+                                case 7:
+                                    iv_vaca.setVisibility(View.GONE);
+                                case 9:
+                                    iv_vaca.setVisibility(View.VISIBLE);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onSequenceCanceled(TapTarget lastTarget) {
+                            iv_vaca.setVisibility(View.GONE);
+                            MainActivity.bancoDeDados.tutorialDAO.update(1, 1, 1, 1, 1, 0);
+                        }
+                    }
+            ).start();
+        }
     }
 
     /**
      * Método para verificar se todos os animais contidos na lista são animais completos (dados preenchidos) ou não.
      * Utiliza como base para a verificação somente a categoria.
+     *
      * @param lista Lista de animais.
      * @return Verdadeiro caso todos os animais estejam com os campos preenchidos e false caso contrário.
      */
-    public boolean checkAnimais(ArrayList<Animais> lista){
-        for(int i=0; i<lista.size(); i++){
-            if(lista.get(i).getCategoria() == null || lista.get(i).getCategoria().length() == 0){
+    public boolean checkAnimais(ArrayList<Animais> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getCategoria() == null || lista.get(i).getCategoria().length() == 0) {
                 return false;
             }
         }
@@ -269,17 +380,18 @@ public class AnimaisFragment extends Fragment {
     /**
      * Método responsável por adicionar uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
      */
-    public void adicionaLinha(){
+    public void adicionaLinha() {
         //Infla a linha para a tabela
         TableRow linha_tabela = (TableRow) View.inflate(getActivity(), R.layout.tabela_demanda_linha, null);
+        linha_tutorial = linha_tabela;
         criarLinha(linha_tabela);
 
         //Verifica se os animais já foram carregados. Se não foram, faz o loading.
-        if(!load_complete){
+        if (!load_complete) {
             loadAnimais(linha_tabela);
             calculaTotalAnimais();
 
-            if(numeroDeLinhas+1 == listaAnimais.size()){
+            if (numeroDeLinhas + 1 == listaAnimais.size()) {
                 load_complete = true; //Carregou todos os animais.
             }
         }
@@ -289,16 +401,16 @@ public class AnimaisFragment extends Fragment {
         posicaoLinhaTabela++;
         numeroDeLinhas++;
 
-        if(qtdeAnimais.size() < numeroDeLinhas){
+        if (qtdeAnimais.size() < numeroDeLinhas) {
             qtdeAnimais.add(0.0);
         }
 
-        double [] startArray = {0,0,0,0,0,0,0,0,0,0,0,0};
-        if(matrizUA.size() < numeroDeLinhas){
+        double[] startArray = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        if (matrizUA.size() < numeroDeLinhas) {
             matrizUA.add(startArray);
         }
 
-        if(listaAnimais.size() < numeroDeLinhas){
+        if (listaAnimais.size() < numeroDeLinhas) {
             Animais temp = new Animais();
             listaAnimais.add(temp);
         }
@@ -307,13 +419,13 @@ public class AnimaisFragment extends Fragment {
     /**
      * Método responsável por remover uma linha no layout e ajustar o tamanho das estruturas que armazenam os dados.
      */
-    public void removeLinha(){
+    public void removeLinha() {
         table_layout.removeView(table_layout.getChildAt(posicaoLinhaTabela));
 
-        if(numeroDeLinhas > 0){
-            qtdeAnimais.remove(numeroDeLinhas-1);
-            matrizUA.remove(numeroDeLinhas-1);
-            listaAnimais.remove(numeroDeLinhas-1);
+        if (numeroDeLinhas > 0) {
+            qtdeAnimais.remove(numeroDeLinhas - 1);
+            matrizUA.remove(numeroDeLinhas - 1);
+            listaAnimais.remove(numeroDeLinhas - 1);
 
             posicaoLinhaTabela--;
             numeroDeLinhas--;
@@ -323,7 +435,7 @@ public class AnimaisFragment extends Fragment {
     /**
      * Método responsável por adicionar uma linha na tabela demanda atual e configurar o adapter dos spinners.
      */
-    private void criarLinha(TableRow linha_tabela){
+    private void criarLinha(TableRow linha_tabela) {
         //Localiza o spinner no arquivo xml tabela_oferta_demanda_linha.
         final Spinner spinnerCategoria = linha_tabela.findViewById(R.id.spinner_categoria);
         //Cria um ArrayAdpter usando o array de string com categoriaAnimal. //Cria um ArrayAdapter que pega o Array de string e transforma em um spinner.
@@ -347,13 +459,14 @@ public class AnimaisFragment extends Fragment {
 
     /**
      * Método responsável por identificar a posição de um determinado valor dentro do spinner.
+     *
      * @param spinner Representa o spinner que contém os valores.
-     * @param s Representa o valor buscado dentro do spinner
+     * @param s       Representa o valor buscado dentro do spinner
      * @return A posição desse valor na lista de valores do spinner.
      */
-    private int getSpinnerIndex(Spinner spinner, String s){
-        for (int i=0; i<spinner.getCount(); i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s)){
+    private int getSpinnerIndex(Spinner spinner, String s) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s)) {
                 return i;
             }
         }
@@ -363,9 +476,10 @@ public class AnimaisFragment extends Fragment {
 
     /**
      * Método responsável por carregar todos os animais do banco de dados.
+     *
      * @param linha_tabela representa a última linha adicionada.
      */
-    public void loadAnimais(TableRow linha_tabela){
+    public void loadAnimais(TableRow linha_tabela) {
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
         final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(1);
         final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(2);
@@ -410,16 +524,17 @@ public class AnimaisFragment extends Fragment {
         consumoNov.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(10)));
         consumoDez.setText(String.valueOf(listaAnimais.get(numeroDeLinhas).getMeses(11)));
 
-        if(qtdeAnimais.size() <= numeroDeLinhas){
+        if (qtdeAnimais.size() <= numeroDeLinhas) {
             qtdeAnimais.add(listaAnimais.get(numeroDeLinhas).getNumAnimais());
         }
     }
 
     /**
      * Identifica os elementos da linha, dinamicamente, pelo seu index, e guarda os itens que foram selecionado, no spinner, ou armazenados no editText, para uso posterior
+     *
      * @param linha_tabela Representa a linha que foi adicionada na tabela.
      */
-    public void setListenersLinha(final TableRow linha_tabela){
+    public void setListenersLinha(final TableRow linha_tabela) {
         final Spinner spinnerCategoria = (Spinner) linha_tabela.getChildAt(0);
         final EditText etNumAnimais = (EditText) linha_tabela.getChildAt(1);
         final Spinner spinnerMeses = (Spinner) linha_tabela.getChildAt(2);
@@ -438,16 +553,25 @@ public class AnimaisFragment extends Fragment {
 
                 resultadoConsumo = 0;
                 //Define o consumo baseado na categoria de animal escolhido.
-                switch (categoria){
+                switch (categoria) {
                     case "NOVILHOS JOVENS":
                     case "NOVILHAS JOVENS":
-                    case "TOUROS": { resultadoConsumo = 2.5;  break;}
+                    case "TOUROS": {
+                        resultadoConsumo = 2.5;
+                        break;
+                    }
                     case "NOVILHOS ADULTOS":
                     case "NOVILHAS ADULTOS":
-                    case "VACAS (MATRIZES)": { resultadoConsumo = 3;    break;}
+                    case "VACAS (MATRIZES)": {
+                        resultadoConsumo = 3;
+                        break;
+                    }
                     case "BEZERROS":
                     case "BEZERRAS":
-                    default: { resultadoConsumo = 2;    break;}
+                    default: {
+                        resultadoConsumo = 2;
+                        break;
+                    }
                 }
 
                 //tv_consumo.setText(String.valueOf(resultadoConsumo));
@@ -455,20 +579,22 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         //EditText número de animais.
         etNumAnimais.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 double numeroAnimais = 0.0;
-                int posicao = Integer.parseInt(linha_tabela.getTag().toString())+1;
+                int posicao = Integer.parseInt(linha_tabela.getTag().toString()) + 1;
 
-                if(verificaVazioET(etNumAnimais)){
+                if (verificaVazioET(etNumAnimais)) {
                     numeroAnimais = converteTextoEmDouble(etNumAnimais);
                 }
                 //Salva no array a quantidade de animais digitada para determinada linha.
@@ -479,7 +605,8 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //Spinner meses.
@@ -490,13 +617,15 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         //Edit Text Peso Inicial.
         etPesoInicial.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -504,13 +633,15 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //Edit Text Peso Final.
         etPesoFinal.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -518,13 +649,15 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //Edit Text Peso Verão.
         etPesoVer.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -532,13 +665,15 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //Edit text Peso Outono.
         etPesoOut.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -546,27 +681,15 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //Edit text Peso inverno.
         etPesoInv.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                calcular(linha_tabela, spinnerCategoria,  etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        //Edit Text peso Primavera.
-        etPesoPrim.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -574,19 +697,36 @@ public class AnimaisFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        //Edit Text peso Primavera.
+        etPesoPrim.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                calcular(linha_tabela, spinnerCategoria, etNumAnimais, spinnerMeses, etPesoInicial, etPesoFinal, etPesoVer, etPesoOut, etPesoInv, etPesoPrim);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
     /**
      * Método responsável por calcular a soma total dos animais e atualizar o valor do TextView.
      */
-    public void calculaTotalAnimais(){
+    public void calculaTotalAnimais() {
         //Calcula o total de animais.
         somaAnimal = 0;
 
-        if(!qtdeAnimais.isEmpty()){
-            for(int i =0; i < qtdeAnimais.size(); i++){
+        if (!qtdeAnimais.isEmpty()) {
+            for (int i = 0; i < qtdeAnimais.size(); i++) {
                 somaAnimal = (int) (somaAnimal + qtdeAnimais.get(i));
             }
         }
@@ -597,30 +737,31 @@ public class AnimaisFragment extends Fragment {
 
     /**
      * Método responsável por ler os valores do spinner e das caixas de texto e realizar os cálculos.
-     * @param linha_tabela Representa a linha sob a qual será realizado os calculos.
+     *
+     * @param linha_tabela     Representa a linha sob a qual será realizado os calculos.
      * @param spinnerCategoria Representa o spinner da categoria animal.
-     * @param etNumAnimais Representa a caixa de texto com a quantidade de animais.
-     * @param spinnerMeses Representa o spinner com o mês de entrada do animal na pastagem.
-     * @param etPesoInicial Representa a caixa de texto com o peso inicial do animal.
-     * @param etPesoFinal Representa a caixa de texto com o peso final do animal.
-     * @param etPesoVer Representa a caixa de texto com o ganho de peso do animal no verão.
-     * @param etPesoOut Representa a caixa de texto com o ganho de peso do animal no outono.
-     * @param etPesoInv Representa a caixa de texto com o ganho de peso do animal no inverno.
-     * @param etPesoPrim Representa a caixa de texto com o ganho de peso do animal na primavera.
+     * @param etNumAnimais     Representa a caixa de texto com a quantidade de animais.
+     * @param spinnerMeses     Representa o spinner com o mês de entrada do animal na pastagem.
+     * @param etPesoInicial    Representa a caixa de texto com o peso inicial do animal.
+     * @param etPesoFinal      Representa a caixa de texto com o peso final do animal.
+     * @param etPesoVer        Representa a caixa de texto com o ganho de peso do animal no verão.
+     * @param etPesoOut        Representa a caixa de texto com o ganho de peso do animal no outono.
+     * @param etPesoInv        Representa a caixa de texto com o ganho de peso do animal no inverno.
+     * @param etPesoPrim       Representa a caixa de texto com o ganho de peso do animal na primavera.
      */
-    public void calcular(TableRow linha_tabela, Spinner spinnerCategoria, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim){
+    public void calcular(TableRow linha_tabela, Spinner spinnerCategoria, EditText etNumAnimais, Spinner spinnerMeses, EditText etPesoInicial, EditText etPesoFinal, EditText etPesoVer, EditText etPesoOut, EditText etPesoInv, EditText etPesoPrim) {
         String categoria;
         double consumo, numeroAnimais, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim;
 
-        if(verificaVazioSP(spinnerCategoria) &&
-           verificaVazioET(etNumAnimais) &&
-           verificaVazioSP(spinnerMeses) &&
-           verificaVazioET(etPesoInicial) &&
-           verificaVazioET(etPesoFinal) &&
-           verificaVazioET(etPesoVer) &&
-           verificaVazioET(etPesoOut) &&
-           verificaVazioET(etPesoInv) &&
-           verificaVazioET(etPesoPrim)){
+        if (verificaVazioSP(spinnerCategoria) &&
+                verificaVazioET(etNumAnimais) &&
+                verificaVazioSP(spinnerMeses) &&
+                verificaVazioET(etPesoInicial) &&
+                verificaVazioET(etPesoFinal) &&
+                verificaVazioET(etPesoVer) &&
+                verificaVazioET(etPesoOut) &&
+                verificaVazioET(etPesoInv) &&
+                verificaVazioET(etPesoPrim)) {
 
             categoria = spinnerCategoria.getSelectedItem().toString();
             //consumo = Double.parseDouble(textViewConsumo.getText().toString());
@@ -634,42 +775,66 @@ public class AnimaisFragment extends Fragment {
             pesoPrim = converteTextoEmDouble(etPesoPrim);
 
             double peso_atual;
-            double [] pesoVezesQtdeAnimal = new double[12];
-            double [] pesos = new double[12];
+            double[] pesoVezesQtdeAnimal = new double[12];
+            double[] pesos = new double[12];
 
             String meses = spinnerMeses.getSelectedItem().toString();
 
             double ganho;
             //Array que mapeia os pesos de acordo com as estações. Cada posição faz referência a um mês.
-            double [] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
+            double[] ganhoEstacao = new double[]{pesoVer, pesoVer, pesoOut, pesoOut, pesoOut, pesoInv, pesoInv, pesoInv, pesoPrim, pesoPrim, pesoPrim, pesoVer};
             int posicao = 0;  //posicão utilizada para inserir o animal em determinado mês de acordo com a entrada.
-            int posicaoLinha = Integer.parseInt(linha_tabela.getTag().toString())+1;
+            int posicaoLinha = Integer.parseInt(linha_tabela.getTag().toString()) + 1;
 
             //Define qual a posição que será utilizada no array ganhoEstacao e acordo com o mês de entrada do animal.
-            switch (meses){
-                case "Jan": posicao = 0;  break;
-                case "Fev": posicao = 1;  break;
-                case "Mar": posicao = 2;  break;
-                case "Abr": posicao = 3;  break;
-                case "Mai": posicao = 4;  break;
-                case "Jun": posicao = 5;  break;
-                case "Jul": posicao = 6;  break;
-                case "Ago": posicao = 7;  break;
-                case "Set": posicao = 8;  break;
-                case "Out": posicao = 9;  break;
-                case "Nov": posicao = 10; break;
-                case "Dez": posicao = 11; break;
+            switch (meses) {
+                case "Jan":
+                    posicao = 0;
+                    break;
+                case "Fev":
+                    posicao = 1;
+                    break;
+                case "Mar":
+                    posicao = 2;
+                    break;
+                case "Abr":
+                    posicao = 3;
+                    break;
+                case "Mai":
+                    posicao = 4;
+                    break;
+                case "Jun":
+                    posicao = 5;
+                    break;
+                case "Jul":
+                    posicao = 6;
+                    break;
+                case "Ago":
+                    posicao = 7;
+                    break;
+                case "Set":
+                    posicao = 8;
+                    break;
+                case "Out":
+                    posicao = 9;
+                    break;
+                case "Nov":
+                    posicao = 10;
+                    break;
+                case "Dez":
+                    posicao = 11;
+                    break;
             }
 
             //Estrutura de repetiçao feita para cada vez que o usuário trocar, o valor de entrada, os campos de textView de meses, limparem.
-            for(int i = 9; i< 21; i++){
+            for (int i = 9; i < 21; i++) {
                 TextView v = (TextView) linha_tabela.getChildAt(i);
                 v.setText(String.valueOf(0));
             }
 
             int cont = 0;
             //Estrutura de repetiçao feita para gerar a sequência de somas que resulta no peso final estipulado pelo usuário.
-            for(peso_atual = pesoInicial; peso_atual < pesoFinal;){
+            for (peso_atual = pesoInicial; peso_atual < pesoFinal; ) {
                 int DIAS = 30;
                 int KG = 1000;
                 ganho = (ganhoEstacao[posicao] * DIAS) / KG;
@@ -677,7 +842,7 @@ public class AnimaisFragment extends Fragment {
 
                 //Mapeia para um array os pesos de cada mês já multiplicados pela quantidade de animais.
                 //Esse array serve como entrada para a matriz.
-                switch (posicao){
+                switch (posicao) {
                     case 0: {
                         pesos[0] = peso_atual;
                         pesoVezesQtdeAnimal[0] = peso_atual * numeroAnimais;
@@ -745,13 +910,13 @@ public class AnimaisFragment extends Fragment {
                 posicao++;
 
                 //Quando chega no mês de dezembro, dá a volta, vai para janeiro.
-                if(posicao > 11){
+                if (posicao > 11) {
                     posicao = 0;
                 }
 
                 //Flag para controlar que o número de meses que o animal permanece no campo não seja superior a 12.
                 cont++;
-                if(cont == 12){
+                if (cont == 12) {
                     //Toast.makeText(this, "Você extrapolou o limite de 12 meses do animal no campo. Altere os valores de ganhou ou peso final!", Toast.LENGTH_LONG).show();
                     break;
                 }
@@ -760,14 +925,13 @@ public class AnimaisFragment extends Fragment {
             matrizUA.set(posicaoLinha, pesoVezesQtdeAnimal);
             calculoUaHa(matrizUA);
 
-            if(listaAnimais.size() >= numeroDeLinhas){
+            if (listaAnimais.size() >= numeroDeLinhas) {
                 Animais animal = new Animais(categoria, consumo, numeroAnimais, meses, pesoInicial, pesoFinal, pesoVer, pesoOut, pesoInv, pesoPrim, pesos);
                 listaAnimais.set(posicaoLinha, animal);
             }
-        }
-        else{
+        } else {
             //Estrutura de repetiçao feita para cada vez que o usuário trocar, o valor de entrada, os campos de textView de meses, limparem.
-            for(int i = 9; i< 21; i++){
+            for (int i = 9; i < 21; i++) {
                 TextView v = (TextView) linha_tabela.getChildAt(i);
                 v.setText(String.valueOf(0));
             }
@@ -777,26 +941,25 @@ public class AnimaisFragment extends Fragment {
     /**
      * Método responsável por realizar os cáculos de ua/ha e alterar o valor dos textviews.
      */
-    public void calculoUaHa(ArrayList<double []> matrizUA){
+    public void calculoUaHa(ArrayList<double[]> matrizUA) {
         //Transforma os totais de cada mês em UA (1 UA = 450KG.).
         ArrayList<Double> listaTotalUA = percorreMatrizESoma(matrizUA);
-        for(int i=0; i<listaTotalUA.size(); i++){
+        for (int i = 0; i < listaTotalUA.size(); i++) {
             listaTotalUA.set(i, (listaTotalUA.get(i) / 450));
         }
 
 
         //Recupera a área total vinda da Activity Piquete.
         double areaTotal;
-        if(load){
+        if (load) {
             Propriedade p = BancoDeDados.propriedadeDAO.getPropriedadeById(id_propriedade);
             areaTotal = p.getArea();
-        }
-        else{
+        } else {
             areaTotal = IndexFragment.propriedade.getArea();
         }
 
-        for(int i=0; i<listaTotalUA.size(); i++){
-            listaTotalUAHA.set(i, Double.parseDouble(doisDecimais.format(listaTotalUA.get(i) / areaTotal).replace(",",".")));
+        for (int i = 0; i < listaTotalUA.size(); i++) {
+            listaTotalUAHA.set(i, Double.parseDouble(doisDecimais.format(listaTotalUA.get(i) / areaTotal).replace(",", ".")));
         }
 
         TextView totalJan = getView().findViewById(R.id.tv_AreaUaMesJan);
@@ -813,59 +976,94 @@ public class AnimaisFragment extends Fragment {
         TextView totalDez = getView().findViewById(R.id.tv_AreaUaMesDez);
 
         //Altera os valores dos TextViews.
-        for(int i=0; i<listaTotalUAHA.size(); i++){
-            switch (i){
-                case 0:  { totalJan.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 1:  { totalFev.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 2:  { totalMar.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 3:  { totalAbr.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 4:  { totalMai.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 5:  { totalJun.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 6:  { totalJul.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 7:  { totalAgo.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 8:  { totalSet.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 9:  { totalOut.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 10: { totalNov.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
-                case 11: { totalDez.setText(doisDecimais.format(listaTotalUAHA.get(i))); break; }
+        for (int i = 0; i < listaTotalUAHA.size(); i++) {
+            switch (i) {
+                case 0: {
+                    totalJan.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 1: {
+                    totalFev.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 2: {
+                    totalMar.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 3: {
+                    totalAbr.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 4: {
+                    totalMai.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 5: {
+                    totalJun.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 6: {
+                    totalJul.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 7: {
+                    totalAgo.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 8: {
+                    totalSet.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 9: {
+                    totalOut.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 10: {
+                    totalNov.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
+                case 11: {
+                    totalDez.setText(doisDecimais.format(listaTotalUAHA.get(i)));
+                    break;
+                }
             }
         }
     }
 
     /**
      * Método responsável por percorrer a matriz e somar os valores coluna por coluna.
+     *
      * @param matriz Representa a matriz com os valores calculados de todos os meses para todas as linhas.
      * @return array com os valores totais por coluna.
      */
-    public ArrayList<Double> percorreMatrizESoma(ArrayList<double[]> matriz){
+    public ArrayList<Double> percorreMatrizESoma(ArrayList<double[]> matriz) {
         //i = linha | j = coluna.
-        int i=0, j=0;
+        int i = 0, j = 0;
         double soma = 0.0;
 
         ArrayList<Double> resultado = new ArrayList<>();
         //Inicializa o array com os totais de cada mês com zero.
-        for(int k=0; k<12; k++){
+        for (int k = 0; k < 12; k++) {
             resultado.add(k, 0.0);
         }
 
-        while (i<matriz.size()){
+        while (i < matriz.size()) {
             soma = soma + matriz.get(i)[j];
 
-            if((i+1) == matriz.size()) {
+            if ((i + 1) == matriz.size()) {
                 i = 0;
 
-                if(j+1 < 12){
+                if (j + 1 < 12) {
                     resultado.set(j, soma);
                     j++;
                     soma = 0.0;
-                }
-                else{
-                    if(j == 11){
+                } else {
+                    if (j == 11) {
                         resultado.set(j, soma);
                     }
                     break;
                 }
-            }
-            else{
+            } else {
                 i++;
             }
         }
@@ -874,10 +1072,11 @@ public class AnimaisFragment extends Fragment {
 
     /**
      * Método para converter um texto digitado num campo de texto para double.
+     *
      * @param et Representa a caixa de texto que contém o texto que será convertido.
      * @return Retorna o texto digitado convertido em double.
      */
-    public double converteTextoEmDouble(EditText et){
+    public double converteTextoEmDouble(EditText et) {
         String texto = et.getText().toString();
         double textoEmDouble;
 
@@ -888,54 +1087,56 @@ public class AnimaisFragment extends Fragment {
 
     /**
      * Método para verificar se um Edit Text é vazio.
+     *
      * @param et Representa a caixa de texto que será verificada.
      * @return true caso a caixa de texto esteja vazia e false caso contrário.
      */
-    public boolean verificaVazioET(EditText et){
+    public boolean verificaVazioET(EditText et) {
         boolean empty = et.getText().toString().isEmpty();
         return !empty;
     }
 
     /**
      * Método para verificar se um Spinner é vazio.
+     *
      * @param p Representa o spinner que será verificado.
      * @return Retorna true caso o spinner esteja vazio (sem opção selecionada) e false caso contrário.
      */
-    public boolean verificaVazioSP(Spinner p){
+    public boolean verificaVazioSP(Spinner p) {
         return !p.getSelectedItem().toString().isEmpty();
     }
 
-    public void finalizar(){
+    public void finalizar() {
         IndexFragment.propriedade.setListaAnimaisAtual(listaAnimais);
         IndexFragment.propriedade.setQtdeAnimais(somaAnimal);
         IndexFragment.listaTotalUAHA = new ArrayList<>(listaTotalUAHA);
 
-        if(IndexActivity.usuario.getId() != -1){
+        if (IndexActivity.usuario.getId() != -1) {
             BancoDeDados.propriedadeDAO.inserirPropriedade(IndexFragment.propriedade, IndexActivity.usuario.getId());
             id_propriedade = BancoDeDados.propriedadeDAO.getPropriedadeId(IndexFragment.propriedade.getNome());
 
-            if(id_propriedade >= 0 ){
-                if(IndexFragment.propriedade.getListaPiqueteAtual() != null){
-                    for(int i=0; i<IndexFragment.propriedade.getListaPiqueteAtual().size(); i++){
+            if (id_propriedade >= 0) {
+                if (IndexFragment.propriedade.getListaPiqueteAtual() != null) {
+                    for (int i = 0; i < IndexFragment.propriedade.getListaPiqueteAtual().size(); i++) {
                         BancoDeDados.piqueteDAO.inserirPiquete(IndexFragment.propriedade.getListaPiqueteAtual().get(i), id_propriedade, IPiqueteSchema.TABELA_PIQUETE_ATUAL);
                     }
                 }
 
-                if(IndexFragment.listaTotaisMes != null){
+                if (IndexFragment.listaTotaisMes != null) {
                     BancoDeDados.totalPiqueteMesDAO.inserirTotalMes(IndexFragment.listaTotaisMes, id_propriedade, ITotalPiqueteMes.TABELA_TOTAL_PIQUETE_MES_ATUAL);
                 }
 
-                if(IndexFragment.listaTotaisEstacoes != null){
+                if (IndexFragment.listaTotaisEstacoes != null) {
                     BancoDeDados.totalPiqueteEstacaoDAO.inserirTotalEstacao(IndexFragment.listaTotaisEstacoes, id_propriedade, ITotalPiqueteEstacao.TABELA_TOTAL_PIQUETE_ESTACAO_ATUAL);
                 }
 
-                if(listaAnimais != null){
-                    for(int i=0; i<listaAnimais.size(); i++){
+                if (listaAnimais != null) {
+                    for (int i = 0; i < listaAnimais.size(); i++) {
                         BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), id_propriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
                     }
                 }
 
-                if(listaTotalUAHA != null){
+                if (listaTotalUAHA != null) {
                     BancoDeDados.totalAnimaisDAO.inserirTotalAnimal(listaTotalUAHA, id_propriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
                 }
             }
@@ -947,13 +1148,13 @@ public class AnimaisFragment extends Fragment {
     }
 
     public void atualizarDados(ArrayList<Animais> listaAnimais, int idPropriedade) {
-        if(modo.equals("atual")){
+        if (modo.equals("atual")) {
             //Deleta os valores antigos.
             BancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
             BancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_ATUAL);
 
             //Salva os novos valores.
-            for(int i=0; i<listaAnimais.size(); i++){
+            for (int i = 0; i < listaAnimais.size(); i++) {
                 BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_ATUAL);
             }
 
@@ -961,14 +1162,13 @@ public class AnimaisFragment extends Fragment {
 
             //Atualiza a qtde de animais na tabela de propriedades.
             BancoDeDados.propriedadeDAO.updatePropriedade(idPropriedade, somaAnimal);
-        }
-        else if(modo.equals("proposta")){
+        } else if (modo.equals("proposta")) {
             //Deleta os valores antigos.
             BancoDeDados.animaisDAO.deleteAnimalByPropId(idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
             BancoDeDados.totalAnimaisDAO.deleteTotalAnimaisByPropId(idPropriedade, ITotalAnimais.TABELA_TOTAL_ANIMAIS_PROPOSTA);
 
             //Salva os novos valores.
-            for(int i=0; i<listaAnimais.size(); i++){
+            for (int i = 0; i < listaAnimais.size(); i++) {
                 BancoDeDados.animaisDAO.inserirAnimal(listaAnimais.get(i), idPropriedade, IAnimaisSchema.TABELA_ANIMAIS_PROPOSTA);
             }
 
@@ -991,7 +1191,7 @@ public class AnimaisFragment extends Fragment {
 
         saved_table_layout = new TableLayout(getActivity());
 
-        while (table_layout.getChildCount() > 0){
+        while (table_layout.getChildCount() > 0) {
             TableRow linha = (TableRow) table_layout.getChildAt(0);
             table_layout.removeViewAt(0);
             saved_table_layout.addView(linha);
@@ -1006,10 +1206,10 @@ public class AnimaisFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if(saved_table_layout != null){
+        if (saved_table_layout != null) {
             numeroDeLinhas = saved_table_layout.getChildCount();
 
-            while(saved_table_layout.getChildCount() > 0){
+            while (saved_table_layout.getChildCount() > 0) {
                 TableRow linha = (TableRow) saved_table_layout.getChildAt(0);
                 saved_table_layout.removeViewAt(0);
                 table_layout.addView(linha);

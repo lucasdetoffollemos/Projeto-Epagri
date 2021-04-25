@@ -167,9 +167,9 @@
     <string name="tb_title_cadastrar_animais">Cadastrar Animais</string>
 
     <!-- Menu Propriedades -->
-    <string name="menu_ver_dados">Cadastrar Animais</string>
-    <string name="menu_fazer_proposta">Cadastrar Animais</string>
-    <string name="menu_grafico_atual">Cadastrar Animais</string>
-    <string name="menu_grafico_proposta">Cadastrar Animais</string>
+    <string name="menu_ver_dados">Ver Dados</string>
+    <string name="menu_fazer_proposta">Fazer Proposta</string>
+    <string name="menu_grafico_atual">Ver Gráfico da Situação Atual</string>
+    <string name="menu_grafico_proposta">Ver Gráfico da Proposta</string>
 
 </resources>

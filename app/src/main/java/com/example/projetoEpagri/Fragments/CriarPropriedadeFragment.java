@@ -17,14 +17,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoEpagri.Activities.IndexActivity;
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.Classes.Propriedade;
+import com.example.projetoEpagri.Classes.Tutorial;
 import com.example.projetoEpagri.R;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 public class CriarPropriedadeFragment extends Fragment {
     private String nome_propriedade, regiao;
 
-    public CriarPropriedadeFragment() {}
+    public CriarPropriedadeFragment() {
+    }
 
     public static CriarPropriedadeFragment newInstance() {
         CriarPropriedadeFragment fragment = new CriarPropriedadeFragment();
@@ -50,6 +55,7 @@ public class CriarPropriedadeFragment extends Fragment {
 
         final View toolbar = getView().findViewById(R.id.included_toolbar);
         final ImageView iv_voltar = toolbar.findViewById(R.id.iv_voltar);
+        final ImageView iv_vaca = getView().findViewById(R.id.iv_vaca);
         final EditText et_nome_propriedade = getView().findViewById(R.id.et_nomePropriedade);
         final ImageView iv_mapa = getView().findViewById(R.id.iv_map);
         final TextView tv_clima = getView().findViewById(R.id.tv_clima);
@@ -65,7 +71,7 @@ public class CriarPropriedadeFragment extends Fragment {
         iv_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(IndexFragment.propriedade != null){
+                if (IndexFragment.propriedade != null) {
                     IndexFragment.propriedade = null;
                 }
 
@@ -80,7 +86,7 @@ public class CriarPropriedadeFragment extends Fragment {
             public void onClick(View v) {
                 Integer id = (Integer) iv_mapa.getTag();
 
-                switch(id) {
+                switch (id) {
                     case R.drawable.img_mapa_sul_branco:
                         iv_mapa.setImageResource(R.drawable.img_mapa_sul_cfb);
                         iv_mapa.setTag(R.drawable.img_mapa_sul_cfb);
@@ -108,16 +114,56 @@ public class CriarPropriedadeFragment extends Fragment {
                 nome_propriedade = et_nome_propriedade.getText().toString().trim();
 
                 //Adicionar verificação do clima quando tiver os mapas corretos.
-                if(!nome_propriedade.isEmpty()){
+                if (!nome_propriedade.isEmpty()) {
                     IndexFragment.propriedade = new Propriedade(nome_propriedade, regiao);
 
                     Fragment piquete_fragment = PiqueteFragment.newInstance(-1, false, null);
                     MainActivity.startFragment(piquete_fragment, "piquete_fragment", R.id.ll_index, true, true, getActivity());
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Insira o nome da propriedade", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
+        IndexFragment.tutorial = MainActivity.bancoDeDados.tutorialDAO.getTutorial();
+
+        if (IndexFragment.tutorial != null && IndexFragment.tutorial.getCriar_propriedade() == 0) {
+            iv_vaca.setVisibility(View.VISIBLE);
+
+            new TapTargetSequence(getActivity())
+                    .targets(
+                            TapTarget.forView(iv_vaca, "Etapa 1", "Essa é a primeira etapa do cadastro de propriedades.\n\nDigite o nome da propriedade no campo de texto e indique no mapa a localização da propriedade.\n\nAo terminar, basta clicar no botão \"Próximo Passo\" logo abaixo...")
+                                    .id(1)
+                                    .titleTextSize(20)
+                                    .titleTextColor(R.color.branco)
+                                    .textColor(R.color.branco)
+                                    .tintTarget(false))
+                    .listener(new TapTargetSequence.Listener() {
+                        // This listener will tell us when interesting(tm) events happen in regards
+                        // to the sequence
+                        @Override
+                        public void onSequenceFinish() {
+                            iv_vaca.setVisibility(View.GONE);
+                            MainActivity.bancoDeDados.tutorialDAO.update(1, 1, 1, 0, 0, 0);
+                        }
+
+                        @Override
+                        public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                            switch (lastTarget.id()) {
+                                case 1:
+                                    iv_vaca.setVisibility(View.GONE);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onSequenceCanceled(TapTarget lastTarget) {
+                            iv_vaca.setVisibility(View.GONE);
+                            MainActivity.bancoDeDados.tutorialDAO.update(1, 1, 1, 0, 0, 0);
+                        }
+                    }
+            ).start();
+        }
     }
 }

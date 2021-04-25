@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projetoEpagri.BancoDeDadosSchema.IDadosSchema;
+import com.example.projetoEpagri.BancoDeDadosSchema.ITutorialSchema;
 import com.example.projetoEpagri.Classes.BancoDeDados;
 import com.example.projetoEpagri.Fragments.LoginFragment;
 import com.example.projetoEpagri.Fragments.SplashScreenFragment;
@@ -43,6 +44,10 @@ public class MainActivity extends AppCompatActivity{
 
         bancoDeDados = new BancoDeDados(this);
         bancoDeDados.abreConexao();
+
+        if(bancoDeDados.verificaExistenciaTabela(ITutorialSchema.TABELA_TUTORIAL) && bancoDeDados.verificaTabelaVazia(ITutorialSchema.TABELA_TUTORIAL)){
+            bancoDeDados.tutorialDAO.inserir(0, 0, 0, 0, 0);
+        }
 
         versao = "";
         versaoDiferente = false;

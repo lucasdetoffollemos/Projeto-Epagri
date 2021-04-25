@@ -102,8 +102,6 @@ public class LoginFragment extends Fragment {
         boolean check = BancoDeDados.usuarioDAO.login(nome, senha_hashed);
 
         if(check){
-            Toast.makeText(getActivity(), "Usuário logado", Toast.LENGTH_SHORT).show();
-
             startActivityIndex(nome, senha);
         }
         else if(nome.isEmpty() || senha.isEmpty()){
