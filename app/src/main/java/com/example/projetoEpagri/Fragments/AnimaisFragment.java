@@ -1,6 +1,7 @@
 package com.example.projetoEpagri.Fragments;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -830,6 +832,7 @@ public class AnimaisFragment extends Fragment {
             for (int i = 9; i < 21; i++) {
                 TextView v = (TextView) linha_tabela.getChildAt(i);
                 v.setText(String.valueOf(0));
+                v.setBackgroundColor(Color.parseColor("#EFEFF1"));
             }
 
             int cont = 0;
@@ -919,6 +922,10 @@ public class AnimaisFragment extends Fragment {
                 if (cont == 12) {
                     //Toast.makeText(this, "Você extrapolou o limite de 12 meses do animal no campo. Altere os valores de ganhou ou peso final!", Toast.LENGTH_LONG).show();
                     break;
+                }
+
+                if(peso_atual >= pesoFinal){
+                    v.setBackgroundColor(Color.parseColor("#A9E9CD"));
                 }
             }
 

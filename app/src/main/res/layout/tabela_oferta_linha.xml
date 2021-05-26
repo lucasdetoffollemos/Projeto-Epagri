@@ -33,11 +33,11 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_area"
+        android:imeOptions="actionDone"
         android:inputType="number|numberDecimal"
-        android:maxLength="6"
+        android:maxLength="8"
         android:maxLines="1"
-        android:textSize="14sp"
-        android:imeOptions="actionDone"/>
+        android:textSize="14sp" />
 
 
     <TextView

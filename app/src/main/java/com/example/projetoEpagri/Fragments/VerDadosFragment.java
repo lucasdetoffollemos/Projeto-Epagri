@@ -1,5 +1,7 @@
 package com.example.projetoEpagri.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.projetoEpagri.Activities.IndexActivity;
 import com.example.projetoEpagri.Activities.MainActivity;
 import com.example.projetoEpagri.R;
 import com.google.android.material.tabs.TabLayout;
@@ -23,6 +26,7 @@ public class VerDadosFragment extends Fragment {
 
     private int id_propriedade;
     private boolean fazer_proposta; //Flag para indicar se o Fragment está sendo aberto no modo "Fazer Proposta".
+    private boolean click_bt_atualizar;
 
     public VerDadosFragment() {}
 
@@ -67,7 +71,28 @@ public class VerDadosFragment extends Fragment {
         iv_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                //Criando a caixa de pergunta, se o usuário quer ou não sair do "Ver Dados"
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Atenção");
+                builder.setMessage("Você deve clicar no botão \"Atualizar Dados\" antes de sair ou todas as alterações realizadas serão perdidas. Tem certeza que deseja sair?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+
+
+                builder.setNeutralButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                builder.show();
             }
         });
 

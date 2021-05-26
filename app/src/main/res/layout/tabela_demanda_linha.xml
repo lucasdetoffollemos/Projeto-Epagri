@@ -51,11 +51,11 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoInicial"
+        android:imeOptions="actionDone"
         android:inputType="numberDecimal"
-        android:maxLength="4"
+        android:maxLength="8"
         android:maxLines="1"
-        android:textSize="14sp"
-        android:imeOptions="actionDone"/>
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_pesoFinal"
@@ -67,11 +67,11 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/hint_et_pesoFinal"
+        android:imeOptions="actionDone"
         android:inputType="numberDecimal"
-        android:maxLength="4"
+        android:maxLength="8"
         android:maxLines="1"
-        android:textSize="14sp"
-        android:imeOptions="actionDone"/>
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/et_pesoVerao"

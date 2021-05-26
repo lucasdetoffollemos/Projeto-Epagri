@@ -151,6 +151,8 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
                 builder.setPositiveButton("cfa", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        getSupportFragmentManager().popBackStack();
+
                         Fragment configuracoes_fragment = ConfiguracoesFragment.newInstance("cfa");
                         MainActivity.startFragment(configuracoes_fragment, "configuracoes_fragment", R.id.ll_index, true, true, IndexActivity.this);
                     }
@@ -159,6 +161,8 @@ public class IndexActivity extends AppCompatActivity implements FragmentManager.
                 builder.setNegativeButton("cfb", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        getSupportFragmentManager().popBackStack();
+
                         Fragment configuracoes_fragment = ConfiguracoesFragment.newInstance("cfb");
                         MainActivity.startFragment(configuracoes_fragment, "configuracoes_fragment", R.id.ll_index, true, true, IndexActivity.this);
 
