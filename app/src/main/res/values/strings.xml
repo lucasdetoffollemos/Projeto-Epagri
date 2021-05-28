@@ -74,6 +74,7 @@
     <string name="txt_tv_qnt">Qtde</string>
     <string name="txt_tv_cadastreAnimais">Cadastre os Animais</string>
     <string name="txt_tv_config">Configurações</string>
+    <string name="txt_tv_clima">Sem clima definido</string>
     <string name="txt_tv_config_cfa">Clima Quente - cfa</string>
     <string name="txt_tv_config_cfb">Clima Frio - cfb</string>
     <string name="txt_tv_seusDados">Seu Dados</string>

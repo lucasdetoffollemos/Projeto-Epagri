@@ -80,16 +80,27 @@
 
         <ImageView
             android:id="@+id/iv_map"
-            android:layout_width="200dp"
-            android:layout_height="250dp"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:isScrollContainer="false"
             app:layout_constraintBottom_toTopOf="@+id/tv_texto_clima"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_regiao"
-            app:srcCompat="@drawable/img_mapa_sul_branco"
-            android:isScrollContainer="false" />
+            app:srcCompat="@drawable/mapa_cfb" />
+
+        <ImageView
+            android:id="@+id/iv_cfb"
+            android:layout_width="110dp"
+            android:layout_height="170dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_map"
+            app:layout_constraintEnd_toEndOf="@+id/iv_map"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="@+id/iv_map"
+            app:layout_constraintTop_toTopOf="@+id/iv_map"
+            app:layout_constraintVertical_bias="0.3" />
 
         <TextView
             android:id="@+id/tv_texto_clima"
@@ -131,5 +142,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -58,6 +58,7 @@ public class CriarPropriedadeFragment extends Fragment {
         final ImageView iv_vaca = getView().findViewById(R.id.iv_vaca);
         final EditText et_nome_propriedade = getView().findViewById(R.id.et_nomePropriedade);
         final ImageView iv_mapa = getView().findViewById(R.id.iv_map);
+        final ImageView iv_cfb = getView().findViewById(R.id.iv_cfb);
         final TextView tv_clima = getView().findViewById(R.id.tv_clima);
         final Button bt_proximo = getView().findViewById(R.id.bt_levaPiquete);
 
@@ -65,8 +66,8 @@ public class CriarPropriedadeFragment extends Fragment {
         toolbar_title.setText(R.string.txt_bt_cadastroPropriedade);
 
         iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
-        tv_clima.setText(R.string.txt_tv_config_cfa);
-        regiao = "cfa";
+        tv_clima.setText(R.string.txt_tv_clima);
+        regiao = "";
 
         iv_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +80,6 @@ public class CriarPropriedadeFragment extends Fragment {
             }
         });
 
-        //TERMINAR DE FAZER AO RECEBER OS MAPAS!
         iv_mapa.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -88,23 +88,45 @@ public class CriarPropriedadeFragment extends Fragment {
 
                 switch (id) {
                     case R.drawable.img_mapa_sul_branco:
-                        iv_mapa.setImageResource(R.drawable.img_mapa_sul_cfb);
-                        iv_mapa.setTag(R.drawable.img_mapa_sul_cfb);
-                        regiao = "cfb";
-                        tv_clima.setText(R.string.txt_tv_config_cfb);
-                        break;
-                    case R.drawable.img_mapa_sul_cfb:
-                        iv_mapa.setImageResource(R.drawable.img_mapa_sul_branco);
-                        iv_mapa.setTag(R.drawable.img_mapa_sul_branco);
+                        iv_mapa.setImageResource(R.drawable.mapa_cfa);
+                        iv_mapa.setTag(R.drawable.mapa_cfa);
                         regiao = "cfa";
                         tv_clima.setText(R.string.txt_tv_config_cfa);
-
                         break;
-                    //TODO mapa sul cfb.
+                    case R.drawable.mapa_cfb:
+                        iv_mapa.setImageResource(R.drawable.mapa_cfa);
+                        iv_mapa.setTag(R.drawable.mapa_cfa);
+                        regiao = "cfa";
+                        tv_clima.setText(R.string.txt_tv_config_cfa);
+                        break;
                     default:
                         break;
                 }
 
+            }
+        });
+
+        iv_cfb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer id = (Integer) iv_mapa.getTag();
+
+                switch (id) {
+                    case R.drawable.img_mapa_sul_branco:
+                        iv_mapa.setImageResource(R.drawable.mapa_cfb);
+                        iv_mapa.setTag(R.drawable.mapa_cfb);
+                        regiao = "cfb";
+                        tv_clima.setText(R.string.txt_tv_config_cfb);
+                        break;
+                    case R.drawable.mapa_cfa:
+                        iv_mapa.setImageResource(R.drawable.mapa_cfb);
+                        iv_mapa.setTag(R.drawable.mapa_cfb);
+                        regiao = "cfb";
+                        tv_clima.setText(R.string.txt_tv_config_cfb);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
@@ -114,13 +136,13 @@ public class CriarPropriedadeFragment extends Fragment {
                 nome_propriedade = et_nome_propriedade.getText().toString().trim();
 
                 //Adicionar verificação do clima quando tiver os mapas corretos.
-                if (!nome_propriedade.isEmpty()) {
+                if (!nome_propriedade.isEmpty() && regiao.length() > 0) {
                     IndexFragment.propriedade = new Propriedade(nome_propriedade, regiao);
 
                     Fragment piquete_fragment = PiqueteFragment.newInstance(-1, false, null);
                     MainActivity.startFragment(piquete_fragment, "piquete_fragment", R.id.ll_index, true, true, getActivity());
                 } else {
-                    Toast.makeText(getActivity(), "Insira o nome da propriedade", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Insira o nome da propriedade e selecione a localidade no mapa antes de prosseguir!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
